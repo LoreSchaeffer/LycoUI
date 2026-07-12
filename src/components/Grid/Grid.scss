@@ -1,0 +1,52 @@
+@use "sass:math";
+@use "../../styles/tokens/breakpoints" as *;
+
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  margin-left: calc(var(--spacing-4) * -0.5);
+  margin-right: calc(var(--spacing-4) * -0.5);
+
+  &--stretch {
+    align-items: stretch;
+  }
+
+  &--start {
+    align-items: flex-start;
+  }
+
+  &--center {
+    align-items: center;
+  }
+
+  &--end {
+    align-items: flex-end;
+  }
+}
+
+.col {
+  box-sizing: border-box;
+  padding-left: calc(var(--spacing-4) * 0.5);
+  padding-right: calc(var(--spacing-4) * 0.5);
+  flex-basis: 0;
+  flex-grow: 1;
+  max-width: 100%;
+}
+
+@for $i from 1 through 12 {
+  .col-#{$i} {
+    flex: 0 0 percentage(math.div($i, 12));
+    max-width: percentage(math.div($i, 12));
+  }
+}
+
+@each $bp-name, $bp-value in $breakpoints {
+  @include respond-to($bp-name) {
+    @for $i from 1 through 12 {
+      .col-#{$bp-name}-#{$i} {
+        flex: 0 0 percentage(math.div($i, 12));
+        max-width: percentage(math.div($i, 12));
+      }
+    }
+  }
+}

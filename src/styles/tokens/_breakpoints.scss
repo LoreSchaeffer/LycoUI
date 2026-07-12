@@ -1,0 +1,20 @@
+$breakpoints: (
+        'sm': 640px,  // Large phones / Small tablets
+        'md': 768px,  // Tablets
+        'lg': 1024px, // Laptops
+        'xl': 1280px, // Desktop monitors
+        '2xl': 1536px // Large displays
+);
+
+@mixin respond-to($breakpoint) {
+  @if map-has-key($breakpoints, $breakpoint) {
+    $value: map-get($breakpoints, $breakpoint);
+
+    @media screen and (min-width: $value) {
+      @content;
+    }
+  } @else {
+    @error "Unfortunately, no value could be retrieved from `#{$breakpoint}`. "
+         + "Available breakpoints are: #{map-keys($breakpoints)}.";
+  }
+}
