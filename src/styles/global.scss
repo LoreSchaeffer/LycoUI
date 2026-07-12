@@ -1,0 +1,268 @@
+@use "sass:map";
+@use "fonts";
+@use "tokens/colors" as colors;
+@use "tokens/elevations" as elevations;
+@use "tokens/motion" as motion;
+@use "tokens/radii" as radius;
+@use "tokens/shadows" as shadow;
+@use "tokens/spacing" as space;
+@use "tokens/typography" as typo;
+
+// ==========================================================================
+// DYNAMIC COLOR MIXIN
+// ==========================================================================
+@mixin generate-dynamic-slate {
+  @each $step, $lightness in colors.$slate-steps {
+    --slate-#{$step}: hsl(var(--theme-hue), var(--theme-sat), #{$lightness});
+  }
+
+  --color-bg-root: var(--slate-950);
+  --color-bg-surface: var(--slate-900);
+  --color-surface-elevated: var(--slate-850);
+  --color-text-primary: var(--slate-50);
+  --color-text-secondary: var(--slate-400);
+  --color-border-base: var(--slate-800);
+}
+
+:root {
+  // ==========================================================================
+  // COLORS
+  // ==========================================================================
+  --theme-hue: #{map.get(colors.$theme-hues, 'blue')};
+  --theme-sat: 15%;
+
+  @each $name, $hue in colors.$theme-hues {
+    @each $step, $lightness in colors.$lightness-steps {
+      // --color-step: hsl(hue, saturation, lightness);
+      --#{$name}-#{$step}: hsl(#{$hue}, #{colors.$sat-base}, #{$lightness});
+    }
+
+    // Alias for primary colors
+    --#{$name}: var(--#{$name}-500);
+  }
+
+  --color-primary: var(--blue-500);
+  --color-success: var(--green-500);
+  --color-warning: var(--yellow-500);
+  --color-danger: var(--red-500);
+  --color-info: var(--cyan-500);
+
+  @include generate-dynamic-slate;
+
+  // ==========================================================================
+  // TYPOGRAPHY
+  // ==========================================================================
+
+  --font-family-base: #{map.get(typo.$font-families, 'base')};
+
+  @each $name, $size in typo.$font-sizes {
+    --font-size-#{$name}: #{$size};
+  }
+
+  @each $name, $weight in typo.$font-weights {
+    --font-weight-#{$name}: #{$weight};
+  }
+
+  @each $name, $height in typo.$line-heights {
+    --line-height-#{$name}: #{$height};
+  }
+
+  // ==========================================================================
+  // SPACING
+  // ==========================================================================
+
+  @each $name, $value in space.$spacing-steps {
+    --spacing-#{$name}: #{$value};
+  }
+
+  // ==========================================================================
+  // RADIUS, SHADOWS, Z-INDEX & MOTION
+  // ==========================================================================
+
+  @each $name, $value in radius.$radius-steps {
+    --radius-#{$name}: #{$value};
+  }
+
+  @each $name, $value in shadow.$shadow-steps {
+    --shadow-#{$name}: #{$value};
+  }
+
+  @each $name, $value in elevations.$z-index-steps {
+    --z-#{$name}: #{$value};
+  }
+
+  @each $name, $value in motion.$duration-steps {
+    --duration-#{$name}: #{$value};
+  }
+
+  @each $name, $value in motion.$ease-steps {
+    --ease-#{$name}: #{$value};
+  }
+}
+
+// ==========================================================================
+// THEMES
+// ==========================================================================
+
+@each $name, $hue in colors.$theme-hues {
+  .theme-#{$name} {
+    --theme-hue: #{$hue};
+    @include generate-dynamic-slate;
+  }
+}
+
+.theme-oled {
+  --theme-sat: 0%;
+  @include generate-dynamic-slate;
+  --color-bg-root: var(--slate-1000);
+}
+
+// ==========================================================================
+// CSS RESET
+// ==========================================================================
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: 100%;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-text-size-adjust: 100%;
+  text-rendering: optimizeLegibility;
+}
+
+body {
+  background-color: var(--color-bg-root);
+  color-scheme: dark;
+  overflow-wrap: break-word;
+}
+
+img,
+picture,
+svg,
+video {
+  display: block;
+  max-width: 100%;
+}
+
+input,
+button,
+textarea,
+select {
+  font: inherit;
+  color: inherit;
+}
+
+button {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+}
+
+// ==========================================================================
+// TYPOGRAPHY
+// ==========================================================================
+body {
+  font-family: var(--font-family-base);
+  color: var(--color-text-primary);
+  font-size: var(--font-size-base);
+  line-height: var(--line-height-normal);
+}
+
+h1, h2, h3, h4, h5, h6 {
+  color: var(--color-text-primary);
+  font-weight: var(--font-weight-bold);
+  line-height: var(--line-height-tight);
+  margin-bottom: var(--spacing-4);
+}
+
+h1 {
+  font-size: var(--font-size-3xl);
+}
+
+h2 {
+  font-size: var(--font-size-2xl);
+}
+
+h3 {
+  font-size: var(--font-size-xl);
+}
+
+h4 {
+  font-size: var(--font-size-lg);
+}
+
+h5, h6 {
+  font-size: var(--font-size-base);
+}
+
+p {
+  color: var(--color-text-secondary);
+  margin-bottom: var(--spacing-4);
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+}
+
+small {
+  font-size: var(--font-size-xs);
+  color: var(--color-text-muted);
+}
+
+strong, b {
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-text-primary);
+}
+
+a {
+  color: var(--color-primary);
+  text-decoration: none;
+  transition: color 0.2s ease;
+
+  &:hover {
+    color: var(--color-primary-hover);
+    text-decoration: underline;
+  }
+}
+
+// ==========================================================================
+// SCROLLBAR STYLES
+// ==========================================================================
+
+// Firefox Standard
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--slate-600) transparent;
+}
+
+// WebKit / Blink (Chrome, Edge, Safari)
+*::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+*::-webkit-scrollbar-track {
+  background: transparent;
+  border-radius: 4px;
+}
+
+*::-webkit-scrollbar-thumb {
+  background-color: var(--slate-700);
+  border-radius: 4px;
+  border: 2px solid transparent;
+  background-clip: padding-box;
+
+  &:hover {
+    background-color: var(--slate-500);
+  }
+}
+
+html::-webkit-scrollbar-track {
+  background: var(--color-bg-root);
+}

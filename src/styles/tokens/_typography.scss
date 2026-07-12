@@ -1,0 +1,26 @@
+$font-families: (
+        'base': ('Noto Sans', system-ui, sans-serif)
+);
+
+$font-sizes: (
+        'xs': 0.75rem,    // 12px - Badges/Captions
+        'sm': 0.875rem,   // 14px - Primary UI size for dense interfaces
+        'base': 1rem,     // 16px - Body text
+        'lg': 1.125rem,   // 18px - Subheadings (+2px rule)
+        'xl': 1.25rem,    // 20px - Section Headings
+        '2xl': 1.5rem,    // 24px - Page Titles
+        '3xl': 2rem       // 32px - Hero/Display elements
+);
+
+$font-weights: (
+        'regular': 400,
+        'medium': 500,
+        'semibold': 600,
+        'bold': 700
+);
+
+$line-heights: (
+        'tight': 1.2,
+        'normal': 1.5,
+        'loose': 1.75
+);
