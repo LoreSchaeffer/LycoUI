@@ -1,14 +1,19 @@
-# Lyoco UI
+# Lyco UI
 
-`lyco-ui` is an agnostic, scalable, and performance-focused UI component library and Design System. 
-The architecture is designed to generate a universal styling infrastructure (via CSS Variables and SCSS) 
-that is fully compatible with both Vanilla HTML/JS environments and modern React applications.
+`lyco-ui` is an agnostic, scalable, and performance-focused UI component library and Design System built on an NPM Workspace monorepo architecture.
+
+## 🎨 Design Philosophy
+The visual language diverges from traditional flat design, introducing a modern, depth-oriented aesthetic:
+* **Depth & Textures:** Heavy reliance on subtle gradients, multi-layered box-shadows, and noise textures. It achieves a tactile feel without relying on pure glassmorphism.
+* **Rounded Geometry:** High border-radius values across surfaces and interactive elements for a fluid, organic appearance.
+* **Component-Level Flat Override:** Every component supports a strict `isFlat` fallback toggle, instantly stripping gradients and textures to render a pure, solid-color variant.
+* **Responsive First:** The layout system is heavily inspired by Bootstrap 5's flexbox grid, ensuring absolute layout uniformity and fluid adaptation across all viewports.
 
 ---
 
 ## 🛠 Tech Stack
 
-The project is built on a modern, lightning-fast ecosystem, configured with the following technologies:
+The workspace utilizes the following unified ecosystem:
 
 ### Core Framework & Language
 * **React 19**: Utilized at version `^19.2.7` for crafting the user interface components.
@@ -18,56 +23,44 @@ The project is built on a modern, lightning-fast ecosystem, configured with the 
 * **Sass (SCSS)**: Version `^1.101.0`. Provides the logical infrastructure (advanced `@each`, `@for` loops, and `@mixin` directives) to map design tokens and compile utilities and global classes.
 * **Clsx**: Version `^2.1.1`. A core utility for conditionally manipulating and cleanly concatenating CSS classes within React components.
 
-### Build Tool & Development Environment
-* **Vite 8**: Configured at version `^8.1.4` as an ultra-fast bundler for both the local development environment and the optimized production build.
-* **Storybook 10**: Version `^10.5.0` with the `@storybook/react-vite` integration. Serves as an isolated environment (Workshop) for component development, accessibility testing (`@storybook/addon-a11y`), and official documentation generation (`@storybook/addon-docs`).
+### Build Tool & Monorepo
+* **Vite 8**: Configured at version `^8.1.4`. Powers both the library compilation (via Rolldown) and the lightning-fast HMR development server for the documentation playground.
+* **NPM Workspaces**: Architected to strictly separate the `core` UI library from the `docs` consumption playground, ensuring zero-overhead dogfooding without third-party dependencies.
 
 ---
 
-## 📂 File Architecture and Repository Structure
+## 📂 Repository Architecture (Monorepo)
 
-The source directory strictly separates centralized style orchestration from atomic component isolation:
+The source directory strictly isolates the compiled library from the testing environment:
 
-\`\`\`text
-lyco-ui/
-├── .storybook/               # Storybook configuration files
-├── src/
-│   ├── components/           # Atomic UI Components
-│   │   └── Grid/             # Responsive Grid Module
-│   │       ├── Col.tsx       # Column component (forwardRef, clsx)
-│   │       ├── Grid.scss     # Grid compiler and flex layout math
-│   │       ├── Grid.stories.tsx # Layout & Bootstrap-like documentation
-│   │       ├── index.ts      # Component barrel export file
-│   │       └── Row.tsx       # Row component with align modifiers
-│   ├── docs/
-│   │   └── Colors.stories.tsx # Global design tokens color laboratory
-│   ├── styles/               # Global styling orchestration
-│   │   ├── tokens/           # Atomic Design Token Maps
-│   │   │   ├── _breakpoints.scss # Media query responsive break steps
-│   │   │   ├── _colors.scss      # Hue and lightness map definitions
-│   │   │   ├── _elevations.scss  # Z-index layering definitions
-│   │   │   ├── _index.scss       # Tokens entrypoint (forward engine)
-│   │   │   ├── _motion.scss      # Animation duration and easing curves
-│   │   │   ├── _radii.scss       # Border-radius size scale
-│   │   │   ├── _shadows.scss     # Box-shadow layers for layers depth
-│   │   │   ├── _spacing.scss     # 4px-grid spacing multiplier system
-│   │   │   └── _typography.scss  # REM-based font sizes and line-heights
-│   │   ├── _fonts.scss       # Font face and asset definitions
-│   │   └── global.scss       # Main entry point (Reset, Core tags & CSS Variables injector)
-│   └── index.ts              # Library global entry point
-├── package.json              # Scripts, dependencies and metadata definitions
-├── tsconfig.json             # TypeScript configuration profile
-└── vite.config.ts            # Vite compiler configuration
-\`\`\`
-
----
+```text
+lyco-ui-workspace/
+├── package.json              # Root workspace orchestrator
+├── packages/
+│   ├── core/                 # Atomic UI Components & Styling (Published Library)
+│   │   ├── src/
+│   │   │   ├── components/   # Isolated React components (e.g., Grid, Surface)
+│   │   │   ├── styles/       # Global styling orchestration
+│   │   │   │   ├── tokens/   # Atomic Design Token Maps (_colors, _radii, _shadows, etc.)
+│   │   │   │   ├── _fonts.scss
+│   │   │   │   └── global.scss # Main entry point (Reset & CSS Variables injector)
+│   │   │   └── index.ts      # Library global entry point
+│   │   ├── package.json      # Library manifest
+│   │   ├── tsconfig.json     # Strict TS compilation rules
+│   │   └── vite.config.ts    # Rolldown library build configuration
+│   └── docs/                 # Custom Vite Playground & Documentation SPA
+│       ├── src/
+│       │   ├── App.tsx       # Live playground testing environment
+│       │   └── main.tsx      # React root injector
+│       ├── index.html        # Web entry point
+│       ├── package.json      # Docs manifest (depends on locally symlinked lyco-ui)
+│       ├── tsconfig.json     # SPA TS validation rules (noEmit)
+│       └── vite.config.ts    # Standard Vite web build configuration
+```
 
 ## 🔄 Workflow & Available Scripts
+Execute these commands from the root directory to orchestrate the workspaces:
 
-The integrated commands in the project's development cycle utilize the following native scripts:
-
-*   \`npm run dev\`: Starts the local development server via Vite.
-*   \`npm run build\`: Type-checks the code with the TypeScript compiler and runs the production build of the application.
-*   \`npm run lint\`: Executes a lightning-fast static code check via \`oxlint\` to catch formatting issues or potential errors.
-*   \`npm run storybook\`: Starts the local Storybook environment on port \`6006\` for isolated component development and documentation review.
-*   \`npm run build-storybook\`: Compiles the Storybook documentation into a static package ready for distribution or online deployment.
+- `npm run dev:docs`: Starts the documentation playground. Automatically intercepts core imports via Vite alias for instant HMR without requiring pre-builds.
+- `npm run build`: Executes the production build across all workspaces (core library and docs static site).
+- `npm run clean`: Purges all node_modules and dist directories across the workspace to reset the environment.
