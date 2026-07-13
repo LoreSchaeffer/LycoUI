@@ -1,0 +1,10 @@
+$radius-steps: (
+        'none': 0,
+        'sm': 0.25rem,    // 4px - Small badges/tags
+        'md': 0.5rem,     // 8px - Tooltips/Popovers
+        'base': 0.75rem,  // 12px - Default Inputs/Buttons
+        'lg': 1rem,       // 16px - Cards/Dropdowns
+        'xl': 1.5rem,     // 24px - Modals/Floating Panels
+        '2xl': 2rem,      // 32px - Large app sections/Drawers
+        'full': 9999px    // Pills/Avatars
+);

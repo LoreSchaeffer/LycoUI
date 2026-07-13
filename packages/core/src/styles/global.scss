@@ -6,23 +6,39 @@
 @use "tokens/radii" as radius;
 @use "tokens/shadows" as shadow;
 @use "tokens/spacing" as space;
+@use "tokens/surfaces" as surface;
 @use "tokens/typography" as typo;
 
 // ==========================================================================
-// DYNAMIC COLOR MIXIN
+// DYNAMIC COLOR & SURFACE MIXIN
 // ==========================================================================
 @mixin generate-dynamic-slate {
   @each $step, $lightness in colors.$slate-steps {
     --slate-#{$step}: hsl(var(--theme-hue), var(--theme-sat), #{$lightness});
   }
 
+  // Core Backgrounds
   --color-bg-root: var(--slate-950);
   --color-bg-surface: var(--slate-900);
   --color-surface-elevated: var(--slate-850);
+  --color-surface-flat: var(--slate-900); // Fallback for flat mode
+
+  // Typography Colors
   --color-text-primary: var(--slate-50);
   --color-text-secondary: var(--slate-400);
+  --color-text-muted: var(--slate-500);
+
+  // Borders
   --color-border-base: var(--slate-800);
+
+  // Gradient Stops for Modern Depth
+  --color-surface-start: var(--slate-850);
+  --color-surface-end: var(--slate-950);
 }
+
+// ==========================================================================
+// ROOT START
+// ==========================================================================
 
 :root {
   // ==========================================================================
@@ -33,27 +49,31 @@
 
   @each $name, $hue in colors.$theme-hues {
     @each $step, $lightness in colors.$lightness-steps {
-      // --color-step: hsl(hue, saturation, lightness);
       --#{$name}-#{$step}: hsl(#{$hue}, #{colors.$sat-base}, #{$lightness});
     }
-
-    // Alias for primary colors
+    // Aliases for primary colors
     --#{$name}: var(--#{$name}-500);
   }
 
+  // Brand Palette
   --color-primary: var(--blue-500);
+  --color-primary-hover: var(--blue-400);
   --color-success: var(--green-500);
   --color-warning: var(--yellow-500);
   --color-danger: var(--red-500);
   --color-info: var(--cyan-500);
+
+  // Brand Gradients
+  --color-brand-start: var(--blue-400);
+  --color-brand-end: var(--blue-600);
 
   @include generate-dynamic-slate;
 
   // ==========================================================================
   // TYPOGRAPHY
   // ==========================================================================
-
   --font-family-base: #{map.get(typo.$font-families, 'base')};
+  --font-family-mono: #{map.get(typo.$font-families, 'mono')};
 
   @each $name, $size in typo.$font-sizes {
     --font-size-#{$name}: #{$size};
@@ -68,23 +88,14 @@
   }
 
   // ==========================================================================
-  // SPACING
+  // SPACING, RADIUS, Z-INDEX & MOTION
   // ==========================================================================
-
   @each $name, $value in space.$spacing-steps {
     --spacing-#{$name}: #{$value};
   }
 
-  // ==========================================================================
-  // RADIUS, SHADOWS, Z-INDEX & MOTION
-  // ==========================================================================
-
   @each $name, $value in radius.$radius-steps {
     --radius-#{$name}: #{$value};
-  }
-
-  @each $name, $value in shadow.$shadow-steps {
-    --shadow-#{$name}: #{$value};
   }
 
   @each $name, $value in elevations.$z-index-steps {
@@ -98,12 +109,29 @@
   @each $name, $value in motion.$ease-steps {
     --ease-#{$name}: #{$value};
   }
+
+  // ==========================================================================
+  // SHADOWS
+  // ==========================================================================
+  @each $name, $value in shadow.$shadow-steps {
+    --shadow-#{$name}: #{$value};
+  }
+
+  // ==========================================================================
+  // SURFACES (Textures & Gradients)
+  // ==========================================================================
+  @each $name, $value in surface.$surface-treatments {
+    --surface-#{$name}: #{$value};
+  }
 }
 
 // ==========================================================================
-// THEMES
+// ROOT END
 // ==========================================================================
 
+// ==========================================================================
+// THEMES & MODES
+// ==========================================================================
 @each $name, $hue in colors.$theme-hues {
   .theme-#{$name} {
     --theme-hue: #{$hue};
@@ -117,8 +145,15 @@
   --color-bg-root: var(--slate-1000);
 }
 
+// Flat Mode Toggle (Can be applied to :root, <body>, or specific components)
+[data-mode="flat"], .mode-flat {
+  --surface-gradient-subtle: var(--surface-flat-base);
+  --surface-gradient-strong: var(--color-primary);
+  --surface-texture-noise: none;
+}
+
 // ==========================================================================
-// CSS RESET
+// CSS RESET & BASE STYLES
 // ==========================================================================
 *,
 *::before,
@@ -140,21 +175,19 @@ body {
   background-color: var(--color-bg-root);
   color-scheme: dark;
   overflow-wrap: break-word;
+  font-family: var(--font-family-base);
+  color: var(--color-text-primary);
+  font-size: var(--font-size-base);
+  line-height: var(--line-height-normal);
 }
 
-img,
-picture,
-svg,
-video {
+img, picture, svg, video {
   display: block;
   max-width: 100%;
   height: auto;
 }
 
-input,
-button,
-textarea,
-select {
+input, button, textarea, select {
   font: inherit;
   color: inherit;
 }
@@ -166,15 +199,8 @@ button {
 }
 
 // ==========================================================================
-// TYPOGRAPHY
+// TYPOGRAPHY ELEMENTS
 // ==========================================================================
-body {
-  font-family: var(--font-family-base);
-  color: var(--color-text-primary);
-  font-size: var(--font-size-base);
-  line-height: var(--line-height-normal);
-}
-
 h1, h2, h3, h4, h5, h6 {
   color: var(--color-text-primary);
   font-weight: var(--font-weight-bold);
@@ -224,7 +250,7 @@ strong, b {
 a {
   color: var(--color-primary);
   text-decoration: none;
-  transition: color 0.2s ease;
+  transition: color var(--duration-fast) var(--ease-default);
 
   &:hover {
     color: var(--color-primary-hover);
@@ -232,17 +258,33 @@ a {
   }
 }
 
+code,
+kbd,
+samp,
+pre,
+.monospace {
+  font-family: var(--font-family-mono);
+  font-size: 0.875em;
+}
+
+pre {
+  overflow-x: auto;
+  font-size: var(--font-size-sm);
+
+  code {
+    font-size: inherit;
+    color: inherit;
+  }
+}
+
 // ==========================================================================
 // SCROLLBAR STYLES
 // ==========================================================================
-
-// Firefox Standard
 * {
   scrollbar-width: thin;
   scrollbar-color: var(--slate-600) transparent;
 }
 
-// WebKit / Blink (Chrome, Edge, Safari)
 *::-webkit-scrollbar {
   width: 8px;
   height: 8px;
@@ -250,12 +292,12 @@ a {
 
 *::-webkit-scrollbar-track {
   background: transparent;
-  border-radius: 4px;
+  border-radius: var(--radius-md);
 }
 
 *::-webkit-scrollbar-thumb {
   background-color: var(--slate-700);
-  border-radius: 4px;
+  border-radius: var(--radius-md);
   border: 2px solid transparent;
   background-clip: padding-box;
 
