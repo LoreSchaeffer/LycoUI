@@ -1,0 +1,50 @@
+.lyco-btn-group {
+  display: inline-flex;
+  position: relative;
+  border-radius: var(--radius-base);
+
+  > .lyco-btn {
+    position: relative;
+    flex: 1 1 auto;
+
+    &:hover,
+    &:focus-visible,
+    &:active {
+      z-index: 1;
+    }
+  }
+
+  &--horizontal {
+    flex-direction: row;
+
+    > .lyco-btn {
+      &:not(:first-child) {
+        border-top-left-radius: 0;
+        border-bottom-left-radius: 0;
+        border-left: 1px solid color-mix(in srgb, var(--color-bg-root) 40%, transparent);
+      }
+
+      &:not(:last-child) {
+        border-top-right-radius: 0;
+        border-bottom-right-radius: 0;
+      }
+    }
+  }
+
+  &--vertical {
+    flex-direction: column;
+
+    > .lyco-btn {
+      &:not(:first-child) {
+        border-top-left-radius: 0;
+        border-top-right-radius: 0;
+        border-top: 1px solid color-mix(in srgb, var(--color-bg-root) 40%, transparent);
+      }
+
+      &:not(:last-child) {
+        border-bottom-left-radius: 0;
+        border-bottom-right-radius: 0;
+      }
+    }
+  }
+}

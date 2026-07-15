@@ -28,6 +28,11 @@ export const docsNavigation: DocNavigationCategory[] = [
                 name: 'Architecture',
                 path: '/docs/architecture',
                 component: lazy(() => import('../pages/getting-started/Architecture'))
+            },
+            {
+                name: 'Grid System',
+                path: '/docs/grid',
+                component: lazy(() => import('../pages/components/Grid/GridDoc.tsx'))
             }
         ]
     },
@@ -36,9 +41,9 @@ export const docsNavigation: DocNavigationCategory[] = [
         icon: PiStackBold,
         items: [
             {
-                name: 'Grid System',
-                path: '/docs/components/grid',
-                component: lazy(() => import('../pages/components/grid/GridDoc.tsx'))
+                name: 'Button',
+                path: '/docs/components/Button',
+                component: lazy(() => import('../pages/components/Button/ButtonDoc.tsx'))
             }
         ]
     }
