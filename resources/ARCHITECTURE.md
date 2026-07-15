@@ -3,9 +3,10 @@
 `lyco-ui` is an agnostic, scalable, and performance-focused UI component library and Design System built on an NPM Workspace monorepo architecture.
 
 ## 🎨 Design Philosophy
-The visual language diverges from traditional flat design, introducing a modern, depth-oriented aesthetic:
+The visual language diverges from traditional flat design, introducing a modern, depth-oriented aesthetic
 * **Depth & Textures:** Heavy reliance on subtle gradients, multi-layered box-shadows, and noise textures. It achieves a tactile feel without relying on pure glassmorphism.
 * **Rounded Geometry:** High border-radius values across surfaces and interactive elements for a fluid, organic appearance.
+* **Motion & Micro-interactions:** Fluid animations and state transitions must be heavily utilized across all interactive elements. Motion is treated as a first-class citizen to provide immediate visual feedback and elevate the 2026 user experience.
 * **Component-Level Flat Override:** Every component supports a strict `isFlat` fallback toggle, instantly stripping gradients and textures to render a pure, solid-color variant.
 * **Responsive First:** The layout system is heavily inspired by Bootstrap 5's flexbox grid, ensuring absolute layout uniformity and fluid adaptation across all viewports.
 

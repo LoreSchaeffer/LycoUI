@@ -58,6 +58,8 @@
   // Brand Palette
   --color-primary: var(--blue-500);
   --color-primary-hover: var(--blue-400);
+  --color-primary-dim: color-mix(in srgb, var(--color-primary) 15%, transparent);
+
   --color-success: var(--green-500);
   --color-warning: var(--yellow-500);
   --color-danger: var(--red-500);
@@ -85,6 +87,22 @@
 
   @each $name, $height in typo.$line-heights {
     --line-height-#{$name}: #{$height};
+  }
+
+  .lyco-text-center {
+    text-align: center;
+  }
+
+  .lyco-text-primary {
+    color: var(--color-text-primary);
+  }
+
+  .lyco-text-secondary {
+    color: var(--color-text-secondary);
+  }
+
+  .lyco-text-muted {
+    color: var(--color-text-muted);
   }
 
   // ==========================================================================
@@ -122,6 +140,47 @@
   // ==========================================================================
   @each $name, $value in surface.$surface-treatments {
     --surface-#{$name}: #{$value};
+  }
+
+  // ==========================================================================
+  // UTILITIES
+  // ==========================================================================
+  // Spacing (Margin Bottom)
+  .lyco-mb-0 {
+    margin-bottom: 0 !important;
+  }
+
+  .lyco-mb-2 {
+    margin-bottom: var(--spacing-2) !important;
+  }
+
+  .lyco-mb-4 {
+    margin-bottom: var(--spacing-4) !important;
+  }
+
+  .lyco-mb-6 {
+    margin-bottom: var(--spacing-6) !important;
+  }
+
+  .lyco-mb-8 {
+    margin-bottom: var(--spacing-8) !important;
+  }
+
+  .lyco-mb-10 {
+    margin-bottom: var(--spacing-10) !important;
+  }
+
+  // Spacing (Margin Top)
+  .lyco-mt-0 {
+    margin-top: 0 !important;
+  }
+
+  .lyco-mt-4 {
+    margin-top: var(--spacing-4) !important;
+  }
+
+  .lyco-mt-8 {
+    margin-top: var(--spacing-8) !important;
   }
 }
 

@@ -1,52 +1,103 @@
 @use "sass:math";
 @use "../../styles/tokens/breakpoints" as *;
 
-.row {
+.lyco-row {
+  --lyco-gutter-x: var(--spacing-4, 1rem);
+  --lyco-gutter-y: 0;
+
   display: flex;
   flex-wrap: wrap;
-  margin-left: calc(var(--spacing-4) * -0.5);
-  margin-right: calc(var(--spacing-4) * -0.5);
+  margin-top: calc(var(--lyco-gutter-y) * -1);
+  margin-left: calc(var(--lyco-gutter-x) * -0.5);
+  margin-right: calc(var(--lyco-gutter-x) * -0.5);
 
-  &--stretch {
+  &--align-stretch {
     align-items: stretch;
   }
 
-  &--start {
+  &--align-start {
     align-items: flex-start;
   }
 
-  &--center {
+  &--align-center {
     align-items: center;
   }
 
-  &--end {
+  &--align-end {
     align-items: flex-end;
   }
-}
 
-.col {
-  box-sizing: border-box;
-  padding-left: calc(var(--spacing-4) * 0.5);
-  padding-right: calc(var(--spacing-4) * 0.5);
-  flex-basis: 0;
-  flex-grow: 1;
-  max-width: 100%;
-}
+  &--justify-start {
+    justify-content: flex-start;
+  }
 
-@for $i from 1 through 12 {
-  .col-#{$i} {
-    flex: 0 0 percentage(math.div($i, 12));
-    max-width: percentage(math.div($i, 12));
+  &--justify-center {
+    justify-content: center;
+  }
+
+  &--justify-end {
+    justify-content: flex-end;
+  }
+
+  &--justify-between {
+    justify-content: space-between;
   }
 }
+
+.lyco-col {
+  box-sizing: border-box;
+  flex-shrink: 0;
+  width: 100%;
+  max-width: 100%;
+  padding-left: calc(var(--lyco-gutter-x) * 0.5);
+  padding-right: calc(var(--lyco-gutter-x) * 0.5);
+  margin-top: var(--lyco-gutter-y);
+  flex-grow: 1;
+  flex-basis: 0;
+
+  &--stretch {
+    display: flex;
+    flex-direction: column;
+
+    > * {
+      flex-grow: 1;
+    }
+  }
+
+  &--align-auto {
+    align-self: auto;
+  }
+
+  &--align-start {
+    align-self: flex-start;
+  }
+
+  &--align-center {
+    align-self: center;
+  }
+
+  &--align-end {
+    align-self: flex-end;
+  }
+
+  &--align-stretch {
+    align-self: stretch;
+  }
+}
+
+@mixin make-grid-columns($infix: "") {
+  @for $i from 1 through 12 {
+    .lyco-col#{$infix}-#{$i} {
+      flex: 0 0 percentage(math.div($i, 12));
+      max-width: percentage(math.div($i, 12));
+    }
+  }
+}
+
+@include make-grid-columns();
 
 @each $bp-name, $bp-value in $breakpoints {
   @include respond-to($bp-name) {
-    @for $i from 1 through 12 {
-      .col-#{$bp-name}-#{$i} {
-        flex: 0 0 percentage(math.div($i, 12));
-        max-width: percentage(math.div($i, 12));
-      }
-    }
+    @include make-grid-columns("-#{$bp-name}");
   }
 }

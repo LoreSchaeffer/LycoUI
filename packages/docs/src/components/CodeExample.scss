@@ -1,0 +1,133 @@
+$bp-md: 768px;
+
+.lyco-docs-code-example {
+  margin-bottom: var(--spacing-10);
+  width: 100%;
+  min-width: 0;
+
+  &__title {
+    font-size: var(--font-size-xl);
+    font-weight: 600;
+    margin-bottom: var(--spacing-2);
+    color: var(--color-text-primary);
+  }
+
+  &__description {
+    color: var(--color-text-secondary);
+    margin-bottom: var(--spacing-4);
+    line-height: 1.6;
+    font-size: var(--font-size-base);
+  }
+
+  &__preview {
+    padding: var(--spacing-4);
+    border: 1px solid var(--color-border-base);
+    border-top-left-radius: var(--radius-lg);
+    border-top-right-radius: var(--radius-lg);
+    background-color: var(--color-bg-base);
+    overflow-x: auto;
+
+    @media (min-width: $bp-md) {
+      padding: var(--spacing-6);
+    }
+  }
+
+  &__toolbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-left: 1px solid var(--color-border-base);
+    border-right: 1px solid var(--color-border-base);
+    border-bottom: 1px solid var(--color-border-base);
+    background-color: var(--color-bg-surface);
+  }
+
+  &__tabs {
+    display: flex;
+  }
+
+  &__tab {
+    padding: var(--spacing-2) var(--spacing-4);
+    color: var(--color-text-secondary);
+    border-bottom: 2px solid transparent;
+    font-weight: 400;
+    font-size: var(--font-size-sm);
+    transition: all var(--duration-fast) var(--ease-default);
+
+    &:hover {
+      color: var(--color-text-primary);
+      background-color: rgba(255, 255, 255, 0.02);
+    }
+
+    &.is-active {
+      color: var(--color-primary);
+      border-bottom-color: var(--color-primary);
+      font-weight: 500;
+    }
+  }
+
+  &__copy {
+    padding: var(--spacing-2) var(--spacing-4);
+    color: var(--color-text-secondary);
+    font-size: var(--font-size-lg);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: color var(--duration-fast) var(--ease-default);
+
+    &:hover {
+      color: var(--color-text-primary);
+    }
+
+    .lyco-text-success {
+      color: var(--color-success);
+    }
+  }
+
+  &__code-wrapper {
+    background-color: #0d1117;
+    border: 1px solid var(--color-border-base);
+    border-top: none;
+    border-bottom-left-radius: var(--radius-lg);
+    border-bottom-right-radius: var(--radius-lg);
+    overflow-x: auto;
+    max-width: 100%;
+  }
+
+  &__pre {
+    margin: 0;
+    padding: var(--spacing-4);
+    color: #c9d1d9;
+    font-size: var(--font-size-sm);
+    line-height: 1.5;
+    white-space: pre-wrap;
+    word-break: break-all;
+
+    @media (min-width: $bp-md) {
+      white-space: pre;
+      word-break: normal;
+    }
+  }
+
+  .lyco-docs-shiki-wrapper {
+    pre.shiki {
+      margin: 0;
+      padding: var(--spacing-4);
+      background-color: transparent !important;
+      font-size: var(--font-size-sm);
+      line-height: 1.5;
+      white-space: pre-wrap;
+      word-break: break-all;
+
+      @media (min-width: $bp-md) {
+        white-space: pre;
+        word-break: normal;
+      }
+    }
+
+    code {
+      font-family: var(--font-family-mono);
+    }
+  }
+}
+

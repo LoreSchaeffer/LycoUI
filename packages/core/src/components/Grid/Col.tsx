@@ -2,6 +2,7 @@ import {forwardRef, type HTMLAttributes, type ReactNode} from "react";
 import clsx from "clsx";
 
 export type ColumnSpan = 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12;
+export type ColumnAlign = 'auto' | 'start' | 'center' | 'end' | 'stretch';
 
 export interface ColProps extends HTMLAttributes<HTMLDivElement> {
     children: ReactNode;
@@ -11,6 +12,8 @@ export interface ColProps extends HTMLAttributes<HTMLDivElement> {
     lg?: ColumnSpan;
     xl?: ColumnSpan;
     xxl?: ColumnSpan;
+    stretch?: boolean;
+    align?: ColumnAlign;
 }
 
 export const Col = forwardRef<HTMLDivElement, ColProps>((
@@ -22,20 +25,24 @@ export const Col = forwardRef<HTMLDivElement, ColProps>((
         lg,
         xl,
         xxl,
+        stretch = false,
+        align,
         className,
         ...props
-    }: ColProps, ref) => {
+    }, ref) => {
     return (
         <div
             ref={ref}
             className={clsx(
-                'col',
-                span && `col-${span}`,
-                sm && `col-sm-${sm}`,
-                md && `col-md-${md}`,
-                lg && `col-lg-${lg}`,
-                xl && `col-xl-${xl}`,
-                xxl && `col-2xl-${xxl}`,
+                'lyco-col',
+                span && `lyco-col-${span}`,
+                sm && `lyco-col-sm-${sm}`,
+                md && `lyco-col-md-${md}`,
+                lg && `lyco-col-lg-${lg}`,
+                xl && `lyco-col-xl-${xl}`,
+                xxl && `lyco-col-xxl-${xxl}`,
+                stretch && 'lyco-col--stretch',
+                align && `lyco-col--align-${align}`,
                 className
             )}
             {...props}
