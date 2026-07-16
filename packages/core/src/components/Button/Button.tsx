@@ -7,8 +7,11 @@ export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
     children: ReactNode;
     variant?: ColorVariant;
     size?: SizeVariant;
-    isFlat?: boolean;
+    flat?: boolean;
+    outlined?: boolean;
+    rounded?: boolean;
     isLoading?: boolean;
+    icon?: ReactNode;
     iconStart?: ReactNode;
     iconEnd?: ReactNode;
 }
@@ -18,8 +21,11 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>((
         children,
         variant = 'primary',
         size = 'base',
-        isFlat = false,
+        flat = false,
+        outlined = false,
+        rounded = false,
         isLoading = false,
+        icon,
         iconStart,
         iconEnd,
         className,
@@ -28,6 +34,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>((
     }, ref) => {
 
     const isDisabled = disabled || isLoading;
+    const isIconOnly = Boolean(icon && !children);
 
     return (
         <button
@@ -37,8 +44,10 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>((
                 'lyco-btn',
                 `lyco-btn--${variant}`,
                 `lyco-btn--${size}`,
-                isFlat && 'lyco-btn--flat',
+                flat && 'lyco-btn--flat',
+                rounded && 'lyco-btn--rounded',
                 isLoading && 'lyco-btn--loading',
+                isIconOnly && 'lyco-btn--icon-only',
                 className
             )}
             {...props}
@@ -54,18 +63,26 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>((
                 </span>
             )}
 
-            {!isLoading && iconStart && (
-                <span className="lyco-btn__icon lyco-btn__icon--start">
-                    {iconStart}
-                </span>
+            {!isLoading && isIconOnly && (
+                <span className="lyco-btn__icon">{icon}</span>
             )}
 
-            <span className="lyco-btn__content">{children}</span>
+            {!isIconOnly && (
+                <>
+                    {!isLoading && iconStart && (
+                        <span className="lyco-btn__icon lyco-btn__icon--start">
+                            {iconStart}
+                        </span>
+                    )}
 
-            {!isLoading && iconEnd && (
-                <span className="lyco-btn__icon lyco-btn__icon--end">
-                    {iconEnd}
-                </span>
+                    <span className="lyco-btn__content">{children}</span>
+
+                    {!isLoading && iconEnd && (
+                        <span className="lyco-btn__icon lyco-btn__icon--end">
+                            {iconEnd}
+                        </span>
+                    )}
+                </>
             )}
         </button>
     );

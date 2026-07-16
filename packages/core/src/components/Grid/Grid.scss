@@ -88,8 +88,8 @@
 @mixin make-grid-columns($infix: "") {
   @for $i from 1 through 12 {
     .lyco-col#{$infix}-#{$i} {
-      flex: 0 0 percentage(math.div($i, 12));
-      max-width: percentage(math.div($i, 12));
+      flex: 0 0 math.percentage(math.div($i, 12));
+      max-width: math.percentage(math.div($i, 12));
     }
   }
 }

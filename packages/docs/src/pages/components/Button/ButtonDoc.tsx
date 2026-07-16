@@ -15,7 +15,7 @@ const ButtonDoc: React.FC = () => {
             <section className="lyco-mb-10">
                 <h2>Color Variants</h2>
                 <p className="lyco-text-secondary lyco-mb-6">
-                    Buttons inherit the high-depth, textured styling dictated by the design philosophy. The <code>variant</code> prop dynamically maps to global theme hues.
+                    Buttons inherit the high-depth, textured styling dictated by the design philosophy. The <code>variant</code> prop dynamically maps to global theme hues and automatically calculates optimal text contrast.
                 </p>
                 <CodeExample
                     title="Theme Colors"
@@ -23,6 +23,34 @@ const ButtonDoc: React.FC = () => {
                     htmlCode="<!-- Auto-generated output dynamically maps to BEM classes (e.g. .lyco-btn--red) -->"
                 >
                     {buttonExamples.variants.preview}
+                </CodeExample>
+            </section>
+
+            <section className="lyco-mb-10">
+                <h2>Outlined Variants</h2>
+                <p className="lyco-text-secondary lyco-mb-6">
+                    Use the <code>isOutlined</code> prop to remove background colors and apply an inset border. Hovering inverses the colors.
+                </p>
+                <CodeExample
+                    title="Outlined Buttons"
+                    reactCode={buttonExamples.outlined.reactCode}
+                    htmlCode="<!-- Applies .lyco-btn--outlined modifier -->"
+                >
+                    {buttonExamples.outlined.preview}
+                </CodeExample>
+            </section>
+
+            <section className="lyco-mb-10">
+                <h2>Rounded Variants</h2>
+                <p className="lyco-text-secondary lyco-mb-6">
+                    Use the <code>rounded</code> prop to apply a maximum border-radius. This creates a pill shape for text buttons or a perfect circle for icon-only buttons.
+                </p>
+                <CodeExample
+                    title="Rounded Buttons"
+                    reactCode={buttonExamples.rounded.reactCode}
+                    htmlCode="<!-- Applies .lyco-btn--rounded modifier -->"
+                >
+                    {buttonExamples.rounded.preview}
                 </CodeExample>
             </section>
 
@@ -43,12 +71,12 @@ const ButtonDoc: React.FC = () => {
             <section className="lyco-mb-10">
                 <h2>Icons</h2>
                 <p className="lyco-text-secondary lyco-mb-6">
-                    Pass React elements to <code>iconStart</code> or <code>iconEnd</code>. The internal layout manages gaps and vertical alignment flawlessly.
+                    Pass React elements to <code>iconStart</code>, <code>iconEnd</code>, or use <code>icon</code> without children to create a perfectly square icon-only button.
                 </p>
                 <CodeExample
-                    title="Icon Placement"
+                    title="Icon Placement & Square Buttons"
                     reactCode={buttonExamples.icons.reactCode}
-                    htmlCode="<!-- Renders internal spans for structured alignment -->"
+                    htmlCode="<!-- Renders internal spans for structured alignment or .lyco-btn--icon-only -->"
                 >
                     {buttonExamples.icons.preview}
                 </CodeExample>
@@ -85,7 +113,7 @@ const ButtonDoc: React.FC = () => {
             <section className="lyco-mt-10">
                 <h2 className="lyco-mb-2">API Reference</h2>
                 <p className="lyco-text-secondary lyco-mb-6">
-                    Comprehensive list of props for Button and ButtonGroup.
+                    Comprehensive list of props for Button and ButtonGroup[cite: 37].
                 </p>
 
                 <PropsTable
