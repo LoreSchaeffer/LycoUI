@@ -1,14 +1,42 @@
 import './CodeExample.scss';
-import React, {useCallback, useState} from 'react';
+import React, {type CSSProperties, useCallback, useMemo, useState} from 'react';
 import {FiCheck, FiCopy} from 'react-icons/fi';
 import clsx from 'clsx';
 import {SyntaxHighlighter} from "./syntax/SyntaxHighlighter.tsx";
+import {renderToStaticMarkup} from "react-dom/server";
+
+const formatHtml = (html: string): string => {
+    let indentLevel = 0;
+    const tab = '  ';
+
+    return html
+        .replace(/>\s+</g, '><')
+        .replace(/></g, '>\n<')
+        .split('\n')
+        .map((line) => {
+            const isClosing = line.match(/^<\//);
+            const isSelfClosing = line.match(/\/>$/) || line.match(/^<(input|img|br|hr|meta|link)/);
+            const hasClosingTagOnSameLine = line.match(/<\/[^>]+>$/);
+            const isOpening = line.match(/^<[^/]/) && !isSelfClosing && !hasClosingTagOnSameLine;
+
+            if (isClosing) indentLevel = Math.max(indentLevel - 1, 0);
+
+            const currentIndent = tab.repeat(indentLevel);
+
+            if (isOpening) indentLevel++;
+
+            return `${currentIndent}${line}`;
+        })
+        .join('\n');
+};
 
 export interface CodeExampleProps {
     title: string;
     description?: React.ReactNode;
     reactCode: string;
-    htmlCode: string;
+    htmlHint?: string;
+    previewLayout?: 'row' | 'column';
+    previewStyles?: CSSProperties;
     children: React.ReactNode;
 }
 
@@ -16,13 +44,24 @@ export const CodeExample: React.FC<CodeExampleProps> = ({
                                                             title,
                                                             description,
                                                             reactCode,
-                                                            htmlCode,
+                                                            htmlHint,
+                                                            previewLayout = 'row',
+                                                            previewStyles,
                                                             children
                                                         }) => {
     const [activeTab, setActiveTab] = useState<'react' | 'html'>('react');
     const [isCopied, setIsCopied] = useState<boolean>(false);
 
-    const activeCode = activeTab === 'react' ? reactCode.trim() : htmlCode.trim();
+    const generatedHtml = useMemo(() => {
+        const rawHtml = renderToStaticMarkup(<>{children}</>);
+        const beautifiedHtml = formatHtml(rawHtml);
+
+        return htmlHint
+            ? `<!-- ${htmlHint.trim()} -->\n${beautifiedHtml}`
+            : beautifiedHtml;
+    }, [children, htmlHint]);
+
+    const activeCode = activeTab === 'react' ? reactCode.trim() : generatedHtml;
 
     const handleCopy = useCallback(async () => {
         try {
@@ -36,7 +75,7 @@ export const CodeExample: React.FC<CodeExampleProps> = ({
 
     return (
         <section className="lyco-docs-code-example">
-            <h3 className="lyco-docs-code-example__title">{title}</h3>
+            <h2 className="lyco-docs-code-example__title">{title}</h2>
 
             {description && (
                 <div className="lyco-docs-code-example__description">
@@ -44,7 +83,7 @@ export const CodeExample: React.FC<CodeExampleProps> = ({
                 </div>
             )}
 
-            <div className="lyco-docs-code-example__preview">
+            <div className={clsx('lyco-docs-code-example__preview', `lyco-layout-${previewLayout}`)} style={previewStyles}>
                 {children}
             </div>
 

@@ -1,4 +1,4 @@
-import {type ComponentType, lazy, type LazyExoticComponent} from 'react';
+import {type ComponentType, lazy, type LazyExoticComponent} from "react";
 import {PiBookOpenBold, PiStackBold} from "react-icons/pi";
 import type {IconType} from "react-icons";
 
@@ -11,13 +11,41 @@ export interface DocNavigationItem {
 export interface DocNavigationCategory {
     title: string;
     icon?: IconType;
+    sorted: boolean;
     items: DocNavigationItem[];
+}
+
+type ReactComponent = ComponentType<Record<string, unknown>>;
+
+const componentModules = import.meta.glob('../pages/components/**/*Doc.tsx');
+
+const excludedComponents = ['Grid'];
+
+const generateComponentRoutes = (): DocNavigationItem[] => {
+    const items: DocNavigationItem[] = [];
+
+    for (const path in componentModules) {
+        const match = path.match(/\/([^/]+)Doc\.tsx$/);
+        if (match && match[1]) {
+            const name = match[1];
+            if (!excludedComponents.includes(name)) {
+                items.push({
+                    name,
+                    path: `/docs/components/${name.toLocaleLowerCase()}`,
+                    component: lazy(componentModules[path] as () => Promise<{ default: ReactComponent }>)
+                });
+            }
+        }
+    }
+
+    return items;
 }
 
 export const docsNavigation: DocNavigationCategory[] = [
     {
         title: 'Getting Started',
         icon: PiBookOpenBold,
+        sorted: false,
         items: [
             {
                 name: 'Introduction',
@@ -39,13 +67,8 @@ export const docsNavigation: DocNavigationCategory[] = [
     {
         title: 'Components',
         icon: PiStackBold,
-        items: [
-            {
-                name: 'Button',
-                path: '/docs/components/Button',
-                component: lazy(() => import('../pages/components/Button/ButtonDoc.tsx'))
-            }
-        ]
+        sorted: true,
+        items: generateComponentRoutes()
     }
 ];
 

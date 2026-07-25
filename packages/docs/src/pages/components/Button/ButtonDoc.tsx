@@ -1,8 +1,21 @@
 import React from 'react';
-import {CodeExample} from '../../../components/CodeExample.tsx';
-import {PropsTable} from '../../../components/api-reference/ApiReference.tsx';
-import {buttonExamples} from "./ButtonExamples.tsx";
-import {buttonGroupPropsData, buttonPropsData} from "./ButtonApi.tsx";
+import {buttonGroupPropsData, buttonPropsData} from './api';
+import {CodeExample} from "../../../components/CodeExample.tsx";
+import {PropsTable} from "../../../components/api-reference/ApiReference.tsx";
+import VariantsExample from './examples/VariantsExample';
+import variantsExampleCode from './examples/VariantsExample?raw';
+import OutlinedExample from './examples/OutlinedExample';
+import outlinedExampleCode from './examples/OutlinedExample?raw';
+import RoundedExample from "./examples/RoundedExample.tsx";
+import roundedExampleCode from "./examples/RoundedExample?raw";
+import SizesExample from "./examples/SizesExample.tsx";
+import sizesExampleCode from "./examples/SizesExample?raw";
+import IconsExample from "./examples/IconsExample.tsx";
+import iconsExampleCode from "./examples/IconsExample?raw";
+import StatesExample from "./examples/StatesExample.tsx";
+import statesExampleCode from "./examples/StatesExample?raw";
+import GroupsExample from "./examples/GroupsExample.tsx";
+import groupsExampleCode from "./examples/GroupsExample?raw";
 
 const ButtonDoc: React.FC = () => {
     return (
@@ -13,107 +26,79 @@ const ButtonDoc: React.FC = () => {
             </p>
 
             <section className="lyco-mb-10">
-                <h2>Color Variants</h2>
-                <p className="lyco-text-secondary lyco-mb-6">
-                    Buttons inherit the high-depth, textured styling dictated by the design philosophy. The <code>variant</code> prop dynamically maps to global theme hues and automatically calculates optimal text contrast.
-                </p>
                 <CodeExample
-                    title="Theme Colors"
-                    reactCode={buttonExamples.variants.reactCode}
-                    htmlCode="<!-- Auto-generated output dynamically maps to BEM classes (e.g. .lyco-btn--red) -->"
+                    title="Color Variants"
+                    description={<p>The <code>variant</code> prop dynamically maps to global theme hues and automatically calculates optimal text contrast.</p>}
+                    reactCode={variantsExampleCode}
                 >
-                    {buttonExamples.variants.preview}
+                    <VariantsExample/>
                 </CodeExample>
             </section>
 
             <section className="lyco-mb-10">
-                <h2>Outlined Variants</h2>
-                <p className="lyco-text-secondary lyco-mb-6">
-                    Use the <code>isOutlined</code> prop to remove background colors and apply an inset border. Hovering inverses the colors.
-                </p>
                 <CodeExample
-                    title="Outlined Buttons"
-                    reactCode={buttonExamples.outlined.reactCode}
-                    htmlCode="<!-- Applies .lyco-btn--outlined modifier -->"
+                    title="Outlined Variants"
+                    description={<p>Use the <code>outlined</code> prop to remove background colors and apply an inset border. Hovering inverses the colors.</p>}
+                    reactCode={outlinedExampleCode}
                 >
-                    {buttonExamples.outlined.preview}
+                    <OutlinedExample/>
                 </CodeExample>
             </section>
 
             <section className="lyco-mb-10">
-                <h2>Rounded Variants</h2>
-                <p className="lyco-text-secondary lyco-mb-6">
-                    Use the <code>rounded</code> prop to apply a maximum border-radius. This creates a pill shape for text buttons or a perfect circle for icon-only buttons.
-                </p>
                 <CodeExample
                     title="Rounded Buttons"
-                    reactCode={buttonExamples.rounded.reactCode}
-                    htmlCode="<!-- Applies .lyco-btn--rounded modifier -->"
+                    description={<p>Use the <code>rounded</code> prop to apply a maximum border-radius. This creates a pill shape for text buttons or a perfect circle for icon-only buttons.</p>}
+                    reactCode={roundedExampleCode}
                 >
-                    {buttonExamples.rounded.preview}
+                    <RoundedExample/>
                 </CodeExample>
             </section>
 
-            <section className="lyco-mb-10">
-                <h2>Sizes</h2>
-                <p className="lyco-text-secondary lyco-mb-6">
-                    Scale buttons proportionally using the <code>size</code> prop. Padding, font sizes, and border-radii adjust automatically.
-                </p>
+            <section className={"lyco-mb-10"}>
                 <CodeExample
                     title="Size Scaling"
-                    reactCode={buttonExamples.sizes.reactCode}
-                    htmlCode="<!-- Uses classes: .lyco-btn--sm, .lyco-btn--base, .lyco-btn--lg -->"
+                    description={<p>Scale buttons proportionally using the <code>size</code> prop. Padding, font sizes, and border-radii adjust automatically.</p>}
+                    reactCode={sizesExampleCode}
                 >
-                    {buttonExamples.sizes.preview}
+                    <SizesExample/>
                 </CodeExample>
             </section>
 
             <section className="lyco-mb-10">
-                <h2>Icons</h2>
-                <p className="lyco-text-secondary lyco-mb-6">
-                    Pass React elements to <code>iconStart</code>, <code>iconEnd</code>, or use <code>icon</code> without children to create a perfectly square icon-only button.
-                </p>
                 <CodeExample
-                    title="Icon Placement & Square Buttons"
-                    reactCode={buttonExamples.icons.reactCode}
-                    htmlCode="<!-- Renders internal spans for structured alignment or .lyco-btn--icon-only -->"
+                    title="Icons"
+                    description={<p>Pass React elemets to <code>iconStart</code>, <code>iconEnd</code>, or use <code>icon</code> without children to create a perfectly square icon-only button.</p>}
+                    reactCode={iconsExampleCode}
                 >
-                    {buttonExamples.icons.preview}
+                    <IconsExample/>
+                </CodeExample>
+            </section>
+
+            <section className={"lyco-mb-10"}>
+                <CodeExample
+                    title="States & Modifiers"
+                    description={<p>Use the <code>flat</code> for flat colors, <code>loading</code> to show a spinner inside the button, and <code>disabled</code> to disable the button.</p>}
+                    reactCode={statesExampleCode}
+                >
+                    <StatesExample/>
                 </CodeExample>
             </section>
 
             <section className="lyco-mb-10">
-                <h2>States & Modifiers</h2>
-                <p className="lyco-text-secondary lyco-mb-6">
-                    Trigger layout changes for loading logic, disable interaction, or strip textures for a minimalist flat design.
-                </p>
                 <CodeExample
-                    title="Flat, Loading & Disabled"
-                    reactCode={buttonExamples.states.reactCode}
-                    htmlCode="<!-- Applies .lyco-btn--flat, .lyco-btn--loading, or standard disabled attributes -->"
+                    title="Button Groups"
+                    description={<p>Use the <code>ButtonGroup</code> component to group buttons together. It automatically applies spacing and rounded corners to the first and last buttons.</p>}
+                    reactCode={groupsExampleCode}
                 >
-                    {buttonExamples.states.preview}
-                </CodeExample>
-            </section>
-
-            <section className="lyco-mb-10">
-                <h2>Button Group</h2>
-                <p className="lyco-text-secondary lyco-mb-6">
-                    Group a series of buttons together on a single line or stack them in a vertical column. The <code>ButtonGroup</code> component automatically handles nested radius resets and visual separators.
-                </p>
-                <CodeExample
-                    title="Orientation Options"
-                    reactCode={buttonExamples.groups.reactCode}
-                    htmlCode="<!-- Uses .lyco-btn-group wrapper modifying internal radii -->"
-                >
-                    {buttonExamples.groups.preview}
+                    <GroupsExample/>
                 </CodeExample>
             </section>
 
             <section className="lyco-mt-10">
                 <h2 className="lyco-mb-2">API Reference</h2>
                 <p className="lyco-text-secondary lyco-mb-6">
-                    Comprehensive list of props for Button and ButtonGroup[cite: 37].
+                    Comprehensive list of props for Button and ButtonGroup.
                 </p>
 
                 <PropsTable
@@ -127,7 +112,8 @@ const ButtonDoc: React.FC = () => {
                 />
             </section>
         </article>
-    );
+    )
+        ;
 };
 
 export default ButtonDoc;

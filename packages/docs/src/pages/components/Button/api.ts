@@ -1,4 +1,4 @@
-import type {PropDefinition} from '../../../components/api-reference/ApiReference';
+import type {PropDefinition} from "../../../components/api-reference/ApiReference.tsx";
 
 export const buttonPropsData: PropDefinition[] = [
     {
@@ -55,7 +55,7 @@ export const buttonPropsData: PropDefinition[] = [
     {
         name: '...props',
         type: 'ButtonHTMLAttributes<HTMLButtonElement>',
-        description: <>Inherits all native HTML button attributes (e.g., <code>disabled</code>, <code>onClick</code>).</>
+        description: '<>Inherits all native HTML button attributes (e.g., <code>disabled</code>, <code>onClick</code>).</>'
     }
 ];
 

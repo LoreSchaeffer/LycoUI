@@ -1,19 +1,21 @@
 import './Button.scss';
 import {type ButtonHTMLAttributes, forwardRef, type ReactNode} from 'react';
 import clsx from 'clsx';
-import type {ColorVariant, SizeVariant} from "../../types/types.ts";
+import type {ColorVariant, SizeVariant} from '../../types/types.ts';
+import {Spinner, type SpinnerType} from '../Spinner';
 
 export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
-    children: ReactNode;
+    children?: ReactNode;
     variant?: ColorVariant;
     size?: SizeVariant;
     flat?: boolean;
     outlined?: boolean;
     rounded?: boolean;
-    isLoading?: boolean;
+    loading?: boolean;
     icon?: ReactNode;
     iconStart?: ReactNode;
     iconEnd?: ReactNode;
+    spinnerType?: SpinnerType;
 }
 
 export const Button = forwardRef<HTMLButtonElement, ButtonProps>((
@@ -24,17 +26,20 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>((
         flat = false,
         outlined = false,
         rounded = false,
-        isLoading = false,
+        loading = false,
         icon,
         iconStart,
         iconEnd,
+        spinnerType = 'classic',
         className,
         disabled,
         ...props
     }, ref) => {
-
-    const isDisabled = disabled || isLoading;
+    const isDisabled = disabled || loading;
     const isIconOnly = Boolean(icon && !children);
+
+    const showSpinnerStart = loading && (Boolean(iconStart) || !iconEnd);
+    const showSpinnerEnd = loading && Boolean(iconEnd) && !iconStart;
 
     return (
         <button
@@ -46,40 +51,32 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>((
                 `lyco-btn--${size}`,
                 flat && 'lyco-btn--flat',
                 rounded && 'lyco-btn--rounded',
-                isLoading && 'lyco-btn--loading',
+                outlined && 'lyco-btn--outlined',
+                loading && 'lyco-btn--loading',
                 isIconOnly && 'lyco-btn--icon-only',
                 className
             )}
             {...props}
         >
-            {/*
-              Placeholder for Spinner.
-              When implemented, conditionally render Spinner here if isLoading is true.
-              Often, the spinner replaces iconStart or appears absolutely centered.
-            */}
-            {isLoading && (
-                <span className="lyco-btn__spinner-placeholder" aria-hidden="true">
-                    ⏳
+            {isIconOnly && (
+                <span className="lyco-btn__icon">
+                    {loading ? <Spinner size={size} type={spinnerType} className="lyco-btn__spinner"/> : icon}
                 </span>
-            )}
-
-            {!isLoading && isIconOnly && (
-                <span className="lyco-btn__icon">{icon}</span>
             )}
 
             {!isIconOnly && (
                 <>
-                    {!isLoading && iconStart && (
+                    {(showSpinnerStart || (!loading && iconStart)) && (
                         <span className="lyco-btn__icon lyco-btn__icon--start">
-                            {iconStart}
+                            {showSpinnerStart ? <Spinner size={size} type={spinnerType} className="lyco-btn__spinner"/> : iconStart}
                         </span>
                     )}
 
-                    <span className="lyco-btn__content">{children}</span>
+                    {children}
 
-                    {!isLoading && iconEnd && (
+                    {(showSpinnerEnd || (!loading && iconEnd)) && (
                         <span className="lyco-btn__icon lyco-btn__icon--end">
-                            {iconEnd}
+                            {showSpinnerEnd ? <Spinner size={size} type={spinnerType} className="lyco-btn__spinner"/> : iconEnd}
                         </span>
                     )}
                 </>

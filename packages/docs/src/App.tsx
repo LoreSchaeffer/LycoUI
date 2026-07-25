@@ -1,10 +1,10 @@
 import './App.scss';
 import React, {Suspense, useEffect, useState} from 'react';
 import {BrowserRouter, Navigate, NavLink, Route, Routes, useLocation} from 'react-router';
-import {docsNavigation, flattenedRoutes} from './routes/docsRoutes';
 import {FiMenu, FiX} from 'react-icons/fi';
 import clsx from "clsx";
 import {PiBookBold, PiBookOpenBold} from "react-icons/pi";
+import {docsNavigation, flattenedRoutes} from "./routes/auto-discovery.ts";
 
 const DocsLayout: React.FC = () => {
     const [isSidebarOpen, setIsSidebarOpen] = useState<boolean>(false);
@@ -58,27 +58,32 @@ const DocsLayout: React.FC = () => {
                                     {category.title}
                                 </h4>
                                 <ul className="lyco-docs-sidebar__section-items">
-                                    {category.items.map((item) => (
-                                        <li key={item.path}>
-                                            <NavLink
-                                                className={
-                                                    ({isActive}) =>
+                                    {(() => {
+                                        const items = category.sorted
+                                            ? [...category.items].sort((a, b) => a.name.localeCompare(b.name))
+                                            : category.items;
+
+                                        return items.map((item) => (
+                                            <li key={item.path}>
+                                                <NavLink
+                                                    className={({isActive}) =>
                                                         clsx('lyco-docs-sidebar__nav-link', isActive && 'active')
-                                                }
-                                                to={item.path}
-                                            >
-                                                {({isActive}) => (
-                                                    <>
-                                                        {isActive
-                                                            ? <PiBookOpenBold style={{opacity: 0.7}}/>
-                                                            : <PiBookBold style={{opacity: 0.7}}/>
-                                                        }
-                                                        {item.name}
-                                                    </>
-                                                )}
-                                            </NavLink>
-                                        </li>
-                                    ))}
+                                                    }
+                                                    to={item.path}
+                                                >
+                                                    {({isActive}) => (
+                                                        <>
+                                                            {isActive
+                                                                ? <PiBookOpenBold style={{opacity: 0.7}}/>
+                                                                : <PiBookBold style={{opacity: 0.7}}/>
+                                                            }
+                                                            {item.name}
+                                                        </>
+                                                    )}
+                                                </NavLink>
+                                            </li>
+                                        ));
+                                    })()}
                                 </ul>
                             </div>
                         )

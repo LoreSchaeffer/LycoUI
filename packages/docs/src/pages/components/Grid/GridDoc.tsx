@@ -33,7 +33,7 @@ const GridDoc: React.FC = () => {
                     title="Equal-width"
                     description={<p>For example, here are two grid layouts that apply to every device and viewport. Add any number of unit-less classes and every column will be the same width.</p>}
                     reactCode={gridExamples.autoLayout.reactCode}
-                    htmlCode={gridExamples.autoLayout.htmlCode}
+                    htmlHint={gridExamples.autoLayout.htmlCode}
                 >
                     {gridExamples.autoLayout.preview}
                 </CodeExample>
@@ -42,7 +42,7 @@ const GridDoc: React.FC = () => {
                     title="Setting one column width"
                     description={<p>Auto-layout for flexbox grid columns also means you can set the width of one column and have the sibling columns automatically resize around it.</p>}
                     reactCode={gridExamples.settingOneColumnWidth.reactCode}
-                    htmlCode={gridExamples.settingOneColumnWidth.htmlCode}
+                    htmlHint={gridExamples.settingOneColumnWidth.htmlCode}
                 >
                     {gridExamples.settingOneColumnWidth.preview}
                 </CodeExample>
@@ -54,7 +54,7 @@ const GridDoc: React.FC = () => {
                     title="Stacked to horizontal"
                     description={<p>Using a single set of <code>md</code> props, you can create a basic grid system that starts out stacked on mobile devices and tablet devices before becoming horizontal on desktop.</p>}
                     reactCode={gridExamples.responsiveSizing.reactCode}
-                    htmlCode={gridExamples.responsiveSizing.htmlCode}
+                    htmlHint={gridExamples.responsiveSizing.htmlCode}
                 >
                     {gridExamples.responsiveSizing.preview}
                 </CodeExample>
@@ -66,7 +66,7 @@ const GridDoc: React.FC = () => {
                     title="Vertical alignment"
                     description={<p>Use the <code>align</code> prop to change the vertical alignment of columns within a row.</p>}
                     reactCode={gridExamples.alignment.reactCode}
-                    htmlCode={gridExamples.alignment.htmlCode}
+                    htmlHint={gridExamples.alignment.htmlCode}
                 >
                     {gridExamples.alignment.preview}
                 </CodeExample>
@@ -78,7 +78,7 @@ const GridDoc: React.FC = () => {
                     title="Stretch to match siblings"
                     description={<p>The <code>stretch</code> prop transforms the column into a flex container, automatically forcing any direct child element to grow and fill the vertical space.</p>}
                     reactCode={gridExamples.stretching.reactCode}
-                    htmlCode={gridExamples.stretching.htmlCode}
+                    htmlHint={gridExamples.stretching.htmlCode}
                 >
                     {gridExamples.stretching.preview}
                 </CodeExample>

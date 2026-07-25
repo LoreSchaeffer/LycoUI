@@ -1,0 +1,14 @@
+@use "sass:list";
+
+$lyco-all-colors: 'red', 'orange', 'yellow', 'green', 'teal', 'cyan', 'blue', 'indigo', 'purple', 'magenta', 'neutral', 'white';
+$lyco-light-colors: 'yellow', 'green', 'cyan', 'orange', 'teal', 'white';
+
+@mixin for-each-theme-color {
+  @each $color in $lyco-all-colors {
+    $is-light: list.index($lyco-light-colors, $color) != null;
+
+    &--#{$color} {
+      @content($color, $is-light);
+    }
+  }
+}

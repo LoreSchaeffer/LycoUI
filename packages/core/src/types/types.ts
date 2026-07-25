@@ -1,5 +1,6 @@
 export type ColorVariant =
     | 'primary'
+    | 'neutral'
     | 'red'
     | 'orange'
     | 'yellow'
@@ -9,6 +10,7 @@ export type ColorVariant =
     | 'blue'
     | 'indigo'
     | 'purple'
-    | 'magenta';
+    | 'magenta'
+    | 'white';
 
 export type SizeVariant = 'sm' | 'base' | 'lg';
