@@ -1,64 +1,87 @@
+import './Introduction.scss';
 import React from 'react';
 
 const Introduction: React.FC = () => {
     return (
-        <article>
+        <article className="docs-intro">
             {/* TODO: Replace with <Typography variant="h1"> */}
-            <h1 style={{
-                fontSize: 'var(--font-size-3xl)',
-                fontWeight: 800,
-                marginBottom: 'var(--spacing-4)',
-                color: 'var(--color-text-primary)'
-            }}>
+            <h1 className="docs-intro__title">
                 Introduction
             </h1>
 
             {/* TODO: Replace with <Typography variant="lead"> */}
-            <p style={{
-                fontSize: 'var(--font-size-lg)',
-                color: 'var(--color-text-secondary)',
-                lineHeight: 1.6,
-                marginBottom: 'var(--spacing-8)'
-            }}>
+            <p className="docs-intro__lead">
                 Lyco UI is an agnostic, scalable, and performance-focused UI component library
                 designed for modern 2026 web applications.
             </p>
 
             {/* TODO: Replace with <Section> or <Card> component */}
-            <section style={{ marginTop: 'var(--spacing-8)' }}>
+            <section className="docs-intro__section">
                 {/* TODO: Replace with <Typography variant="h2"> */}
-                <h2 style={{
-                    fontSize: 'var(--font-size-xl)',
-                    fontWeight: 600,
-                    marginBottom: 'var(--spacing-4)',
-                    color: 'var(--color-text-primary)',
-                    borderBottom: '1px solid var(--color-border-base)',
-                    paddingBottom: 'var(--spacing-2)'
-                }}>
+                <h2 className="docs-intro__section-title">
+                    Installation
+                </h2>
+
+                {/* TODO: Replace with standard <Text> component */}
+                <p className="docs-intro__text">
+                    Install Lyco UI via your preferred package manager. Ensure you have React and ReactDOM installed as peer dependencies.
+                </p>
+
+                {/* TODO: Replace with <CodeBlock language="bash"> */}
+                <pre className="docs-intro__code-block">
+                    <code>
+                        npm install lyco-ui
+                    </code>
+                </pre>
+            </section>
+
+            {/* TODO: Replace with <Section> or <Card> component */}
+            <section className="docs-intro__section">
+                {/* TODO: Replace with <Typography variant="h2"> */}
+                <h2 className="docs-intro__section-title">
+                    Usage
+                </h2>
+
+                {/* TODO: Replace with standard <Text> component */}
+                <p className="docs-intro__text">
+                    To use Lyco UI, you must first import the global stylesheet at the root of your application (e.g., inside <code>main.tsx</code> or <code>App.tsx</code>). This initializes the CSS variables required by all components.
+                </p>
+
+                {/* TODO: Replace with <CodeBlock language="tsx"> */}
+                <pre className="docs-intro__code-block">
+                    <code>
+                        {`// main.tsx\nimport 'lyco-ui/dist/styles/global.css';\nimport { Button } from 'lyco-ui';\n\nexport const App = () => (\n  <Button variant="primary">Click Me</Button>\n);`}
+                    </code>
+                </pre>
+            </section>
+
+            {/* TODO: Replace with <Section> or <Card> component */}
+            <section className="docs-intro__section docs-intro__section--last">
+                {/* TODO: Replace with <Typography variant="h2"> */}
+                <h2 className="docs-intro__section-title">
                     Design Philosophy
                 </h2>
 
                 {/* TODO: Replace with standard <Text> component */}
-                <p style={{ color: 'var(--color-text-secondary)', lineHeight: 1.6, marginBottom: 'var(--spacing-4)' }}>
+                <p className="docs-intro__text">
                     The visual language introduces a modern, depth-oriented aesthetic.
                     It leverages subtle gradients, multi-layered box-shadows, and noise textures
                     to achieve a tactile feel without relying on pure glassmorphism.
                 </p>
 
                 {/* TODO: Replace with <List> component */}
-                <ul style={{
-                    paddingLeft: 'var(--spacing-6)',
-                    color: 'var(--color-text-secondary)',
-                    lineHeight: 1.8
-                }}>
-                    <li style={{ marginBottom: 'var(--spacing-2)' }}>
-                        <strong style={{ color: 'var(--color-text-primary)' }}>Depth & Textures:</strong> Heavy reliance on advanced CSS rendering.
+                <ul className="docs-intro__list">
+                    <li className="docs-intro__list-item">
+                        <strong>Depth & Textures:</strong> Heavy reliance on advanced CSS rendering.
                     </li>
-                    <li style={{ marginBottom: 'var(--spacing-2)' }}>
-                        <strong style={{ color: 'var(--color-text-primary)' }}>Rounded Geometry:</strong> Fluid, organic appearance via high border-radius.
+                    <li className="docs-intro__list-item">
+                        <strong>Rounded Geometry:</strong> Fluid, organic appearance via high border-radius.
                     </li>
-                    <li style={{ marginBottom: 'var(--spacing-2)' }}>
-                        <strong style={{ color: 'var(--color-text-primary)' }}>Flat Fallback:</strong> Built-in <code style={{ backgroundColor: 'var(--color-bg-surface)', padding: '2px 6px', borderRadius: '4px' }}>isFlat</code> prop for solid-color rendering.
+                    <li className="docs-intro__list-item">
+                        <strong>Flat Fallback:</strong> Built-in <code>isFlat</code> prop for solid-color rendering.
+                    </li>
+                    <li className="docs-intro__list-item">
+                        <strong>Zero-Runtime CSS:</strong> All styling is handled via pure CSS modules and SCSS preprocessing, ensuring zero overhead at runtime.
                     </li>
                 </ul>
             </section>

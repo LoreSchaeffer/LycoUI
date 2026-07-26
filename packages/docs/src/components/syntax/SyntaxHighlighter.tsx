@@ -48,7 +48,7 @@ export const SyntaxHighlighter = ({code, language}: SyntaxHighlighterProps) => {
 
     if (!highlightedHtml) {
         return (
-            <pre className="lyco-docs-code-example__pre">
+            <pre className="docs-code-example__pre">
                 <code>{code}</code>
             </pre>
         );
@@ -56,7 +56,7 @@ export const SyntaxHighlighter = ({code, language}: SyntaxHighlighterProps) => {
 
     return (
         <div
-            className="lyco-docs-shiki-wrapper"
+            className="docs-shiki-wrapper"
             dangerouslySetInnerHTML={{__html: highlightedHtml}}
         />
     );

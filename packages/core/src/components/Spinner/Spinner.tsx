@@ -17,6 +17,7 @@ export const Spinner = forwardRef<HTMLSpanElement, SpinnerProps>((
         variant = 'primary',
         size = 'base',
         className,
+        'aria-label': ariaLabel = 'Loading',
         ...props
     }, ref) => {
 
@@ -24,32 +25,16 @@ export const Spinner = forwardRef<HTMLSpanElement, SpinnerProps>((
         <span
             ref={ref}
             role="status"
-            aria-label="Loading"
+            aria-label={ariaLabel}
             className={clsx(
-                'lyco-spinner',
-                `lyco-spinner--${type}`,
-                `lyco-spinner--${variant}`,
-                `lyco-spinner--${size}`,
+                'spinner',
+                `spinner-${type}`,
+                variant && `spinner-${variant}`,
+                size !== 'base' && `spinner-${size}`,
                 className
             )}
             {...props}
-        >
-            {type === 'classic' ? (
-                <svg className="lyco-spinner__svg" viewBox="25 25 50 50">
-                    <circle
-                        className="lyco-spinner__circle"
-                        cx="50"
-                        cy="50"
-                        r="20"
-                        fill="none"
-                        strokeWidth="5"
-                        strokeMiterlimit="10"
-                    />
-                </svg>
-            ) : (
-                <span className="lyco-spinner__grow"/>
-            )}
-        </span>
+        />
     );
 });
 

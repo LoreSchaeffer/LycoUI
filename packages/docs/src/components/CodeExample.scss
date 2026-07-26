@@ -1,6 +1,6 @@
 $bp-md: 768px;
 
-.lyco-docs-code-example {
+.docs-code-example {
   margin-bottom: var(--spacing-10);
   width: 100%;
   min-width: 0;
@@ -31,14 +31,14 @@ $bp-md: 768px;
       padding: var(--spacing-6);
     }
 
-    &.lyco-layout-row {
+    &.layout-row {
       display: flex;
       flex-wrap: wrap;
       gap: var(--spacing-4);
       align-items: center;
     }
 
-    &.lyco-layout-column {
+    &.layout-column {
       display: flex;
       flex-direction: column;
       gap: var(--spacing-4);
@@ -93,7 +93,7 @@ $bp-md: 768px;
       color: var(--color-text-primary);
     }
 
-    .lyco-text-success {
+    .text-success {
       color: var(--color-success);
     }
   }
@@ -123,7 +123,7 @@ $bp-md: 768px;
     }
   }
 
-  .lyco-docs-shiki-wrapper {
+  .docs-shiki-wrapper {
     pre.shiki {
       margin: 0;
       padding: var(--spacing-4);

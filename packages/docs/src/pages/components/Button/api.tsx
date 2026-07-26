@@ -14,10 +14,22 @@ export const buttonPropsData: PropDefinition[] = [
         description: 'Defines the physical size, padding, and font size of the button.'
     },
     {
+        name: 'align',
+        type: "'start' | 'center' | 'end'",
+        defaultValue: "'center'",
+        description: 'Defines the horizontal alignment of the button content.'
+    },
+    {
         name: 'flat',
         type: 'boolean',
         defaultValue: 'false',
         description: 'Strips gradients, textures, and shadows for a pure solid-color appearance.'
+    },
+    {
+        name: 'static',
+        type: 'boolean',
+        defaultValue: 'false',
+        description: 'Disable click animation.'
     },
     {
         name: 'outlined',
@@ -32,7 +44,7 @@ export const buttonPropsData: PropDefinition[] = [
         description: 'Applies maximum border-radius, creating a pill shape for text buttons or a perfect circle for icon-only buttons.'
     },
     {
-        name: 'isLoading',
+        name: 'loading',
         type: 'boolean',
         defaultValue: 'false',
         description: 'Triggers the loading state, hiding text, disabling interaction, and showing a spinner.'
@@ -51,11 +63,6 @@ export const buttonPropsData: PropDefinition[] = [
         name: 'iconEnd',
         type: 'ReactNode',
         description: 'Icon element positioned after the text content.'
-    },
-    {
-        name: '...props',
-        type: 'ButtonHTMLAttributes<HTMLButtonElement>',
-        description: '<>Inherits all native HTML button attributes (e.g., <code>disabled</code>, <code>onClick</code>).</>'
     }
 ];
 
@@ -65,10 +72,10 @@ export const buttonGroupPropsData: PropDefinition[] = [
         type: "'horizontal' | 'vertical'",
         defaultValue: "'horizontal'",
         description: 'Defines the layout direction and handles internal border-radius collapsing.'
-    },
-    {
-        name: '...props',
-        type: 'HTMLAttributes<HTMLDivElement>',
-        description: 'Inherits all native HTML div attributes.'
     }
+];
+
+export const apiConfig = [
+    {name: 'buttonPropsData', data: buttonPropsData},
+    {name: 'buttonGroupPropsData', data: buttonGroupPropsData}
 ];

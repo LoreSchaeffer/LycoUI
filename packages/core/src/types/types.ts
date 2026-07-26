@@ -14,3 +14,7 @@ export type ColorVariant =
     | 'white';
 
 export type SizeVariant = 'sm' | 'base' | 'lg';
+
+export type Alignment = 'start' | 'center' | 'end';
+
+export type Orientation = 'horizontal' | 'vertical';

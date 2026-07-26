@@ -1,5 +1,9 @@
 import {Button} from 'lyco-ui';
 
+export const title = 'Size Scaling';
+export const description = <p>Scale buttons proportionally using the <code>size</code> prop. Padding, font sizes, and border-radii adjust automatically.</p>;
+export const order = 3;
+
 export default function SizesExample() {
     return (
         <>

@@ -1,7 +1,7 @@
 @use "sass:list";
 @use "../../styles/mixins/theme-variants" as *;
 
-.lyco-btn {
+.btn {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -16,10 +16,12 @@
   transition: all var(--duration-fast) var(--ease-default);
   overflow: hidden;
 
+  padding: var(--spacing-2) var(--spacing-4);
+  font-size: var(--font-size-base);
+
   border: 1px solid transparent;
   box-shadow: var(--shadow-sm);
   background-image: linear-gradient(180deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0) 100%);
-
   gap: var(--spacing-2);
 
   &:focus-visible {
@@ -28,7 +30,6 @@
 
   &:active:not(:disabled) {
     transform: translateY(1px);
-    background-image: none;
     box-shadow: none;
   }
 
@@ -41,18 +42,13 @@
   // ==========================================================================
   // SIZES
   // ==========================================================================
-  &--sm {
+  &-sm {
     padding: var(--spacing-1) var(--spacing-3);
     font-size: var(--font-size-sm);
     border-radius: var(--radius-sm);
   }
 
-  &--base {
-    padding: var(--spacing-2) var(--spacing-4);
-    font-size: var(--font-size-base);
-  }
-
-  &--lg {
+  &-lg {
     padding: var(--spacing-3) var(--spacing-6);
     font-size: var(--font-size-lg);
     border-radius: var(--radius-base);
@@ -61,9 +57,10 @@
   // ==========================================================================
   // VARIANTS
   // ==========================================================================
-  &--primary {
+  &-primary {
     --btn-color-base: var(--color-primary);
     --btn-color-hover: var(--color-primary-hover);
+    --btn-color-active: var(--blue-600);
     --btn-text-color: var(--white);
 
     color: var(--btn-text-color);
@@ -75,11 +72,17 @@
       background-color: var(--btn-color-hover);
       background-image: linear-gradient(180deg, var(--blue-300), var(--blue-400));
     }
+
+    &:active:not(:disabled) {
+      background-color: var(--btn-color-active);
+      background-image: none;
+    }
   }
 
   @include for-each-theme-color using($color, $is-light) {
     --btn-color-base: var(--#{$color}-500);
     --btn-color-hover: var(--#{$color}-400);
+    --btn-color-active: var(--#{$color}-600);
 
     @if $is-light {
       --btn-text-color: var(--slate-950);
@@ -96,12 +99,17 @@
       background-color: var(--btn-color-hover);
       background-image: linear-gradient(180deg, var(--#{$color}-300), var(--#{$color}-400));
     }
+
+    &:active:not(:disabled) {
+      background-color: var(--btn-color-active);
+      background-image: none;
+    }
   }
 
   // ==========================================================================
   // MODIFIERS
   // ==========================================================================
-  &--flat {
+  &-flat {
     background-image: none !important;
     box-shadow: none !important;
 
@@ -110,14 +118,13 @@
     }
   }
 
-  &--rounded {
+  &-rounded {
     border-radius: var(--radius-full);
   }
 
-  &--outlined {
+  &-outlined {
     background: transparent !important;
     color: var(--btn-color-base) !important;
-
     border-color: var(--btn-color-base) !important;
     box-shadow: none !important;
 
@@ -127,35 +134,47 @@
     }
 
     &:active:not(:disabled) {
-      box-shadow: var(--shadow-inner) !important;
+      background-color: var(--btn-color-active) !important;
+      border-color: var(--btn-color-active) !important;
+      color: var(--btn-text-color) !important;
+      box-shadow: none !important;
     }
   }
 
-  &--icon-only {
+  &-icon-only {
     padding: 0;
 
-    &.lyco-btn--sm {
+    &.btn-sm {
       width: 2rem;
       height: 2rem;
     }
 
-    &.lyco-btn--base {
+    &:not(.btn-sm):not(.btn-lg) {
       width: 2.5rem;
       height: 2.5rem;
     }
 
-    &.lyco-btn--lg {
+    &.btn-lg {
       width: 3rem;
       height: 3rem;
     }
 
-    .lyco-btn__icon {
+    .btn__icon {
       font-size: 1.25em;
     }
   }
 
-  &--loading {
+  &-static {
+    transform: none !important;
+  }
+
+  &-loading {
     cursor: wait;
+    pointer-events: none;
+
+    .btn__icon:not(:has(.btn__spinner)) {
+      opacity: 0;
+    }
   }
 
   // ==========================================================================
@@ -169,6 +188,8 @@
   }
 
   &__spinner {
-    color: currentColor !important;
+    color: var(--btn-text-color, currentColor) !important;
+    width: 1.15em !important;
+    height: 1.15em !important;
   }
 }

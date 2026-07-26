@@ -53,11 +53,6 @@ export const docsNavigation: DocNavigationCategory[] = [
                 component: lazy(() => import('../pages/getting-started/Introduction'))
             },
             {
-                name: 'Architecture',
-                path: '/docs/architecture',
-                component: lazy(() => import('../pages/getting-started/Architecture'))
-            },
-            {
                 name: 'Grid System',
                 path: '/docs/grid',
                 component: lazy(() => import('../pages/components/Grid/GridDoc.tsx'))

@@ -7,9 +7,7 @@ export type RowJustify = 'start' | 'center' | 'end' | 'between';
 
 export interface RowProps extends HTMLAttributes<HTMLDivElement> {
     children: ReactNode;
-    /** Vertical alignment of columns within the row */
     align?: RowAlign;
-    /** Horizontal alignment and distribution of columns */
     justify?: RowJustify;
 }
 
@@ -17,7 +15,7 @@ export const Row = forwardRef<HTMLDivElement, RowProps>((
     {
         children,
         align = 'stretch',
-        justify,
+        justify = 'start',
         className,
         ...props
     }, ref) => {
@@ -26,9 +24,9 @@ export const Row = forwardRef<HTMLDivElement, RowProps>((
         <div
             ref={ref}
             className={clsx(
-                'lyco-row',
-                `lyco-row--align-${align}`,
-                justify && `lyco-row--justify-${justify}`,
+                'row',
+                align !== 'stretch' && `row-align-${align}`,
+                justify !== 'start' && `row-justify-${justify}`,
                 className
             )}
             {...props}

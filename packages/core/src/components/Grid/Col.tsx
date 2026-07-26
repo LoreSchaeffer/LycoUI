@@ -26,7 +26,7 @@ export const Col = forwardRef<HTMLDivElement, ColProps>((
         xl,
         xxl,
         stretch = false,
-        align,
+        align = 'auto',
         className,
         ...props
     }, ref) => {
@@ -34,15 +34,15 @@ export const Col = forwardRef<HTMLDivElement, ColProps>((
         <div
             ref={ref}
             className={clsx(
-                'lyco-col',
-                span && `lyco-col-${span}`,
-                sm && `lyco-col-sm-${sm}`,
-                md && `lyco-col-md-${md}`,
-                lg && `lyco-col-lg-${lg}`,
-                xl && `lyco-col-xl-${xl}`,
-                xxl && `lyco-col-xxl-${xxl}`,
-                stretch && 'lyco-col--stretch',
-                align && `lyco-col--align-${align}`,
+                'col',
+                span && `col-${span}`,
+                sm && `col-sm-${sm}`,
+                md && `col-md-${md}`,
+                lg && `col-lg-${lg}`,
+                xl && `col-xl-${xl}`,
+                xxl && `col-xxl-${xxl}`,
+                stretch && 'col-stretch',
+                align !== 'auto' && `col-align-${align}`,
                 className
             )}
             {...props}

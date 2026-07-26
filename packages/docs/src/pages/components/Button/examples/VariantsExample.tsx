@@ -1,5 +1,9 @@
 import {Button} from 'lyco-ui';
 
+export const title = 'Color Variants';
+export const description = <p>The <code>variant</code> prop dynamically maps to global theme hues and automatically calculates optimal text contrast.</p>;
+export const order = 0;
+
 export default function VariantsExample() {
     return (
         <>

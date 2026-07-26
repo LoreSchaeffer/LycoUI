@@ -1,6 +1,10 @@
 import {Button} from 'lyco-ui';
 import {PiCaretRightBold, PiFloppyDiskBold, PiGearBold, PiMagnifyingGlassBold, PiTrashBold} from "react-icons/pi";
 
+export const title = 'Icons';
+export const description = <p>Pass React elemets to <code>iconStart</code>, <code>iconEnd</code>, or use <code>icon</code> without children to create a perfectly square icon-only button.</p>;
+export const order = 4;
+
 export default function IconsExample() {
     return (
         <>

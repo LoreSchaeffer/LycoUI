@@ -1,61 +1,52 @@
 @use "sass:math";
 @use "../../styles/tokens/breakpoints" as *;
 
-.lyco-row {
-  --lyco-gutter-x: var(--spacing-4, 1rem);
-  --lyco-gutter-y: 0;
+.row {
+  --gutter-x: var(--spacing-4, 1rem);
+  --gutter-y: 0;
 
   display: flex;
   flex-wrap: wrap;
-  margin-top: calc(var(--lyco-gutter-y) * -1);
-  margin-left: calc(var(--lyco-gutter-x) * -0.5);
-  margin-right: calc(var(--lyco-gutter-x) * -0.5);
+  width: 100%;
+  margin-top: calc(var(--gutter-y) * -1);
+  margin-left: calc(var(--gutter-x) * -0.5);
+  margin-right: calc(var(--gutter-x) * -0.5);
 
-  &--align-stretch {
-    align-items: stretch;
-  }
-
-  &--align-start {
+  &-align-start {
     align-items: flex-start;
   }
 
-  &--align-center {
+  &-align-center {
     align-items: center;
   }
 
-  &--align-end {
+  &-align-end {
     align-items: flex-end;
   }
 
-  &--justify-start {
-    justify-content: flex-start;
-  }
-
-  &--justify-center {
+  &-justify-center {
     justify-content: center;
   }
 
-  &--justify-end {
+  &-justify-end {
     justify-content: flex-end;
   }
 
-  &--justify-between {
+  &-justify-between {
     justify-content: space-between;
   }
 }
 
-.lyco-col {
+.col {
   box-sizing: border-box;
-  flex-shrink: 0;
-  width: 100%;
+  flex: 1 0 0%;
+  min-width: 0;
   max-width: 100%;
-  padding-left: calc(var(--lyco-gutter-x) * 0.5);
-  padding-right: calc(var(--lyco-gutter-x) * 0.5);
-  margin-top: var(--lyco-gutter-y);
-  flex-grow: 1;
-  flex-basis: 0;
+  padding-left: calc(var(--gutter-x) * 0.5);
+  padding-right: calc(var(--gutter-x) * 0.5);
+  margin-top: var(--gutter-y);
 
-  &--stretch {
+  &-stretch {
     display: flex;
     flex-direction: column;
 
@@ -64,30 +55,26 @@
     }
   }
 
-  &--align-auto {
-    align-self: auto;
-  }
-
-  &--align-start {
+  &-align-start {
     align-self: flex-start;
   }
 
-  &--align-center {
+  &-align-center {
     align-self: center;
   }
 
-  &--align-end {
+  &-align-end {
     align-self: flex-end;
   }
 
-  &--align-stretch {
+  &-align-stretch {
     align-self: stretch;
   }
 }
 
 @mixin make-grid-columns($infix: "") {
   @for $i from 1 through 12 {
-    .lyco-col#{$infix}-#{$i} {
+    .col#{$infix}-#{$i} {
       flex: 0 0 math.percentage(math.div($i, 12));
       max-width: math.percentage(math.div($i, 12));
     }

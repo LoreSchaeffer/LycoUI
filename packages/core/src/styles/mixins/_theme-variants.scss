@@ -7,7 +7,7 @@ $lyco-light-colors: 'yellow', 'green', 'cyan', 'orange', 'teal', 'white';
   @each $color in $lyco-all-colors {
     $is-light: list.index($lyco-light-colors, $color) != null;
 
-    &--#{$color} {
+    &-#{$color} {
       @content($color, $is-light);
     }
   }

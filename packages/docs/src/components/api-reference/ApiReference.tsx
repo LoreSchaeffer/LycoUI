@@ -15,10 +15,10 @@ export interface PropsTableProps {
 
 export const PropsTable: React.FC<PropsTableProps> = ({title, data}) => {
     return (
-        <div className="lyco-mb-8">
-            <h3 className="lyco-mb-4">{title}</h3>
-            <div className="lyco-table-wrapper">
-                <table className="lyco-table">
+        <div className="mb-8">
+            <h3 className="mb-4">{title}</h3>
+            <div className="table-wrapper">
+                <table className="table">
                     <thead>
                     <tr>
                         <th>Prop</th>
@@ -30,20 +30,20 @@ export const PropsTable: React.FC<PropsTableProps> = ({title, data}) => {
                     <tbody>
                     {data.map((row) => (
                         <tr key={row.name}>
-                            <td className="lyco-td-prop">
+                            <td className="td-prop">
                                 <code>{row.name}</code>
                             </td>
-                            <td className="lyco-td-type">
+                            <td className="td-type">
                                 <code>{row.type}</code>
                             </td>
-                            <td className="lyco-td-default">
+                            <td className="td-default">
                                 {row.defaultValue ? (
                                     <code>{row.defaultValue}</code>
                                 ) : (
-                                    <span className="lyco-text-muted">-</span>
+                                    <span className="text-muted">-</span>
                                 )}
                             </td>
-                            <td className="lyco-td-description">{row.description}</td>
+                            <td className="td-description">{row.description}</td>
                         </tr>
                     ))}
                     </tbody>
@@ -66,10 +66,10 @@ export interface CssVarsTableProps {
 
 export const CssVarsTable: React.FC<CssVarsTableProps> = ({title, data}) => {
     return (
-        <div className="lyco-mb-8">
-            <h3 className="lyco-mb-4">{title}</h3>
-            <div className="lyco-table-wrapper">
-                <table className="lyco-table">
+        <div className="mb-8">
+            <h3 className="mb-4">{title}</h3>
+            <div className="table-wrapper">
+                <table className="table">
                     <thead>
                     <tr>
                         <th>Variable</th>
@@ -80,13 +80,13 @@ export const CssVarsTable: React.FC<CssVarsTableProps> = ({title, data}) => {
                     <tbody>
                     {data.map((row) => (
                         <tr key={row.name}>
-                            <td className="lyco-td-prop">
+                            <td className="td-prop">
                                 <code>{row.name}</code>
                             </td>
-                            <td className="lyco-td-default">
+                            <td className="td-default">
                                 <code>{row.defaultValue}</code>
                             </td>
-                            <td className="lyco-td-description">{row.description}</td>
+                            <td className="td-description">{row.description}</td>
                         </tr>
                     ))}
                     </tbody>

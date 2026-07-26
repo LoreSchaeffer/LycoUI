@@ -1,5 +1,5 @@
 import './App.scss';
-import React, {Suspense, useEffect, useState} from 'react';
+import React, {Suspense, useEffect, useMemo, useState} from 'react';
 import {BrowserRouter, Navigate, NavLink, Route, Routes, useLocation} from 'react-router';
 import {FiMenu, FiX} from 'react-icons/fi';
 import clsx from "clsx";
@@ -14,32 +14,41 @@ const DocsLayout: React.FC = () => {
         setIsSidebarOpen(false);
     }, [location.pathname]);
 
+    const processedNavigation = useMemo(() => {
+        return docsNavigation.map(category => ({
+            ...category,
+            items: category.sorted
+                ? [...category.items].sort((a, b) => a.name.localeCompare(b.name))
+                : category.items
+        }));
+    }, []);
+
     return (
-        <div className="lyco-docs-layout">
-            <header className="lyco-docs-mobile-header">
+        <div className="docs-layout">
+            <header className="docs-mobile-header">
                 <button
-                    className="lyco-docs-menu-btn"
+                    className="docs-menu-btn"
                     onClick={() => setIsSidebarOpen(true)}
                     aria-label="Open documentation menu"
                 >
                     <FiMenu/>
                 </button>
-                <span className="lyco-docs-mobile-title">Lyco UI Docs</span>
+                <span className="docs-mobile-title">Lyco UI Docs</span>
             </header>
 
             {isSidebarOpen && (
                 <div
-                    className="lyco-docs-backdrop"
+                    className="docs-backdrop"
                     onClick={() => setIsSidebarOpen(false)}
                     aria-hidden="true"
                 />
             )}
 
-            <aside className={`lyco-docs-sidebar ${isSidebarOpen ? 'is-open' : ''}`}>
-                <div className="lyco-docs-sidebar__header">
-                    <span className="lyco-docs-sidebar__logo">Lyco UI</span>
+            <aside className={`docs-sidebar ${isSidebarOpen ? 'is-open' : ''}`}>
+                <div className="docs-sidebar__header">
+                    <span className="docs-sidebar__logo">Lyco UI</span>
                     <button
-                        className="lyco-docs-close-btn"
+                        className="docs-close-btn"
                         onClick={() => setIsSidebarOpen(false)}
                         aria-label="Close menu"
                     >
@@ -47,51 +56,45 @@ const DocsLayout: React.FC = () => {
                     </button>
                 </div>
 
-                <nav className="lyco-docs-sidebar__nav">
-                    {docsNavigation.map((category) => {
+                <nav className="docs-sidebar__nav">
+                    {processedNavigation.map((category) => {
                         const Icon = category.icon;
 
                         return (
                             <div key={category.title}>
-                                <h4 className="lyco-docs-sidebar__section-title">
+                                <h4 className="docs-sidebar__section-title">
                                     <Icon/>
                                     {category.title}
                                 </h4>
-                                <ul className="lyco-docs-sidebar__section-items">
-                                    {(() => {
-                                        const items = category.sorted
-                                            ? [...category.items].sort((a, b) => a.name.localeCompare(b.name))
-                                            : category.items;
-
-                                        return items.map((item) => (
-                                            <li key={item.path}>
-                                                <NavLink
-                                                    className={({isActive}) =>
-                                                        clsx('lyco-docs-sidebar__nav-link', isActive && 'active')
-                                                    }
-                                                    to={item.path}
-                                                >
-                                                    {({isActive}) => (
-                                                        <>
-                                                            {isActive
-                                                                ? <PiBookOpenBold style={{opacity: 0.7}}/>
-                                                                : <PiBookBold style={{opacity: 0.7}}/>
-                                                            }
-                                                            {item.name}
-                                                        </>
-                                                    )}
-                                                </NavLink>
-                                            </li>
-                                        ));
-                                    })()}
+                                <ul className="docs-sidebar__section-items">
+                                    {category.items.map((item) => (
+                                        <li key={item.path}>
+                                            <NavLink
+                                                className={({isActive}) =>
+                                                    clsx('docs-sidebar__nav-link', isActive && 'active')
+                                                }
+                                                to={item.path}
+                                            >
+                                                {({isActive}) => (
+                                                    <>
+                                                        {isActive
+                                                            ? <PiBookOpenBold style={{opacity: 0.7}}/>
+                                                            : <PiBookBold style={{opacity: 0.7}}/>
+                                                        }
+                                                        {item.name}
+                                                    </>
+                                                )}
+                                            </NavLink>
+                                        </li>
+                                    ))}
                                 </ul>
                             </div>
-                        )
+                        );
                     })}
                 </nav>
             </aside>
 
-            <main className="lyco-docs-content">
+            <main className="docs-content">
                 <Suspense fallback={<div style={{color: 'var(--color-text-muted)'}}>Loading page...</div>}>
                     <Routes>
                         <Route path="/" element={<Navigate to="/docs/introduction" replace/>}/>

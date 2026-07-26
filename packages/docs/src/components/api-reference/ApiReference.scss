@@ -1,10 +1,10 @@
-.lyco-table-wrapper {
+.table-wrapper {
   overflow-x: auto;
   margin-bottom: var(--spacing-8);
   -webkit-overflow-scrolling: touch;
 }
 
-.lyco-table {
+.table {
   width: 100%;
   text-align: left;
   border-collapse: collapse;
@@ -39,22 +39,22 @@
     white-space: nowrap;
   }
 
-  .lyco-td-prop code {
+  .td-prop code {
     color: var(--color-info);
     background-color: color-mix(in srgb, var(--color-info) 12%, transparent);
   }
 
-  .lyco-td-type code {
+  .td-type code {
     color: var(--color-warning);
     background-color: color-mix(in srgb, var(--color-warning) 12%, transparent);
   }
 
-  .lyco-td-default code {
+  .td-default code {
     color: var(--color-success);
     background-color: color-mix(in srgb, var(--color-success) 12%, transparent);
   }
 
-  .lyco-td-description {
+  .td-description {
     width: 99%;
     min-width: 300px;
     color: var(--color-text-secondary);

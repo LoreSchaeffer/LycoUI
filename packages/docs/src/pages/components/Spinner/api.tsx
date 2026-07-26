@@ -25,3 +25,7 @@ export const spinnerPropsData: PropDefinition[] = [
         description: 'Inherits all native HTML span attributes (e.g., aria-label, role).'
     }
 ];
+
+export const apiConfig = [
+    {name: 'spinnerPropsData', data: spinnerPropsData}
+]

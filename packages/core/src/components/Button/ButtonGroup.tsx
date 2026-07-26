@@ -1,10 +1,11 @@
 import './ButtonGroup.scss';
 import {forwardRef, type HTMLAttributes, type ReactNode} from 'react';
 import clsx from 'clsx';
+import type {Orientation} from "../../types/types.ts";
 
 export interface ButtonGroupProps extends HTMLAttributes<HTMLDivElement> {
     children: ReactNode;
-    orientation?: 'horizontal' | 'vertical';
+    orientation?: Orientation;
 }
 
 export const ButtonGroup = forwardRef<HTMLDivElement, ButtonGroupProps>((
@@ -14,13 +15,13 @@ export const ButtonGroup = forwardRef<HTMLDivElement, ButtonGroupProps>((
         className,
         ...props
     }, ref) => {
+
     return (
         <div
             ref={ref}
             role="group"
             className={clsx(
-                'lyco-btn-group',
-                `lyco-btn-group--${orientation}`,
+                orientation === 'vertical' ? 'btn-group-vertical' : 'btn-group',
                 className
             )}
             {...props}

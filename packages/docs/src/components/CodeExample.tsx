@@ -4,31 +4,8 @@ import {FiCheck, FiCopy} from 'react-icons/fi';
 import clsx from 'clsx';
 import {SyntaxHighlighter} from "./syntax/SyntaxHighlighter.tsx";
 import {renderToStaticMarkup} from "react-dom/server";
-
-const formatHtml = (html: string): string => {
-    let indentLevel = 0;
-    const tab = '  ';
-
-    return html
-        .replace(/>\s+</g, '><')
-        .replace(/></g, '>\n<')
-        .split('\n')
-        .map((line) => {
-            const isClosing = line.match(/^<\//);
-            const isSelfClosing = line.match(/\/>$/) || line.match(/^<(input|img|br|hr|meta|link)/);
-            const hasClosingTagOnSameLine = line.match(/<\/[^>]+>$/);
-            const isOpening = line.match(/^<[^/]/) && !isSelfClosing && !hasClosingTagOnSameLine;
-
-            if (isClosing) indentLevel = Math.max(indentLevel - 1, 0);
-
-            const currentIndent = tab.repeat(indentLevel);
-
-            if (isOpening) indentLevel++;
-
-            return `${currentIndent}${line}`;
-        })
-        .join('\n');
-};
+import {formatHtml} from "../utils/html-formatter.ts";
+import {formatReact} from "../utils/react-formatter.ts";
 
 export interface CodeExampleProps {
     title: string;
@@ -56,12 +33,13 @@ export const CodeExample: React.FC<CodeExampleProps> = ({
         const rawHtml = renderToStaticMarkup(<>{children}</>);
         const beautifiedHtml = formatHtml(rawHtml);
 
-        return htmlHint
-            ? `<!-- ${htmlHint.trim()} -->\n${beautifiedHtml}`
-            : beautifiedHtml;
+        if (!htmlHint) return beautifiedHtml;
+
+        const safeHtmlHint = htmlHint.replace(/-->/g, '-- >').trim();
+        return `<!-- ${safeHtmlHint} -->\n${beautifiedHtml}`;
     }, [children, htmlHint]);
 
-    const activeCode = activeTab === 'react' ? reactCode.trim() : generatedHtml;
+    const activeCode = activeTab === 'react' ? formatReact(reactCode).trim() : generatedHtml;
 
     const handleCopy = useCallback(async () => {
         try {
@@ -74,24 +52,24 @@ export const CodeExample: React.FC<CodeExampleProps> = ({
     }, [activeCode]);
 
     return (
-        <section className="lyco-docs-code-example">
-            <h2 className="lyco-docs-code-example__title">{title}</h2>
+        <section className="docs-code-example">
+            <h2 className="docs-code-example__title">{title}</h2>
 
             {description && (
-                <div className="lyco-docs-code-example__description">
+                <div className="docs-code-example__description">
                     {description}
                 </div>
             )}
 
-            <div className={clsx('lyco-docs-code-example__preview', `lyco-layout-${previewLayout}`)} style={previewStyles}>
+            <div className={clsx('docs-code-example__preview', `layout-${previewLayout}`)} style={previewStyles}>
                 {children}
             </div>
 
-            <div className="lyco-docs-code-example__toolbar">
-                <div className="lyco-docs-code-example__tabs">
+            <div className="docs-code-example__toolbar">
+                <div className="docs-code-example__tabs">
                     <button
                         type="button"
-                        className={clsx('lyco-docs-code-example__tab', activeTab === 'react' && 'is-active')}
+                        className={clsx('docs-code-example__tab', activeTab === 'react' && 'is-active')}
                         onClick={() => setActiveTab('react')}
                         aria-pressed={activeTab === 'react'}
                     >
@@ -99,7 +77,7 @@ export const CodeExample: React.FC<CodeExampleProps> = ({
                     </button>
                     <button
                         type="button"
-                        className={clsx('lyco-docs-code-example__tab', activeTab === 'html' && 'is-active')}
+                        className={clsx('docs-code-example__tab', activeTab === 'html' && 'is-active')}
                         onClick={() => setActiveTab('html')}
                         aria-pressed={activeTab === 'html'}
                     >
@@ -109,16 +87,16 @@ export const CodeExample: React.FC<CodeExampleProps> = ({
 
                 <button
                     type="button"
-                    className="lyco-docs-code-example__copy"
+                    className="docs-code-example__copy"
                     onClick={handleCopy}
                     aria-label="Copy code to clipboard"
                     title="Copy code"
                 >
-                    {isCopied ? <FiCheck className="lyco-text-success"/> : <FiCopy/>}
+                    {isCopied ? <FiCheck className="text-success"/> : <FiCopy/>}
                 </button>
             </div>
 
-            <div className="lyco-docs-code-example__code-wrapper">
+            <div className="docs-code-example__code-wrapper">
                 <SyntaxHighlighter
                     code={activeCode}
                     language={activeTab === 'react' ? 'tsx' : 'html'}

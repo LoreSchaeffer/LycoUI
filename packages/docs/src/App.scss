@@ -1,6 +1,6 @@
 $bp-md: 768px;
 
-.lyco-docs-layout {
+.docs-layout {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
@@ -14,7 +14,7 @@ $bp-md: 768px;
 }
 
 // Mobile header
-.lyco-docs-mobile-header {
+.docs-mobile-header {
   display: flex;
   align-items: center;
   padding: var(--spacing-4);
@@ -28,7 +28,7 @@ $bp-md: 768px;
     display: none;
   }
 
-  .lyco-docs-menu-btn {
+  .docs-menu-btn {
     background: transparent;
     border: none;
     color: var(--color-text-primary);
@@ -41,14 +41,14 @@ $bp-md: 768px;
     margin-right: var(--spacing-4);
   }
 
-  .lyco-docs-mobile-title {
+  .docs-mobile-title {
     font-weight: 700;
     font-size: var(--font-size-lg);
   }
 }
 
 // Backdrop overlay for mobile sidebar
-.lyco-docs-backdrop {
+.docs-backdrop {
   position: fixed;
   inset: 0;
   background-color: rgba(0, 0, 0, 0.5);
@@ -63,7 +63,7 @@ $bp-md: 768px;
 }
 
 // Sidebar structural layout
-.lyco-docs-sidebar {
+.docs-sidebar {
   position: fixed;
   top: 0;
   left: 0;
@@ -142,7 +142,7 @@ $bp-md: 768px;
     font-weight: 500;
   }
 
-  .lyco-docs-close-btn {
+  .docs-close-btn {
     background: transparent;
     border: none;
     color: var(--color-text-secondary);
@@ -165,7 +165,7 @@ $bp-md: 768px;
 }
 
 // Main content area
-.lyco-docs-content {
+.docs-content {
   padding: var(--spacing-6);
   width: 100%;
   max-width: 1300px;
@@ -177,7 +177,7 @@ $bp-md: 768px;
   }
 }
 
-.lyco-text-lead {
+.text-lead {
   font-size: var(--font-size-lg);
   line-height: 1.6;
   color: var(--color-text-secondary);

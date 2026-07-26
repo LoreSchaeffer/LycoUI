@@ -9,6 +9,7 @@ export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
     variant?: ColorVariant;
     size?: SizeVariant;
     flat?: boolean;
+    static?: boolean;
     outlined?: boolean;
     rounded?: boolean;
     loading?: boolean;
@@ -24,6 +25,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>((
         variant = 'primary',
         size = 'base',
         flat = false,
+        'static': btnStatic = false,
         outlined = false,
         rounded = false,
         loading = false,
@@ -46,37 +48,38 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>((
             ref={ref}
             disabled={isDisabled}
             className={clsx(
-                'lyco-btn',
-                `lyco-btn--${variant}`,
-                `lyco-btn--${size}`,
-                flat && 'lyco-btn--flat',
-                rounded && 'lyco-btn--rounded',
-                outlined && 'lyco-btn--outlined',
-                loading && 'lyco-btn--loading',
-                isIconOnly && 'lyco-btn--icon-only',
+                'btn',
+                `btn-${variant}`,
+                size !== 'base' && `btn-${size}`,
+                flat && 'btn-flat',
+                btnStatic && 'btn-static',
+                rounded && 'btn-rounded',
+                outlined && 'btn-outlined',
+                loading && 'btn-loading',
+                isIconOnly && 'btn-icon-only',
                 className
             )}
             {...props}
         >
             {isIconOnly && (
-                <span className="lyco-btn__icon">
-                    {loading ? <Spinner size={size} type={spinnerType} className="lyco-btn__spinner"/> : icon}
+                <span className="btn__icon">
+                    {loading ? <Spinner size={size} type={spinnerType} className="btn__spinner"/> : icon}
                 </span>
             )}
 
             {!isIconOnly && (
                 <>
                     {(showSpinnerStart || (!loading && iconStart)) && (
-                        <span className="lyco-btn__icon lyco-btn__icon--start">
-                            {showSpinnerStart ? <Spinner size={size} type={spinnerType} className="lyco-btn__spinner"/> : iconStart}
+                        <span className="btn__icon btn__icon--start">
+                            {showSpinnerStart ? <Spinner size={size} type={spinnerType} className="btn__spinner"/> : iconStart}
                         </span>
                     )}
 
                     {children}
 
                     {(showSpinnerEnd || (!loading && iconEnd)) && (
-                        <span className="lyco-btn__icon lyco-btn__icon--end">
-                            {showSpinnerEnd ? <Spinner size={size} type={spinnerType} className="lyco-btn__spinner"/> : iconEnd}
+                        <span className="btn__icon btn__icon--end">
+                            {showSpinnerEnd ? <Spinner size={size} type={spinnerType} className="btn__spinner"/> : iconEnd}
                         </span>
                     )}
                 </>

@@ -5,19 +5,20 @@ export const rowPropsData: PropDefinition[] = [
         name: 'align',
         type: "'stretch' | 'start' | 'center' | 'end'",
         defaultValue: "'stretch'",
-        description: <>Vertical alignment of children columns. Applies <code>.lyco-row--align-*</code></>
+        description: <>Vertical alignment of children columns. Applies <code>.row-align-*</code>.</>
     },
     {
         name: 'justify',
         type: "'start' | 'center' | 'end' | 'between'",
-        description: <>Horizontal distribution of children columns. Applies <code>.lyco-row--justify-*</code></>
+        defaultValue: "'start'",
+        description: <>Horizontal distribution of children columns. Applies <code>.row-justify-*</code>.</>
     }
 ];
 
 export const colPropsData: PropDefinition[] = [
     {
         name: 'span',
-        type: '1 | 2 | ... | 12',
+        type: '1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12',
         description: 'Base column span (mobile-first). Auto-layout if omitted.'
     },
     {
@@ -29,24 +30,31 @@ export const colPropsData: PropDefinition[] = [
         name: 'stretch',
         type: 'boolean',
         defaultValue: 'false',
-        description: <>Converts column into a flex container forcing children to stretch (<code>.lyco-col--stretch</code>).</>
+        description: <>Converts column into a flex container forcing children to stretch vertically (<code>.col-stretch</code>).</>
     },
     {
         name: 'align',
         type: "'auto' | 'start' | 'center' | 'end' | 'stretch'",
-        description: <>Overrides the row's vertical alignment for this specific column. Applies <code>.lyco-col--align-*</code></>
+        defaultValue: "'auto'",
+        description: <>Overrides the row's vertical alignment for this specific column. Applies <code>.col-align-*</code>.</>
     }
 ];
 
 export const gridCssVarsData: CssVarDefinition[] = [
     {
-        name: '--lyco-gutter-x',
+        name: '--gutter-x',
         defaultValue: 'var(--spacing-4)',
         description: 'Horizontal padding applied to columns and negative margin to row.'
     },
     {
-        name: '--lyco-gutter-y',
+        name: '--gutter-y',
         defaultValue: '0',
         description: 'Vertical spacing applied as top margin to columns.'
     }
+];
+
+export const apiConfig = [
+    {name: 'rowPropsData', data: rowPropsData},
+    {name: 'colPropsData', data: colPropsData},
+    {name: 'gridCssVarsData', data: gridCssVarsData}
 ];

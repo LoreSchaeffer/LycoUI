@@ -103,19 +103,19 @@
     --line-height-#{$name}: #{$height};
   }
 
-  .lyco-text-center {
+  .text-center {
     text-align: center;
   }
 
-  .lyco-text-primary {
+  .text-primary {
     color: var(--color-text-primary);
   }
 
-  .lyco-text-secondary {
+  .text-secondary {
     color: var(--color-text-secondary);
   }
 
-  .lyco-text-muted {
+  .text-muted {
     color: var(--color-text-muted);
   }
 
@@ -160,40 +160,40 @@
   // UTILITIES
   // ==========================================================================
   // Spacing (Margin Bottom)
-  .lyco-mb-0 {
+  .mb-0 {
     margin-bottom: 0 !important;
   }
 
-  .lyco-mb-2 {
+  .mb-2 {
     margin-bottom: var(--spacing-2) !important;
   }
 
-  .lyco-mb-4 {
+  .mb-4 {
     margin-bottom: var(--spacing-4) !important;
   }
 
-  .lyco-mb-6 {
+  .mb-6 {
     margin-bottom: var(--spacing-6) !important;
   }
 
-  .lyco-mb-8 {
+  .mb-8 {
     margin-bottom: var(--spacing-8) !important;
   }
 
-  .lyco-mb-10 {
+  .mb-10 {
     margin-bottom: var(--spacing-10) !important;
   }
 
   // Spacing (Margin Top)
-  .lyco-mt-0 {
+  .mt-0 {
     margin-top: 0 !important;
   }
 
-  .lyco-mt-4 {
+  .mt-4 {
     margin-top: var(--spacing-4) !important;
   }
 
-  .lyco-mt-8 {
+  .mt-8 {
     margin-top: var(--spacing-8) !important;
   }
 }
@@ -347,6 +347,14 @@ pre {
     font-size: inherit;
     color: inherit;
   }
+}
+
+// ==========================================================================
+// UTILITIES
+// ==========================================================================
+
+.hidden {
+  display: none !important;
 }
 
 // ==========================================================================
