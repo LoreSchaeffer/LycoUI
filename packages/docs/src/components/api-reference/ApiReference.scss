@@ -40,18 +40,18 @@
   }
 
   .td-prop code {
-    color: var(--color-info);
-    background-color: color-mix(in srgb, var(--color-info) 12%, transparent);
+    color: var(--color-cyan);
+    background-color: color-mix(in srgb, var(--color-cyan) 12%, transparent);
   }
 
   .td-type code {
-    color: var(--color-warning);
-    background-color: color-mix(in srgb, var(--color-warning) 12%, transparent);
+    color: var(--color-yellow);
+    background-color: color-mix(in srgb, var(--color-yellow) 12%, transparent);
   }
 
   .td-default code {
-    color: var(--color-success);
-    background-color: color-mix(in srgb, var(--color-success) 12%, transparent);
+    color: var(--color-green);
+    background-color: color-mix(in srgb, var(--color-green) 12%, transparent);
   }
 
   .td-description {

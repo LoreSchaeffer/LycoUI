@@ -92,7 +92,7 @@ export const CodeExample: React.FC<CodeExampleProps> = ({
                     aria-label="Copy code to clipboard"
                     title="Copy code"
                 >
-                    {isCopied ? <FiCheck className="text-success"/> : <FiCopy/>}
+                    {isCopied ? <FiCheck className="text-green"/> : <FiCopy/>}
                 </button>
             </div>
 

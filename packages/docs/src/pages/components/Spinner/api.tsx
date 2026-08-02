@@ -18,11 +18,6 @@ export const spinnerPropsData: PropDefinition[] = [
         type: "'sm' | 'base' | 'lg'",
         defaultValue: "'base'",
         description: 'Defines the physical dimensions of the spinner.'
-    },
-    {
-        name: '...props',
-        type: 'HTMLAttributes<HTMLSpanElement>',
-        description: 'Inherits all native HTML span attributes (e.g., aria-label, role).'
     }
 ];
 

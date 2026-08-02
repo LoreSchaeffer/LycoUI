@@ -53,6 +53,8 @@
     }
     // Aliases for primary colors
     --#{$name}: var(--#{$name}-500);
+    // Dim version
+    --#{$name}-dim: color-mix(in srgb, var(--#{$name}) 15%, transparent);
   }
 
   // Brand Palette
