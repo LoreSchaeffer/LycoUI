@@ -1,19 +1,19 @@
 import './Radio.scss';
-import {forwardRef, type InputHTMLAttributes, type ReactNode, useId} from 'react';
+import {forwardRef, memo, type InputHTMLAttributes, type ReactNode, useId} from 'react';
 import clsx from 'clsx';
-import type {ColorVariant, SizeVariant} from "../../types/types.ts";
+import type {FullVariant, SizeVariant} from "../../types/types.ts";
 
 export interface RadioProps extends Omit<InputHTMLAttributes<HTMLInputElement>, 'size'> {
     label?: ReactNode;
-    variant?: ColorVariant | 'default';
+    variant?: FullVariant | 'default';
     size?: SizeVariant;
 }
 
-export const Radio = forwardRef<HTMLInputElement, RadioProps>((
+export const Radio = memo(forwardRef<HTMLInputElement, RadioProps>((
     {
         label,
         variant = 'primary',
-        size = 'base',
+        size = 'md',
         className,
         disabled,
         id,
@@ -33,7 +33,7 @@ export const Radio = forwardRef<HTMLInputElement, RadioProps>((
             className={clsx(
                 'radio',
                 isColored && `radio-${variant}`,
-                size !== 'base' && `radio-${size}`,
+                size !== 'md' && `radio-${size}`,
                 className
             )}
             {...props}
@@ -48,6 +48,6 @@ export const Radio = forwardRef<HTMLInputElement, RadioProps>((
             <span>{label}</span>
         </label>
     );
-});
+}));
 
 Radio.displayName = 'Radio';

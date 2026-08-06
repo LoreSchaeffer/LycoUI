@@ -21,6 +21,7 @@
   appearance: none;
   -webkit-appearance: none;
   background-color: var(--color-bg-surface);
+  --radio-dot-color: var(--white);
   margin: 0.125em 0 0;
   font: inherit;
   color: currentColor;
@@ -40,7 +41,7 @@
     border-radius: 50%;
     transform: scale(0);
     transition: transform 120ms var(--ease-default);
-    background-color: var(--white);
+    background-color: var(--radio-dot-color);
   }
 
   &:disabled {
@@ -85,10 +86,12 @@
 
   &-success {
     --radio-color-base: var(--color-success);
+    --radio-dot-color: var(--slate-950);
   }
 
   &-warning {
     --radio-color-base: var(--color-warning);
+    --radio-dot-color: var(--slate-950);
   }
 
   &-danger {
@@ -97,6 +100,7 @@
 
   &-info {
     --radio-color-base: var(--color-info);
+    --radio-dot-color: var(--slate-950);
   }
 
   // ==========================================================================
@@ -104,5 +108,8 @@
   // ==========================================================================
   @include for-each-theme-color using($color, $is-light) {
     --radio-color-base: var(--#{$color});
+    @if $is-light {
+      --radio-dot-color: var(--slate-950);
+    }
   }
 }

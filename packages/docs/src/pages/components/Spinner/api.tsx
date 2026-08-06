@@ -9,14 +9,16 @@ export const spinnerPropsData: PropDefinition[] = [
     },
     {
         name: 'variant',
-        type: 'ColorVariant',
+        type: 'FullVariant',
+        typeLink: '/docs/types#full-variant',
         defaultValue: "'primary'",
-        description: 'Maps the spinner color to the global theme hues.'
+        description: 'Maps the spinner color to the global theme hues or semantic variants.'
     },
     {
         name: 'size',
-        type: "'sm' | 'base' | 'lg'",
-        defaultValue: "'base'",
+        type: 'SizeVariant',
+        typeLink: '/docs/types#size-variant',
+        defaultValue: "'md'",
         description: 'Defines the physical dimensions of the spinner.'
     }
 ];

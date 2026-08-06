@@ -55,7 +55,7 @@
   }
 
   // ==========================================================================
-  // VARIANTS
+  // VARIANTS — Primary (explicit alias for blue)
   // ==========================================================================
   &-primary {
     --btn-color-base: var(--color-primary);
@@ -79,6 +79,9 @@
     }
   }
 
+  // ==========================================================================
+  // VARIANTS — All Theme Colors (from mixin loop)
+  // ==========================================================================
   @include for-each-theme-color using($color, $is-light) {
     --btn-color-base: var(--#{$color}-500);
     --btn-color-hover: var(--#{$color}-400);
@@ -87,7 +90,7 @@
     @if $is-light {
       --btn-text-color: var(--slate-950);
     } @else {
-      --btn-text-color: #ffffff;
+      --btn-text-color: var(--white);
     }
 
     background-color: var(--btn-color-base);
@@ -107,14 +110,109 @@
   }
 
   // ==========================================================================
-  // MODIFIERS
+  // VARIANTS — Semantic Aliases (success, warning, danger, info)
   // ==========================================================================
-  &-flat {
-    background-image: none !important;
-    box-shadow: none !important;
+  &-success {
+    --btn-color-base: var(--green-500);
+    --btn-color-hover: var(--green-400);
+    --btn-color-active: var(--green-600);
+    --btn-text-color: var(--slate-950);
+
+    background-color: var(--btn-color-base);
+    border-color: var(--green-500);
+    color: var(--btn-text-color);
+    background-image: linear-gradient(180deg, var(--green-400), var(--green-500));
+
+    &:hover:not(:disabled) {
+      background-color: var(--btn-color-hover);
+      background-image: linear-gradient(180deg, var(--green-300), var(--green-400));
+    }
 
     &:active:not(:disabled) {
-      box-shadow: none !important;
+      background-color: var(--btn-color-active);
+      background-image: none;
+    }
+  }
+
+  &-warning {
+    --btn-color-base: var(--yellow-500);
+    --btn-color-hover: var(--yellow-400);
+    --btn-color-active: var(--yellow-600);
+    --btn-text-color: var(--slate-950);
+
+    background-color: var(--btn-color-base);
+    border-color: var(--yellow-500);
+    color: var(--btn-text-color);
+    background-image: linear-gradient(180deg, var(--yellow-400), var(--yellow-500));
+
+    &:hover:not(:disabled) {
+      background-color: var(--btn-color-hover);
+      background-image: linear-gradient(180deg, var(--yellow-300), var(--yellow-400));
+    }
+
+    &:active:not(:disabled) {
+      background-color: var(--btn-color-active);
+      background-image: none;
+    }
+  }
+
+  &-danger {
+    --btn-color-base: var(--red-500);
+    --btn-color-hover: var(--red-400);
+    --btn-color-active: var(--red-600);
+    --btn-text-color: var(--white);
+
+    background-color: var(--btn-color-base);
+    border-color: var(--red-500);
+    color: var(--btn-text-color);
+    background-image: linear-gradient(180deg, var(--red-400), var(--red-500));
+
+    &:hover:not(:disabled) {
+      background-color: var(--btn-color-hover);
+      background-image: linear-gradient(180deg, var(--red-300), var(--red-400));
+    }
+
+    &:active:not(:disabled) {
+      background-color: var(--btn-color-active);
+      background-image: none;
+    }
+  }
+
+  &-info {
+    --btn-color-base: var(--cyan-500);
+    --btn-color-hover: var(--cyan-400);
+    --btn-color-active: var(--cyan-600);
+    --btn-text-color: var(--slate-950);
+
+    background-color: var(--btn-color-base);
+    border-color: var(--cyan-500);
+    color: var(--btn-text-color);
+    background-image: linear-gradient(180deg, var(--cyan-400), var(--cyan-500));
+
+    &:hover:not(:disabled) {
+      background-color: var(--btn-color-hover);
+      background-image: linear-gradient(180deg, var(--cyan-300), var(--cyan-400));
+    }
+
+    &:active:not(:disabled) {
+      background-color: var(--btn-color-active);
+      background-image: none;
+    }
+  }
+
+  // ==========================================================================
+  // MODIFIERS
+  // ==========================================================================
+
+  // Flat: strips gradients and shadows for a solid-color fallback.
+  // Uses double-class specificity (.btn.btn-flat) to override variant
+  // background-image without resorting to !important.
+  &.btn-flat {
+    background-image: none;
+    box-shadow: none;
+
+    &:active:not(:disabled) {
+      box-shadow: none;
     }
   }
 
@@ -122,22 +220,27 @@
     border-radius: var(--radius-full);
   }
 
-  &-outlined {
-    background: transparent !important;
-    color: var(--btn-color-base) !important;
-    border-color: var(--btn-color-base) !important;
-    box-shadow: none !important;
+  // Outlined: transparent background with solid border.
+  // Double-class specificity overrides variant fills cleanly.
+  &.btn-outlined {
+    background: transparent;
+    background-image: none;
+    color: var(--btn-color-base);
+    border-color: var(--btn-color-base);
+    box-shadow: none;
 
     &:hover:not(:disabled) {
-      background-color: var(--btn-color-base) !important;
-      color: var(--btn-text-color) !important;
+      background-color: var(--btn-color-base);
+      background-image: none;
+      color: var(--btn-text-color);
     }
 
     &:active:not(:disabled) {
-      background-color: var(--btn-color-active) !important;
-      border-color: var(--btn-color-active) !important;
-      color: var(--btn-text-color) !important;
-      box-shadow: none !important;
+      background-color: var(--btn-color-active);
+      background-image: none;
+      border-color: var(--btn-color-active);
+      color: var(--btn-text-color);
+      box-shadow: none;
     }
   }
 
@@ -164,8 +267,13 @@
     }
   }
 
-  &-static {
-    transform: none !important;
+  // Static: disables the press-down translateY animation.
+  &.btn-static {
+    transform: none;
+
+    &:active:not(:disabled) {
+      transform: none;
+    }
   }
 
   &-loading {
@@ -186,10 +294,12 @@
     justify-content: center;
     font-size: 1.1em;
   }
+}
 
-  &__spinner {
-    color: var(--btn-text-color, currentColor) !important;
-    width: 1.15em !important;
-    height: 1.15em !important;
-  }
+// Spinner inside button — scoped outside .btn to avoid BEM nesting issues.
+// Uses .btn .btn__spinner for sufficient specificity over Spinner defaults.
+.btn .btn__spinner {
+  color: var(--btn-text-color, currentColor);
+  width: 1.15em;
+  height: 1.15em;
 }

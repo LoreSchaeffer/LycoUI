@@ -9,6 +9,13 @@ export const description = (<p>
 </p>);
 export const order = 5;
 
+export const vanillaHtml = `
+<button class="btn btn-primary btn-flat">Flat Variant</button>
+<button class="btn btn-primary is-loading">Loading</button>
+<button class="btn btn-primary" disabled>Disabled</button>
+<button class="btn btn-primary btn-static">Static</button>
+`;
+
 export default function StatesExample() {
     return (
         <>

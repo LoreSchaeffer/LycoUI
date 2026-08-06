@@ -57,7 +57,7 @@ export const SyntaxHighlighter = ({code, language}: SyntaxHighlighterProps) => {
     return (
         <div
             className="docs-shiki-wrapper"
-            redouslySetInnerHTML={{__html: highlightedHtml}}
+            dangerouslySetInnerHTML={{__html: highlightedHtml}}
         />
     );
 };

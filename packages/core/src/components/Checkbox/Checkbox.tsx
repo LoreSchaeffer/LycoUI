@@ -1,19 +1,19 @@
 import './Checkbox.scss';
-import {forwardRef, type InputHTMLAttributes, type ReactNode, useId} from 'react';
+import {forwardRef, memo, type InputHTMLAttributes, type ReactNode, useId} from 'react';
 import clsx from 'clsx';
-import type {ColorVariant, SizeVariant} from "../../types/types.ts";
+import type {FullVariant, SizeVariant} from "../../types/types.ts";
 
 export interface CheckboxProps extends Omit<InputHTMLAttributes<HTMLInputElement>, 'size'> {
     label?: ReactNode;
-    variant?: ColorVariant | 'default';
+    variant?: FullVariant | 'default';
     size?: SizeVariant;
 }
 
-export const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>((
+export const Checkbox = memo(forwardRef<HTMLInputElement, CheckboxProps>((
     {
         label,
         variant = 'primary',
-        size = 'base',
+        size = 'md',
         className,
         disabled,
         id,
@@ -33,7 +33,7 @@ export const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>((
             className={clsx(
                 'checkbox',
                 isColored && `checkbox-${variant}`,
-                size !== 'base' && `checkbox-${size}`,
+                size !== 'md' && `checkbox-${size}`,
                 className
             )}
             {...props}
@@ -48,6 +48,6 @@ export const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>((
             <span>{label}</span>
         </label>
     );
-});
+}));
 
 Checkbox.displayName = 'Checkbox';

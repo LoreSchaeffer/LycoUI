@@ -49,6 +49,18 @@
     background-color: color-mix(in srgb, var(--color-yellow) 12%, transparent);
   }
 
+  .type-link {
+    text-decoration: none;
+    
+    code {
+      transition: all var(--duration-fast) var(--ease-default);
+    }
+    
+    &:hover code {
+      background-color: color-mix(in srgb, var(--color-yellow) 25%, transparent);
+    }
+  }
+
   .td-default code {
     color: var(--color-green);
     background-color: color-mix(in srgb, var(--color-green) 12%, transparent);

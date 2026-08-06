@@ -44,6 +44,22 @@
   &-primary {
     color: var(--color-primary);
   }
+  
+  &-success {
+    color: var(--color-success);
+  }
+
+  &-warning {
+    color: var(--color-warning);
+  }
+
+  &-danger {
+    color: var(--color-danger);
+  }
+
+  &-info {
+    color: var(--color-info);
+  }
 
   @include for-each-theme-color using($color, $is-light) {
     @if $color == 'white' {

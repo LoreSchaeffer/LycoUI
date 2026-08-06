@@ -1,5 +1,6 @@
 import {forwardRef, type HTMLAttributes, type ReactNode} from "react";
 import clsx from "clsx";
+import "./Grid.scss";
 
 export type ColumnSpan = 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12;
 export type ColumnAlign = 'auto' | 'start' | 'center' | 'end' | 'stretch';

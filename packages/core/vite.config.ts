@@ -7,19 +7,24 @@ export default defineConfig({
     plugins: [
         react(),
         dts({
+            outDirs: ['dist/types'],
             insertTypesEntry: true,
             include: ['src/**/*.ts', 'src/**/*.tsx'],
         })
     ],
     build: {
         sourcemap: true,
+        emptyOutDir: true,
         lib: {
-            entry: resolve(__dirname, 'src/index.ts'),
+            entry: {
+                index: resolve(__dirname, 'src/index.ts'),
+                vanilla: resolve(__dirname, 'src/vanilla.ts'),
+            },
             name: 'LycoUI',
-            fileName: (format) => `lyco-ui.${format}.js`,
+            fileName: (format, entryName) => `${entryName}.${format}.js`,
             formats: ['es', 'cjs']
         },
-        rolldownOptions: {
+        rollupOptions: {
             external: ['react', 'react-dom', 'react/jsx-runtime', 'clsx'],
             output: {
                 globals: {

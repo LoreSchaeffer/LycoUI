@@ -1,13 +1,14 @@
 import './Button.scss';
 import {type ButtonHTMLAttributes, forwardRef, type ReactNode} from 'react';
 import clsx from 'clsx';
-import type {ColorVariant, SizeVariant} from '../../types/types.ts';
+import type {Alignment, FullVariant, SizeVariant} from '../../types/types.ts';
 import {Spinner, type SpinnerType} from '../Spinner';
 
 export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
     children?: ReactNode;
-    variant?: ColorVariant;
+    variant?: FullVariant;
     size?: SizeVariant;
+    align?: Alignment;
     flat?: boolean;
     static?: boolean;
     outlined?: boolean;
@@ -23,7 +24,8 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>((
     {
         children,
         variant = 'primary',
-        size = 'base',
+        size = 'md',
+        align = 'center',
         flat = false,
         'static': btnStatic = false,
         outlined = false,
@@ -35,6 +37,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>((
         spinnerType = 'classic',
         className,
         disabled,
+        style,
         ...props
     }, ref) => {
     const isDisabled = disabled || loading;
@@ -43,6 +46,10 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>((
     const showSpinnerStart = loading && (Boolean(iconStart) || !iconEnd);
     const showSpinnerEnd = loading && Boolean(iconEnd) && !iconStart;
 
+    const mergedStyle = align !== 'center'
+        ? { justifyContent: align === 'start' ? 'flex-start' : 'flex-end', ...style }
+        : style;
+
     return (
         <button
             ref={ref}
@@ -50,7 +57,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>((
             className={clsx(
                 'btn',
                 `btn-${variant}`,
-                size !== 'base' && `btn-${size}`,
+                size !== 'md' && `btn-${size}`,
                 flat && 'btn-flat',
                 btnStatic && 'btn-static',
                 rounded && 'btn-rounded',
@@ -59,6 +66,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>((
                 isIconOnly && 'btn-icon-only',
                 className
             )}
+            style={mergedStyle}
             {...props}
         >
             {isIconOnly && (

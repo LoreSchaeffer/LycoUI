@@ -25,7 +25,6 @@ $bp-md: 768px;
     border-top-left-radius: var(--radius-lg);
     border-top-right-radius: var(--radius-lg);
     background-color: var(--color-bg-base);
-    overflow-x: auto;
 
     @media (min-width: $bp-md) {
       padding: var(--spacing-6);

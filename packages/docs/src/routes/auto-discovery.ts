@@ -6,6 +6,7 @@ export interface DocNavigationItem {
     name: string;
     path: string;
     component: LazyExoticComponent<ComponentType<any>>;
+    subItems?: { name: string; hash: string }[];
 }
 
 export interface DocNavigationCategory {
@@ -56,6 +57,19 @@ export const docsNavigation: DocNavigationCategory[] = [
                 name: 'Grid System',
                 path: '/docs/grid',
                 component: lazy(() => import('../pages/components/Grid/GridDoc.tsx'))
+            },
+            {
+                name: 'Custom Types',
+                path: '/docs/types',
+                component: lazy(() => import('../pages/types/TypesDoc.tsx')),
+                subItems: [
+                    { name: 'ColorVariant', hash: '#color-variant' },
+                    { name: 'SemanticVariant', hash: '#semantic-variant' },
+                    { name: 'FullVariant', hash: '#full-variant' },
+                    { name: 'SizeVariant', hash: '#size-variant' },
+                    { name: 'Alignment', hash: '#alignment' },
+                    { name: 'Orientation', hash: '#orientation' },
+                ]
             }
         ]
     },

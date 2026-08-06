@@ -5,6 +5,14 @@ export const title = 'Elevations';
 export const description = <p>Use the <code>elevation</code> prop to control the perceived depth of the card.</p>;
 export const order = 0;
 
+export const vanillaHtml = `
+<div class="card card-elevation-0 card-padding-md">
+    <h3 class="mb-2">Elevation 0</h3>
+    <p class="text-secondary mb-0">Surface depth and shadow adjustments.</p>
+</div>
+<div class="card card-elevation-1 card-padding-md">...</div>
+`;
+
 export default function ElevationsExample() {
     const elevations: CardElevation[] = [0, 1, 2, 3, 4];
 

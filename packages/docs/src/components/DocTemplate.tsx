@@ -1,11 +1,12 @@
 import React, {useMemo} from 'react';
-import {type PropDefinition, type CssVarDefinition, PropsTable, CssVarsTable} from "./api-reference/ApiReference.tsx";
+import {type CssVarDefinition, CssVarsTable, type PropDefinition, PropsTable} from "./api-reference/ApiReference.tsx";
 import {CodeExample} from "./CodeExample.tsx";
 
 export interface ExampleModule {
     title: string;
     description?: React.ReactNode;
     order?: number;
+    vanillaHtml?: string;
     default: React.ComponentType;
 }
 
@@ -30,7 +31,7 @@ export interface DocTemplateProps {
 }
 
 type ContentBlock =
-    | { type: 'example'; id: string; title: string; description?: React.ReactNode; order: number; Component: React.ComponentType; source: string }
+    | { type: 'example'; id: string; title: string; description?: React.ReactNode; order: number; Component: React.ComponentType; source: string; vanillaHtml?: string }
     | { type: 'extra'; id: string; title: string; description: React.ReactNode; order: number };
 
 const formatApiTitle = (exportName: string): string => {
@@ -62,6 +63,7 @@ export const DocTemplate: React.FC<DocTemplateProps> = ({
                 order: mod.order ?? 99,
                 Component: mod.default,
                 source: rawSources[path] || '',
+                vanillaHtml: mod.vanillaHtml,
             });
         });
 
@@ -103,6 +105,7 @@ export const DocTemplate: React.FC<DocTemplateProps> = ({
                                 title={block.title}
                                 description={block.description}
                                 reactCode={block.source}
+                                vanillaHtml={block.vanillaHtml}
                             >
                                 <block.Component/>
                             </CodeExample>

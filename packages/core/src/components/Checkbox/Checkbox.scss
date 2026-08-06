@@ -1,5 +1,8 @@
 @use "../../styles/mixins/theme-variants" as *;
 
+$svg-check-white: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='20 6 9 17 4 12'%3E%3C/polyline%3E%3C/svg%3E";
+$svg-check-dark: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23020617' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='20 6 9 17 4 12'%3E%3C/polyline%3E%3C/svg%3E";
+
 .checkbox-wrapper {
   display: inline-flex;
   align-items: center;
@@ -33,7 +36,8 @@
   transition: all var(--duration-fast) var(--ease-default);
   cursor: pointer;
 
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='20 6 9 17 4 12'%3E%3C/polyline%3E%3C/svg%3E");
+  --checkbox-icon: url("#{$svg-check-white}");
+  background-image: var(--checkbox-icon);
   background-size: 0;
   background-position: center;
   background-repeat: no-repeat;
@@ -77,10 +81,12 @@
 
   &-success {
     --checkbox-color-base: var(--color-success);
+    --checkbox-icon: url("#{$svg-check-dark}");
   }
 
   &-warning {
     --checkbox-color-base: var(--color-warning);
+    --checkbox-icon: url("#{$svg-check-dark}");
   }
 
   &-danger {
@@ -89,6 +95,7 @@
 
   &-info {
     --checkbox-color-base: var(--color-info);
+    --checkbox-icon: url("#{$svg-check-dark}");
   }
 
   // ==========================================================================
@@ -96,5 +103,8 @@
   // ==========================================================================
   @include for-each-theme-color using($color, $is-light) {
     --checkbox-color-base: var(--#{$color});
+    @if $is-light {
+      --checkbox-icon: url("#{$svg-check-dark}");
+    }
   }
 }

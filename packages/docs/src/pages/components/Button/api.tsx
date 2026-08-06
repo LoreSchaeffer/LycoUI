@@ -3,19 +3,22 @@ import type {PropDefinition} from "../../../components/api-reference/ApiReferenc
 export const buttonPropsData: PropDefinition[] = [
     {
         name: 'variant',
-        type: 'ColorVariant',
+        type: 'FullVariant',
+        typeLink: '/docs/types#full-variant',
         defaultValue: "'primary'",
         description: 'Defines the color scheme based on global theme hues.'
     },
     {
         name: 'size',
-        type: "'sm' | 'base' | 'lg'",
-        defaultValue: "'base'",
+        type: 'SizeVariant',
+        typeLink: '/docs/types#size-variant',
+        defaultValue: "'md'",
         description: 'Defines the physical size, padding, and font size of the button.'
     },
     {
         name: 'align',
-        type: "'start' | 'center' | 'end'",
+        type: 'Alignment',
+        typeLink: '/docs/types#alignment',
         defaultValue: "'center'",
         description: 'Defines the horizontal alignment of the button content.'
     },
@@ -69,7 +72,8 @@ export const buttonPropsData: PropDefinition[] = [
 export const buttonGroupPropsData: PropDefinition[] = [
     {
         name: 'orientation',
-        type: "'horizontal' | 'vertical'",
+        type: 'Orientation',
+        typeLink: '/docs/types#orientation',
         defaultValue: "'horizontal'",
         description: 'Defines the layout direction and handles internal border-radius collapsing.'
     }

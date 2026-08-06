@@ -10,7 +10,7 @@
   color: var(--color-text-primary);
   overflow: hidden;
   transition: box-shadow var(--duration-fast) var(--ease-default),
-  background-color var(--duration-fast) var(--ease-default);
+              background-color var(--duration-fast) var(--ease-default);
 
   // ==========================================================================
   // ELEVATIONS
@@ -59,7 +59,16 @@
   }
 
   // ==========================================================================
+  // FLAT MODIFIER — strips elevation depth cues for a clean solid appearance
+  // ==========================================================================
+  &.card-flat {
+    box-shadow: none;
+    background-image: none;
+  }
+
+  // ==========================================================================
   // COLOR VARIANTS (Solid & Dim)
+  // Uses double-class specificity to override elevation background cleanly.
   // ==========================================================================
   &.card-variant {
     &.card-dim {
@@ -84,7 +93,7 @@
   &-primary {
     --card-color-base: var(--color-primary);
     --card-color-dim: var(--color-primary-dim);
-    --card-text-color: #ffffff;
+    --card-text-color: var(--white);
   }
 
   &-success {
@@ -102,7 +111,7 @@
   &-danger {
     --card-color-base: var(--color-danger);
     --card-color-dim: color-mix(in srgb, var(--color-danger) 15%, transparent);
-    --card-text-color: #ffffff;
+    --card-text-color: var(--white);
   }
 
   &-info {
@@ -112,7 +121,7 @@
   }
 
   // ==========================================================================
-  // PALETTE COLOR MAPPINGS
+  // PALETTE COLOR MAPPINGS (from mixin loop)
   // ==========================================================================
   @include for-each-theme-color using($color, $is-light) {
     --card-color-base: var(--#{$color});
@@ -121,7 +130,7 @@
     @if $is-light {
       --card-text-color: var(--slate-950);
     } @else {
-      --card-text-color: #ffffff;
+      --card-text-color: var(--white);
     }
   }
 }

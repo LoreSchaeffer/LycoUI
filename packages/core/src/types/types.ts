@@ -13,7 +13,11 @@ export type ColorVariant =
     | 'magenta'
     | 'white';
 
-export type SizeVariant = 'sm' | 'base' | 'lg';
+export type SemanticVariant = 'success' | 'warning' | 'danger' | 'info';
+
+export type FullVariant = ColorVariant | SemanticVariant;
+
+export type SizeVariant = 'sm' | 'md' | 'lg';
 
 export type Alignment = 'start' | 'center' | 'end';
 

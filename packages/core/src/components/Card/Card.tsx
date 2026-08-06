@@ -1,7 +1,7 @@
 import './Card.scss';
 import {forwardRef, type HTMLAttributes, type ReactNode} from 'react';
 import clsx from 'clsx';
-import type {ColorVariant} from '../../types/types.ts';
+import type {FullVariant} from '../../types/types.ts';
 
 export type CardElevation = 0 | 1 | 2 | 3 | 4;
 export type CardPadding = 'none' | 'sm' | 'md' | 'lg';
@@ -9,8 +9,9 @@ export type CardPadding = 'none' | 'sm' | 'md' | 'lg';
 export interface CardProps extends HTMLAttributes<HTMLDivElement> {
     children: ReactNode;
     elevation?: CardElevation;
-    variant?: ColorVariant | 'default';
+    variant?: FullVariant | 'default';
     isDim?: boolean;
+    isFlat?: boolean;
     padding?: CardPadding;
 }
 
@@ -20,6 +21,7 @@ export const Card = forwardRef<HTMLDivElement, CardProps>((
         elevation = 1,
         variant = 'default',
         isDim = true,
+        isFlat = false,
         padding = 'md',
         className,
         ...props
@@ -39,6 +41,7 @@ export const Card = forwardRef<HTMLDivElement, CardProps>((
                     `card-${variant}`,
                     isDim ? 'card-dim' : 'card-solid'
                 ],
+                isFlat && 'card-flat',
                 className
             )}
             {...props}

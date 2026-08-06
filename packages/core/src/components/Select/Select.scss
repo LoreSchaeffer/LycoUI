@@ -1,0 +1,259 @@
+@use "../../styles/mixins/theme-variants" as *;
+
+.select {
+  position: relative;
+  width: 100%;
+  font-family: var(--font-family-base);
+  font-size: var(--font-size-base);
+  color: var(--color-text-primary);
+  outline: none;
+
+  --select-color-base: var(--color-primary);
+
+  &.is-disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+
+    .select__trigger {
+      pointer-events: none;
+    }
+  }
+
+  &:focus-visible .select__trigger {
+    box-shadow: 0 0 0 2px var(--color-bg-root), 0 0 0 4px var(--select-color-base);
+    border-color: var(--select-color-base);
+  }
+
+  // ==========================================================================
+  // SIZES
+  // ==========================================================================
+  &-sm {
+    font-size: var(--font-size-sm);
+
+    .select__trigger {
+      padding: var(--spacing-1) var(--spacing-3);
+      min-height: 2rem;
+    }
+  }
+
+  &-lg {
+    font-size: var(--font-size-lg);
+
+    .select__trigger {
+      padding: var(--spacing-3) var(--spacing-4);
+      min-height: 3rem;
+    }
+  }
+
+  // ==========================================================================
+  // SEMANTIC & PALETTE VARIANTS
+  // ==========================================================================
+  &-primary {
+    --select-color-base: var(--color-primary);
+  }
+
+  &-success {
+    --select-color-base: var(--color-success);
+  }
+
+  &-warning {
+    --select-color-base: var(--color-warning);
+  }
+
+  &-danger {
+    --select-color-base: var(--color-danger);
+  }
+
+  &-info {
+    --select-color-base: var(--color-info);
+  }
+
+  @include for-each-theme-color using($color, $is-light) {
+    &-#{$color} {
+      --select-color-base: var(--#{$color});
+    }
+  }
+
+  // ==========================================================================
+  // TRIGGER ELEMENT
+  // ==========================================================================
+  &__trigger {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    min-height: 2.5rem;
+    padding: var(--spacing-2) var(--spacing-3);
+    background-color: var(--color-bg-surface);
+    border: 1px solid var(--color-border-base);
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    transition: all var(--duration-fast) var(--ease-default);
+    box-sizing: border-box;
+
+    &:hover {
+      border-color: var(--color-text-secondary);
+    }
+  }
+
+  &.is-open .select__trigger {
+    border-color: var(--select-color-base);
+    box-shadow: 0 0 0 1px var(--select-color-base);
+  }
+
+  &__content {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-2);
+    overflow: hidden;
+  }
+
+  &__icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--color-text-secondary);
+    font-size: 1.1em;
+  }
+
+  &__value {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  &__placeholder {
+    color: var(--color-text-muted);
+  }
+
+  &__chevron {
+    width: 1.25em;
+    height: 1.25em;
+    color: var(--color-text-secondary);
+    transition: transform var(--duration-fast) var(--ease-default);
+    flex-shrink: 0;
+  }
+
+  &.is-open .select__chevron {
+    transform: rotate(180deg);
+  }
+
+  // ==========================================================================
+  // DROPDOWN LISTBOX
+  // ==========================================================================
+  &__dropdown {
+    position: absolute;
+    top: calc(100% + var(--spacing-2));
+    left: 0;
+    width: 100%;
+    max-height: 250px;
+    overflow-y: auto;
+    margin: 0;
+    padding: var(--spacing-1);
+    list-style: none;
+    background-color: var(--color-surface-elevated);
+    border: 1px solid var(--color-border-base);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-md);
+    z-index: var(--z-dropdown, 100);
+    box-sizing: border-box;
+
+    &[hidden] {
+      display: none !important;
+    }
+
+    scrollbar-width: thin;
+    scrollbar-color: var(--slate-600) transparent;
+
+    &::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background-color: var(--slate-600);
+      border-radius: var(--radius-full);
+    }
+  }
+
+  &__option {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-2);
+    padding: var(--spacing-2) var(--spacing-3);
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    transition: background-color var(--duration-fast) var(--ease-default),
+    color var(--duration-fast) var(--ease-default);
+
+
+
+    &.is-disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    &:not(.is-disabled):hover,
+    &.is-focused:not(.is-disabled) {
+      background-color: var(--color-bg-surface);
+    }
+
+    &.is-selected {
+      background-color: color-mix(in srgb, var(--select-color-base) 15%, transparent);
+      color: var(--select-color-base);
+      font-weight: var(--font-weight-medium);
+    }
+  }
+
+  &__spacer {
+    height: 1px;
+    background-color: var(--color-border-base);
+    margin: var(--spacing-2) 0;
+    padding: 0;
+    list-style: none;
+    cursor: default;
+    pointer-events: none;
+  }
+
+  @mixin option-variant($color-var) {
+    background-color: color-mix(in srgb, #{$color-var} 15%, transparent);
+    color: #{$color-var};
+
+    &:not(.is-disabled):hover,
+    &.is-focused:not(.is-disabled) {
+      background-color: color-mix(in srgb, #{$color-var} 25%, transparent);
+    }
+
+    &.is-selected {
+      background-color: color-mix(in srgb, #{$color-var} 35%, transparent);
+      font-weight: var(--font-weight-medium);
+    }
+  }
+
+  &__option-success {
+    @include option-variant(var(--color-success));
+  }
+  &__option-warning {
+    @include option-variant(var(--color-warning));
+  }
+  &__option-danger {
+    @include option-variant(var(--color-danger));
+  }
+  &__option-info {
+    @include option-variant(var(--color-info));
+  }
+
+  @include for-each-theme-color using($color, $is-light) {
+    &__option-#{$color} {
+      @include option-variant(var(--#{$color}));
+    }
+  }
+
+  &__icon--option {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: inherit;
+    font-size: 1.1em;
+    flex-shrink: 0;
+  }
+}

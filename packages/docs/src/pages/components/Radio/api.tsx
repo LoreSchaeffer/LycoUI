@@ -8,14 +8,16 @@ export const radioPropsData: PropDefinition[] = [
     },
     {
         name: 'variant',
-        type: "ColorVariant | 'default'",
+        type: 'FullVariant',
+        typeLink: '/docs/types#full-variant',
         defaultValue: "'primary'",
         description: 'Applies semantic colors from the global palette to the radio background and border.'
     },
     {
         name: 'size',
-        type: "'sm' | 'base' | 'lg'",
-        defaultValue: "'base'",
+        type: 'SizeVariant',
+        typeLink: '/docs/types#size-variant',
+        defaultValue: "'md'",
         description: 'Controls the physical dimensions of the radio and its label text.'
     }
 ];

@@ -4,6 +4,7 @@ import React, {type ReactNode} from 'react';
 export interface PropDefinition {
     name: string;
     type: string;
+    typeLink?: string;
     defaultValue?: string;
     description: ReactNode;
 }
@@ -34,7 +35,11 @@ export const PropsTable: React.FC<PropsTableProps> = ({title, data}) => {
                                 <code>{row.name}</code>
                             </td>
                             <td className="td-type">
-                                <code>{row.type}</code>
+                                {row.typeLink ? (
+                                    <a href={row.typeLink} className="type-link"><code>{row.type}</code></a>
+                                ) : (
+                                    <code>{row.type}</code>
+                                )}
                             </td>
                             <td className="td-default">
                                 {row.defaultValue ? (

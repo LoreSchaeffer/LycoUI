@@ -12,6 +12,7 @@ export interface CodeExampleProps {
     description?: React.ReactNode;
     reactCode: string;
     htmlHint?: string;
+    vanillaHtml?: string;
     previewLayout?: 'row' | 'column';
     previewStyles?: CSSProperties;
     children: React.ReactNode;
@@ -22,6 +23,7 @@ export const CodeExample: React.FC<CodeExampleProps> = ({
                                                             description,
                                                             reactCode,
                                                             htmlHint,
+                                                            vanillaHtml,
                                                             previewLayout = 'row',
                                                             previewStyles,
                                                             children
@@ -30,14 +32,14 @@ export const CodeExample: React.FC<CodeExampleProps> = ({
     const [isCopied, setIsCopied] = useState<boolean>(false);
 
     const generatedHtml = useMemo(() => {
-        const rawHtml = renderToStaticMarkup(<>{children}</>);
+        let rawHtml = vanillaHtml || renderToStaticMarkup(<>{children}</>);
         const beautifiedHtml = formatHtml(rawHtml);
 
         if (!htmlHint) return beautifiedHtml;
 
         const safeHtmlHint = htmlHint.replace(/-->/g, '-- >').trim();
         return `<!-- ${safeHtmlHint} -->\n${beautifiedHtml}`;
-    }, [children, htmlHint]);
+    }, [children, htmlHint, vanillaHtml]);
 
     const activeCode = activeTab === 'react' ? formatReact(reactCode).trim() : generatedHtml;
 

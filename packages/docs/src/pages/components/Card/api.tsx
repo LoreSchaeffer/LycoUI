@@ -15,15 +15,22 @@ export const cardPropsData: PropDefinition[] = [
     },
     {
         name: 'variant',
-        type: "ColorVariant | 'default'",
+        type: "FullVariant | 'default'",
+        typeLink: '/docs/types#full-variant',
         defaultValue: "'default'",
-        description: 'Applies semantic colors from the global palette to the card structure.'
+        description: 'Applies semantic or palette colors from the global theme to the card structure.'
     },
     {
         name: 'isDim',
         type: 'boolean',
         defaultValue: 'true',
-        description: 'If true, applies a transparent background. If false, applies a solid block color.'
+        description: 'If true, applies a transparent background tint. If false, applies a solid block color with automatic text contrast.'
+    },
+    {
+        name: 'isFlat',
+        type: 'boolean',
+        defaultValue: 'false',
+        description: 'Strips shadows and background gradients for a clean flat appearance. Applies .card-flat class.'
     }
 ];
 

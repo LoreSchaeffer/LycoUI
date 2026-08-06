@@ -12,7 +12,23 @@ const DocsLayout: React.FC = () => {
 
     useEffect(() => {
         setIsSidebarOpen(false);
-    }, [location.pathname]);
+        if (location.hash) {
+            const id = location.hash.substring(1);
+            let attempts = 0;
+            const scrollInterval = setInterval(() => {
+                const el = document.getElementById(id);
+                if (el) {
+                    el.scrollIntoView({ behavior: 'smooth' });
+                    clearInterval(scrollInterval);
+                }
+                attempts++;
+                if (attempts > 15) clearInterval(scrollInterval);
+            }, 100);
+        } else {
+            window.scrollTo(0, 0);
+            document.querySelector('.docs-content')?.scrollTo(0, 0);
+        }
+    }, [location.pathname, location.hash]);
 
     const processedNavigation = useMemo(() => {
         return docsNavigation.map(category => ({
@@ -85,6 +101,20 @@ const DocsLayout: React.FC = () => {
                                                     </>
                                                 )}
                                             </NavLink>
+                                            {item.subItems && location.pathname === item.path && (
+                                                <ul className="docs-sidebar__subitems">
+                                                    {item.subItems.map(subItem => (
+                                                        <li key={subItem.hash}>
+                                                            <NavLink
+                                                                className={() => clsx('docs-sidebar__sub-link', location.hash === subItem.hash && 'active')}
+                                                                to={`${item.path}${subItem.hash}`}
+                                                            >
+                                                                {subItem.name}
+                                                            </NavLink>
+                                                        </li>
+                                                    ))}
+                                                </ul>
+                                            )}
                                         </li>
                                     ))}
                                 </ul>
