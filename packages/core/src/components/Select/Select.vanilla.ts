@@ -1,5 +1,5 @@
 export function initLycoSelects() {
-    const nativeSelects = document.querySelectorAll<HTMLSelectElement>('select.lyco-select-custom');
+    const nativeSelects = document.querySelectorAll<HTMLSelectElement>('select.select-custom');
     nativeSelects.forEach(select => {
         if (!select.dataset.lycoInitialized) {
             new LycoSelectController(select);

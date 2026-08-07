@@ -1,0 +1,436 @@
+@use "../../styles/mixins/theme-variants" as *;
+
+// ==========================================================================
+// INPUT WRAPPER — Contains input + validation message
+// ==========================================================================
+.input-wrapper {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+// ==========================================================================
+// INPUT — Main container
+// ==========================================================================
+.input {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  background-color: var(--color-surface-elevated);
+  border: 1px solid var(--color-border-base);
+  
+  --input-radius: var(--radius-md);
+  border-radius: var(--input-radius);
+  
+  transition:
+    border-color var(--duration-fast) var(--ease-default),
+    box-shadow var(--duration-fast) var(--ease-default);
+  cursor: text;
+
+  --input-color-base: var(--color-primary);
+  --input-height: 2.75rem;
+  --input-padding-x: var(--spacing-3);
+  --input-font-size: var(--font-size-base);
+  --input-icon-size: 1.25rem;
+
+  // ==========================================================================
+  // NATIVE INPUT
+  // ==========================================================================
+  &__field {
+    flex: 1;
+    width: 100%;
+    height: var(--input-height);
+    padding: 0 var(--input-padding-x);
+    background: transparent;
+    border: none;
+    outline: none;
+    color: var(--color-text-primary);
+    font-family: var(--font-family-base);
+    font-size: var(--input-font-size);
+    caret-color: var(--input-color-base);
+
+    &::placeholder {
+      color: var(--color-text-muted);
+      opacity: 1;
+    }
+
+    // Hide native number spinners — custom step buttons replace them
+    &[type="number"] {
+      -moz-appearance: textfield;
+      appearance: textfield;
+
+      &::-webkit-outer-spin-button,
+      &::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+      }
+    }
+
+    // File input styling
+    &[type="file"] {
+      padding: 0;
+      cursor: pointer;
+      line-height: var(--input-height);
+      color: var(--color-text-secondary);
+
+      &::file-selector-button {
+        height: 100%;
+        padding: 0 var(--input-padding-x);
+        margin-right: var(--spacing-3);
+        background-color: var(--color-surface-elevated);
+        border: none;
+        border-right: 1px solid var(--color-border-base);
+        border-top-left-radius: calc(var(--input-radius) - 1px);
+        border-bottom-left-radius: calc(var(--input-radius) - 1px);
+        color: var(--color-text-primary);
+        font-family: inherit;
+        font-size: var(--input-font-size);
+        font-weight: 500;
+        cursor: pointer;
+        transition: background-color var(--duration-fast) var(--ease-default);
+
+        &:hover {
+          background-color: color-mix(in srgb, var(--color-surface-elevated) 80%, var(--color-text-primary));
+        }
+      }
+    }
+  }
+
+  // ==========================================================================
+  // FLOATING LABEL
+  // ==========================================================================
+  &__label {
+    position: absolute;
+    left: var(--input-padding-x);
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: var(--input-font-size);
+    color: var(--color-text-muted);
+    pointer-events: none;
+    transform-origin: left center;
+    transition:
+      transform var(--duration-fast) var(--ease-default),
+      font-size var(--duration-fast) var(--ease-default),
+      color var(--duration-fast) var(--ease-default);
+    line-height: 1;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: calc(100% - var(--input-padding-x) * 2);
+  }
+
+  &__required {
+    color: var(--color-danger);
+  }
+
+  // When focused or filled, float the label up
+  &.is-focused &__label,
+  &.is-filled &__label {
+    transform: translateY(-130%) scale(0.8);
+    color: var(--color-text-secondary);
+  }
+
+  &.is-focused &__label {
+    color: var(--input-color-base);
+  }
+
+  // When label is present, add top padding to the field to make room
+  &:has(.input__label) .input__field {
+    padding-top: var(--spacing-3);
+  }
+
+  // Adjust label position when icon-start is present
+  &.input-has-icon-start .input__label {
+    left: calc(var(--input-padding-x) + var(--input-icon-size) + var(--spacing-2));
+  }
+
+  // Placeholder visibility with floating label
+  &:has(.input__label) .input__field::placeholder {
+    opacity: 0;
+    transition: opacity var(--duration-fast) var(--ease-default);
+  }
+
+  &.is-focused:has(.input__label) .input__field::placeholder {
+    opacity: 1;
+  }
+
+  // Hide placeholder natively for file inputs since it acts weird with floating label
+  &:has(.input__field[type="file"]) .input__field {
+    color: transparent;
+  }
+  &.is-focused:has(.input__field[type="file"]) .input__field,
+  &.is-filled:has(.input__field[type="file"]) .input__field {
+    color: var(--color-text-secondary);
+  }
+
+  // ==========================================================================
+  // ICONS
+  // ==========================================================================
+  &__icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    color: var(--color-text-muted);
+    width: var(--input-icon-size);
+    height: var(--input-icon-size);
+
+    svg {
+      width: 100%;
+      height: 100%;
+    }
+
+    &--start {
+      margin-left: var(--input-padding-x);
+    }
+
+    &--end {
+      margin-right: var(--input-padding-x);
+    }
+
+    &--clickable {
+      cursor: pointer;
+      border: none;
+      background: none;
+      padding: 0;
+      border-radius: var(--radius-sm);
+      transition: color var(--duration-fast) var(--ease-default);
+
+      &:hover {
+        color: var(--input-color-base);
+      }
+
+      &:focus-visible {
+        outline: 2px solid var(--input-color-base);
+        outline-offset: 2px;
+      }
+    }
+  }
+
+  // Remove left padding from field when icon-start is present (icon has its own margin)
+  &.input-has-icon-start .input__field {
+    padding-left: var(--spacing-2);
+  }
+
+  &.input-has-icon-end .input__field {
+    padding-right: var(--spacing-2);
+  }
+
+  // ==========================================================================
+  // STEP BUTTONS (Number inputs)
+  // ==========================================================================
+  &__step-buttons {
+    display: flex;
+    flex-direction: column;
+    align-self: stretch;
+    border-left: 1px solid var(--color-border-base);
+    flex-shrink: 0;
+  }
+
+  &__step-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex: 1;
+    width: 2rem;
+    padding: 0;
+    border: none;
+    background: transparent;
+    color: var(--color-text-muted);
+    cursor: pointer;
+    transition:
+      background-color var(--duration-fast) var(--ease-default),
+      color var(--duration-fast) var(--ease-default);
+
+    svg {
+      width: 0.75rem;
+      height: 0.75rem;
+    }
+
+    &:hover {
+      background-color: color-mix(in srgb, var(--input-color-base) 15%, transparent);
+      color: var(--input-color-base);
+    }
+
+    &:active {
+      background-color: color-mix(in srgb, var(--input-color-base) 25%, transparent);
+    }
+
+    &--up {
+      border-bottom: 1px solid var(--color-border-base);
+      border-radius: 0 var(--radius-md) 0 0;
+    }
+
+    &--down {
+      border-radius: 0 0 var(--radius-md) 0;
+    }
+  }
+
+  // ==========================================================================
+  // FOCUS STATE
+  // ==========================================================================
+  &.is-focused {
+    border-color: var(--input-color-base);
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--input-color-base) 20%, transparent);
+  }
+
+  // ==========================================================================
+  // DISABLED STATE
+  // ==========================================================================
+  &.is-disabled {
+    opacity: 0.55;
+    cursor: not-allowed;
+    pointer-events: none;
+  }
+
+  // ==========================================================================
+  // READONLY STATE
+  // ==========================================================================
+  &.is-readonly,
+  &:has(.input__field[readonly]) {
+    background-color: var(--color-surface-base);
+    border-color: var(--color-border-base);
+    
+    .input__field {
+      cursor: default;
+    }
+
+    .input__icon--clickable {
+      pointer-events: none;
+      opacity: 0.5;
+    }
+  }
+
+  // ==========================================================================
+  // LOADING STATE
+  // ==========================================================================
+  &.is-loading {
+    cursor: wait;
+  }
+
+  // ==========================================================================
+  // VALIDATION STATES
+  // ==========================================================================
+  &.is-valid {
+    border-color: var(--color-success);
+
+    &.is-focused {
+      box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-success) 20%, transparent);
+    }
+  }
+
+  &.is-invalid {
+    border-color: var(--color-danger);
+
+    &.is-focused {
+      box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-danger) 20%, transparent);
+    }
+  }
+
+  // ==========================================================================
+  // FLAT MODIFIER
+  // ==========================================================================
+  &.input-flat {
+    box-shadow: none;
+    background-image: none;
+
+    &.is-focused {
+      box-shadow: 0 0 0 3px color-mix(in srgb, var(--input-color-base) 20%, transparent);
+    }
+  }
+
+  // ==========================================================================
+  // SIZES
+  // ==========================================================================
+  &-sm {
+    --input-height: 2.25rem;
+    --input-padding-x: var(--spacing-2);
+    --input-font-size: var(--font-size-sm);
+    --input-icon-size: 1rem;
+    --input-radius: var(--radius-sm);
+
+    .input__step-btn {
+      width: 1.5rem;
+
+      svg {
+        width: 0.625rem;
+        height: 0.625rem;
+      }
+    }
+  }
+
+  &-lg {
+    --input-height: 3.25rem;
+    --input-padding-x: var(--spacing-4);
+    --input-font-size: var(--font-size-lg);
+    --input-icon-size: 1.5rem;
+    --input-radius: var(--radius-base);
+
+    .input__step-btn {
+      width: 2.5rem;
+
+      svg {
+        width: 0.875rem;
+        height: 0.875rem;
+      }
+    }
+  }
+
+  // ==========================================================================
+  // VARIANT — Primary
+  // ==========================================================================
+  &-primary {
+    --input-color-base: var(--color-primary);
+  }
+
+  // ==========================================================================
+  // VARIANTS — Semantic
+  // ==========================================================================
+  &-success {
+    --input-color-base: var(--color-success);
+  }
+  &-warning {
+    --input-color-base: var(--color-warning);
+  }
+  &-danger {
+    --input-color-base: var(--color-danger);
+  }
+  &-info {
+    --input-color-base: var(--color-info);
+  }
+
+  // ==========================================================================
+  // VARIANTS — Theme Colors
+  // ==========================================================================
+  @include for-each-theme-color using($color, $is-light) {
+    --input-color-base: var(--#{$color}-500);
+  }
+}
+
+// ==========================================================================
+// VALIDATION MESSAGE — Outside .input to avoid BEM nesting issues
+// ==========================================================================
+.input__message {
+  font-size: var(--font-size-sm);
+  margin-top: var(--spacing-1);
+  padding-left: var(--spacing-1);
+  line-height: 1.4;
+
+  &--valid {
+    color: var(--color-success);
+  }
+
+  &--invalid {
+    color: var(--color-danger);
+  }
+}
+
+// ==========================================================================
+// SPINNER INSIDE INPUT — scoped outside .input to avoid BEM nesting
+// ==========================================================================
+.input .input__spinner {
+  color: var(--input-color-base, currentColor);
+  width: var(--input-icon-size, 1.25rem);
+  height: var(--input-icon-size, 1.25rem);
+}

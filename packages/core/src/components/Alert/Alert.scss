@@ -1,0 +1,135 @@
+@use "../../styles/mixins/theme-variants" as *;
+
+.alert {
+  --alert-color-base: var(--color-primary);
+  --alert-bg: color-mix(in srgb, var(--alert-color-base) 12%, transparent);
+  --alert-text: var(--color-text-primary);
+  --alert-border: var(--alert-color-base);
+  --alert-radius: var(--radius-md);
+  
+  position: relative;
+  display: flex;
+  align-items: flex-start;
+  padding: var(--spacing-4) var(--spacing-5);
+  background-color: var(--alert-bg);
+  color: var(--alert-text);
+  border-radius: var(--alert-radius);
+  border-left: 4px solid var(--alert-border);
+  box-shadow: var(--shadow-sm);
+  overflow: hidden;
+  font-family: var(--font-family-base);
+  font-size: var(--font-size-base);
+  line-height: 1.5;
+
+
+
+  &.has-icon {
+    .alert__content {
+      padding-left: var(--spacing-3);
+    }
+  }
+
+  &.alert-closable {
+    padding-right: 3rem;
+  }
+
+  // Generate variants
+  &-success { --alert-color-base: var(--color-success); }
+  &-warning { --alert-color-base: var(--color-warning); }
+  &-danger { --alert-color-base: var(--color-danger); }
+  &-info { --alert-color-base: var(--color-info); }
+  
+  &-neutral { 
+    --alert-color-base: var(--slate-500); 
+  }
+  
+  &-white {
+    --alert-color-base: var(--white);
+    --alert-text: var(--color-text-primary);
+  }
+
+  @include for-each-theme-color using($color, $is-light) {
+    @if $color != 'white' and $color != 'neutral' {
+      &-#{$color} { --alert-color-base: var(--#{$color}-500); }
+    }
+  }
+}
+
+.alert__icon {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.5rem;
+  height: 1.5rem;
+  color: var(--alert-border);
+
+  .alert-white & {
+    color: var(--color-text-secondary);
+  }
+
+  svg {
+    width: 100%;
+    height: 100%;
+  }
+}
+
+.alert__content {
+  flex-grow: 1;
+  word-break: break-word;
+}
+
+.alert__close {
+  position: absolute;
+  top: 0.75rem;
+  right: 0.75rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2rem;
+  height: 2rem;
+  padding: 0;
+  background: transparent;
+  border: none;
+  border-radius: var(--radius-sm);
+  color: var(--color-text-muted);
+  cursor: pointer;
+  transition: background-color var(--duration-fast), color var(--duration-fast);
+
+  &:hover {
+    color: var(--color-text-primary);
+    background-color: var(--color-surface-hover);
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--alert-color-base);
+    outline-offset: -2px;
+  }
+
+  svg {
+    width: 1.25rem;
+    height: 1.25rem;
+  }
+}
+
+.alert__progress {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  height: 3px;
+  background-color: var(--alert-border);
+  animation: alert-shrink linear forwards;
+
+  .alert-white & {
+    background-color: var(--color-border-hover);
+  }
+}
+
+@keyframes alert-shrink {
+  0% {
+    width: 100%;
+  }
+  100% {
+    width: 0%;
+  }
+}

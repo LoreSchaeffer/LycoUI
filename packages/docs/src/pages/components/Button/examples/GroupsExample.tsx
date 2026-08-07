@@ -22,7 +22,7 @@ export const vanillaHtml = `
 export default function GroupsExample() {
     return (
         <>
-            <ButtonGroup className="lyco-mb-4">
+            <ButtonGroup className="mb-4">
                 <Button>Left</Button>
                 <Button>Middle</Button>
                 <Button>Right</Button>

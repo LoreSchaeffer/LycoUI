@@ -8,7 +8,7 @@ export const order = 3;
 export const vanillaHtml = `
 <div class="row">
   <div class="col-12 col-md-6">
-    <select class="lyco-select-custom">
+    <select class="select-custom">
       <option value="1">Normal Option</option>
       <option value="2" data-variant="success">Success Option</option>
       <option value="3" data-variant="danger">Danger Option</option>

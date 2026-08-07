@@ -2,11 +2,11 @@ import {useState} from 'react';
 import {Col, Row, Select} from 'lyco-ui';
 
 export const title = 'Basic Usage';
-export const description = <p>A standard select dropdown. In Vanilla HTML, use the <code>data-lyco-select</code> attribute to trigger the automatic JavaScript enhancement.</p>;
+export const description = <p>A standard select dropdown. In Vanilla HTML, use the <code>select-custom</code> class to trigger the automatic JavaScript enhancement.</p>;
 export const order = 1;
 
 export const vanillaHtml = `
-<select data-lyco-select data-variant="primary">
+<select class="select-custom" data-variant="primary">
     <option value="" disabled selected>Select an option...</option>
     <option value="1">Option 1</option>
     <option value="2">Option 2</option>
