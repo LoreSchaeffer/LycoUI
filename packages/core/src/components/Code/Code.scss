@@ -11,6 +11,8 @@
   border-radius: var(--code-radius);
   display: flex;
   flex-direction: column;
+  width: 100%;
+  min-width: 0;
   overflow: hidden;
   box-shadow: var(--shadow-sm);
   position: relative;
@@ -79,14 +81,29 @@
       outline-offset: 2px;
     }
 
-    .text-success {
+    .icon-success {
+      display: none;
       color: var(--color-success);
+    }
+    
+    .icon-default {
+      display: block;
+    }
+
+    &.is-copied {
+      .icon-default {
+        display: none;
+      }
+      .icon-success {
+        display: block;
+      }
     }
   }
 
   &__body {
     position: relative;
     flex: 1;
+    min-width: 0;
     overflow: hidden;
   }
 

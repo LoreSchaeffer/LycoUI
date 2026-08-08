@@ -8,6 +8,19 @@ export function initLycoSelects() {
     });
 }
 
+function parseSafeSvg(svgString: string): SVGSVGElement | null {
+    const template = document.createElement('template');
+    template.innerHTML = svgString;
+    const svg = template.content.querySelector('svg');
+    if (!svg) return null;
+    
+    svg.querySelectorAll('script').forEach(s => s.remove());
+    Array.from(svg.attributes).forEach(attr => {
+        if (attr.name.startsWith('on')) svg.removeAttribute(attr.name);
+    });
+    return svg;
+}
+
 class LycoSelectController {
     private readonly nativeSelect: HTMLSelectElement;
     private readonly customContainer: HTMLDivElement;
@@ -15,6 +28,7 @@ class LycoSelectController {
     private valueElement!: HTMLSpanElement;
     private dropdown!: HTMLUListElement;
     private options: HTMLLIElement[] = [];
+    private optionListeners: { el: HTMLLIElement, click: () => void, mouseenter: () => void }[] = [];
 
     private isOpen: boolean = false;
     private focusedIndex: number = -1;
@@ -75,6 +89,7 @@ class LycoSelectController {
         chevron.setAttribute('stroke-width', '2');
         chevron.setAttribute('stroke-linecap', 'round');
         chevron.setAttribute('stroke-linejoin', 'round');
+        chevron.setAttribute('aria-hidden', 'true');
         const polyline = document.createElementNS('http://www.w3.org/2000/svg', 'polyline');
         polyline.setAttribute('points', '6 9 12 15 18 9');
         chevron.appendChild(polyline);
@@ -121,12 +136,8 @@ class LycoSelectController {
             if (iconContent) {
                 const iconSpan = document.createElement('span');
                 iconSpan.className = 'select__icon select__icon--option';
-                const template = document.createElement('template');
-                template.innerHTML = iconContent;
-                // Basic sanitization: remove scripts
-                const scripts = template.content.querySelectorAll('script');
-                scripts.forEach(s => s.remove());
-                iconSpan.appendChild(template.content);
+                const safeSvg = parseSafeSvg(iconContent);
+                if (safeSvg) iconSpan.appendChild(safeSvg);
                 li.appendChild(iconSpan);
             }
 
@@ -150,8 +161,11 @@ class LycoSelectController {
 
         this.options.forEach((optEl, listIndex) => {
             if (optEl.classList.contains('select__spacer')) return;
-            optEl.addEventListener('click', () => this.selectOption(listIndex));
-            optEl.addEventListener('mouseenter', () => this.updateFocus(listIndex));
+            const clickFn = () => this.selectOption(listIndex);
+            const mouseFn = () => this.updateFocus(listIndex);
+            optEl.addEventListener('click', clickFn);
+            optEl.addEventListener('mouseenter', mouseFn);
+            this.optionListeners.push({ el: optEl, click: clickFn, mouseenter: mouseFn });
         });
 
         this.customContainer.addEventListener('keydown', this._onKeyDown);
@@ -163,13 +177,22 @@ class LycoSelectController {
         this.trigger.removeEventListener('click', this._onToggle);
         this.customContainer.removeEventListener('keydown', this._onKeyDown);
         this.nativeSelect.removeEventListener('change', this._onChange);
+        this.optionListeners.forEach(({ el, click, mouseenter }) => {
+            el.removeEventListener('click', click);
+            el.removeEventListener('mouseenter', mouseenter);
+        });
         this.customContainer.remove();
+        this.nativeSelect.style.display = '';
         delete this.nativeSelect.dataset.lycoInitialized;
     }
 
     private toggle(): void {
         if (this.nativeSelect.disabled) return;
-        this.isOpen ? this.close() : this.open();
+        if (this.isOpen) {
+            this.close();
+        } else {
+            this.open();
+        }
     }
 
     private open(): void {
@@ -230,11 +253,8 @@ class LycoSelectController {
         if (iconContent) {
             const iconSpan = document.createElement('span');
             iconSpan.className = 'select__icon select__icon--start';
-            const template = document.createElement('template');
-            template.innerHTML = iconContent;
-            const scripts = template.content.querySelectorAll('script');
-            scripts.forEach(s => s.remove());
-            iconSpan.appendChild(template.content);
+            const safeSvg = parseSafeSvg(iconContent);
+            if (safeSvg) iconSpan.appendChild(safeSvg);
             this.valueElement.parentNode?.insertBefore(iconSpan, this.valueElement);
         }
 

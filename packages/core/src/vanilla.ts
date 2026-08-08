@@ -4,6 +4,7 @@ import {initLycoInputs} from './components/Input/Input.vanilla';
 import {initLycoAccordions} from './components/Accordion/Accordion.vanilla';
 import {initLycoAlerts} from './components/Alert/Alert.vanilla';
 import {initLycoCodes} from './components/Code/Code.vanilla';
+import {snackbar} from './components/Snackbar/Snackbar.vanilla';
 
 export const initLycoUI = (): void => {
     initLycoSelects();
@@ -25,5 +26,6 @@ if (typeof window !== 'undefined' && typeof document !== 'undefined') {
 export {
     initLycoSelects,
     initLycoRanges,
-    initLycoInputs
+    initLycoInputs,
+    snackbar
 };

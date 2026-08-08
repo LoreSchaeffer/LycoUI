@@ -95,5 +95,10 @@ class LycoRangeController {
 
     public destroy(): void {
         this.nativeInput.removeEventListener('input', this._onInput);
+        this.nativeInput.classList.remove('range__input');
+        this.nativeInput.classList.add('range-custom');
+        this.customContainer.parentNode?.insertBefore(this.nativeInput, this.customContainer);
+        this.customContainer.remove();
+        delete this.nativeInput.dataset.lycoInitialized;
     }
 }

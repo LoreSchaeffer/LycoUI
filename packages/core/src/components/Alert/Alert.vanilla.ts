@@ -51,14 +51,18 @@ class LycoAlertController {
         }, durationSeconds * 1000);
     }
 
-    public close(): void {
+    public destroy(): void {
         if (this.timerId) {
             window.clearTimeout(this.timerId);
         }
         if (this.closeBtn) {
             this.closeBtn.removeEventListener('click', this._onCloseClick);
         }
-        
+        delete this.element.dataset.lycoInitialized;
+    }
+
+    public close(): void {
+        this.destroy();
         // Remove from DOM safely
         this.element.remove();
     }

@@ -1,12 +1,13 @@
 import './Input.scss';
 import React, { forwardRef, useState, useRef, useCallback, useEffect, useId } from 'react';
+import type { InputHTMLAttributes } from 'react';
 import clsx from 'clsx';
 import type { FullVariant, SizeVariant } from '../../types/types';
 import { Spinner, type SpinnerType } from '../Spinner';
 
 export type InputValidation = 'disabled' | 'auto' | 'valid' | 'invalid';
 
-export interface InputProps extends Omit<React.InputHTMLAttributes<HTMLInputElement>, 'size'> {
+export interface InputProps extends Omit<InputHTMLAttributes<HTMLInputElement>, 'size'> {
   variant?: FullVariant;
   size?: SizeVariant;
   label?: string;
@@ -160,13 +161,12 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
         input.stepDown();
       }
 
-      // Dispatch native input event to trigger React's onChange
-      const nativeEvent = new Event('input', { bubbles: true });
-      input.dispatchEvent(nativeEvent);
-
-      // Also trigger change for React controlled components
-      const changeEvent = new Event('change', { bubbles: true });
-      input.dispatchEvent(changeEvent);
+      // Safely notify React of the value change using the native setter
+      const nativeInputValueSetter = Object.getOwnPropertyDescriptor(window.HTMLInputElement.prototype, 'value')?.set;
+      if (nativeInputValueSetter) {
+        nativeInputValueSetter.call(input, input.value);
+      }
+      input.dispatchEvent(new Event('input', { bubbles: true }));
 
       setIsFilled(input.value.length > 0);
 

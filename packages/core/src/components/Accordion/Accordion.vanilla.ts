@@ -9,11 +9,13 @@ export function initLycoAccordions(): void {
 }
 
 class LycoAccordionController {
+    private readonly customElement: HTMLDivElement;
     private readonly wrapper: HTMLDivElement;
     private readonly allowMultiple: boolean;
     private items: AccordionItemController[] = [];
 
     constructor(customElement: HTMLDivElement) {
+        this.customElement = customElement;
         this.allowMultiple = customElement.getAttribute('data-allow-multiple') === 'true';
         const variant = customElement.getAttribute('data-variant') || 'primary';
         const flush = customElement.getAttribute('data-flush') === 'true';
@@ -57,10 +59,14 @@ class LycoAccordionController {
 
     public destroy(): void {
         this.items.forEach(item => item.destroy());
+        this.wrapper.parentNode?.replaceChild(this.customElement, this.wrapper);
+        delete this.customElement.dataset.lycoInitialized;
     }
 }
 
 class AccordionItemController {
+    private readonly customItem: HTMLDivElement;
+    private readonly contentNodes: Node[];
     private readonly element: HTMLDivElement;
     private readonly button: HTMLButtonElement;
     private readonly parent: LycoAccordionController;
@@ -69,12 +75,13 @@ class AccordionItemController {
     private readonly _onClick: () => void;
 
     constructor(customItem: HTMLDivElement, parent: LycoAccordionController, index: number) {
+        this.customItem = customItem;
         this.parent = parent;
         
         const title = customItem.getAttribute('data-title') || 'Item';
         const initiallyOpen = customItem.getAttribute('data-open') === 'true';
         const disabled = customItem.hasAttribute('disabled');
-        const contentNodes = Array.from(customItem.childNodes);
+        this.contentNodes = Array.from(customItem.childNodes);
 
         // Generate IDs
         const baseId = `lyco-acc-${Math.random().toString(36).substr(2, 9)}-${index}`;
@@ -98,12 +105,21 @@ class AccordionItemController {
         this.button.setAttribute('aria-controls', collapseId);
         if (disabled) this.button.disabled = true;
 
-        this.button.innerHTML = `
-            ${title}
-            <svg class="accordion__chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <polyline points="6 9 12 15 18 9" />
-            </svg>
-        `;
+        this.button.textContent = title;
+        const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+        svg.setAttribute('class', 'accordion__chevron');
+        svg.setAttribute('viewBox', '0 0 24 24');
+        svg.setAttribute('fill', 'none');
+        svg.setAttribute('stroke', 'currentColor');
+        svg.setAttribute('stroke-width', '2');
+        svg.setAttribute('stroke-linecap', 'round');
+        svg.setAttribute('stroke-linejoin', 'round');
+        svg.setAttribute('aria-hidden', 'true');
+        const polyline = document.createElementNS('http://www.w3.org/2000/svg', 'polyline');
+        polyline.setAttribute('points', '6 9 12 15 18 9');
+        svg.appendChild(polyline);
+        this.button.appendChild(svg);
+        
         header.appendChild(this.button);
         this.element.appendChild(header);
 
@@ -121,7 +137,7 @@ class AccordionItemController {
         body.className = 'accordion__body';
         
         // Move native children safely
-        contentNodes.forEach(node => body.appendChild(node));
+        this.contentNodes.forEach(node => body.appendChild(node));
 
         collapseInner.appendChild(body);
         collapse.appendChild(collapseInner);
@@ -167,5 +183,6 @@ class AccordionItemController {
 
     public destroy(): void {
         this.button.removeEventListener('click', this._onClick);
+        this.contentNodes.forEach(node => this.customItem.appendChild(node));
     }
 }

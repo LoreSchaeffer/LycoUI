@@ -14,5 +14,6 @@ export * from './components/Code';
 export * from "./components/Range";
 export * from "./components/ProgressBar";
 export * from "./components/Input";
+export * from "./components/Snackbar";
 
 export * from "./types/types";

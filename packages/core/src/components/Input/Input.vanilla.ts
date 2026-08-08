@@ -8,15 +8,32 @@ export function initLycoInputs(): void {
     });
 }
 
+function parseSafeSvg(svgString: string): SVGSVGElement | null {
+    const template = document.createElement('template');
+    template.innerHTML = svgString;
+    const svg = template.content.querySelector('svg');
+    if (!svg) return null;
+    
+    svg.querySelectorAll('script').forEach(s => s.remove());
+    Array.from(svg.attributes).forEach(attr => {
+        if (attr.name.startsWith('on')) svg.removeAttribute(attr.name);
+    });
+    return svg;
+}
+
 class LycoInputController {
     private readonly nativeInput: HTMLInputElement;
     private readonly wrapper: HTMLDivElement;
     private readonly container: HTMLDivElement;
     private messageEl?: HTMLDivElement;
+    private upBtn: HTMLButtonElement | null = null;
+    private downBtn: HTMLButtonElement | null = null;
 
     private readonly _onFocus: () => void;
     private readonly _onBlur: () => void;
     private readonly _onInput: () => void;
+    private readonly _onUpStep: () => void;
+    private readonly _onDownStep: () => void;
 
     private hasBlurred = false;
     private validation: string;
@@ -30,6 +47,8 @@ class LycoInputController {
         this._onFocus = () => this.handleFocus();
         this._onBlur = () => this.handleBlur();
         this._onInput = () => this.handleInput();
+        this._onUpStep = () => this.handleStep(1);
+        this._onDownStep = () => this.handleStep(-1);
 
         this.buildUI();
         this.bindEvents();
@@ -72,10 +91,11 @@ class LycoInputController {
         this.nativeInput.parentNode?.insertBefore(this.wrapper, this.nativeInput);
 
         // Icon start
-        if (hasIconStart) {
+        if (hasIconStart && iconStartSvg) {
             const iconEl = document.createElement('span');
             iconEl.className = 'input__icon input__icon--start';
-            iconEl.innerHTML = iconStartSvg!;
+            const safeSvg = parseSafeSvg(iconStartSvg);
+            if (safeSvg) iconEl.appendChild(safeSvg);
             this.container.appendChild(iconEl);
         }
 
@@ -103,10 +123,11 @@ class LycoInputController {
         }
 
         // Icon end
-        if (hasIconEnd && !showSteps) {
+        if (hasIconEnd && !showSteps && iconEndSvg) {
             const iconEl = document.createElement('span');
             iconEl.className = 'input__icon input__icon--end';
-            iconEl.innerHTML = iconEndSvg!;
+            const safeSvg = parseSafeSvg(iconEndSvg);
+            if (safeSvg) iconEl.appendChild(safeSvg);
             this.container.appendChild(iconEl);
         }
 
@@ -115,24 +136,24 @@ class LycoInputController {
             const stepContainer = document.createElement('div');
             stepContainer.className = 'input__step-buttons';
 
-            const upBtn = document.createElement('button');
-            upBtn.type = 'button';
-            upBtn.className = 'input__step-btn input__step-btn--up';
-            upBtn.setAttribute('aria-label', 'Increment');
-            upBtn.tabIndex = -1;
-            upBtn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"/></svg>';
-            upBtn.addEventListener('click', () => this.handleStep(1));
+            this.upBtn = document.createElement('button');
+            this.upBtn.type = 'button';
+            this.upBtn.className = 'input__step-btn input__step-btn--up';
+            this.upBtn.setAttribute('aria-label', 'Increment');
+            this.upBtn.tabIndex = -1;
+            this.upBtn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"/></svg>';
+            this.upBtn.addEventListener('click', this._onUpStep);
 
-            const downBtn = document.createElement('button');
-            downBtn.type = 'button';
-            downBtn.className = 'input__step-btn input__step-btn--down';
-            downBtn.setAttribute('aria-label', 'Decrement');
-            downBtn.tabIndex = -1;
-            downBtn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>';
-            downBtn.addEventListener('click', () => this.handleStep(-1));
+            this.downBtn = document.createElement('button');
+            this.downBtn.type = 'button';
+            this.downBtn.className = 'input__step-btn input__step-btn--down';
+            this.downBtn.setAttribute('aria-label', 'Decrement');
+            this.downBtn.tabIndex = -1;
+            this.downBtn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>';
+            this.downBtn.addEventListener('click', this._onDownStep);
 
-            stepContainer.appendChild(upBtn);
-            stepContainer.appendChild(downBtn);
+            stepContainer.appendChild(this.upBtn);
+            stepContainer.appendChild(this.downBtn);
             this.container.appendChild(stepContainer);
         }
 
@@ -260,5 +281,13 @@ class LycoInputController {
         this.nativeInput.removeEventListener('focus', this._onFocus);
         this.nativeInput.removeEventListener('blur', this._onBlur);
         this.nativeInput.removeEventListener('input', this._onInput);
+        if (this.upBtn) this.upBtn.removeEventListener('click', this._onUpStep);
+        if (this.downBtn) this.downBtn.removeEventListener('click', this._onDownStep);
+
+        this.nativeInput.classList.remove('input__field');
+        this.nativeInput.classList.add('input-custom');
+        this.wrapper.parentNode?.insertBefore(this.nativeInput, this.wrapper);
+        this.wrapper.remove();
+        delete this.nativeInput.dataset.lycoInitialized;
     }
 }

@@ -1,11 +1,12 @@
 import './Code.scss';
-import React, { forwardRef, useEffect, useState, useRef } from 'react';
+import { forwardRef, useEffect, useState, useRef, useCallback } from 'react';
+import type { HTMLAttributes, ChangeEvent, UIEvent } from 'react';
 import clsx from 'clsx';
 import { createHighlighter } from 'shiki';
 // Import from generic shiki entry point or core based on version, assuming standard 'shiki' works:
 import type { Highlighter } from 'shiki';
 
-export interface CodeProps extends Omit<React.HTMLAttributes<HTMLDivElement>, 'onChange'> {
+export interface CodeProps extends Omit<HTMLAttributes<HTMLDivElement>, 'onChange'> {
   /** The code snippet to display */
   code?: string;
   /** Initial code if used in uncontrolled editable mode */
@@ -130,15 +131,15 @@ export const Code = forwardRef<HTMLDivElement, CodeProps>((
     setInternalLang(propLanguage);
   }, [propLanguage]);
 
-  const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+  const handleChange = useCallback((e: ChangeEvent<HTMLTextAreaElement>) => {
     const newCode = e.target.value;
     if (!isControlled) {
       setInternalCode(newCode);
     }
     onChange?.(newCode);
-  };
+  }, [isControlled, onChange]);
 
-  const handleCopy = async () => {
+  const handleCopy = useCallback(async () => {
     try {
       await navigator.clipboard.writeText(currentCode);
       setIsCopied(true);
@@ -146,9 +147,9 @@ export const Code = forwardRef<HTMLDivElement, CodeProps>((
     } catch (err) {
       console.error('Failed to copy code:', err);
     }
-  };
+  }, [currentCode]);
 
-  const handleDownload = () => {
+  const handleDownload = useCallback(() => {
     const blob = new Blob([currentCode], { type: 'text/plain' });
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
@@ -158,16 +159,16 @@ export const Code = forwardRef<HTMLDivElement, CodeProps>((
     a.click();
     document.body.removeChild(a);
     URL.revokeObjectURL(url);
-  };
+  }, [currentCode, fileName, internalLang]);
 
   // Sync scroll between textarea and pre
-  const handleScroll = (e: React.UIEvent<HTMLTextAreaElement>) => {
+  const handleScroll = useCallback((e: UIEvent<HTMLTextAreaElement>) => {
     const pre = e.currentTarget.nextElementSibling as HTMLPreElement | null;
     if (pre) {
       pre.scrollTop = e.currentTarget.scrollTop;
       pre.scrollLeft = e.currentTarget.scrollLeft;
     }
-  };
+  }, []);
 
   // Check if we need the header
   const hasHeader = showCopy || showDownload || showLanguageSelector;
@@ -204,12 +205,13 @@ export const Code = forwardRef<HTMLDivElement, CodeProps>((
             {showCopy && (
               <button 
                 type="button" 
-                className="lyco-code__action" 
+                className={clsx('lyco-code__action', isCopied && 'is-copied')}
                 onClick={handleCopy}
                 title="Copy code"
                 aria-label="Copy code"
               >
-                {isCopied ? <span className="text-success"><CheckIcon /></span> : <CopyIcon />}
+                <span className="icon-default"><CopyIcon /></span>
+                <span className="icon-success"><CheckIcon /></span>
               </button>
             )}
             {showDownload && (

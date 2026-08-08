@@ -67,7 +67,10 @@
   --color-danger: var(--red-500);
   --color-info: var(--cyan-500);
 
-  --white-300: #ffffff;
+  --white: #ffffff;
+  --black: #000000;
+
+  --white-300: var(--white);
   --white-400: var(--slate-25);
   --white-500: var(--slate-50);
   --white-600: var(--slate-200);
@@ -77,9 +80,6 @@
   --neutral-500: var(--slate-850);
   --neutral-600: var(--slate-900);
   --neutral: var(--neutral-500);
-
-  --white: #ffffff;
-  --black: #000000;
 
   // Brand Gradients
   --color-brand-start: var(--blue-400);
@@ -149,22 +149,24 @@
 // ==========================================================================
 // UTILITIES
 // ==========================================================================
-.text-center { text-align: center; }
-.text-primary { color: var(--color-text-primary); }
-.text-secondary { color: var(--color-text-secondary); }
-.text-muted { color: var(--color-text-muted); }
+@layer utilities {
+  .text-center { text-align: center; }
+  .text-primary { color: var(--color-text-primary); }
+  .text-secondary { color: var(--color-text-secondary); }
+  .text-muted { color: var(--color-text-muted); }
 
-// Spacing Utilities
-.mb-0 { margin-bottom: 0 !important; }
-.mb-2 { margin-bottom: var(--spacing-2) !important; }
-.mb-4 { margin-bottom: var(--spacing-4) !important; }
-.mb-6 { margin-bottom: var(--spacing-6) !important; }
-.mb-8 { margin-bottom: var(--spacing-8) !important; }
-.mb-10 { margin-bottom: var(--spacing-10) !important; }
+  // Spacing Utilities
+  .mb-0 { margin-bottom: 0; }
+  .mb-2 { margin-bottom: var(--spacing-2); }
+  .mb-4 { margin-bottom: var(--spacing-4); }
+  .mb-6 { margin-bottom: var(--spacing-6); }
+  .mb-8 { margin-bottom: var(--spacing-8); }
+  .mb-10 { margin-bottom: var(--spacing-10); }
 
-.mt-0 { margin-top: 0 !important; }
-.mt-4 { margin-top: var(--spacing-4) !important; }
-.mt-8 { margin-top: var(--spacing-8) !important; }
+  .mt-0 { margin-top: 0; }
+  .mt-4 { margin-top: var(--spacing-4); }
+  .mt-8 { margin-top: var(--spacing-8); }
+}
 
 // ==========================================================================
 // ROOT END
@@ -321,8 +323,10 @@ pre {
 // UTILITIES
 // ==========================================================================
 
-.hidden {
-  display: none !important;
+@layer utilities {
+  .hidden {
+    display: none;
+  }
 }
 
 // ==========================================================================
@@ -334,8 +338,8 @@ pre {
 }
 
 *::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
+  width: var(--spacing-2);
+  height: var(--spacing-2);
 }
 
 *::-webkit-scrollbar-track {
