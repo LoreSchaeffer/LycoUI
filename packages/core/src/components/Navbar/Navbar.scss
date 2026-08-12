@@ -1,0 +1,335 @@
+@use "../../styles/tokens/breakpoints" as *;
+@use "../../styles/mixins/theme-variants" as *;
+
+.navbar {
+  // Variables
+  --navbar-bg: var(--color-bg-base);
+  --navbar-text: var(--color-text-primary);
+  --navbar-padding-y: var(--spacing-3);
+  --navbar-padding-x: var(--spacing-4);
+  --navbar-zindex: var(--z-index-sticky, 1020);
+
+  position: relative;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: var(--navbar-padding-y) var(--navbar-padding-x);
+  background-color: var(--navbar-bg);
+  color: var(--navbar-text);
+  box-shadow: var(--shadow-sm);
+
+  // Positions
+  &.navbar--sticky {
+    position: sticky;
+    top: 0;
+    z-index: var(--navbar-zindex);
+  }
+
+  &.navbar--fixed {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: var(--navbar-zindex);
+  }
+
+  // Variants (Base, Dark, Light)
+  &.navbar--base {
+    --navbar-bg: var(--color-bg-base);
+    --navbar-text: var(--color-text-primary);
+  }
+  
+  &.navbar--dark {
+    --navbar-bg: var(--slate-900);
+    --navbar-text: var(--white);
+  }
+  
+  &.navbar--light {
+    --navbar-bg: var(--white);
+    --navbar-text: var(--slate-900);
+  }
+  
+  &.navbar--transparent {
+    --navbar-bg: transparent;
+    --navbar-text: inherit;
+    box-shadow: none;
+  }
+
+  // Elevations
+  &-elevation-0 { box-shadow: none; }
+  &-elevation-1 { box-shadow: var(--shadow-sm); }
+  &-elevation-2 { box-shadow: var(--shadow-md); }
+  &-elevation-3 { box-shadow: var(--shadow-lg); }
+  &-elevation-4 { box-shadow: var(--shadow-xl); }
+
+  // Color Variants (Solid & Dim)
+  &.navbar-variant {
+    &.navbar-dim {
+      background-color: var(--navbar-color-dim);
+      color: var(--color-text-primary);
+    }
+
+    &.navbar-solid {
+      background-color: var(--navbar-color-base);
+      color: var(--navbar-text-color, var(--white));
+      
+      .navbar__link, .navbar__brand, .navbar__toggle {
+        color: inherit;
+      }
+      
+      .navbar__link {
+        color: color-mix(in srgb, currentColor 85%, transparent);
+        &:hover, &:focus, &.is-active {
+          color: currentColor;
+        }
+      }
+    }
+  }
+
+  &-primary {
+    --navbar-color-base: var(--color-primary);
+    --navbar-color-dim: var(--color-primary-dim);
+    --navbar-text-color: var(--white);
+  }
+
+  &-success {
+    --navbar-color-base: var(--color-success);
+    --navbar-color-dim: color-mix(in srgb, var(--color-success) 15%, transparent);
+    --navbar-text-color: var(--slate-950);
+  }
+
+  &-warning {
+    --navbar-color-base: var(--color-warning);
+    --navbar-color-dim: color-mix(in srgb, var(--color-warning) 15%, transparent);
+    --navbar-text-color: var(--slate-950);
+  }
+
+  &-danger {
+    --navbar-color-base: var(--color-danger);
+    --navbar-color-dim: color-mix(in srgb, var(--color-danger) 15%, transparent);
+    --navbar-text-color: var(--white);
+  }
+
+  &-info {
+    --navbar-color-base: var(--color-info);
+    --navbar-color-dim: color-mix(in srgb, var(--color-info) 15%, transparent);
+    --navbar-text-color: var(--slate-950);
+  }
+
+  @include for-each-theme-color using($color, $is-light) {
+    --navbar-color-base: var(--#{$color});
+    --navbar-color-dim: var(--#{$color}-dim);
+    @if $is-light {
+      --navbar-text-color: var(--slate-950);
+    } @else {
+      --navbar-text-color: var(--white);
+    }
+  }
+
+  // Elements
+  &__container {
+    display: flex;
+    flex-wrap: inherit;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    margin-right: auto;
+    margin-left: auto;
+  }
+
+  &__brand {
+    font-size: var(--font-size-lg);
+    font-weight: var(--font-weight-bold);
+    color: inherit;
+    text-decoration: none;
+    white-space: nowrap;
+    margin-right: var(--spacing-6);
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-2);
+    
+    &:hover, &:focus {
+      color: inherit;
+      text-decoration: none;
+    }
+    
+    &--centered {
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      margin-right: 0;
+    }
+  }
+
+  &__toggle {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    width: 2.25rem;
+    height: 2.25rem;
+    background: transparent;
+    border: 1px solid color-mix(in srgb, currentColor 20%, transparent);
+    border-radius: var(--radius-md);
+    padding: var(--spacing-1) calc(var(--spacing-1) + 2px);
+    cursor: pointer;
+    color: inherit;
+    transition: all var(--duration-fast) var(--ease-default);
+    
+    &:hover {
+      background-color: color-mix(in srgb, currentColor 10%, transparent);
+    }
+    
+    &:focus-visible {
+      outline: 2px solid var(--color-primary);
+      outline-offset: 2px;
+    }
+
+    span {
+      display: block;
+      width: 100%;
+      height: 2px;
+      background-color: currentColor;
+      border-radius: 2px;
+      transition: all var(--duration-normal) var(--ease-default);
+    }
+    
+    &[aria-expanded="true"] {
+      span:nth-child(1) {
+        transform: translateY(0.55rem) rotate(45deg);
+      }
+      span:nth-child(2) {
+        opacity: 0;
+      }
+      span:nth-child(3) {
+        transform: translateY(-0.55rem) rotate(-45deg);
+      }
+    }
+  }
+
+  &__collapse {
+    flex-basis: 100%;
+    flex-grow: 1;
+    display: grid;
+    grid-template-rows: 0fr;
+    transition: grid-template-rows var(--duration-normal) var(--ease-default);
+    
+    &.is-open {
+      grid-template-rows: 1fr;
+    }
+  }
+
+  &__collapse-inner {
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+  }
+
+  &__nav {
+    display: flex;
+    flex-direction: column;
+    padding-left: 0;
+    margin-bottom: 0;
+    list-style: none;
+    gap: var(--spacing-2);
+    padding-top: var(--spacing-4);
+    padding-bottom: var(--spacing-2);
+    width: 100%;
+    
+    &--align-start { margin-right: auto; }
+    &--align-center { margin-left: auto; margin-right: auto; }
+    &--align-end { margin-left: auto; }
+  }
+
+  &__item {
+    display: block;
+  }
+
+  &__link {
+    display: block;
+    padding: var(--spacing-2) 0;
+    color: color-mix(in srgb, var(--navbar-text) 80%, transparent);
+    text-decoration: none;
+    font-weight: var(--font-weight-medium);
+    transition: color var(--duration-fast) var(--ease-default);
+    
+    &:hover, &:focus {
+      color: var(--navbar-text);
+    }
+    
+    &.is-active {
+      color: var(--color-primary);
+      font-weight: var(--font-weight-semibold);
+    }
+  }
+}
+
+// Generate Expand Modifiers for responsive layouts
+@each $bp-name, $bp-value in $breakpoints {
+  .navbar--expand-#{$bp-name} {
+    @include respond-to($bp-name) {
+      .navbar__toggle {
+        display: none;
+      }
+      
+      .navbar__collapse {
+        display: flex !important;
+        flex-basis: auto;
+        grid-template-rows: 1fr; // Override grid animation
+      }
+      
+      .navbar__collapse-inner {
+        overflow: visible;
+        flex-direction: row;
+        align-items: center;
+      }
+      
+      .navbar__nav {
+        flex-direction: row;
+        align-items: center;
+        gap: var(--spacing-4);
+        padding-top: 0;
+        padding-bottom: 0;
+        width: auto;
+      }
+      
+      .navbar__link {
+        padding: var(--spacing-2) var(--spacing-3);
+      }
+    }
+  }
+}
+
+// Always expanded
+.navbar--expand-always {
+  .navbar__toggle {
+    display: none;
+  }
+  
+  .navbar__collapse {
+    display: flex !important;
+    flex-basis: auto;
+    grid-template-rows: 1fr;
+  }
+  
+  .navbar__collapse-inner {
+    overflow: visible;
+    flex-direction: row;
+    align-items: center;
+  }
+  
+  .navbar__nav {
+    flex-direction: row;
+    align-items: center;
+    gap: var(--spacing-4);
+    padding-top: 0;
+    padding-bottom: 0;
+    width: auto;
+  }
+  
+  .navbar__link {
+    padding: var(--spacing-2) var(--spacing-3);
+  }
+}

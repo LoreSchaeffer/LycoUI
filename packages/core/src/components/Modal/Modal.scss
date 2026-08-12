@@ -1,0 +1,129 @@
+@keyframes modalFadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes modalSlideUp {
+  from { transform: translateY(20px) scale(0.98); }
+  to { transform: translateY(0) scale(1); }
+}
+
+.modal-open {
+  overflow: hidden;
+}
+
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: var(--z-modal);
+  background-color: color-mix(in srgb, var(--black) 60%, transparent); // Backdrop
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  overflow-x: hidden;
+  overflow-y: auto;
+  outline: 0;
+  padding: var(--spacing-4);
+
+  // Animation for React (conditional rendering) and Vanilla (.is-open)
+  animation: modalFadeIn var(--duration-normal) var(--ease-default) forwards;
+
+  &__dialog {
+    position: relative;
+    width: 100%;
+    margin: var(--spacing-8) auto;
+    pointer-events: none;
+    
+    // Animation
+    animation: modalSlideUp var(--duration-normal) var(--ease-default) forwards;
+
+    &--sm { max-width: 300px; }
+    &--md { max-width: 500px; }
+    &--lg { max-width: 800px; }
+    &--xl { max-width: 1140px; }
+
+    &--scrollable {
+      max-height: calc(100% - var(--spacing-8)); // Accounts for .modal padding
+      display: flex;
+      flex-direction: column;
+
+      .modal__content {
+        max-height: 100%;
+        overflow: hidden;
+      }
+
+      .modal__body {
+        overflow-y: auto;
+      }
+    }
+
+    &--centered {
+      margin: auto; // Centers vertically in the .modal flex container without flex layout inside
+    }
+  }
+
+  &__content {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    pointer-events: auto;
+    background-color: var(--color-bg-surface);
+    border: 1px solid var(--color-border-base);
+    border-radius: var(--radius-xl);
+    box-shadow: var(--shadow-xl);
+    outline: 0;
+  }
+
+  &__header {
+    display: flex;
+    flex-shrink: 0;
+    align-items: center;
+    justify-content: space-between;
+    padding: var(--spacing-4) var(--spacing-6);
+    border-bottom: 1px solid var(--color-border-base);
+  }
+
+  &__title {
+    margin-bottom: 0;
+    line-height: var(--line-height-tight);
+    font-size: var(--font-size-xl);
+    font-weight: var(--font-weight-semibold);
+  }
+
+  &__close {
+    background: transparent;
+    border: 0;
+    padding: 0;
+    color: var(--color-text-secondary);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: color var(--duration-fast) var(--ease-default);
+
+    &:hover {
+      color: var(--color-text-primary);
+    }
+  }
+
+  &__body {
+    position: relative;
+    flex: 1 1 auto;
+    padding: var(--spacing-6);
+  }
+
+  &__footer {
+    display: flex;
+    flex-shrink: 0;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: flex-end;
+    padding: var(--spacing-4) var(--spacing-6);
+    border-top: 1px solid var(--color-border-base);
+    gap: var(--spacing-2);
+  }
+}

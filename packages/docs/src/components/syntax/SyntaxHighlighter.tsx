@@ -1,13 +1,13 @@
 import {useEffect, useState} from 'react';
-import {createHighlighter, type Highlighter} from 'shiki';
+let highlighterPromise: Promise<any> | null = null;
 
-let highlighterPromise: Promise<Highlighter> | null = null;
-
-const getSharedHighlighter = (): Promise<Highlighter> => {
+const getSharedHighlighter = async (): Promise<any> => {
     if (!highlighterPromise) {
-        highlighterPromise = createHighlighter({
-            themes: ['andromeeda'],
-            langs: ['tsx', 'html', 'css', 'scss', 'typescript', 'javascript'],
+        highlighterPromise = import('shiki').then(({ createHighlighter }) => {
+            return createHighlighter({
+                themes: ['andromeeda'],
+                langs: ['tsx', 'html', 'css', 'scss', 'typescript', 'javascript'],
+            });
         });
     }
     return highlighterPromise;
@@ -20,12 +20,14 @@ export interface SyntaxHighlighterProps {
 
 export const SyntaxHighlighter = ({code, language}: SyntaxHighlighterProps) => {
     const [highlightedHtml, setHighlightedHtml] = useState<string>('');
+    const [highlightStatus, setHighlightStatus] = useState<'loading' | 'success' | 'error'>('loading');
 
     useEffect(() => {
         let isMounted = true;
 
         const processCode = async () => {
             try {
+                setHighlightStatus('loading');
                 const highlighter = await getSharedHighlighter();
 
                 const html = highlighter.codeToHtml(code, {
@@ -33,9 +35,13 @@ export const SyntaxHighlighter = ({code, language}: SyntaxHighlighterProps) => {
                     theme: 'andromeeda',
                 });
 
-                if (isMounted) setHighlightedHtml(html);
+                if (isMounted) {
+                    setHighlightedHtml(html);
+                    setHighlightStatus('success');
+                }
             } catch (error) {
-                console.error('Shiki highlighting failed:', error);
+                console.warn('Shiki highlighting failed or shiki is not installed:', error);
+                if (isMounted) setHighlightStatus('error');
             }
         };
 
@@ -46,9 +52,12 @@ export const SyntaxHighlighter = ({code, language}: SyntaxHighlighterProps) => {
         };
     }, [code, language]);
 
-    if (!highlightedHtml) {
+    if (!highlightedHtml || highlightStatus !== 'success') {
         return (
-            <pre className="docs-code-example__pre">
+            <pre 
+                className="docs-code-example__pre"
+                style={{ color: highlightStatus === 'loading' ? 'transparent' : undefined }}
+            >
                 <code>{code}</code>
             </pre>
         );

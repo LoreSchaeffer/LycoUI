@@ -20,6 +20,12 @@ export const codeProps: PropDefinition[] = [
         description: 'The language to highlight. Defaults to javascript.'
     },
     {
+        name: 'theme',
+        type: 'string',
+        defaultValue: "'andromeeda'",
+        description: 'The Shiki theme to use for syntax highlighting (requires shiki to be installed).'
+    },
+    {
         name: 'editable',
         type: 'boolean',
         defaultValue: 'false',

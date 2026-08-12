@@ -2,8 +2,8 @@ import './Code.scss';
 import { forwardRef, useEffect, useState, useRef, useCallback } from 'react';
 import type { HTMLAttributes, ChangeEvent, UIEvent } from 'react';
 import clsx from 'clsx';
-import { createHighlighter } from 'shiki';
-// Import from generic shiki entry point or core based on version, assuming standard 'shiki' works:
+// Shiki types (if available) for better developer experience.
+// Shiki is an optional peer dependency.
 import type { Highlighter } from 'shiki';
 
 export interface CodeProps extends Omit<HTMLAttributes<HTMLDivElement>, 'onChange'> {
@@ -13,6 +13,8 @@ export interface CodeProps extends Omit<HTMLAttributes<HTMLDivElement>, 'onChang
   defaultCode?: string;
   /** Language of the code */
   language?: string;
+  /** Theme to use for syntax highlighting (requires shiki) */
+  theme?: string;
   /** Whether the code is editable */
   editable?: boolean;
   /** Shows a copy button in the header */
@@ -29,16 +31,26 @@ export interface CodeProps extends Omit<HTMLAttributes<HTMLDivElement>, 'onChang
   onChange?: (code: string) => void;
 }
 
-let highlighterPromise: Promise<Highlighter> | null = null;
+let highlighterPromise: Promise<any> | null = null;
 
-const getSharedHighlighter = (): Promise<Highlighter> => {
+const getSharedHighlighter = async (theme: string, langs: string[]): Promise<any> => {
   if (!highlighterPromise) {
-    highlighterPromise = createHighlighter({
-      themes: ['andromeeda'],
-      langs: ['javascript', 'typescript', 'html', 'css', 'json', 'bash', 'tsx', 'jsx', 'scss'],
+    highlighterPromise = import('shiki').then(({ createHighlighter }) => {
+      return createHighlighter({
+        themes: [theme],
+        langs,
+      });
     });
   }
-  return highlighterPromise;
+  
+  const highlighter = await highlighterPromise;
+  
+  const loadedThemes = highlighter.getLoadedThemes();
+  if (!loadedThemes.includes(theme)) {
+    await highlighter.loadTheme(theme);
+  }
+  
+  return highlighter;
 };
 
 // Simple SVG Icons
@@ -69,6 +81,7 @@ export const Code = forwardRef<HTMLDivElement, CodeProps>((
     code: propCode,
     defaultCode = '',
     language: propLanguage = 'javascript',
+    theme = 'andromeeda',
     editable = false,
     showCopy = false,
     showDownload = false,
@@ -84,6 +97,7 @@ export const Code = forwardRef<HTMLDivElement, CodeProps>((
   const [internalLang, setInternalLang] = useState(propLanguage);
   
   const [highlightedHtml, setHighlightedHtml] = useState<string>('');
+  const [highlightStatus, setHighlightStatus] = useState<'loading' | 'success' | 'error'>('loading');
   const [isCopied, setIsCopied] = useState(false);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
 
@@ -96,7 +110,8 @@ export const Code = forwardRef<HTMLDivElement, CodeProps>((
 
     const processCode = async () => {
       try {
-        const highlighter = await getSharedHighlighter();
+        setHighlightStatus('loading');
+        const highlighter = await getSharedHighlighter(theme, supportedLanguages);
         
         // Ensure language is loaded (basic check)
         const loadedLangs = highlighter.getLoadedLanguages();
@@ -108,14 +123,18 @@ export const Code = forwardRef<HTMLDivElement, CodeProps>((
 
         const html = highlighter.codeToHtml(currentCode, {
           lang: internalLang,
-          theme: 'andromeeda',
+          theme,
         });
 
         if (isMounted) {
           setHighlightedHtml(html);
+          setHighlightStatus('success');
         }
       } catch (error) {
-        console.error('Syntax highlighting failed:', error);
+        console.warn('Syntax highlighting failed or shiki is not installed:', error);
+        if (isMounted) {
+          setHighlightStatus('error');
+        }
       }
     };
 
@@ -124,7 +143,7 @@ export const Code = forwardRef<HTMLDivElement, CodeProps>((
     return () => {
       isMounted = false;
     };
-  }, [currentCode, internalLang]);
+  }, [currentCode, internalLang, theme, supportedLanguages]);
 
   // Handle external language changes
   useEffect(() => {
@@ -242,16 +261,18 @@ export const Code = forwardRef<HTMLDivElement, CodeProps>((
           />
         )}
         
-        {highlightedHtml ? (
+        {highlightedHtml && highlightStatus === 'success' ? (
           <div 
             className="lyco-code__highlight"
             dangerouslySetInnerHTML={{ __html: highlightedHtml }}
             aria-hidden={editable}
           />
         ) : (
-          <pre className="lyco-code__highlight">
-            <code>{currentCode}</code>
-          </pre>
+          <div className="lyco-code__highlight">
+            <pre style={{ color: highlightStatus === 'loading' ? 'transparent' : undefined }}>
+              <code>{currentCode}</code>
+            </pre>
+          </div>
         )}
       </div>
     </div>

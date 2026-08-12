@@ -15,5 +15,10 @@ export * from "./components/Range";
 export * from "./components/ProgressBar";
 export * from "./components/Input";
 export * from "./components/Snackbar";
+export * from "./components/Modal";
+export { Navbar } from './components/Navbar';
+export type { NavbarProps, NavbarBrandProps, NavbarToggleProps, NavbarCollapseProps, NavbarNavProps, NavbarItemProps, NavbarLinkProps } from './components/Navbar';
+
+export * from "./components/Sidebar/Sidebar";
 
 export * from "./types/types";
