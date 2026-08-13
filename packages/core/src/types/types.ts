@@ -22,3 +22,5 @@ export type SizeVariant = 'sm' | 'md' | 'lg';
 export type Alignment = 'start' | 'center' | 'end';
 
 export type Orientation = 'horizontal' | 'vertical';
+
+export type NotificationPosition = 'top-left' | 'top-right' | 'bottom-left' | 'bottom-right';

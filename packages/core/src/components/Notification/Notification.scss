@@ -1,0 +1,334 @@
+@use "../../styles/mixins/theme-variants" as *;
+
+// ==========================================================================
+// NOTIFICATION STACK (Container)
+// ==========================================================================
+.notification-stack {
+  position: fixed;
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-3);
+  z-index: 9999;
+  pointer-events: none;
+  max-height: 100vh;
+  overflow: hidden;
+  padding: var(--spacing-4);
+
+  // Position variants
+  &--bottom-right {
+    bottom: 0;
+    right: 0;
+    align-items: flex-end;
+  }
+
+  &--bottom-left {
+    bottom: 0;
+    left: 0;
+    align-items: flex-start;
+  }
+
+  &--top-right {
+    top: 0;
+    right: 0;
+    align-items: flex-end;
+  }
+
+  &--top-left {
+    top: 0;
+    left: 0;
+    align-items: flex-start;
+  }
+}
+
+// ==========================================================================
+// NOTIFICATION (Single notification)
+// ==========================================================================
+.notification {
+  --notification-color-base: var(--slate-800);
+  --notification-bg: color-mix(in srgb, var(--notification-color-base) 15%, var(--color-bg-surface));
+  --notification-text: var(--color-text-primary);
+  --notification-border: var(--notification-color-base);
+  --notification-radius: var(--radius-md);
+
+  pointer-events: auto;
+  position: relative;
+  display: flex;
+  align-items: flex-start;
+  padding: var(--spacing-4) var(--spacing-5);
+  background-color: var(--notification-bg);
+  color: var(--notification-text);
+  border-radius: var(--notification-radius);
+  border: 1px solid var(--notification-border);
+  box-shadow: var(--shadow-lg);
+  font-family: var(--font-family-base);
+  font-size: var(--font-size-sm);
+  line-height: var(--line-height-normal);
+  min-width: 20rem;
+  max-width: 26rem;
+  overflow: hidden;
+  will-change: transform, opacity;
+
+  // Enter animations per position
+  &.notification-enter--bottom-right {
+    animation: notification-slide-in-right var(--duration-normal) var(--ease-out) forwards;
+    animation-fill-mode: forwards;
+    animation-timing-function: var(--ease-out);
+  }
+
+  &.notification-enter--bottom-left {
+    animation: notification-slide-in-left var(--duration-normal) var(--ease-out) forwards;
+    animation-fill-mode: forwards;
+    animation-timing-function: var(--ease-out);
+  }
+
+  &.notification-enter--top-right {
+    animation: notification-slide-in-right var(--duration-normal) var(--ease-out) forwards;
+    animation-fill-mode: forwards;
+    animation-timing-function: var(--ease-out);
+  }
+
+  &.notification-enter--top-left {
+    animation: notification-slide-in-left var(--duration-normal) var(--ease-out) forwards;
+    animation-fill-mode: forwards;
+    animation-timing-function: var(--ease-out);
+  }
+
+  // Exit animations
+  &.notification-exit--bottom-right,
+  &.notification-exit--top-right {
+    animation: notification-slide-out-right var(--duration-fast) var(--ease-in) forwards;
+    animation-fill-mode: forwards;
+    animation-timing-function: var(--ease-in);
+  }
+
+  &.notification-exit--bottom-left,
+  &.notification-exit--top-left {
+    animation: notification-slide-out-left var(--duration-fast) var(--ease-in) forwards;
+    animation-fill-mode: forwards;
+    animation-timing-function: var(--ease-in);
+  }
+
+  // Hover pauses progress bar
+  &:hover .notification__progress-bar {
+    animation-play-state: paused;
+  }
+
+  // Closable modifier
+  &.notification-closable {
+    padding-right: 3rem;
+  }
+
+  // Icon present modifier
+  &.has-icon {
+    .notification__body {
+      padding-left: var(--spacing-3);
+    }
+  }
+
+  // ── Variant colors ──
+  &.notification-success {
+    --notification-color-base: var(--color-success);
+    background-color: color-mix(in srgb, var(--color-success) 15%, var(--color-bg-surface));
+  }
+  &.notification-warning {
+    --notification-color-base: var(--color-warning);
+    --notification-text: var(--color-text-primary);
+    background-color: color-mix(in srgb, var(--color-warning) 15%, var(--color-bg-surface));
+  }
+  &.notification-danger {
+    --notification-color-base: var(--color-danger);
+    background-color: color-mix(in srgb, var(--color-danger) 15%, var(--color-bg-surface));
+  }
+  &.notification-info {
+    --notification-color-base: var(--color-info);
+    background-color: color-mix(in srgb, var(--color-info) 15%, var(--color-bg-surface));
+  }
+  &.notification-neutral {
+    --notification-color-base: var(--slate-800);
+    background-color: color-mix(in srgb, var(--slate-800) 15%, var(--color-bg-surface));
+  }
+
+  &.notification-white {
+    --notification-color-base: var(--white);
+    --notification-text: var(--color-text-primary);
+    --notification-border: var(--color-border-base);
+    background-color: var(--white);
+  }
+
+  @include for-each-theme-color using($color, $is-light) {
+    @if $color != 'white' and $color != 'neutral' {
+      &.notification-#{$color} {
+        --notification-color-base: var(--#{$color}-500);
+        background-color: color-mix(in srgb, var(--#{$color}-500) 15%, var(--color-bg-surface));
+      }
+    }
+  }
+
+  // Flat modifier
+  &.notification-flat {
+    box-shadow: none;
+    border-color: transparent;
+  }
+}
+
+// ==========================================================================
+// NOTIFICATION CHILDREN
+// ==========================================================================
+.notification__icon {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.25rem;
+  height: 1.25rem;
+  margin-top: 0.125rem;
+  color: inherit;
+  opacity: 0.9;
+
+  svg {
+    width: 100%;
+    height: 100%;
+  }
+}
+
+.notification__body {
+  flex-grow: 1;
+  min-width: 0;
+}
+
+.notification__title {
+  display: block;
+  font-weight: var(--font-weight-semibold);
+  font-size: var(--font-size-sm);
+  line-height: var(--line-height-tight);
+  margin-bottom: var(--spacing-1);
+  color: var(--color-text-primary);
+}
+
+.notification__message {
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-sm);
+  line-height: var(--line-height-normal);
+  word-break: break-word;
+  margin: 0;
+}
+
+.notification__close {
+  position: absolute;
+  top: var(--spacing-2);
+  right: var(--spacing-2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.75rem;
+  height: 1.75rem;
+  padding: 0;
+  background: transparent;
+  border: none;
+  border-radius: var(--radius-sm);
+  color: inherit;
+  opacity: 0.5;
+  cursor: pointer;
+  transition: opacity var(--duration-fast) var(--ease-default),
+    background-color var(--duration-fast) var(--ease-default);
+
+  &:hover {
+    opacity: 1;
+    background-color: color-mix(in srgb, currentColor 10%, transparent);
+  }
+
+  &:focus-visible {
+    outline: 2px solid currentColor;
+    outline-offset: -2px;
+    opacity: 1;
+  }
+
+  svg {
+    width: 1rem;
+    height: 1rem;
+  }
+}
+
+// ==========================================================================
+// PROGRESS BAR
+// ==========================================================================
+.notification__progress {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  overflow: hidden;
+  border-radius: 0 0 var(--notification-radius) var(--notification-radius);
+}
+
+.notification__progress-bar {
+  width: 100%;
+  height: 100%;
+  background-color: color-mix(in srgb, var(--notification-color-base) 60%, transparent);
+  transform-origin: left center;
+  animation: notification-progress-shrink linear forwards;
+  animation-fill-mode: forwards;
+  animation-timing-function: linear;
+}
+
+// ==========================================================================
+// KEYFRAMES
+// ==========================================================================
+@keyframes notification-slide-in-right {
+  0% {
+    opacity: 0;
+    transform: translateX(100%);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes notification-slide-in-left {
+  0% {
+    opacity: 0;
+    transform: translateX(-100%);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes notification-slide-out-right {
+  0% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+
+  100% {
+    opacity: 0;
+    transform: translateX(100%);
+  }
+}
+
+@keyframes notification-slide-out-left {
+  0% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+
+  100% {
+    opacity: 0;
+    transform: translateX(-100%);
+  }
+}
+
+@keyframes notification-progress-shrink {
+  0% {
+    transform: scaleX(1);
+  }
+
+  100% {
+    transform: scaleX(0);
+  }
+}

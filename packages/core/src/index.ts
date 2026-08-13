@@ -20,5 +20,6 @@ export { Navbar } from './components/Navbar';
 export type { NavbarProps, NavbarBrandProps, NavbarToggleProps, NavbarCollapseProps, NavbarNavProps, NavbarItemProps, NavbarLinkProps } from './components/Navbar';
 
 export * from "./components/Sidebar/Sidebar";
+export * from './components/Notification';
 
 export * from "./types/types";

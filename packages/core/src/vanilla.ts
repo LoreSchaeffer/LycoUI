@@ -8,6 +8,7 @@ import {snackbar} from './components/Snackbar/Snackbar.vanilla';
 import {initLycoModals, LycoModalController} from './components/Modal/Modal.vanilla';
 import {initLycoNavbars, LycoNavbarController} from './components/Navbar/Navbar.vanilla';
 import {initLycoSidebars, LycoSidebarController} from './components/Sidebar/Sidebar.vanilla';
+import {notification} from './components/Notification/Notification.vanilla';
 
 export const initLycoUI = (): void => {
     initLycoSelects();
@@ -34,6 +35,7 @@ export {
     initLycoRanges,
     initLycoInputs,
     snackbar,
+    notification,
     initLycoModals,
     LycoModalController,
     initLycoNavbars,
