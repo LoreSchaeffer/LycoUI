@@ -43,6 +43,14 @@ $bp-md: 768px;
       gap: var(--spacing-4);
       align-items: flex-start;
     }
+
+    // Full-width components should always stretch inside the preview
+    .table,
+    .table-responsive,
+    .data-table {
+      width: 100%;
+      flex: 1 1 100%;
+    }
   }
 
   &__toolbar {

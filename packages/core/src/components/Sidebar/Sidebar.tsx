@@ -1,5 +1,5 @@
 import './Sidebar.scss';
-import React, { forwardRef, useState, useCallback, useMemo, createContext, useContext, useRef, useEffect } from 'react';
+import React, { forwardRef, useState, useCallback, useMemo, createContext, useRef } from 'react';
 import clsx from 'clsx';
 
 interface SidebarContextType {
@@ -8,13 +8,7 @@ interface SidebarContextType {
 
 const SidebarContext = createContext<SidebarContextType | null>(null);
 
-function useSidebarContext() {
-  const context = useContext(SidebarContext);
-  if (!context) {
-    throw new Error('Sidebar compound components must be rendered within a Sidebar');
-  }
-  return context;
-}
+
 
 // --- Sidebar Root ---
 

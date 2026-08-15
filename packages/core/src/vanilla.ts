@@ -7,8 +7,9 @@ import {initLycoCodes} from './components/Code/Code.vanilla';
 import {snackbar} from './components/Snackbar/Snackbar.vanilla';
 import {initLycoModals, LycoModalController} from './components/Modal/Modal.vanilla';
 import {initLycoNavbars, LycoNavbarController} from './components/Navbar/Navbar.vanilla';
-import {initLycoSidebars, LycoSidebarController} from './components/Sidebar/Sidebar.vanilla';
+import {initLycoSidebars} from './components/Sidebar/Sidebar.vanilla';
 import {notification} from './components/Notification/Notification.vanilla';
+import {initLycoPagination} from './components/Pagination/Pagination.vanilla';
 
 export const initLycoUI = (): void => {
     initLycoSelects();
@@ -20,6 +21,7 @@ export const initLycoUI = (): void => {
     initLycoModals();
     initLycoNavbars();
     initLycoSidebars();
+    initLycoPagination();
 };
 
 if (typeof window !== 'undefined' && typeof document !== 'undefined') {
@@ -39,5 +41,6 @@ export {
     initLycoModals,
     LycoModalController,
     initLycoNavbars,
-    LycoNavbarController
+    LycoNavbarController,
+    initLycoPagination
 };

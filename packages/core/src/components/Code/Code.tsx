@@ -4,7 +4,7 @@ import type { HTMLAttributes, ChangeEvent, UIEvent } from 'react';
 import clsx from 'clsx';
 // Shiki types (if available) for better developer experience.
 // Shiki is an optional peer dependency.
-import type { Highlighter } from 'shiki';
+
 
 export interface CodeProps extends Omit<HTMLAttributes<HTMLDivElement>, 'onChange'> {
   /** The code snippet to display */

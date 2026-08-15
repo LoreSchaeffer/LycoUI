@@ -21,5 +21,8 @@ export type { NavbarProps, NavbarBrandProps, NavbarToggleProps, NavbarCollapsePr
 
 export * from "./components/Sidebar/Sidebar";
 export * from './components/Notification';
+export * from './components/Pagination';
+export * from './components/Table';
+export * from './components/DataTable';
 
 export * from "./types/types";

@@ -1,0 +1,167 @@
+@use "../../styles/mixins/theme-variants" as *;
+
+.table {
+  --table-bg: transparent;
+  --table-color: var(--color-text-primary);
+  --table-border-color: var(--color-border-base);
+  --table-stripe-bg: color-mix(in srgb, var(--color-text-primary) 2%, transparent);
+  --table-hover-bg: color-mix(in srgb, var(--color-text-primary) 4%, transparent);
+  --table-active-bg: color-mix(in srgb, var(--color-text-primary) 8%, transparent);
+  --table-padding-y: var(--spacing-3);
+  --table-padding-x: var(--spacing-4);
+  --table-border-radius: var(--radius-md);
+  
+  width: 100%;
+  margin-bottom: var(--spacing-4);
+  vertical-align: top;
+  border-color: var(--table-border-color);
+  border-collapse: separate;
+  border-spacing: 0;
+  text-align: left;
+
+  > :not(caption) > * > * {
+    padding: var(--table-padding-y) var(--table-padding-x);
+    background-color: var(--table-bg);
+    color: var(--table-color);
+    border-bottom: 1px solid var(--table-border-color);
+  }
+
+  > tbody {
+    vertical-align: inherit;
+  }
+  
+  > thead {
+    vertical-align: bottom;
+    > * > * {
+        font-weight: var(--font-weight-medium);
+        color: var(--color-text-secondary);
+        border-bottom: 2px solid var(--table-border-color);
+    }
+  }
+
+  // Rounded corners on the outer cells when bordered
+  &.table-bordered {
+    border: 1px solid var(--table-border-color);
+    border-radius: var(--table-border-radius);
+    
+    > :not(caption) > * > * {
+      border-right: 1px solid var(--table-border-color);
+    }
+    
+    > :not(caption) > * > *:last-child {
+      border-right: 0;
+    }
+    
+    > :not(caption) > *:last-child > * {
+      border-bottom: 0;
+    }
+
+    // Border radius clipping for the corners
+    > thead:first-child > tr:first-child > *:first-child,
+    > tbody:first-child > tr:first-child > *:first-child {
+        border-top-left-radius: calc(var(--table-border-radius) - 1px);
+    }
+    > thead:first-child > tr:first-child > *:last-child,
+    > tbody:first-child > tr:first-child > *:last-child {
+        border-top-right-radius: calc(var(--table-border-radius) - 1px);
+    }
+    > tbody:last-child > tr:last-child > *:first-child,
+    > tfoot:last-child > tr:last-child > *:first-child {
+        border-bottom-left-radius: calc(var(--table-border-radius) - 1px);
+    }
+    > tbody:last-child > tr:last-child > *:last-child,
+    > tfoot:last-child > tr:last-child > *:last-child {
+        border-bottom-right-radius: calc(var(--table-border-radius) - 1px);
+    }
+  }
+
+  // Striped
+  &-striped {
+    > tbody > tr:nth-of-type(odd) > * {
+      --table-bg: var(--table-stripe-bg);
+      color: var(--table-color);
+    }
+  }
+
+  // Hover
+  &-hover {
+    > tbody > tr:hover > * {
+      --table-bg: var(--table-hover-bg);
+      color: var(--table-color);
+    }
+  }
+
+  // Borderless
+  &-borderless {
+    > :not(caption) > * > * {
+      border-bottom-width: 0;
+    }
+    > thead > * > * {
+        border-bottom-width: 0;
+    }
+  }
+
+  // Small
+  &-sm {
+    --table-padding-y: var(--spacing-1);
+    --table-padding-x: var(--spacing-2);
+    font-size: var(--font-size-sm);
+  }
+
+  // Semantic Variants
+  &-success {
+    --table-bg: color-mix(in srgb, var(--color-success) 10%, transparent);
+    --table-color: var(--color-text-primary);
+    --table-border-color: color-mix(in srgb, var(--color-success) 30%, transparent);
+    --table-stripe-bg: color-mix(in srgb, var(--color-success) 15%, transparent);
+    --table-hover-bg: color-mix(in srgb, var(--color-success) 20%, transparent);
+  }
+  
+  &-danger {
+    --table-bg: color-mix(in srgb, var(--color-danger) 10%, transparent);
+    --table-color: var(--color-text-primary);
+    --table-border-color: color-mix(in srgb, var(--color-danger) 30%, transparent);
+    --table-stripe-bg: color-mix(in srgb, var(--color-danger) 15%, transparent);
+    --table-hover-bg: color-mix(in srgb, var(--color-danger) 20%, transparent);
+  }
+
+  &-warning {
+    --table-bg: color-mix(in srgb, var(--color-warning) 10%, transparent);
+    --table-color: var(--color-text-primary);
+    --table-border-color: color-mix(in srgb, var(--color-warning) 30%, transparent);
+    --table-stripe-bg: color-mix(in srgb, var(--color-warning) 15%, transparent);
+    --table-hover-bg: color-mix(in srgb, var(--color-warning) 20%, transparent);
+  }
+
+  &-info {
+    --table-bg: color-mix(in srgb, var(--color-info) 10%, transparent);
+    --table-color: var(--color-text-primary);
+    --table-border-color: color-mix(in srgb, var(--color-info) 30%, transparent);
+    --table-stripe-bg: color-mix(in srgb, var(--color-info) 15%, transparent);
+    --table-hover-bg: color-mix(in srgb, var(--color-info) 20%, transparent);
+  }
+
+  &-primary {
+    --table-bg: color-mix(in srgb, var(--color-primary) 10%, transparent);
+    --table-color: var(--color-text-primary);
+    --table-border-color: color-mix(in srgb, var(--color-primary) 30%, transparent);
+    --table-stripe-bg: color-mix(in srgb, var(--color-primary) 15%, transparent);
+    --table-hover-bg: color-mix(in srgb, var(--color-primary) 20%, transparent);
+  }
+
+  @include for-each-theme-color using($color, $is-light) {
+    &-#{$color} {
+        --table-bg: color-mix(in srgb, var(--#{$color}-500) 10%, transparent);
+        --table-color: var(--color-text-primary);
+        --table-border-color: color-mix(in srgb, var(--#{$color}-500) 30%, transparent);
+        --table-stripe-bg: color-mix(in srgb, var(--#{$color}-500) 15%, transparent);
+        --table-hover-bg: color-mix(in srgb, var(--#{$color}-500) 20%, transparent);
+    }
+  }
+}
+
+.table-responsive {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  width: 100%;
+}

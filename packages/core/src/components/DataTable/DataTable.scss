@@ -1,0 +1,223 @@
+.data-table {
+  width: 100%;
+
+  // ========================================================================
+  // TOOLBAR
+  // ========================================================================
+  &__toolbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--spacing-4);
+    padding: var(--spacing-3) 0;
+  }
+
+  &__search {
+    flex: 0 1 auto;
+    min-width: 0;
+    max-width: 20rem;
+
+    .input-wrapper {
+      margin: 0;
+    }
+  }
+
+  &__controls {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-4);
+    flex-shrink: 0;
+  }
+
+  &__results-info {
+    font-size: var(--font-size-sm);
+    color: var(--color-text-muted);
+    white-space: nowrap;
+  }
+
+  &__page-size {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-2);
+  }
+
+  &__page-size-label {
+    font-size: var(--font-size-sm);
+    color: var(--color-text-secondary);
+    white-space: nowrap;
+  }
+
+  // ========================================================================
+  // TABLE CONTAINER
+  // ========================================================================
+  &__container {
+    background: var(--color-bg-surface);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    box-shadow: var(--shadow-base);
+    border: 1px solid var(--color-border-base);
+
+    // Override Table's default margin-bottom inside the container
+    .table {
+      margin-bottom: 0;
+    }
+  }
+
+  // ========================================================================
+  // COLUMN HEADERS
+  // ========================================================================
+  &__th {
+    user-select: none;
+    white-space: nowrap;
+    font-weight: var(--font-weight-semibold);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    font-size: var(--font-size-xs);
+
+    &--sortable {
+      cursor: pointer;
+      transition: background var(--duration-fast) var(--ease-default);
+
+      &:hover {
+        background: var(--color-surface-elevated);
+      }
+    }
+
+    &--sorted {
+      color: var(--color-primary);
+    }
+  }
+
+  &__th-content {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--spacing-2);
+  }
+
+  &__sort-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 1rem;
+    height: 1rem;
+    flex-shrink: 0;
+
+    svg {
+      width: 100%;
+      height: 100%;
+    }
+  }
+
+  // ========================================================================
+  // ROWS
+  // ========================================================================
+  &__row--clickable {
+    cursor: pointer;
+  }
+
+  // ========================================================================
+  // EMPTY / LOADING STATE
+  // ========================================================================
+  &__empty-cell {
+    text-align: center;
+    padding: var(--spacing-10) var(--spacing-4);
+    color: var(--color-text-muted);
+    font-size: var(--font-size-sm);
+  }
+
+  // ========================================================================
+  // DRAG-AND-DROP
+  // ========================================================================
+  &__drag-header,
+  &__drag-cell {
+    width: 2.5rem;
+    min-width: 2.5rem;
+    max-width: 2.5rem;
+    text-align: center;
+    padding-left: var(--spacing-2);
+    padding-right: 0;
+  }
+
+  &__drag-cell {
+    cursor: grab;
+    color: var(--color-text-muted);
+    transition: color var(--duration-fast) var(--ease-default);
+
+    &:active {
+      cursor: grabbing;
+    }
+
+    svg {
+      vertical-align: middle;
+    }
+  }
+
+  &__drag-info {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-2);
+    font-size: var(--font-size-sm);
+    color: var(--color-text-muted);
+    padding: var(--spacing-1) 0;
+
+    svg {
+      flex-shrink: 0;
+    }
+  }
+
+  // Drag state classes
+  .is-dragging {
+    opacity: 0.4;
+  }
+
+  .is-drag-over {
+    > * {
+      box-shadow: inset 0 -2px 0 0 var(--color-primary);
+    }
+  }
+
+  // ========================================================================
+  // STICKY TOOLBAR
+  // ========================================================================
+  &.is-sticky {
+    .data-table__toolbar {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      background: var(--color-bg-root);
+      padding-top: var(--spacing-4);
+      padding-bottom: var(--spacing-4);
+    }
+  }
+
+  // ========================================================================
+  // RESPONSIVE
+  // ========================================================================
+  @media (max-width: 768px) {
+    &__toolbar {
+      flex-direction: column;
+      align-items: stretch;
+      gap: var(--spacing-3);
+    }
+
+    &__search {
+      max-width: 100%;
+    }
+
+    &__controls {
+      flex-wrap: wrap;
+      gap: var(--spacing-3);
+      justify-content: space-between;
+    }
+
+    &__results-info {
+      order: 3;
+      flex-basis: 100%;
+      text-align: center;
+    }
+
+    &__th {
+      font-size: calc(var(--font-size-xs) * 0.9);
+    }
+  }
+}
