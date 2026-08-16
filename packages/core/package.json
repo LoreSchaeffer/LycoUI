@@ -1,8 +1,22 @@
 {
-  "name": "lyco-ui",
-  "private": true,
-  "version": "0.0.0",
+  "name": "@loreschaeffer/lyco-ui",
+  "version": "1.0.0",
+  "description": "A dual-target UI component library for React and Vanilla HTML/CSS/JS",
   "type": "module",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/LoreSchaeffer/LycoUI.git",
+    "directory": "packages/core"
+  },
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com"
+  },
+  "files": [
+    "dist"
+  ],
+  "sideEffects": [
+    "*.css"
+  ],
   "main": "./dist/index.cjs.js",
   "module": "./dist/index.es.js",
   "types": "./dist/types/index.d.ts",
@@ -25,9 +39,17 @@
     "lint": "oxlint"
   },
   "dependencies": {
-    "clsx": "^2.1.1",
-    "react": "^19.2.7",
-    "react-dom": "^19.2.7"
+    "clsx": "^2.1.1"
+  },
+  "peerDependencies": {
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "shiki": "^4.0.0"
+  },
+  "peerDependenciesMeta": {
+    "shiki": {
+      "optional": true
+    }
   },
   "devDependencies": {
     "@types/node": "^24.13.3",
@@ -36,18 +58,12 @@
     "@typescript/typescript6": "^6.0.2",
     "@vitejs/plugin-react": "^6.0.3",
     "oxlint": "^1.73.0",
+    "react": "^19.2.7",
+    "react-dom": "^19.2.7",
     "sass": "^1.101.0",
     "shiki": "^4.4.2",
     "typescript": "~7.0.2",
     "vite": "^8.1.4",
     "vite-plugin-dts": "^5.0.3"
-  },
-  "peerDependencies": {
-    "shiki": "^4.0.0"
-  },
-  "peerDependenciesMeta": {
-    "shiki": {
-      "optional": true
-    }
   }
 }
