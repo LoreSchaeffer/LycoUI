@@ -18,8 +18,8 @@
     /* Monorepo Path Resolution */
     "baseUrl": ".",
     "paths": {
-      "lyco-ui": ["../../packages/core/src/index.ts"],
-      "lyco-ui/*": ["../../packages/core/src/*"]
+      "@loreschaeffer/lyco-ui": ["../core/src/index.ts"],
+      "@loreschaeffer/lyco-ui/*": ["../core/src/*"]
     },
 
     /* SPA Build Settings */

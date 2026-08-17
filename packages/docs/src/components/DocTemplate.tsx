@@ -24,6 +24,7 @@ export interface ApiSectionConfig {
 export interface DocTemplateProps {
     title: string;
     description: React.ReactNode;
+    importCode?: string;
     exampleModules: Record<string, unknown>;
     rawSources: Record<string, string>;
     apiConfig?: ApiSectionConfig[];

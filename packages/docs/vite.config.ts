@@ -6,8 +6,8 @@ export default defineConfig({
     plugins: [react()],
     resolve: {
         alias: {
-            'lyco-ui/style.css': resolve(__dirname, '../core/src/styles/global.scss'),
-            'lyco-ui': resolve(__dirname, '../core/src/index.ts')
+            '@loreschaeffer/lyco-ui/style.css': resolve(__dirname, '../core/src/styles/global.scss'),
+            '@loreschaeffer/lyco-ui': resolve(__dirname, '../core/src/index.ts')
         }
     },
     build: {
