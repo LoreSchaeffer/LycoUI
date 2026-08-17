@@ -1,4 +1,4 @@
-import { Col, Input, Row } from 'lyco-ui';
+import { Col, Input, Row } from '@loreschaeffer/lyco-ui';
 
 export const title = 'File Input';
 export const description = <p>The Input component fully supports <code>type="file"</code>. The file selector button is styled to match the component's variant, and placeholders are hidden automatically.</p>;

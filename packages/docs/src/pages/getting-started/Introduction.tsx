@@ -1,5 +1,6 @@
 import './Introduction.scss';
 import React from 'react';
+import { Code } from '@loreschaeffer/lyco-ui';
 
 const Introduction: React.FC = () => {
     return (
@@ -24,15 +25,27 @@ const Introduction: React.FC = () => {
 
                 {/* TODO: Replace with standard <Text> component */}
                 <p className="docs-intro__text">
-                    Install Lyco UI via your preferred package manager. Ensure you have React and ReactDOM installed as peer dependencies.
+                    Lyco UI is hosted on <strong>GitHub Packages</strong>. Before installing, configure
+                    your project to use the GitHub npm registry for
+                    the <code>@loreschaeffer</code> scope.
                 </p>
 
-                {/* TODO: Replace with <CodeBlock language="bash"> */}
-                <pre className="docs-intro__code-block">
-                    <code>
-                        npm install lyco-ui
-                    </code>
-                </pre>
+                <p className="docs-intro__text">
+                    Create or edit <code>.npmrc</code> in your project root:
+                </p>
+
+                <Code language="ini" code={'@loreschaeffer:registry=https://npm.pkg.github.com'} />
+
+                <p className="docs-intro__text">
+                    Then install the package:
+                </p>
+
+                <Code language="bash" code="npm install @loreschaeffer/lyco-ui" />
+
+                <p className="docs-intro__text">
+                    For detailed setup instructions including authentication and peer dependencies,
+                    see the <a href="/docs/installation">Installation</a> page.
+                </p>
             </section>
 
             {/* TODO: Replace with <Section> or <Card> component */}
@@ -42,17 +55,38 @@ const Introduction: React.FC = () => {
                     Usage
                 </h2>
 
+                <h3 className="docs-intro__subsection-title">React</h3>
+
                 {/* TODO: Replace with standard <Text> component */}
                 <p className="docs-intro__text">
-                    To use Lyco UI, you must first import the global stylesheet at the root of your application (e.g., inside <code>main.tsx</code> or <code>App.tsx</code>). This initializes the CSS variables required by all components.
+                    Import the global stylesheet at the root of your application (e.g.,
+                    inside <code>main.tsx</code> or <code>App.tsx</code>), then import components
+                    as needed.
                 </p>
 
-                {/* TODO: Replace with <CodeBlock language="tsx"> */}
-                <pre className="docs-intro__code-block">
-                    <code>
-                        {`// main.tsx\nimport 'lyco-ui/dist/styles/global.css';\nimport { Button } from 'lyco-ui';\n\nexport const App = () => (\n  <Button variant="primary">Click Me</Button>\n);`}
-                    </code>
-                </pre>
+                <Code
+                    language="tsx"
+                    code={`// main.tsx
+import '@loreschaeffer/lyco-ui/style.css';
+import { Button } from '@loreschaeffer/lyco-ui';
+
+export const App = () => (
+  <Button variant="primary">Click Me</Button>
+);`}
+                />
+
+                <h3 className="docs-intro__subsection-title">Vanilla HTML/CSS/JS</h3>
+
+                {/* TODO: Replace with standard <Text> component */}
+                <p className="docs-intro__text">
+                    Include the CSS and JS files directly. No build tools or framework required.
+                </p>
+
+                <Code
+                    language="html"
+                    code={`<link rel="stylesheet" href="node_modules/@loreschaeffer/lyco-ui/dist/lyco-ui.css">
+<script type="module" src="node_modules/@loreschaeffer/lyco-ui/dist/vanilla.es.js"></script>`}
+                />
             </section>
 
             {/* TODO: Replace with <Section> or <Card> component */}

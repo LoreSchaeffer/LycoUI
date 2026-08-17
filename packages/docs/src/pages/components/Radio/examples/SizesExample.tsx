@@ -1,5 +1,5 @@
-import type {SizeVariant} from 'lyco-ui';
-import {Col, Radio, Row} from 'lyco-ui';
+import type {SizeVariant} from '@loreschaeffer/lyco-ui';
+import {Col, Radio, Row} from '@loreschaeffer/lyco-ui';
 
 export const title = 'Sizes';
 export const description = <p>Adjust the dimensions using the <code>size</code> prop.</p>;

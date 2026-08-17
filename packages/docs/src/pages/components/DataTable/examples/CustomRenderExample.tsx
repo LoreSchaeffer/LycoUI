@@ -1,4 +1,4 @@
-import { DataTable, Badge, type DataTableColumn } from 'lyco-ui';
+import { DataTable, Badge, type DataTableColumn } from '@loreschaeffer/lyco-ui';
 
 interface Product {
     id: number;

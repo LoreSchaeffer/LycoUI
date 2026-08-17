@@ -1,4 +1,4 @@
-import { Sidebar } from 'lyco-ui';
+import { Sidebar } from '@loreschaeffer/lyco-ui';
 import React from 'react';
 
 export const title = 'Auto-Generated Initials';

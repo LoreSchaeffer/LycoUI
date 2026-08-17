@@ -1,4 +1,4 @@
-import {Col, Row} from 'lyco-ui';
+import {Col, Row} from '@loreschaeffer/lyco-ui';
 
 export const title = 'Column stretching';
 export const description = <p>The <code>stretch</code> prop transforms the column into a flex container, automatically forcing any direct child element to grow and fill the vertical space.</p>;

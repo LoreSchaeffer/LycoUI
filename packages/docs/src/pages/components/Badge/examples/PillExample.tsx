@@ -1,4 +1,4 @@
-import { Badge } from 'lyco-ui';
+import { Badge } from '@loreschaeffer/lyco-ui';
 
 export const title = 'Pill & Dim Variations';
 export const description = <p>Use the <code>pill</code> prop to make badges fully rounded. Use the <code>dim</code> prop for a softer look with a semi-transparent background. These props can be combined.</p>;

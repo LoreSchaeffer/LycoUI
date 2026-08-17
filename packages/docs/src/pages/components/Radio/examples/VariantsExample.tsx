@@ -1,5 +1,5 @@
-import type {FullVariant} from 'lyco-ui';
-import {Col, Radio, Row} from 'lyco-ui';
+import type {FullVariant} from '@loreschaeffer/lyco-ui';
+import {Col, Radio, Row} from '@loreschaeffer/lyco-ui';
 
 export const title = 'Colors & Variants';
 export const description = <p>Customize the active color using the <code>variant</code> prop.</p>;

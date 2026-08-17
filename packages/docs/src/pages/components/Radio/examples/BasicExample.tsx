@@ -1,4 +1,4 @@
-import {Col, Radio, Row} from 'lyco-ui';
+import {Col, Radio, Row} from '@loreschaeffer/lyco-ui';
 
 export const title = 'Basic Usage';
 export const description = <p>Group radio buttons using the same <code>name</code> attribute.</p>;

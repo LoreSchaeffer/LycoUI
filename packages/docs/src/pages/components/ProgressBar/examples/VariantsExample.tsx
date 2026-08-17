@@ -1,5 +1,5 @@
-import { Col, ProgressBar, Row } from 'lyco-ui';
-import type { FullVariant } from 'lyco-ui';
+import { Col, ProgressBar, Row } from '@loreschaeffer/lyco-ui';
+import type { FullVariant } from '@loreschaeffer/lyco-ui';
 
 export const title = 'Colors & Variants';
 export const description = <p>Customize the color of the progress bar using the variant prop.</p>;

@@ -1,4 +1,4 @@
-import { Sidebar, Button } from 'lyco-ui';
+import { Sidebar, Button } from '@loreschaeffer/lyco-ui';
 import React, { useState } from 'react';
 
 export const title = 'Overlay Mode';

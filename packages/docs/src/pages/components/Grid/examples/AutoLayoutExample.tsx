@@ -1,4 +1,4 @@
-import {Col, Row} from 'lyco-ui';
+import {Col, Row} from '@loreschaeffer/lyco-ui';
 
 export const title = 'Auto-layout columns';
 export const description = <p>Utilize breakpoint-specific column classes for easy column sizing without an explicit numbered class.</p>;

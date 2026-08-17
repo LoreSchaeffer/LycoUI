@@ -1,4 +1,4 @@
-import {Checkbox, Col, Row} from 'lyco-ui';
+import {Checkbox, Col, Row} from '@loreschaeffer/lyco-ui';
 
 export const title = 'Basic Usage';
 export const description = <p>Bind a label to the checkbox. Clicking the label automatically toggles the input.</p>;

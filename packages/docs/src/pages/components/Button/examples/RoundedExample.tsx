@@ -1,4 +1,4 @@
-import {Button} from 'lyco-ui';
+import {Button} from '@loreschaeffer/lyco-ui';
 import {PiCaretRightBold, PiMagnifyingGlassBold, PiTrashBold} from "react-icons/pi";
 
 export const title = 'Rounded Buttons';

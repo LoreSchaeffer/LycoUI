@@ -37,6 +37,14 @@
     margin-bottom: var(--spacing-4);
   }
 
+  &__subsection-title {
+    font-size: var(--font-size-lg);
+    font-weight: 600;
+    margin-top: var(--spacing-6);
+    margin-bottom: var(--spacing-3);
+    color: var(--color-text-primary);
+  }
+
   &__code-block {
     background-color: var(--color-bg-surface);
     padding: var(--spacing-4);

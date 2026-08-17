@@ -13,7 +13,7 @@ export default function AlertDoc() {
         <DocTemplate
             title="Alert"
             description="Contextual feedback messages for typical user actions, featuring icons, manual closing, and timed progress bars."
-            importCode="import { Alert } from 'lyco-ui';"
+            importCode="import { Alert } from '@loreschaeffer/lyco-ui';"
             exampleModules={exampleModules}
             rawSources={rawSources as any}
             apiConfig={apiConfig}

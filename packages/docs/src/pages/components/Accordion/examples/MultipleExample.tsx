@@ -1,4 +1,4 @@
-import { Accordion, AccordionItem } from 'lyco-ui';
+import { Accordion, AccordionItem } from '@loreschaeffer/lyco-ui';
 
 export const title = 'Multiple Open Items';
 export const description = <p>By default, only one accordion item can be open at a time. Use the <code>allowMultiple</code> prop to allow independent toggling of multiple items.</p>;

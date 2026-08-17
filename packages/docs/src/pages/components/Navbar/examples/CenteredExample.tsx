@@ -1,4 +1,4 @@
-import { Navbar } from 'lyco-ui';
+import { Navbar } from '@loreschaeffer/lyco-ui';
 
 export const title = 'Centered Navbar';
 export const description = <p>A navbar with a centered navigation list.</p>;

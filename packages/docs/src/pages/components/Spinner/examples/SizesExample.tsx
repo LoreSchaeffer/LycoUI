@@ -1,4 +1,4 @@
-import {Spinner} from 'lyco-ui';
+import {Spinner} from '@loreschaeffer/lyco-ui';
 
 export const title = 'Sizes';
 export const description = <p>Use the <code>size</code> prop to control the size of the spinner.</p>;

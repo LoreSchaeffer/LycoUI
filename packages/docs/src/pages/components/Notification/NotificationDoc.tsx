@@ -1,4 +1,4 @@
-import { NotificationProvider } from 'lyco-ui';
+import { NotificationProvider } from '@loreschaeffer/lyco-ui';
 import { DocTemplate } from '../../../components/DocTemplate';
 import { apiConfig } from './api';
 

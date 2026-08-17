@@ -1,4 +1,4 @@
-import { Badge } from 'lyco-ui';
+import { Badge } from '@loreschaeffer/lyco-ui';
 
 export const title = 'Basic Badges';
 export const description = <p>Badges support all standard theme colors. By default, they have a solid background, a subtle shadow, and a top highlight.</p>;

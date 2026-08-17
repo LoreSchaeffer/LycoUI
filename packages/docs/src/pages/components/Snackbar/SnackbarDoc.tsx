@@ -1,4 +1,4 @@
-import {SnackbarProvider} from 'lyco-ui';
+import {SnackbarProvider} from '@loreschaeffer/lyco-ui';
 import {DocTemplate} from '../../../components/DocTemplate';
 import {apiConfig} from './api';
 

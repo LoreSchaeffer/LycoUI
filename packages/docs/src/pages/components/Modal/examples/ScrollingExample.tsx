@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Modal, ModalHeader, ModalTitle, ModalBody, ModalFooter, Button } from 'lyco-ui';
+import { Modal, ModalHeader, ModalTitle, ModalBody, ModalFooter, Button } from '@loreschaeffer/lyco-ui';
 
 export const title = 'Scrolling Long Content';
 export const description = (

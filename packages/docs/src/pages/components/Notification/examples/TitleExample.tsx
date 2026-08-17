@@ -1,4 +1,4 @@
-import { Button, useNotification } from 'lyco-ui';
+import { Button, useNotification } from '@loreschaeffer/lyco-ui';
 
 export const title = 'Title & Description';
 export const description = <p>Pass a <code>title</code> prop for a bold heading above the message body. This is useful for richer, more descriptive notifications.</p>;

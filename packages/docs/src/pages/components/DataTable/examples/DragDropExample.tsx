@@ -1,5 +1,5 @@
 import { useState, useCallback } from 'react';
-import { DataTable, type DataTableColumn } from 'lyco-ui';
+import { DataTable, type DataTableColumn } from '@loreschaeffer/lyco-ui';
 
 interface Step {
     id: number;

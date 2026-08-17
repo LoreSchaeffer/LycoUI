@@ -1,4 +1,4 @@
-import { Alert } from 'lyco-ui';
+import { Alert } from '@loreschaeffer/lyco-ui';
 
 export const title = 'Closable Alerts';
 export const description = <p>Add the <code>closable</code> prop to display a close button. You can provide an <code>onClose</code> callback to perform actions when the alert is dismissed.</p>;

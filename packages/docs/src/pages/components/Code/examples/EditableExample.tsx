@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Code } from 'lyco-ui';
+import { Code } from '@loreschaeffer/lyco-ui';
 
 export const title = 'Editable Code Block';
 export const description = <p>Setting <code>editable</code> to true overlays a transparent textarea. You can edit the code, and syntax highlighting updates in real-time.</p>;

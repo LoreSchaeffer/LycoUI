@@ -1,4 +1,4 @@
-import { Badge, Button } from 'lyco-ui';
+import { Badge, Button } from '@loreschaeffer/lyco-ui';
 
 export const title = 'Scaling inside Parent Elements';
 export const description = <p>Badges automatically scale their size to match the parent element's font size. They are perfect for counters inside buttons or headings.</p>;

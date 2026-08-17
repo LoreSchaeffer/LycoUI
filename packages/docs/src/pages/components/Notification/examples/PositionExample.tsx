@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { Button, NotificationProvider, useNotification } from 'lyco-ui';
-import type { NotificationPosition } from 'lyco-ui';
+import { Button, NotificationProvider, useNotification } from '@loreschaeffer/lyco-ui';
+import type { NotificationPosition } from '@loreschaeffer/lyco-ui';
 
 export const title = 'Position';
 export const description = <p>Wrap your app in a <code>NotificationProvider</code> with a <code>position</code> prop to change the stack corner. Select a position below and fire a notification to see it in action.</p>;

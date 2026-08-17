@@ -1,4 +1,4 @@
-import {Col, Row} from 'lyco-ui';
+import {Col, Row} from '@loreschaeffer/lyco-ui';
 
 export const title = 'Setting one column width';
 export const description = <p>Auto-layout for flexbox grid columns also means you can set the width of one column and have the sibling columns automatically resize around it.</p>;

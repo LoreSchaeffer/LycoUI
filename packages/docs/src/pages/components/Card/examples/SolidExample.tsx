@@ -1,5 +1,5 @@
-import type {FullVariant} from 'lyco-ui';
-import {Card, Col, Row} from 'lyco-ui';
+import type {FullVariant} from '@loreschaeffer/lyco-ui';
+import {Card, Col, Row} from '@loreschaeffer/lyco-ui';
 
 export const title = 'Solid Mode';
 export const description = <p>Set <code>isDim={`{false}`}</code> to force a solid background color. Typography contrast is handled automatically.</p>;

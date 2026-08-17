@@ -1,4 +1,4 @@
-import {Button} from 'lyco-ui';
+import {Button} from '@loreschaeffer/lyco-ui';
 
 export const title = 'Outlined Buttons';
 export const description = <p>Use the <code>outlined</code> prop to remove background colors and apply an inset border. Hovering inverses the colors.</p>;

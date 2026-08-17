@@ -1,5 +1,5 @@
 import {useState} from 'react';
-import {Col, Row, Select} from 'lyco-ui';
+import {Col, Row, Select} from '@loreschaeffer/lyco-ui';
 
 export const title = 'Option Variants';
 export const description = <p>Individual options can have their own <code>variant</code> applied to stand out. This uses the dim variant styling by default.</p>;

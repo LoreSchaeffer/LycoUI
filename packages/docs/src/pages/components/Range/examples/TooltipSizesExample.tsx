@@ -1,4 +1,4 @@
-import { Col, Range, Row } from 'lyco-ui';
+import { Col, Range, Row } from '@loreschaeffer/lyco-ui';
 
 export const title = 'Tooltip Sizes';
 export const description = <p>Range supports multiple sizes for the droplet tooltip: <code>sm</code>, <code>md</code> (default), and <code>lg</code>.</p>;

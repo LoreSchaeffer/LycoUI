@@ -1,4 +1,4 @@
-import {Col, Row} from 'lyco-ui';
+import {Col, Row} from '@loreschaeffer/lyco-ui';
 
 export const title = 'Responsive classes';
 export const description = <p>Using a single set of <code>md</code> props, you can create a basic grid system that starts out stacked on mobile devices and tablet devices before becoming horizontal on desktop.</p>;

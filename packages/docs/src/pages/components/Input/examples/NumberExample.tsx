@@ -1,5 +1,5 @@
 import { useState, useCallback } from 'react';
-import { Col, Input, Row } from 'lyco-ui';
+import { Col, Input, Row } from '@loreschaeffer/lyco-ui';
 
 export const title = 'Number Input';
 export const description = <p>For <code>type="number"</code>, step buttons are shown by default. They respect <code>min</code>, <code>max</code>, and <code>step</code> constraints. Set <code>showStepButtons=false</code> to hide them.</p>;

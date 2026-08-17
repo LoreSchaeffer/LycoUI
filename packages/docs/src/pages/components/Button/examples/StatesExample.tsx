@@ -1,4 +1,4 @@
-import {Button} from 'lyco-ui';
+import {Button} from '@loreschaeffer/lyco-ui';
 
 export const title = 'States & Modifiers';
 export const description = (<p>

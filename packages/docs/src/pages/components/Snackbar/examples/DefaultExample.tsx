@@ -1,4 +1,4 @@
-import {Button, useSnackbar} from 'lyco-ui';
+import {Button, useSnackbar} from '@loreschaeffer/lyco-ui';
 
 export const title = 'Default Usage';
 export const description = <p>The `Snackbar` is managed by the `SnackbarProvider`. Use the `useSnackbar` hook to imperatively show messages. In Vanilla JS, use the `LycoUI.snackbar.show()` method.</p>;

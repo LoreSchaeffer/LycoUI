@@ -1,4 +1,4 @@
-import { Col, Range, Row } from 'lyco-ui';
+import { Col, Range, Row } from '@loreschaeffer/lyco-ui';
 
 export const title = 'Basic Usage';
 export const description = <p>A simple range slider with a droplet tooltip.</p>;

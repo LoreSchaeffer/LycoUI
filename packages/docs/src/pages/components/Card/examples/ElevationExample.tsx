@@ -1,5 +1,5 @@
-import type {CardElevation} from 'lyco-ui';
-import {Card, Col, Row} from 'lyco-ui';
+import type {CardElevation} from '@loreschaeffer/lyco-ui';
+import {Card, Col, Row} from '@loreschaeffer/lyco-ui';
 
 export const title = 'Elevations';
 export const description = <p>Use the <code>elevation</code> prop to control the perceived depth of the card.</p>;

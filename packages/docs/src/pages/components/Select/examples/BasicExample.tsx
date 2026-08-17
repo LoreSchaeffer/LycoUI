@@ -1,5 +1,5 @@
 import {useState} from 'react';
-import {Col, Row, Select} from 'lyco-ui';
+import {Col, Row, Select} from '@loreschaeffer/lyco-ui';
 
 export const title = 'Basic Usage';
 export const description = <p>A standard select dropdown. In Vanilla HTML, use the <code>select-custom</code> class to trigger the automatic JavaScript enhancement.</p>;

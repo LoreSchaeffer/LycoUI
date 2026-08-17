@@ -1,4 +1,4 @@
-import {Button, ButtonGroup} from 'lyco-ui';
+import {Button, ButtonGroup} from '@loreschaeffer/lyco-ui';
 import {PiFloppyDiskBold, PiPlusBold, PiTrashBold} from "react-icons/pi";
 
 export const title = 'Button Groups';

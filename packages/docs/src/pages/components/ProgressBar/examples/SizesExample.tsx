@@ -1,4 +1,4 @@
-import { Col, ProgressBar, Row } from 'lyco-ui';
+import { Col, ProgressBar, Row } from '@loreschaeffer/lyco-ui';
 
 export const title = 'Sizes';
 export const description = <p>Progress bars support multiple sizes: <code>sm</code>, <code>md</code> (default), and <code>lg</code>.</p>;

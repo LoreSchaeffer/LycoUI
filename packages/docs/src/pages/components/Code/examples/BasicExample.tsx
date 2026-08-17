@@ -1,4 +1,4 @@
-import { Code } from 'lyco-ui';
+import { Code } from '@loreschaeffer/lyco-ui';
 
 export const title = 'Basic Code Block';
 export const description = <p>Display formatted code using the <code>language</code> prop. Syntax highlighting is handled automatically.</p>;

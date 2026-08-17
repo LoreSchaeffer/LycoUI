@@ -1,4 +1,4 @@
-import {Spinner} from 'lyco-ui';
+import {Spinner} from '@loreschaeffer/lyco-ui';
 
 export const title = 'Types';
 export const description = <p>Use the <code>type</code> prop to control the spinner's animation.</p>;

@@ -1,4 +1,4 @@
-import { Navbar } from 'lyco-ui';
+import { Navbar } from '@loreschaeffer/lyco-ui';
 
 export const title = 'Basic Navbar';
 export const description = <p>A standard navbar with a brand on the left and links on the right.</p>;

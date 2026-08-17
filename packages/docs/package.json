@@ -11,7 +11,7 @@
   },
   "dependencies": {
     "clsx": "^2.1.1",
-    "lyco-ui": "*",
+    "@loreschaeffer/lyco-ui": "*",
     "react": "^19.2.7",
     "react-dom": "^19.2.7",
     "react-icons": "^5.7.0",

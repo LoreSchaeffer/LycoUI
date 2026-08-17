@@ -1,4 +1,4 @@
-import { Accordion, AccordionItem } from 'lyco-ui';
+import { Accordion, AccordionItem } from '@loreschaeffer/lyco-ui';
 
 export const title = 'Basic Accordion';
 export const description = <p>The default accordion behavior is exclusive: opening an item closes any other open items.</p>;

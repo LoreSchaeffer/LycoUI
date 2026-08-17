@@ -1,5 +1,5 @@
 import { useState, useCallback } from 'react';
-import { DataTable, type DataTableColumn, type SortDirection } from 'lyco-ui';
+import { DataTable, type DataTableColumn, type SortDirection } from '@loreschaeffer/lyco-ui';
 
 interface Task {
     id: number;

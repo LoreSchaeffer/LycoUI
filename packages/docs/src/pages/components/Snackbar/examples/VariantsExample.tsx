@@ -1,4 +1,4 @@
-import {Button, useSnackbar} from 'lyco-ui';
+import {Button, useSnackbar} from '@loreschaeffer/lyco-ui';
 
 export const title = 'Semantic Variants';
 export const description = <p>Snackbars support all semantic and color variants, just like the `Alert` component. They also support a `flat` mode for a cleaner look without shadows.</p>;

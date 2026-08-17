@@ -1,5 +1,5 @@
 import { useCallback, useState } from 'react';
-import { Col, Input, Row } from 'lyco-ui';
+import { Col, Input, Row } from '@loreschaeffer/lyco-ui';
 
 export const title = 'Validation';
 export const description = <p>Validation can be automatic (based on native HTML constraints and a custom <code>validationFn</code>), or manually controlled via the <code>validation</code> prop. Auto-validation triggers after the first blur.</p>;

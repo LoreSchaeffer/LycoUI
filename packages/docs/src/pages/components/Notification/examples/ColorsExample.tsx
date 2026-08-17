@@ -1,4 +1,4 @@
-import { Button, useNotification } from 'lyco-ui';
+import { Button, useNotification } from '@loreschaeffer/lyco-ui';
 
 export const title = 'Color Variants';
 export const description = <p>Notifications support the full LycoUI color palette. Use any <code>ColorVariant</code> to match your application's theme.</p>;

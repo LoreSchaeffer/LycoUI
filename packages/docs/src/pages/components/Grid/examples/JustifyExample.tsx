@@ -1,4 +1,4 @@
-import {Col, Row} from 'lyco-ui';
+import {Col, Row} from '@loreschaeffer/lyco-ui';
 
 export const title = 'Horizontal alignment';
 export const description = <p>Use the <code>justify</code> prop to change the horizontal distribution of columns within a row.</p>;

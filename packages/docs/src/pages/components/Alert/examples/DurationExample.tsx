@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Alert, Button } from 'lyco-ui';
+import { Alert, Button } from '@loreschaeffer/lyco-ui';
 
 export const title = 'Timed Duration Alerts';
 export const description = <p>Provide a <code>duration</code> in seconds. The alert will display a shrinking progress bar and automatically unmount (and call <code>onClose</code>) when the time expires.</p>;

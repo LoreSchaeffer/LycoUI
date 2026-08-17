@@ -1,4 +1,4 @@
-import { Accordion, AccordionItem } from 'lyco-ui';
+import { Accordion, AccordionItem } from '@loreschaeffer/lyco-ui';
 
 export const title = 'Flush Accordion';
 export const description = <p>Add the <code>flush</code> prop to remove the outer borders, border-radius, and shadows. This is ideal for embedding accordions seamlessly inside other components like Cards.</p>;

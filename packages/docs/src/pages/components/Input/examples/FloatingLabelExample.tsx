@@ -1,4 +1,4 @@
-import { Col, Input, Row } from 'lyco-ui';
+import { Col, Input, Row } from '@loreschaeffer/lyco-ui';
 
 export const title = 'Floating Labels';
 export const description = <p>Floating labels animate above the field when the input is focused or has a value. Without a label, the input acts as a standard text field with a placeholder.</p>;

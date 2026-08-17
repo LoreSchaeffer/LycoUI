@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Pagination } from 'lyco-ui';
+import { Pagination } from '@loreschaeffer/lyco-ui';
 
 export const title = 'Compact Pagination';
 export const description = <p>The compact pagination variant displays the current page and total pages. The current page number is interactive: clicking it turns it into an input allowing you to quickly jump to a specific page.</p>;

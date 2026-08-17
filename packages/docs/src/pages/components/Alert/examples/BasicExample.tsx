@@ -1,4 +1,4 @@
-import { Alert } from 'lyco-ui';
+import { Alert } from '@loreschaeffer/lyco-ui';
 
 export const title = 'Basic Alerts';
 export const description = <p>Alerts use an elegant and subtle dim styling by default. You can use any semantic color variant, including <code>white</code>.</p>;

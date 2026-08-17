@@ -1,4 +1,4 @@
-import { Navbar, Row, Col } from 'lyco-ui';
+import { Navbar, Row, Col } from '@loreschaeffer/lyco-ui';
 
 export const title = 'Color Variants';
 export const description = <p>Navbars support all semantic and palette colors. Use the <code>dim</code> prop for a softer look.</p>;

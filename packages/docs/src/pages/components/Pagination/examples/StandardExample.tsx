@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Pagination } from 'lyco-ui';
+import { Pagination } from '@loreschaeffer/lyco-ui';
 
 export const title = 'Standard Pagination';
 export const description = <p>The standard pagination variant provides a list of page numbers for navigation.</p>;

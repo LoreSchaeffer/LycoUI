@@ -9,7 +9,7 @@
   ],
   "scripts": {
     "build": "npm run build --workspaces --if-present",
-    "dev:core": "npm run dev -w lyco-ui",
+    "dev:core": "npm run dev -w @loreschaeffer/lyco-ui",
     "dev:docs": "npm run dev -w lyco-ui-docs",
     "clean": "rm -rf node_modules packages/*/node_modules packages/*/dist"
   },

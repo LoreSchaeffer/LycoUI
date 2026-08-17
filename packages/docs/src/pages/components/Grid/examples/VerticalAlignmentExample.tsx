@@ -1,4 +1,4 @@
-import {Col, Row} from 'lyco-ui';
+import {Col, Row} from '@loreschaeffer/lyco-ui';
 
 export const title = 'Vertical alignment';
 export const description = <p>Use the <code>align</code> prop to change the vertical alignment of columns within a row.</p>;

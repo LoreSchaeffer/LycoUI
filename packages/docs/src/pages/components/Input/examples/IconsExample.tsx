@@ -1,5 +1,5 @@
 import { useState, useCallback } from 'react';
-import { Col, Input, Row } from 'lyco-ui';
+import { Col, Input, Row } from '@loreschaeffer/lyco-ui';
 
 export const title = 'Icons';
 export const description = <p>Icons can be placed at the start or end of the input. When an <code>onIconStartClick</code> or <code>onIconEndClick</code> handler is provided, the icon becomes a clickable button.</p>;

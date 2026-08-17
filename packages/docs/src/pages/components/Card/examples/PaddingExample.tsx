@@ -1,5 +1,5 @@
-import type {CardPadding} from 'lyco-ui';
-import {Card, Col, Row} from 'lyco-ui';
+import type {CardPadding} from '@loreschaeffer/lyco-ui';
+import {Card, Col, Row} from '@loreschaeffer/lyco-ui';
 
 export const title = 'Paddings';
 export const description = <p>Control the internal spacing of the card using the <code>padding</code> prop.</p>;

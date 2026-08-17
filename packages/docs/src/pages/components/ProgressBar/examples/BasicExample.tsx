@@ -1,4 +1,4 @@
-import { Col, ProgressBar, Row } from 'lyco-ui';
+import { Col, ProgressBar, Row } from '@loreschaeffer/lyco-ui';
 
 export const title = 'Basic Usage';
 export const description = <p>A basic progress bar to indicate task completion.</p>;

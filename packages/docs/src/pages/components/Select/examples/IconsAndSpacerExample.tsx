@@ -1,5 +1,5 @@
 import {useState} from 'react';
-import {Col, Row, Select} from 'lyco-ui';
+import {Col, Row, Select} from '@loreschaeffer/lyco-ui';
 import {FiLogOut, FiSettings, FiUser} from 'react-icons/fi';
 
 export const title = 'Icons & Spacers';

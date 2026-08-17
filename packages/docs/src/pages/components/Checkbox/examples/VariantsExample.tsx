@@ -1,5 +1,5 @@
-import type {FullVariant} from 'lyco-ui';
-import {Checkbox, Col, Row} from 'lyco-ui';
+import type {FullVariant} from '@loreschaeffer/lyco-ui';
+import {Checkbox, Col, Row} from '@loreschaeffer/lyco-ui';
 
 export const title = 'Colors & Variants';
 export const description = <p>Use the <code>variant</code> prop to apply semantic colors to the active state.</p>;

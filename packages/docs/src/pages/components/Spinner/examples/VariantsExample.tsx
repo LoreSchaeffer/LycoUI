@@ -1,4 +1,4 @@
-import {Spinner} from 'lyco-ui';
+import {Spinner} from '@loreschaeffer/lyco-ui';
 
 export const title = 'Variants';
 export const description = <p>Use the <code>variant</code> prop to control the color of the spinner.</p>;

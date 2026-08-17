@@ -1,5 +1,5 @@
-import type {FullVariant} from 'lyco-ui';
-import {Card, Col, Row} from 'lyco-ui';
+import type {FullVariant} from '@loreschaeffer/lyco-ui';
+import {Card, Col, Row} from '@loreschaeffer/lyco-ui';
 
 export const title = 'Variants (Dim Mode)';
 export const description = <p>By default, applying a <code>variant</code> renders the card in dim mode, utilizing a subtle transparency layer based on the global tokens.</p>;

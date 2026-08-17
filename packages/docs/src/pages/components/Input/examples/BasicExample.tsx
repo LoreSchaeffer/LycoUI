@@ -1,4 +1,4 @@
-import { Col, Input, Row } from 'lyco-ui';
+import { Col, Input, Row } from '@loreschaeffer/lyco-ui';
 
 export const title = 'Basic Usage';
 export const description = <p>Simple text inputs with different color variants. The input border and focus ring reflect the chosen variant.</p>;

@@ -1,4 +1,4 @@
-import { Accordion, AccordionItem } from 'lyco-ui';
+import { Accordion, AccordionItem } from '@loreschaeffer/lyco-ui';
 
 export const title = 'Semantic Variants';
 export const description = <p>Change the <code>variant</code> prop to apply semantic colors. This affects the text color, background tint, and focus rings of the open headers.</p>;

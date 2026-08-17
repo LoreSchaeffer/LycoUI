@@ -1,4 +1,4 @@
-import { Code } from 'lyco-ui';
+import { Code } from '@loreschaeffer/lyco-ui';
 
 export const title = 'Toolbar Options';
 export const description = <p>Enable header toolbars with <code>showCopy</code>, <code>showDownload</code>, and <code>showLanguageSelector</code>.</p>;

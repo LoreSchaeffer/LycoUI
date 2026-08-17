@@ -1,4 +1,4 @@
-import {Button} from 'lyco-ui';
+import {Button} from '@loreschaeffer/lyco-ui';
 import {PiCaretRightBold, PiFloppyDiskBold, PiGearBold, PiMagnifyingGlassBold, PiTrashBold} from "react-icons/pi";
 
 export const title = 'Icons';

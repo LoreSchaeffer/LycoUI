@@ -1,4 +1,4 @@
-import { Button, useNotification } from 'lyco-ui';
+import { Button, useNotification } from '@loreschaeffer/lyco-ui';
 
 export const title = 'Semantic Variants';
 export const description = <p>When using a semantic variant (<code>success</code>, <code>warning</code>, <code>danger</code>, <code>info</code>), an appropriate icon is automatically injected. You can override it with a custom <code>icon</code> prop or suppress it with <code>icon={'{null}'}</code>.</p>;

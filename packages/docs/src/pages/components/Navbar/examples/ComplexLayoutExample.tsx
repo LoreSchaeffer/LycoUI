@@ -1,4 +1,4 @@
-import { Navbar } from 'lyco-ui';
+import { Navbar } from '@loreschaeffer/lyco-ui';
 import React from 'react';
 
 export const title = 'Complex Layout';

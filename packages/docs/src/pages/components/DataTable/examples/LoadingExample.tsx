@@ -1,4 +1,4 @@
-import { DataTable, type DataTableColumn } from 'lyco-ui';
+import { DataTable, type DataTableColumn } from '@loreschaeffer/lyco-ui';
 
 interface Item {
     id: number;

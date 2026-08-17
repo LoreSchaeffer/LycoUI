@@ -1,4 +1,4 @@
-import { Alert } from 'lyco-ui';
+import { Alert } from '@loreschaeffer/lyco-ui';
 
 export const title = 'Alerts with Icons';
 export const description = <p>Provide a <code>ReactNode</code> to the <code>icon</code> prop to render a left-aligned icon.</p>;

@@ -1,4 +1,4 @@
-import { Col, Range, Row } from 'lyco-ui';
+import { Col, Range, Row } from '@loreschaeffer/lyco-ui';
 
 export const title = 'Custom Formatter (Time)';
 export const description = <p>Supply a custom function to format the tooltip value. In Vanilla JS, register your function in <code>window.lycoFormatters</code>.</p>;

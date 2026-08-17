@@ -1,4 +1,4 @@
-import { Button, useNotification } from 'lyco-ui';
+import { Button, useNotification } from '@loreschaeffer/lyco-ui';
 
 export const title = 'Default Usage';
 export const description = <p>Use the <code>useNotification</code> hook inside a <code>NotificationProvider</code> to show notifications imperatively. They auto-dismiss and include a progress bar. Hover over a notification to pause the countdown.</p>;

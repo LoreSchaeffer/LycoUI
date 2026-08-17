@@ -1,4 +1,4 @@
-import { Col, Input, Row } from 'lyco-ui';
+import { Col, Input, Row } from '@loreschaeffer/lyco-ui';
 
 export const title = 'Sizes';
 export const description = <p>The input supports three sizes: <code>sm</code>, <code>md</code> (default), and <code>lg</code>.</p>;

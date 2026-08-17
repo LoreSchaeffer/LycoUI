@@ -1,5 +1,5 @@
-import type {SizeVariant} from 'lyco-ui';
-import {Checkbox, Col, Row} from 'lyco-ui';
+import type {SizeVariant} from '@loreschaeffer/lyco-ui';
+import {Checkbox, Col, Row} from '@loreschaeffer/lyco-ui';
 
 export const title = 'Sizes';
 export const description = <p>Use the <code>size</code> prop to scale the checkbox proportionally.</p>;
