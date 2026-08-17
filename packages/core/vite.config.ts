@@ -10,6 +10,7 @@ export default defineConfig({
             outDirs: ['dist/types'],
             insertTypesEntry: true,
             include: ['src/**/*.ts', 'src/**/*.tsx'],
+            tsconfigPath: './tsconfig.app.json'
         })
     ],
     build: {
