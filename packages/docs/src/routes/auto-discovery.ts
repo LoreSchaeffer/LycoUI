@@ -59,6 +59,31 @@ export const docsNavigation: DocNavigationCategory[] = [
                 component: lazy(() => import('../pages/getting-started/Installation'))
             },
             {
+                name: 'Colors',
+                path: '/docs/colors',
+                component: lazy(() => import('../pages/getting-started/Colors'))
+            },
+            {
+                name: 'Typography',
+                path: '/docs/typography',
+                component: lazy(() => import('../pages/getting-started/TypographyDoc'))
+            },
+            {
+                name: 'Spacing',
+                path: '/docs/spacing',
+                component: lazy(() => import('../pages/getting-started/SpacingDoc'))
+            },
+            {
+                name: 'Shadows',
+                path: '/docs/shadows',
+                component: lazy(() => import('../pages/getting-started/ShadowsDoc'))
+            },
+            {
+                name: 'Border Radius',
+                path: '/docs/radii',
+                component: lazy(() => import('../pages/getting-started/RadiiDoc'))
+            },
+            {
                 name: 'Grid System',
                 path: '/docs/grid',
                 component: lazy(() => import('../pages/components/Grid/GridDoc.tsx'))

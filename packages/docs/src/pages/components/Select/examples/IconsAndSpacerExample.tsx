@@ -26,7 +26,7 @@ export default function IconsAndSpacersExample() {
 
     return (
         <Row>
-            <Col span={12} md={6}>
+            <Col span={6}>
                 <Select
                     value={value}
                     onChange={setValue}

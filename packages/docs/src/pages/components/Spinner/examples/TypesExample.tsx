@@ -5,8 +5,8 @@ export const description = <p>Use the <code>type</code> prop to control the spin
 export const order = 0;
 
 export const vanillaHtml = `
-<span class="spinner spinner-classic spinner-primary" role="status" aria-label="Loading"></span>
-<span class="spinner spinner-growing spinner-primary" role="status" aria-label="Loading"></span>
+<span class="spinner spinner--classic spinner--primary" role="status" aria-label="Loading"></span>
+<span class="spinner spinner--growing spinner--primary" role="status" aria-label="Loading"></span>
 `;
 
 export default function TypesExample() {

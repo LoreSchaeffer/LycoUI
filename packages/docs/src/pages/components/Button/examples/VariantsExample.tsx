@@ -5,14 +5,14 @@ export const description = <p>The <code>variant</code> prop dynamically maps to 
 export const order = 0;
 
 export const vanillaHtml = `
-<button class="btn btn-primary">Primary</button>
-<button class="btn btn-neutral">Neutral</button>
-<button class="btn btn-red">Red</button>
-<button class="btn btn-yellow">Yellow</button>
-<button class="btn btn-green">Green</button>
-<button class="btn btn-teal">Teal</button>
-<button class="btn btn-magenta">Magenta</button>
-<button class="btn btn-white">White</button>
+<button class="btn btn--primary">Primary</button>
+<button class="btn btn--neutral">Neutral</button>
+<button class="btn btn--danger">Danger</button>
+<button class="btn btn--yellow">Yellow</button>
+<button class="btn btn--success">Success</button>
+<button class="btn btn--teal">Teal</button>
+<button class="btn btn--fuchsia">Fuchsia</button>
+<button class="btn btn--white">White</button>
 `;
 
 export default function VariantsExample() {
@@ -24,7 +24,7 @@ export default function VariantsExample() {
             <Button variant="yellow">Yellow</Button>
             <Button variant="success">Success</Button>
             <Button variant="teal">Teal</Button>
-            <Button variant="magenta">Magenta</Button>
+            <Button variant="fuchsia">Fuchsia</Button>
             <Button variant="white">White</Button>
         </>
     );

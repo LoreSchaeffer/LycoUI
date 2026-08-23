@@ -31,10 +31,10 @@ export const Snackbar = forwardRef<HTMLDivElement, SnackbarProps>((
       ref={ref}
       className={clsx(
         'snackbar',
-        `snackbar-${variant}`,
-        closable && 'snackbar-closable',
+        `snackbar--${variant}`,
+        closable && 'snackbar--closable',
         icon && 'has-icon',
-        isFlat && 'snackbar-flat',
+        isFlat && 'snackbar--flat',
         isExiting && 'is-exiting',
         className
       )}

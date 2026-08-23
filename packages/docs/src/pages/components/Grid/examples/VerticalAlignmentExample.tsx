@@ -5,9 +5,12 @@ export const description = <p>Use the <code>align</code> prop to change the vert
 export const order = 3;
 
 export const vanillaHtml = `
-<div class="row row-align-center" style="min-height: 100px;">
-    <div class="col col-4"><div class="col-example">Center aligned</div></div>
-    <div class="col col-4"><div class="col-example">Center aligned</div></div>
+<div class="row row--align-center mb-4">
+    <div class="col col--4"><div class="col-example" style="height: 100px;">Tall</div></div>
+    <div class="col col--2"><div class="col-example">Inherited</div></div>
+    <div class="col col--2 col--align-start"><div class="col-example">Start aligned</div></div>
+    <div class="col col--2 col--align-center"><div class="col-example">Center aligned</div></div>
+    <div class="col col--2 col--align-end"><div class="col-example">End aligned</div></div>
 </div>
 `;
 

@@ -1,27 +1,52 @@
-.lyco-code {
-  --code-bg: var(--slate-950);
-  --code-border: var(--color-border-base);
-  --code-text: var(--slate-300);
-  --code-font: var(--font-family-mono);
-  --code-header-bg: var(--slate-900);
-  --code-radius: var(--radius-md);
+@use "../../styles/mixins/theme-variants" as *;
 
-  background-color: var(--code-bg);
-  border: 1px solid var(--code-border);
-  border-radius: var(--code-radius);
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  min-width: 0;
-  overflow: hidden;
-  box-shadow: var(--shadow-sm);
-  position: relative;
+.code {
+  // Base Variables
+  --code-font: var(--font-family-mono, monospace);
+  --code-text: var(--color-text-secondary);
 
+  &--inline {
+    font-family: var(--code-font);
+    font-size: var(--font-size-sm);
+    background-color: var(--color-surface-elevated, var(--color-carbon));
+    color: var(--color-text-primary);
+    padding: 0.15em 0.3em;
+    border-radius: var(--radius-sm);
+    white-space: nowrap;
+  }
+
+  &--block {
+    --code-bg: var(--color-obsidian, var(--color-bg-root));
+    --code-border: var(--color-border-subtle);
+    --code-header-bg: var(--color-surface-elevated);
+    --code-radius: var(--radius-xl);
+
+    background-color: var(--code-bg);
+    border: 1px solid var(--code-border);
+    border-radius: var(--code-radius);
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    min-width: 0;
+    overflow: hidden;
+    box-shadow: var(--shadow-sm);
+    position: relative; // Crucial for absolute textarea
+
+    &.is-editable {
+      .code__highlight {
+        pointer-events: none; // let clicks pass through to textarea
+      }
+    }
+  }
+
+  // ==========================================
+  // Header / Toolbar
+  // ==========================================
   &__header {
     display: flex;
-    align-items: center;
     justify-content: space-between;
-    padding: var(--spacing-2) var(--spacing-3);
+    align-items: center;
+    padding: var(--spacing-2) var(--spacing-4);
     background-color: var(--code-header-bg);
     border-bottom: 1px solid var(--code-border);
   }
@@ -42,19 +67,17 @@
   }
 
   &__lang-select {
-    background: var(--slate-800);
-    color: var(--color-text-secondary);
-    border: 1px solid var(--slate-700);
-    border-radius: var(--radius-sm);
-    padding: var(--spacing-1) var(--spacing-2);
-    font-size: var(--font-size-xs);
-    font-family: inherit;
-    outline: none;
-    cursor: pointer;
-    transition: border-color var(--duration-fast) var(--ease-default);
-
-    &:focus-visible {
-      border-color: var(--color-primary);
+    min-width: 120px;
+    
+    // Slight adjustments to make the custom Select blend perfectly into the Code header
+    --select-bg: transparent;
+    --select-border: transparent;
+    --select-hover-bg: var(--color-surface-hover);
+    
+    .select__trigger {
+      padding: var(--spacing-1) var(--spacing-2);
+      font-size: var(--font-size-xs);
+      border-radius: var(--radius-sm);
     }
   }
 
@@ -72,7 +95,7 @@
     transition: all var(--duration-fast) var(--ease-default);
 
     &:hover {
-      background-color: var(--slate-800);
+      background-color: var(--color-surface-hover);
       color: var(--color-text-primary);
     }
 
@@ -100,36 +123,47 @@
     }
   }
 
+  // ==========================================
+  // Body (Code & Editor)
+  // ==========================================
   &__body {
     position: relative;
     flex: 1;
     min-width: 0;
-    overflow: hidden;
+    overflow-x: auto;
   }
 
   // Textarea and Pre formatting must be IDENTICAL for editing to work correctly.
   &__textarea,
-  &__highlight pre {
+  &__highlight pre,
+  &__highlight pre code {
     margin: 0;
-    padding: var(--spacing-4);
+    padding: 0;
     font-family: var(--code-font);
     font-size: var(--font-size-sm);
-    line-height: 1.5;
+    line-height: 1.6;
     tab-size: 2;
-    overflow: auto;
     white-space: pre;
     word-break: normal;
+  }
+  
+  &__textarea,
+  &__highlight pre {
+    padding: var(--spacing-6) var(--spacing-6); // Perfect alignment via identical padding
   }
 
   &__highlight {
     background: transparent !important; // Override shiki theme bg
+    pointer-events: auto;
     
     pre {
       background: transparent !important;
       min-height: 100%;
+      overflow-x: auto;
     }
   }
 
+  // Editable overlay (True Ghost Overlay)
   &__textarea {
     position: absolute;
     top: 0;
@@ -139,21 +173,15 @@
     z-index: 1;
     background: transparent;
     color: transparent; // Hide the text, only show caret
-    caret-color: var(--white);
-    border: none;
-    outline: none;
-    resize: none;
+    caret-color: var(--color-text-primary);
+    border: none; // Reset
+    outline: none; // Reset
+    resize: none; // Reset
+    overflow: auto; // Match the pre scrolling
     
     &::selection {
       background-color: color-mix(in srgb, var(--color-primary) 30%, transparent);
       color: transparent;
-    }
-  }
-
-  // When editable, we don't want the pre block to receive pointer events
-  &.is-editable {
-    .lyco-code__highlight {
-      pointer-events: none; // let clicks pass through to textarea
     }
   }
 }

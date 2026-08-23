@@ -19,9 +19,9 @@ const initialSteps: Step[] = [
 ];
 
 const columns: DataTableColumn<Step>[] = [
-    { id: 'id', header: '#', minWidth: '3rem' },
-    { id: 'step', header: 'Step', minWidth: '10rem' },
-    { id: 'description', header: 'Description', minWidth: '14rem' },
+    { id: 'id', header: 'No.', minWidth: '4rem' },
+    { id: 'step', header: 'Step Name', minWidth: '12rem' },
+    { id: 'description', header: 'Description', minWidth: '16rem' },
 ];
 
 export const title = 'Drag & Drop Reorder';

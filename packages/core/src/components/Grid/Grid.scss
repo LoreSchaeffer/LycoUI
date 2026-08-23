@@ -3,36 +3,36 @@
 
 .row {
   --gutter-x: var(--spacing-4, 1rem);
-  --gutter-y: 0;
+  --gutter-y: var(--spacing-4, 1rem);
 
   display: flex;
   flex-wrap: wrap;
-  width: 100%;
+  width: calc(100% + var(--gutter-x));
   margin-top: calc(var(--gutter-y) * -1);
   margin-left: calc(var(--gutter-x) * -0.5);
   margin-right: calc(var(--gutter-x) * -0.5);
 
-  &-align-start {
+  &--align-start {
     align-items: flex-start;
   }
 
-  &-align-center {
+  &--align-center {
     align-items: center;
   }
 
-  &-align-end {
+  &--align-end {
     align-items: flex-end;
   }
 
-  &-justify-center {
+  &--justify-center {
     justify-content: center;
   }
 
-  &-justify-end {
+  &--justify-end {
     justify-content: flex-end;
   }
 
-  &-justify-between {
+  &--justify-between {
     justify-content: space-between;
   }
 }
@@ -46,7 +46,7 @@
   padding-right: calc(var(--gutter-x) * 0.5);
   margin-top: var(--gutter-y);
 
-  &-stretch {
+  &--stretch {
     display: flex;
     flex-direction: column;
 
@@ -55,26 +55,26 @@
     }
   }
 
-  &-align-start {
+  &--align-start {
     align-self: flex-start;
   }
 
-  &-align-center {
+  &--align-center {
     align-self: center;
   }
 
-  &-align-end {
+  &--align-end {
     align-self: flex-end;
   }
 
-  &-align-stretch {
+  &--align-stretch {
     align-self: stretch;
   }
 }
 
 @mixin make-grid-columns($infix: "") {
   @for $i from 1 through 12 {
-    .col#{$infix}-#{$i} {
+    .col#{$infix}--#{$i} {
       flex: 0 0 math.percentage(math.div($i, 12));
       max-width: math.percentage(math.div($i, 12));
     }
@@ -85,6 +85,6 @@
 
 @each $bp-name, $bp-value in $breakpoints {
   @include respond-to($bp-name) {
-    @include make-grid-columns("-#{$bp-name}");
+    @include make-grid-columns("--#{$bp-name}");
   }
 }

@@ -39,9 +39,9 @@ export const Badge = forwardRef<HTMLSpanElement, BadgeProps>((
       ref={ref}
       className={clsx(
         'badge',
-        `badge-${variant}`,
-        pill && 'badge-pill',
-        dim && 'badge-dim',
+        variant && `badge--${variant}`,
+        pill && 'badge--pill',
+        dim && 'badge--dim',
         className
       )}
       {...props}

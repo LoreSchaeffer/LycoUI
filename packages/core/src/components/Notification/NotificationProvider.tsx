@@ -136,7 +136,7 @@ export const NotificationProvider: React.FC<NotificationProviderProps> = ({
               position={position}
               onClose={() => closeNotification(n.id)}
             >
-              {n.message}
+              {n.description || n.message}
             </Notification>
           ))}
         </div>,

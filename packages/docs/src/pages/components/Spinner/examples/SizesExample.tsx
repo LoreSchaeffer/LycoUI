@@ -5,9 +5,9 @@ export const description = <p>Use the <code>size</code> prop to control the size
 export const order = 2;
 
 export const vanillaHtml = `
-<span class="spinner spinner-classic spinner-primary spinner-sm" role="status" aria-label="Loading"></span>
-<span class="spinner spinner-classic spinner-primary" role="status" aria-label="Loading"></span>
-<span class="spinner spinner-classic spinner-primary spinner-lg" role="status" aria-label="Loading"></span>
+<span class="spinner spinner--classic spinner--primary spinner--sm" role="status" aria-label="Loading"></span>
+<span class="spinner spinner--classic spinner--primary" role="status" aria-label="Loading"></span>
+<span class="spinner spinner--classic spinner--primary spinner--lg" role="status" aria-label="Loading"></span>
 `;
 
 export default function VariantsExample() {

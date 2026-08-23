@@ -24,28 +24,27 @@ export const Checkbox = memo(forwardRef<HTMLInputElement, CheckboxProps>((
     const inputId = id ?? generatedId;
     const isColored = variant !== 'default';
 
-    const inputNode = (
-        <input
-            ref={ref}
-            type="checkbox"
-            id={inputId}
-            disabled={disabled}
+    return (
+        <label 
+            htmlFor={inputId} 
             className={clsx(
-                'checkbox',
-                isColored && `checkbox-${variant}`,
-                size !== 'md' && `checkbox-${size}`,
+                'checkbox', 
+                disabled && 'is-disabled',
+                isColored && `checkbox--${variant}`,
+                size !== 'md' && `checkbox--${size}`,
                 className
             )}
-            {...props}
-        />
-    );
-
-    if (!label) return inputNode;
-
-    return (
-        <label htmlFor={inputId} className={clsx('checkbox-wrapper', disabled && 'is-disabled')}>
-            {inputNode}
-            <span>{label}</span>
+        >
+            <input
+                ref={ref}
+                type="checkbox"
+                id={inputId}
+                disabled={disabled}
+                className="checkbox__input"
+                {...props}
+            />
+            <span className="checkbox__control" aria-hidden="true" />
+            {label && <span className="checkbox__label">{label}</span>}
         </label>
     );
 }));

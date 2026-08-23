@@ -161,8 +161,8 @@ export const Select = forwardRef<HTMLDivElement, SelectProps>((
             ref={mergedRef}
             className={clsx(
                 'select',
-                isColored && `select-${variant}`,
-                size !== 'md' && `select-${size}`,
+                isColored && `select--${variant}`,
+                size !== 'md' && `select--${size}`,
                 disabled && 'is-disabled',
                 isOpen && 'is-open',
                 className
@@ -215,7 +215,7 @@ export const Select = forwardRef<HTMLDivElement, SelectProps>((
                             aria-disabled={option.disabled}
                             className={clsx(
                                 'select__option',
-                                option.variant && `select__option-${option.variant}`,
+                                option.variant && `select__option--${option.variant}`,
                                 isSelected && 'is-selected',
                                 isFocused && 'is-focused',
                                 option.disabled && 'is-disabled'

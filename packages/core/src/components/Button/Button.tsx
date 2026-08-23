@@ -1,7 +1,7 @@
 import './Button.scss';
 import {type ButtonHTMLAttributes, forwardRef, type ReactNode} from 'react';
 import clsx from 'clsx';
-import type {Alignment, FullVariant, SizeVariant} from '../../types/types.ts';
+import type {Alignment, FullVariant, SizeVariant} from '../../types/types';
 import {Spinner, type SpinnerType} from '../Spinner';
 
 export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
@@ -9,11 +9,11 @@ export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
     variant?: FullVariant;
     size?: SizeVariant;
     align?: Alignment;
-    flat?: boolean;
-    static?: boolean;
     outlined?: boolean;
+    ghost?: boolean;
     rounded?: boolean;
-    loading?: boolean;
+    static?: boolean;
+    isLoading?: boolean;
     icon?: ReactNode;
     iconStart?: ReactNode;
     iconEnd?: ReactNode;
@@ -26,11 +26,11 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>((
         variant = 'primary',
         size = 'md',
         align = 'center',
-        flat = false,
-        'static': btnStatic = false,
         outlined = false,
+        ghost = false,
         rounded = false,
-        loading = false,
+        'static': btnStatic = false,
+        isLoading = false,
         icon,
         iconStart,
         iconEnd,
@@ -40,11 +40,12 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>((
         style,
         ...props
     }, ref) => {
-    const isDisabled = disabled || loading;
+    
+    const isDisabled = disabled || isLoading;
     const isIconOnly = Boolean(icon && !children);
 
-    const showSpinnerStart = loading && (Boolean(iconStart) || !iconEnd);
-    const showSpinnerEnd = loading && Boolean(iconEnd) && !iconStart;
+    const showSpinnerStart = isLoading && (Boolean(iconStart) || !iconEnd);
+    const showSpinnerEnd = isLoading && Boolean(iconEnd) && !iconStart;
 
     const mergedStyle = align !== 'center'
         ? { justifyContent: align === 'start' ? 'flex-start' : 'flex-end', ...style }
@@ -56,14 +57,14 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>((
             disabled={isDisabled}
             className={clsx(
                 'btn',
-                `btn-${variant}`,
-                size !== 'md' && `btn-${size}`,
-                flat && 'btn-flat',
-                btnStatic && 'btn-static',
-                rounded && 'btn-rounded',
-                outlined && 'btn-outlined',
-                loading && 'btn-loading',
-                isIconOnly && 'btn-icon-only',
+                variant && `btn--${variant}`,
+                size && size !== 'md' && `btn--${size}`,
+                outlined && 'btn--outlined',
+                ghost && 'btn--ghost',
+                rounded && 'btn--rounded',
+                btnStatic && 'btn--static',
+                isLoading && 'btn--loading',
+                isIconOnly && 'btn--icon-only',
                 className
             )}
             style={mergedStyle}
@@ -71,13 +72,13 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>((
         >
             {isIconOnly && (
                 <span className="btn__icon">
-                    {loading ? <Spinner size={size} type={spinnerType} className="btn__spinner"/> : icon}
+                    {isLoading ? <Spinner size={size} type={spinnerType} className="btn__spinner"/> : icon}
                 </span>
             )}
 
             {!isIconOnly && (
                 <>
-                    {(showSpinnerStart || (!loading && iconStart)) && (
+                    {(showSpinnerStart || (!isLoading && iconStart)) && (
                         <span className="btn__icon btn__icon--start">
                             {showSpinnerStart ? <Spinner size={size} type={spinnerType} className="btn__spinner"/> : iconStart}
                         </span>
@@ -85,7 +86,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>((
 
                     {children}
 
-                    {(showSpinnerEnd || (!loading && iconEnd)) && (
+                    {(showSpinnerEnd || (!isLoading && iconEnd)) && (
                         <span className="btn__icon btn__icon--end">
                             {showSpinnerEnd ? <Spinner size={size} type={spinnerType} className="btn__spinner"/> : iconEnd}
                         </span>

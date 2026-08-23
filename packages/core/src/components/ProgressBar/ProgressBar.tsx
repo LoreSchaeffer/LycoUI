@@ -28,8 +28,8 @@ export const ProgressBar = forwardRef<HTMLDivElement, ProgressBarProps>(
       <div
         className={clsx(
           'progress',
-          `progress-${variant}`,
-          `progress-${size}`,
+          `progress--${variant}`,
+          `progress--${size}`,
           className
         )}
         role="progressbar"

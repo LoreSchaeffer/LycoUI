@@ -77,14 +77,14 @@ class LycoInputController {
         // Build container
         const containerClasses = [
             'input',
-            `input-${variant}`,
-            `input-${size}`,
-        ];
-        if (flat) containerClasses.push('input-flat');
+            variant ? `input--${variant}` : '',
+            size && size !== 'md' ? `input--${size}` : '',
+        ].filter(Boolean);
+        if (flat) containerClasses.push('input--flat');
         if (isDisabled) containerClasses.push('is-disabled');
         if (isReadonly) containerClasses.push('is-readonly');
-        if (hasIconStart) containerClasses.push('input-has-icon-start');
-        if (hasIconEnd || showSteps) containerClasses.push('input-has-icon-end');
+        if (hasIconStart) containerClasses.push('input--has-icon-start');
+        if (hasIconEnd || showSteps) containerClasses.push('input--has-icon-end');
         this.container.className = containerClasses.join(' ');
 
         // Insert wrapper before native input, then move input inside

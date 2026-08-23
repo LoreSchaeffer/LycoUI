@@ -25,8 +25,8 @@ export const Row = forwardRef<HTMLDivElement, RowProps>((
             ref={ref}
             className={clsx(
                 'row',
-                align !== 'stretch' && `row-align-${align}`,
-                justify !== 'start' && `row-justify-${justify}`,
+                align !== 'stretch' && `row--align-${align}`,
+                justify !== 'start' && `row--justify-${justify}`,
                 className
             )}
             {...props}

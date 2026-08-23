@@ -12,7 +12,7 @@ export const spinnerPropsData: PropDefinition[] = [
         type: 'FullVariant',
         typeLink: '/docs/types#full-variant',
         defaultValue: "'primary'",
-        description: 'Maps the spinner color to the global theme hues or semantic variants.'
+        description: 'Maps the spinner color to the global theme hues (e.g., amber, lime, fuchsia) or semantic variants.'
     },
     {
         name: 'size',

@@ -16,18 +16,20 @@
 
     .select__trigger {
       pointer-events: none;
+      background-color: var(--color-bg-root);
     }
   }
 
   &:focus-visible .select__trigger {
-    box-shadow: 0 0 0 2px var(--color-bg-root), 0 0 0 4px var(--select-color-base);
+    outline: none;
+    box-shadow: 0 0 0 1px var(--color-void), 0 0 0 3px var(--select-color-base);
     border-color: var(--select-color-base);
   }
 
   // ==========================================================================
   // SIZES
   // ==========================================================================
-  &-sm {
+  &--sm {
     font-size: var(--font-size-sm);
 
     .select__trigger {
@@ -36,7 +38,7 @@
     }
   }
 
-  &-lg {
+  &--lg {
     font-size: var(--font-size-lg);
 
     .select__trigger {
@@ -48,32 +50,22 @@
   // ==========================================================================
   // SEMANTIC & PALETTE VARIANTS
   // ==========================================================================
-  &-primary {
-    --select-color-base: var(--color-primary);
-  }
+  &--primary { --select-color-base: var(--color-primary); }
+  &--success { --select-color-base: var(--color-success); }
+  &--warning { --select-color-base: var(--color-warning); }
+  &--danger { --select-color-base: var(--color-danger); }
+  &--info { --select-color-base: var(--color-info); }
+}
 
-  &-success {
-    --select-color-base: var(--color-success);
-  }
-
-  &-warning {
-    --select-color-base: var(--color-warning);
-  }
-
-  &-danger {
-    --select-color-base: var(--color-danger);
-  }
-
-  &-info {
-    --select-color-base: var(--color-info);
-  }
-
+.select- {
   @include for-each-theme-color using($color, $is-light) {
-    &-#{$color} {
-      --select-color-base: var(--#{$color});
+    &--#{$color} {
+      --select-color-base: var(--#{$color}-500);
     }
   }
+}
 
+.select {
   // ==========================================================================
   // TRIGGER ELEMENT
   // ==========================================================================
@@ -92,13 +84,13 @@
     box-sizing: border-box;
 
     &:hover {
-      border-color: var(--color-text-secondary);
+      border-color: var(--color-border-strong);
     }
   }
 
   &.is-open .select__trigger {
     border-color: var(--select-color-base);
-    box-shadow: 0 0 0 1px var(--select-color-base);
+    box-shadow: 0 0 0 1px var(--color-void), 0 0 0 3px var(--select-color-base);
   }
 
   &__content {
@@ -151,10 +143,11 @@
     margin: 0;
     padding: var(--spacing-1);
     list-style: none;
-    background-color: var(--color-surface-elevated);
-    border: 1px solid var(--color-border-base);
+    background-color: var(--color-bg-surface); // Fallback
+    background-color: var(--surface-floating, var(--color-bg-surface));
+    border: 1px solid var(--color-border-subtle);
     border-radius: var(--radius-md);
-    box-shadow: var(--shadow-md);
+    box-shadow: var(--shadow-xl);
     z-index: var(--z-dropdown, 100);
     box-sizing: border-box;
 
@@ -185,8 +178,6 @@
     transition: background-color var(--duration-fast) var(--ease-default),
     color var(--duration-fast) var(--ease-default);
 
-
-
     &.is-disabled {
       opacity: 0.5;
       cursor: not-allowed;
@@ -194,7 +185,7 @@
 
     &:not(.is-disabled):hover,
     &.is-focused:not(.is-disabled) {
-      background-color: var(--color-bg-surface);
+      background-color: var(--color-surface-active, color-mix(in srgb, var(--select-color-base) 10%, transparent));
     }
 
     &.is-selected {
@@ -206,7 +197,7 @@
 
   &__spacer {
     height: 1px;
-    background-color: var(--color-border-base);
+    background-color: var(--color-border-subtle);
     margin: var(--spacing-2) 0;
     padding: 0;
     list-style: none;
@@ -215,38 +206,24 @@
   }
 
   @mixin option-variant($color-var) {
-    background-color: color-mix(in srgb, #{$color-var} 15%, transparent);
+    background-color: color-mix(in srgb, #{$color-var} 10%, transparent);
     color: #{$color-var};
 
     &:not(.is-disabled):hover,
     &.is-focused:not(.is-disabled) {
-      background-color: color-mix(in srgb, #{$color-var} 25%, transparent);
+      background-color: color-mix(in srgb, #{$color-var} 20%, transparent);
     }
 
     &.is-selected {
-      background-color: color-mix(in srgb, #{$color-var} 35%, transparent);
+      background-color: color-mix(in srgb, #{$color-var} 30%, transparent);
       font-weight: var(--font-weight-medium);
     }
   }
 
-  &__option-success {
-    @include option-variant(var(--color-success));
-  }
-  &__option-warning {
-    @include option-variant(var(--color-warning));
-  }
-  &__option-danger {
-    @include option-variant(var(--color-danger));
-  }
-  &__option-info {
-    @include option-variant(var(--color-info));
-  }
-
-  @include for-each-theme-color using($color, $is-light) {
-    &__option-#{$color} {
-      @include option-variant(var(--#{$color}));
-    }
-  }
+  &__option--success { @include option-variant(var(--color-success)); }
+  &__option--warning { @include option-variant(var(--color-warning)); }
+  &__option--danger { @include option-variant(var(--color-danger)); }
+  &__option--info { @include option-variant(var(--color-info)); }
 
   &__icon--option {
     display: inline-flex;
@@ -255,5 +232,24 @@
     color: inherit;
     font-size: 1.1em;
     flex-shrink: 0;
+  }
+}
+
+.select__option- {
+  @include for-each-theme-color using($color, $is-light) {
+    &--#{$color} {
+      background-color: color-mix(in srgb, var(--#{$color}-500) 10%, transparent);
+      color: var(--#{$color}-500);
+
+      &:not(.is-disabled):hover,
+      &.is-focused:not(.is-disabled) {
+        background-color: color-mix(in srgb, var(--#{$color}-500) 20%, transparent);
+      }
+
+      &.is-selected {
+        background-color: color-mix(in srgb, var(--#{$color}-500) 30%, transparent);
+        font-weight: var(--font-weight-medium);
+      }
+    }
   }
 }

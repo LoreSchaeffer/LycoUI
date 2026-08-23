@@ -4,79 +4,94 @@
   display: flex;
   flex-direction: column;
   box-sizing: border-box;
-  border-radius: var(--radius-lg);
+  border-radius: var(--radius-xl);
   border: 1px solid var(--color-border-base);
   background-color: var(--color-bg-surface);
   color: var(--color-text-primary);
   overflow: hidden;
-  transition: box-shadow var(--duration-fast) var(--ease-default),
+  transition: box-shadow var(--duration-normal) var(--ease-default),
+              border-color var(--duration-normal) var(--ease-default),
+              transform var(--duration-normal) var(--ease-default),
               background-color var(--duration-fast) var(--ease-default);
+
+  // ==========================================================================
+  // COMPOUND SECTIONS
+  // ==========================================================================
+  &__header {
+    padding: var(--spacing-4) var(--spacing-6);
+    border-bottom: 1px solid var(--color-border-subtle);
+    font-weight: 600;
+  }
+
+  &__body {
+    padding: var(--spacing-6);
+    flex: 1 1 auto;
+  }
+
+  &__footer {
+    padding: var(--spacing-4) var(--spacing-6);
+    border-top: 1px solid var(--color-border-subtle);
+    background-color: var(--color-bg-subtle);
+  }
+
+  // ==========================================================================
+  // INTERACTIVE (Hoverable)
+  // ==========================================================================
+  &--interactive {
+    cursor: pointer;
+
+    &:hover {
+      transform: translateY(-2px);
+      border-color: var(--color-border-strong);
+      box-shadow: var(--shadow-md);
+    }
+  }
 
   // ==========================================================================
   // ELEVATIONS
   // ==========================================================================
-  &-elevation-0 {
-    box-shadow: none;
-  }
-
-  &-elevation-1 {
-    box-shadow: var(--shadow-sm);
-  }
-
-  &-elevation-2 {
+  &--elevation-0 { box-shadow: none; }
+  &--elevation-1 { box-shadow: var(--shadow-sm); }
+  &--elevation-2 {
     box-shadow: var(--shadow-md);
     background-color: var(--color-surface-elevated);
   }
-
-  &-elevation-3 {
+  &--elevation-3 {
     box-shadow: var(--shadow-lg);
     background-color: var(--color-surface-elevated);
   }
-
-  &-elevation-4 {
+  &--elevation-4 {
     box-shadow: var(--shadow-xl);
     background-color: var(--color-surface-elevated);
     background-image: linear-gradient(180deg, color-mix(in srgb, var(--white) 3%, transparent) 0%, transparent 100%);
   }
 
   // ==========================================================================
-  // PADDING
+  // PADDING (For flat/non-compound usage)
   // ==========================================================================
-  &-padding-none {
-    padding: 0;
-  }
-
-  &-padding-sm {
-    padding: var(--spacing-4);
-  }
-
-  &-padding-md {
-    padding: var(--spacing-6);
-  }
-
-  &-padding-lg {
-    padding: var(--spacing-8);
-  }
+  &--padding-none { padding: 0; }
+  &--padding-sm { padding: var(--spacing-4); }
+  &--padding-md { padding: var(--spacing-6); }
+  &--padding-lg { padding: var(--spacing-8); }
 
   // ==========================================================================
-  // FLAT MODIFIER — strips elevation depth cues for a clean solid appearance
+  // FLAT MODIFIER
   // ==========================================================================
-  &.card-flat {
+  &--flat {
     box-shadow: none;
     background-image: none;
   }
 
   // ==========================================================================
   // COLOR VARIANTS (Solid & Dim)
-  // Uses double-class specificity to override elevation background cleanly.
   // ==========================================================================
-  &.card-variant {
-    &.card-dim {
+  &--variant {
+    &.card--dim {
       background-color: var(--card-color-dim);
       border-color: color-mix(in srgb, var(--card-color-base) 25%, transparent);
     }
 
-    &.card-solid {
+    &.card--solid {
       background-color: var(--card-color-base);
       border-color: var(--card-color-base);
       color: var(--card-text-color, var(--white));
@@ -84,47 +99,50 @@
       p, h1, h2, h3, h4, h5, h6, .text-secondary, .text-muted {
         color: inherit;
       }
+      
+      .card__header, .card__footer {
+        border-color: color-mix(in srgb, var(--white) 15%, transparent);
+        background-color: transparent;
+      }
     }
   }
+}
 
-  // ==========================================================================
-  // SEMANTIC COLOR MAPPINGS
-  // ==========================================================================
-  &-primary {
-    --card-color-base: var(--color-primary);
-    --card-color-dim: var(--color-primary-dim);
-    --card-text-color: var(--white);
-  }
+// ==========================================================================
+// SEMANTIC COLOR MAPPINGS
+// ==========================================================================
+.card--primary {
+  --card-color-base: var(--color-primary);
+  --card-color-dim: var(--color-primary-dim);
+  --card-text-color: var(--white);
+}
+.card--success {
+  --card-color-base: var(--color-success);
+  --card-color-dim: color-mix(in srgb, var(--color-success) 15%, transparent);
+  --card-text-color: var(--slate-950);
+}
+.card--warning {
+  --card-color-base: var(--color-warning);
+  --card-color-dim: color-mix(in srgb, var(--color-warning) 15%, transparent);
+  --card-text-color: var(--slate-950);
+}
+.card--danger {
+  --card-color-base: var(--color-danger);
+  --card-color-dim: color-mix(in srgb, var(--color-danger) 15%, transparent);
+  --card-text-color: var(--white);
+}
+.card--info {
+  --card-color-base: var(--color-info);
+  --card-color-dim: color-mix(in srgb, var(--color-info) 15%, transparent);
+  --card-text-color: var(--slate-950);
+}
 
-  &-success {
-    --card-color-base: var(--color-success);
-    --card-color-dim: color-mix(in srgb, var(--color-success) 15%, transparent);
-    --card-text-color: var(--slate-950);
-  }
-
-  &-warning {
-    --card-color-base: var(--color-warning);
-    --card-color-dim: color-mix(in srgb, var(--color-warning) 15%, transparent);
-    --card-text-color: var(--slate-950);
-  }
-
-  &-danger {
-    --card-color-base: var(--color-danger);
-    --card-color-dim: color-mix(in srgb, var(--color-danger) 15%, transparent);
-    --card-text-color: var(--white);
-  }
-
-  &-info {
-    --card-color-base: var(--color-info);
-    --card-color-dim: color-mix(in srgb, var(--color-info) 15%, transparent);
-    --card-text-color: var(--slate-950);
-  }
-
-  // ==========================================================================
-  // PALETTE COLOR MAPPINGS (from mixin loop)
-  // ==========================================================================
+// ==========================================================================
+// PALETTE COLOR MAPPINGS
+// ==========================================================================
+.card- {
   @include for-each-theme-color using($color, $is-light) {
-    --card-color-base: var(--#{$color});
+    --card-color-base: var(--#{$color}-500);
     --card-color-dim: var(--#{$color}-dim);
 
     @if $is-light {

@@ -55,6 +55,12 @@ export const rangeProps: PropDefinition[] = [
         description: 'Toggles the visibility of the droplet tooltip.',
     },
     {
+        name: 'tooltipTrigger',
+        type: "'active' | 'hover'",
+        defaultValue: "'active'",
+        description: 'Determines when the tooltip is shown. "active" shows it only when dragging or focusing via keyboard. "hover" adds the ability to see it by hovering the thumb.',
+    },
+    {
         name: 'tooltipSize',
         type: 'SizeVariant',
         typeLink: '/docs/types/size-variant',
@@ -66,6 +72,12 @@ export const rangeProps: PropDefinition[] = [
         type: 'boolean',
         defaultValue: 'true',
         description: 'If true, the track before the thumb will be filled with the variant color.',
+    },
+    {
+        name: 'coloredThumb',
+        type: 'boolean',
+        defaultValue: '!filled',
+        description: 'If true, the thumb will use the variant color. By default, it is white on filled tracks and colored on unfilled tracks.',
     },
     {
         name: 'disabled',

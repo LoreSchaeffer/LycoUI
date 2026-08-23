@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Pagination } from '@loreschaeffer/lyco-ui';
+import { Pagination, Row, Col, Card } from '@loreschaeffer/lyco-ui';
 
 export const title = 'Standard Pagination';
 export const description = <p>The standard pagination variant provides a list of page numbers for navigation.</p>;
@@ -41,31 +41,37 @@ export default function StandardExample() {
     const [page3, setPage3] = useState(2);
 
     return (
-        <div>
-            <Pagination
-                variant="standard"
-                currentPage={page1}
-                totalPages={10}
-                onPageChange={setPage1}
-            />
-            
-            <Pagination
-                variant="standard"
-                colorVariant="danger"
-                currentPage={page2}
-                totalPages={5}
-                onPageChange={setPage2}
-                className="mt-4"
-            />
+        <Row>
+            <Col xs={12} md={8}>
+                <Card>
+                    <Card.Body>
+                        <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--spacing-4)', alignItems: 'center', padding: 'var(--spacing-4) 0' }}>
+                            <Pagination
+                                variant="standard"
+                                currentPage={page1}
+                                totalPages={10}
+                                onChange={setPage1}
+                            />
+                            
+                            <Pagination
+                                variant="standard"
+                                colorVariant="danger"
+                                currentPage={page2}
+                                totalPages={5}
+                                onChange={setPage2}
+                            />
 
-            <Pagination
-                variant="standard"
-                colorVariant="success"
-                currentPage={page3}
-                totalPages={8}
-                onPageChange={setPage3}
-                className="mt-4"
-            />
-        </div>
+                            <Pagination
+                                variant="standard"
+                                colorVariant="success"
+                                currentPage={page3}
+                                totalPages={8}
+                                onChange={setPage3}
+                            />
+                        </div>
+                    </Card.Body>
+                </Card>
+            </Col>
+        </Row>
     );
 }

@@ -19,6 +19,7 @@ import { Input } from '../Input';
 import { Select, type SelectOption } from '../Select';
 import { Pagination } from '../Pagination';
 import { Spinner } from '../Spinner';
+import { Checkbox } from '../Checkbox';
 
 // ==========================================================================
 // TYPES
@@ -92,6 +93,25 @@ export interface DataTableProps<T> extends Omit<HTMLAttributes<HTMLDivElement>, 
      * Use this to persist page size externally (e.g. localStorage).
      */
     onPageSizeChange?: (pageSize: number) => void;
+    /** Where to position the pagination controls. Defaults to `'top'`. */
+    paginationPosition?: 'top' | 'bottom';
+    /** 
+     * How to display the results info text.
+     * `'full'`: "Showing 1 to 10 of 15 results"
+     * `'compact'`: "1-10 of 15"
+     * `'none'`: Hides the info text.
+     * Defaults to `'full'`.
+     */
+    paginationInfo?: 'full' | 'compact' | 'none';
+
+    // --- Localization ---
+    /** 
+     * Override default English text for i18n support. 
+     */
+    localization?: {
+        rowsPerPage?: string;
+        showingResults?: (from: number, to: number, total: number) => string;
+    };
 
     // --- State ---
     /** Shows a loading spinner instead of rows. */
@@ -109,6 +129,16 @@ export interface DataTableProps<T> extends Omit<HTMLAttributes<HTMLDivElement>, 
     /** Fires when a row is right-clicked. */
     onRowContextMenu?: (event: React.MouseEvent, row: T, index: number) => void;
 
+    // --- Selection (opt-in) ---
+    /** Enable row selection checkboxes. */
+    selectable?: boolean;
+    /** Controlled array of selected row keys. */
+    selectedRowKeys?: (string | number)[];
+    /** Uncontrolled initial array of selected row keys. */
+    defaultSelectedRowKeys?: (string | number)[];
+    /** Fires when the selection changes. */
+    onSelectionChange?: (keys: (string | number)[]) => void;
+
     // --- Drag-and-Drop (opt-in) ---
     /**
      * Fires when a row is dragged and dropped to a new position.
@@ -123,12 +153,14 @@ export interface DataTableProps<T> extends Omit<HTMLAttributes<HTMLDivElement>, 
     // --- Table appearance ---
     /** Color variant for the table. */
     variant?: FullVariant;
-    /** Adds zebra-striping to rows. */
+    /** Adds zebra-striping to rows. Defaults to `false`. */
     striped?: boolean;
-    /** Enables hover effect on rows. */
+    /** Enables hover effect on rows. Defaults to `true`. */
     hover?: boolean;
-    /** Adds borders to all cells. */
+    /** Adds borders to all cells. Defaults to `false`. */
     bordered?: boolean;
+    /** Removes all borders from the table (except the outer wrapper). Defaults to `false`. */
+    borderless?: boolean;
     /** Uses compact table size. */
     size?: 'sm' | 'md';
     /** Makes the toolbar sticky at the top when scrolling. */
@@ -240,6 +272,11 @@ function DataTableInner<T>(
         defaultPageSize = 25,
         onPageChange,
         onPageSizeChange,
+        paginationPosition = 'top',
+        paginationInfo = 'full',
+
+        // Localization
+        localization,
 
         // State
         loading = false,
@@ -251,14 +288,21 @@ function DataTableInner<T>(
         onRowClick,
         onRowContextMenu,
 
+        // Selection
+        selectable = false,
+        selectedRowKeys,
+        defaultSelectedRowKeys = [],
+        onSelectionChange,
+
         // Drag-and-drop
         onRowReorder,
 
         // Table appearance
         variant,
-        striped = true,
+        striped = false,
         hover = true,
         bordered = false,
+        borderless = false,
         size,
         stickyToolbar = false,
 
@@ -276,6 +320,10 @@ function DataTableInner<T>(
     const [sortDirection, setSortDirection] = useState<SortDirection>(defaultSortDirection);
     const [pageSize, setPageSize] = useState(defaultPageSize);
     const [currentPage, setCurrentPage] = useState(1);
+
+    // Selection state
+    const [internalSelectedKeys, setInternalSelectedKeys] = useState<(string | number)[]>(defaultSelectedRowKeys);
+    const activeSelectedKeys = selectedRowKeys ?? internalSelectedKeys;
 
     // Drag state
     const [dragIndex, setDragIndex] = useState<number | null>(null);
@@ -444,12 +492,96 @@ function DataTableInner<T>(
         setDragOverIndex(null);
     }, []);
 
+    // --- Selection handlers ---
+    const handleSelectRow = useCallback((key: string | number, checked: boolean) => {
+        const newSelection = checked 
+            ? [...activeSelectedKeys, key] 
+            : activeSelectedKeys.filter(k => k !== key);
+        
+        setInternalSelectedKeys(newSelection);
+        onSelectionChange?.(newSelection);
+    }, [activeSelectedKeys, onSelectionChange]);
+
+    const handleSelectAll = useCallback((checked: boolean) => {
+        if (!checked) {
+            setInternalSelectedKeys([]);
+            onSelectionChange?.([]);
+            return;
+        }
+        
+        const allKeys = sortedData.map((row, idx) => getRowKey(row, idx));
+        const newSelection = Array.from(new Set([...activeSelectedKeys, ...allKeys]));
+        
+        setInternalSelectedKeys(newSelection);
+        onSelectionChange?.(newSelection);
+    }, [sortedData, getRowKey, activeSelectedKeys, onSelectionChange]);
+
+    const isAllSelected = sortedData.length > 0 && sortedData.every((row, idx) => activeSelectedKeys.includes(getRowKey(row, idx)));
+    const isSomeSelected = sortedData.length > 0 && sortedData.some((row, idx) => activeSelectedKeys.includes(getRowKey(row, idx))) && !isAllSelected;
+
     // --- Results count text ---
     const resultsStart = isDragEnabled ? 1 : (currentPage - 1) * pageSize + 1;
     const resultsEnd = isDragEnabled
         ? sortedData.length
         : Math.min(currentPage * pageSize, sortedData.length);
     const totalResults = sortedData.length;
+
+    // --- Pagination / Info Elements ---
+    const renderPaginationInfo = () => {
+        if (totalResults === 0 || paginationInfo === 'none') return null;
+
+        if (paginationInfo === 'compact') {
+            return (
+                <div className="data-table__results-info">
+                    {resultsStart}–{resultsEnd} of {totalResults}
+                </div>
+            );
+        }
+
+        const defaultShowingResults = (from: number, to: number, total: number) => (
+            <span>Showing <strong>{from}</strong> to <strong>{to}</strong> of <strong>{total}</strong> results</span>
+        );
+
+        return (
+            <div className="data-table__results-info">
+                {localization?.showingResults
+                    ? localization.showingResults(resultsStart, resultsEnd, totalResults)
+                    : defaultShowingResults(resultsStart, resultsEnd, totalResults)
+                }
+            </div>
+        );
+    };
+
+    const renderPaginationControls = () => {
+        return (
+            <div className="data-table__controls">
+                {/* Page size select */}
+                <div className="data-table__page-size">
+                    <span className="data-table__page-size-label">
+                        {localization?.rowsPerPage || 'Rows per page:'}
+                    </span>
+                    <Select
+                        options={pageSizeSelectOptions}
+                        value={pageSize}
+                        onChange={handlePageSizeChange}
+                        size="sm"
+                        variant="default"
+                    />
+                </div>
+
+                {/* Pagination */}
+                {totalPages > 1 && (
+                    <Pagination
+                        variant="compact"
+                        currentPage={currentPage}
+                        totalPages={totalPages}
+                        onPageChange={handlePageChange}
+                        size="sm"
+                    />
+                )}
+            </div>
+        );
+    };
 
     return (
         <div
@@ -461,7 +593,6 @@ function DataTableInner<T>(
             )}
             {...props}
         >
-            {/* ========== TOOLBAR ========== */}
             <div ref={toolbarRef} className="data-table__toolbar">
                 {/* Search */}
                 {searchable && !isDragEnabled && (
@@ -479,38 +610,11 @@ function DataTableInner<T>(
                     </div>
                 )}
 
-                {/* Right controls */}
-                {!isDragEnabled && (
-                    <div className="data-table__controls">
-                        {/* Results info */}
-                        {totalResults > 0 && (
-                            <span className="data-table__results-info">
-                                {resultsStart}–{resultsEnd} of {totalResults}
-                            </span>
-                        )}
-
-                        {/* Page size select */}
-                        <div className="data-table__page-size">
-                            <span className="data-table__page-size-label">Rows:</span>
-                            <Select
-                                options={pageSizeSelectOptions}
-                                value={pageSize}
-                                onChange={handlePageSizeChange}
-                                size="sm"
-                                variant="default"
-                            />
-                        </div>
-
-                        {/* Pagination */}
-                        {totalPages > 1 && (
-                            <Pagination
-                                variant="compact"
-                                currentPage={currentPage}
-                                totalPages={totalPages}
-                                onPageChange={handlePageChange}
-                                size="sm"
-                            />
-                        )}
+                {/* Right controls (Pagination top) */}
+                {!isDragEnabled && paginationPosition === 'top' && (
+                    <div className="data-table__toolbar-actions">
+                        {renderPaginationInfo()}
+                        {renderPaginationControls()}
                     </div>
                 )}
 
@@ -531,13 +635,24 @@ function DataTableInner<T>(
                     striped={!isDragEnabled && striped}
                     hover={hover}
                     bordered={bordered}
+                    borderless={borderless}
                     size={size}
                 >
                     <TableHead>
                         <TableRow>
                             {isDragEnabled && (
-                                <TableCell isHeader className="data-table__drag-header">
-                                    <span className="sr-only">Drag handle</span>
+                                <TableCell isHeader className="data-table__drag-header" aria-label="Drag handle">
+                                    {/* Empty visually, used for accessibility label */}
+                                </TableCell>
+                            )}
+                            {selectable && (
+                                <TableCell isHeader className="data-table__select-cell">
+                                    <Checkbox
+                                        checked={isAllSelected}
+                                        indeterminate={isSomeSelected}
+                                        onChange={(e) => handleSelectAll(e.target.checked)}
+                                        aria-label="Select all rows"
+                                    />
                                 </TableCell>
                             )}
                             {columns.map(col => {
@@ -622,6 +737,15 @@ function DataTableInner<T>(
                                                 <DragHandleIcon />
                                             </TableCell>
                                         )}
+                                        {selectable && (
+                                            <TableCell className="data-table__select-cell" onClick={(e) => e.stopPropagation()}>
+                                                <Checkbox
+                                                    checked={activeSelectedKeys.includes(key)}
+                                                    onChange={(e) => handleSelectRow(key, e.target.checked)}
+                                                    aria-label={`Select row ${String(key)}`}
+                                                />
+                                            </TableCell>
+                                        )}
                                         {columns.map(col => (
                                             <TableCell key={`${key}_${col.id}`}>
                                                 {col.render
@@ -646,6 +770,16 @@ function DataTableInner<T>(
                     </TableBody>
                 </Table>
             </div>
+
+            {/* ========== FOOTER ========== */}
+            {!isDragEnabled && paginationPosition === 'bottom' && (
+                <div className="data-table__footer">
+                    {renderPaginationInfo()}
+                    <div className="data-table__footer-controls">
+                        {renderPaginationControls()}
+                    </div>
+                </div>
+            )}
         </div>
     );
 }

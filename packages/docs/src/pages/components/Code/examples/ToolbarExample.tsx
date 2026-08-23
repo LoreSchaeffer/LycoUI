@@ -1,29 +1,29 @@
-import { Code } from '@loreschaeffer/lyco-ui';
+import { Code, Card, Row, Col } from '@loreschaeffer/lyco-ui';
 
 export const title = 'Toolbar Options';
 export const description = <p>Enable header toolbars with <code>showCopy</code>, <code>showDownload</code>, and <code>showLanguageSelector</code>.</p>;
-export const order = 2;
+export const order = 3;
 
 export const vanillaHtml = `
-<div class="lyco-code" data-language="css">
-  <div class="lyco-code__header">
-    <div class="lyco-code__header-left">
-      <select class="lyco-code__lang-select">
+<div class="code--block" data-language="css">
+  <div class="code__header">
+    <div class="code__header-left">
+      <select class="code__lang-select">
         <option value="css">css</option>
         <option value="html">html</option>
       </select>
     </div>
-    <div class="lyco-code__header-right">
-      <button type="button" class="lyco-code__action" title="Copy code" aria-label="Copy code">
+    <div class="code__header-right">
+      <button type="button" class="code__action" title="Copy code" aria-label="Copy code">
         <!-- SVG icon for Copy -->
       </button>
-      <button type="button" class="lyco-code__action" title="Download code" aria-label="Download code">
+      <button type="button" class="code__action" title="Download code" aria-label="Download code">
         <!-- SVG icon for Download -->
       </button>
     </div>
   </div>
-  <div class="lyco-code__body">
-    <pre class="lyco-code__highlight"><code>.card { border-radius: 8px; }</code></pre>
+  <div class="code__body">
+    <pre class="code__highlight"><code>.card { border-radius: 8px; }</code></pre>
   </div>
 </div>
 `;
@@ -41,13 +41,21 @@ export default function ToolbarExample() {
 }`;
 
   return (
-    <Code 
-      language="css" 
-      code={code} 
-      showCopy 
-      showDownload 
-      showLanguageSelector 
-      fileName="styles"
-    />
+    <Row>
+      <Col span={12}>
+        <Card>
+          <Card.Body>
+            <Code 
+              language="css" 
+              code={code} 
+              showCopy 
+              showDownload 
+              showLanguageSelector 
+              fileName="styles"
+            />
+          </Card.Body>
+        </Card>
+      </Col>
+    </Row>
   );
 }

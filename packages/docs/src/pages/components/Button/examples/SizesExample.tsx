@@ -5,9 +5,9 @@ export const description = <p>Scale buttons proportionally using the <code>size<
 export const order = 3;
 
 export const vanillaHtml = `
-<button class="btn btn-primary btn-sm">Small</button>
-<button class="btn btn-primary">Base</button>
-<button class="btn btn-primary btn-lg">Large</button>
+<button class="btn btn--primary btn--sm">Small</button>
+<button class="btn btn--primary">Medium (Default)</button>
+<button class="btn btn--primary btn--lg">Large</button>
 `;
 
 export default function SizesExample() {

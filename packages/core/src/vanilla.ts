@@ -10,6 +10,8 @@ import {initLycoNavbars, LycoNavbarController} from './components/Navbar/Navbar.
 import {initLycoSidebars} from './components/Sidebar/Sidebar.vanilla';
 import {notification} from './components/Notification/Notification.vanilla';
 import {initLycoPagination} from './components/Pagination/Pagination.vanilla';
+import {initTabs} from './components/Tabs/Tabs.vanilla';
+import {initTooltips} from './components/Tooltip/Tooltip.vanilla';
 
 export const initLycoUI = (): void => {
     initLycoSelects();
@@ -22,6 +24,8 @@ export const initLycoUI = (): void => {
     initLycoNavbars();
     initLycoSidebars();
     initLycoPagination();
+    initTabs();
+    initTooltips();
 };
 
 if (typeof window !== 'undefined' && typeof document !== 'undefined') {
@@ -42,5 +46,7 @@ export {
     LycoModalController,
     initLycoNavbars,
     LycoNavbarController,
-    initLycoPagination
+    initLycoPagination,
+    initTabs,
+    initTooltips
 };

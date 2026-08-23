@@ -4,21 +4,21 @@ export const badgeProps: PropDefinition[] = [
     {
         name: 'variant',
         type: "FullVariant | 'white' | 'neutral'",
-        typeLink: '/docs/types/full-variant',
+        typeLink: '/docs/types#full-variant',
         defaultValue: "'primary'",
-        description: 'Applies a color scheme from the global theme palette.'
+        description: 'The visual style of the badge, mapping to the global theme hues (e.g., amber, lime, fuchsia) or semantic variants.'
     },
     {
         name: 'pill',
         type: 'boolean',
         defaultValue: 'false',
-        description: 'Applies the `.badge-pill` class to make the badge fully rounded.'
+        description: 'Use fully rounded borders for a pill-like appearance.'
     },
     {
         name: 'dim',
         type: 'boolean',
         defaultValue: 'false',
-        description: 'Applies the `.badge-dim` class to use a softer, semi-transparent background color instead of a solid color.'
+        description: 'Applies the dim architecture: a highly transparent background with a subtle 1px border and vibrant text, perfect for low-emphasis metadata.'
     },
     {
         name: 'children',

@@ -12,7 +12,7 @@ export default function BadgeDoc() {
     return (
         <DocTemplate
             title="Badge"
-            description="Small count and labeling components. Badges scale to match the size of the immediate parent element by using relative font sizing and em units."
+            description={<p>Highlight information with badges. Our architecture provides two core semantics: <strong>Default (Solid)</strong> for high-emphasis alerts and counters, and <strong>Dim</strong> for subtle, low-emphasis metadata. Badges scale automatically to match their parent's font size.</p>}
             exampleModules={exampleModules}
             rawSources={rawSources}
             apiConfig={apiConfig}

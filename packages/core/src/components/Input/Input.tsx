@@ -210,9 +210,9 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
         <div
           className={clsx(
             'input',
-            `input-${variant}`,
-            `input-${size}`,
-            flat && 'input-flat',
+            variant && `input--${variant}`,
+            size && size !== 'md' && `input--${size}`,
+            flat && 'input--flat',
             isFocused && 'is-focused',
             isFilled && 'is-filled',
             disabled && 'is-disabled',
@@ -220,8 +220,8 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
             loading && 'is-loading',
             visualValidation === 'valid' && 'is-valid',
             visualValidation === 'invalid' && 'is-invalid',
-            hasIconStart && 'input-has-icon-start',
-            (hasIconEnd || showSteps) && 'input-has-icon-end',
+            hasIconStart && 'input--has-icon-start',
+            (hasIconEnd || showSteps) && 'input--has-icon-end',
             className
           )}
         >

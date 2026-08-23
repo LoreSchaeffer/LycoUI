@@ -3,14 +3,17 @@ export type ColorVariant =
     | 'neutral'
     | 'red'
     | 'orange'
+    | 'amber'
     | 'yellow'
+    | 'lime'
     | 'green'
     | 'teal'
     | 'cyan'
     | 'blue'
     | 'indigo'
     | 'purple'
-    | 'magenta'
+    | 'fuchsia'
+    | 'pink'
     | 'white';
 
 export type SemanticVariant = 'success' | 'warning' | 'danger' | 'info';

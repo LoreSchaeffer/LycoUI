@@ -1,6 +1,7 @@
 import './Sidebar.scss';
-import React, { forwardRef, useState, useCallback, useMemo, createContext, useRef } from 'react';
+import React, { forwardRef, useState, useCallback, useMemo, createContext, useRef, useContext } from 'react';
 import clsx from 'clsx';
+import { Button } from '../Button/Button';
 
 interface SidebarContextType {
   isMini: boolean;
@@ -227,6 +228,111 @@ const SidebarLink = forwardRef<HTMLAnchorElement, SidebarLinkProps>((
 });
 SidebarLink.displayName = 'Sidebar.Link';
 
+// --- Sidebar Dropdown ---
+
+export interface SidebarDropdownProps extends React.HTMLAttributes<HTMLLIElement> {
+  title: React.ReactNode;
+  icon?: React.ReactNode;
+}
+
+const SidebarDropdown = forwardRef<HTMLLIElement, SidebarDropdownProps>((
+  { className, title, icon, children, ...props },
+  ref
+) => {
+  const context = useContext(SidebarContext);
+  const isMini = context?.isMini || false;
+  const [isOpen, setIsOpen] = useState(false);
+  const [flyoutStyle, setFlyoutStyle] = useState<React.CSSProperties>({});
+  const triggerRef = useRef<HTMLButtonElement>(null);
+  
+  const renderedIcon = useMemo(() => {
+    if (icon) return icon;
+    return extractInitials(title);
+  }, [icon, title]);
+
+  const toggle = useCallback((e: React.MouseEvent) => {
+    if (isMini) return; // Disable accordion click toggle in mini mode
+    e.preventDefault();
+    setIsOpen(p => !p);
+  }, [isMini]);
+
+  const handleMouseEnter = useCallback(() => {
+    if (isMini && triggerRef.current) {
+      const rect = triggerRef.current.getBoundingClientRect();
+      setFlyoutStyle({
+        position: 'fixed',
+        top: `${rect.top}px`,
+        left: `${rect.right}px`, // Place exactly at the right edge of the trigger
+        width: '12rem',
+        marginTop: 0,
+        marginLeft: 'var(--spacing-2)'
+      });
+    }
+  }, [isMini]);
+
+  const handleMouseLeave = useCallback(() => {
+    if (isMini) {
+      // We can clear the style or let it be. We'll clear it just in case.
+      // But clearing it immediately might disrupt CSS transitions.
+      // Better to just let CSS hide it via opacity/visibility.
+    }
+  }, [isMini]);
+
+  return (
+    <li
+      ref={ref}
+      className={clsx('sidebar__item', 'sidebar__dropdown', isOpen && 'is-open', className)}
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
+      {...props}
+    >
+      <Button
+        ref={triggerRef as any}
+        type="button"
+        ghost
+        className="sidebar__dropdown-trigger"
+        onClick={toggle}
+        aria-expanded={isOpen}
+        aria-haspopup="true"
+      >
+        <span className="sidebar__icon">{renderedIcon}</span>
+        <span className="sidebar__label">{title}</span>
+        <svg className="sidebar__dropdown-caret" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+      </Button>
+      <div className="sidebar__dropdown-menu-wrapper" style={isMini ? flyoutStyle : undefined}>
+        <div className="sidebar__dropdown-menu">
+          {children}
+        </div>
+      </div>
+    </li>
+  );
+});
+SidebarDropdown.displayName = 'Sidebar.Dropdown';
+
+// --- Sidebar Dropdown Item ---
+
+export interface SidebarDropdownItemProps extends React.AnchorHTMLAttributes<HTMLAnchorElement> {
+  as?: React.ElementType;
+  active?: boolean;
+}
+
+const SidebarDropdownItem = forwardRef<HTMLAnchorElement, SidebarDropdownItemProps>((
+  { className, as: Component = 'a', active, children, ...props },
+  ref
+) => {
+  return (
+    <Component
+      ref={ref}
+      className={clsx('sidebar__dropdown-item', active && 'is-active', className)}
+      aria-current={active ? 'page' : undefined}
+      {...props}
+    >
+      {children}
+    </Component>
+  );
+});
+SidebarDropdownItem.displayName = 'Sidebar.DropdownItem';
+
 // Assemble compound component
 export const Sidebar = Object.assign(SidebarComponent, {
   Header: SidebarHeader,
@@ -235,4 +341,6 @@ export const Sidebar = Object.assign(SidebarComponent, {
   Nav: SidebarNav,
   Item: SidebarItem,
   Link: SidebarLink,
+  Dropdown: SidebarDropdown,
+  DropdownItem: SidebarDropdownItem,
 });

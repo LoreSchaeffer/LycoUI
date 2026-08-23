@@ -27,8 +27,8 @@ const GridDoc: React.FC = () => {
                         </p>
                         <ul className="text-secondary mb-6" style={{paddingLeft: 'var(--spacing-6)'}}>
                             <li className="mb-2"><strong>Rows are wrappers for columns.</strong> Each column has horizontal padding (called a gutter) for controlling the space between them.</li>
-                            <li className="mb-2"><strong>Columns are incredibly flexible.</strong> There are 12 template columns available per row, allowing you to create different combinations of elements that span any number of columns.</li>
-                            <li className="mb-2"><strong>Gutters are responsive and customizable.</strong> Gutter classes are available across all breakpoints, with all the same sizes as our margin and padding spacing.</li>
+                            <li className="mb-2"><strong>Columns are incredibly flexible.</strong> There are 12 template columns available per row (e.g. <code>.col--6</code>, <code>.col--md-4</code>), allowing you to create different combinations of elements that span any number of columns.</li>
+                            <li className="mb-2"><strong>Gutters are powered by spacing tokens.</strong> The default gap uses <code>var(--spacing-4)</code> for a consistent, precise layout across the library.</li>
                         </ul>
                     </>
                 ),
