@@ -2,11 +2,13 @@ import './Code.scss';
 import { forwardRef, useEffect, useState, useRef, useCallback } from 'react';
 import type { HTMLAttributes, ChangeEvent, UIEvent } from 'react';
 import clsx from 'clsx';
+import { Select } from '../Select/Select';
+import { getShikiHighlighter } from '../../utils/shiki.config';
 // Shiki types (if available) for better developer experience.
 // Shiki is an optional peer dependency.
 
 
-export interface CodeProps extends Omit<HTMLAttributes<HTMLDivElement>, 'onChange'> {
+export interface CodeProps extends Omit<HTMLAttributes<HTMLElement>, 'onChange'> {
   /** The code snippet to display */
   code?: string;
   /** Initial code if used in uncontrolled editable mode */
@@ -15,13 +17,15 @@ export interface CodeProps extends Omit<HTMLAttributes<HTMLDivElement>, 'onChang
   language?: string;
   /** Theme to use for syntax highlighting (requires shiki) */
   theme?: string;
-  /** Whether the code is editable */
+  /** Whether the code is editable (only for block level) */
   editable?: boolean;
-  /** Shows a copy button in the header */
+  /** Renders the code as inline text instead of a block */
+  inline?: boolean;
+  /** Shows a copy button in the header (only for block level) */
   showCopy?: boolean;
-  /** Shows a download button in the header */
+  /** Shows a download button in the header (only for block level) */
   showDownload?: boolean;
-  /** Shows a language selector in the header */
+  /** Shows a language selector in the header (only for block level) */
   showLanguageSelector?: boolean;
   /** Supported languages in the selector */
   supportedLanguages?: string[];
@@ -31,27 +35,6 @@ export interface CodeProps extends Omit<HTMLAttributes<HTMLDivElement>, 'onChang
   onChange?: (code: string) => void;
 }
 
-let highlighterPromise: Promise<any> | null = null;
-
-const getSharedHighlighter = async (theme: string, langs: string[]): Promise<any> => {
-  if (!highlighterPromise) {
-    highlighterPromise = import('shiki').then(({ createHighlighter }) => {
-      return createHighlighter({
-        themes: [theme],
-        langs,
-      });
-    });
-  }
-  
-  const highlighter = await highlighterPromise;
-  
-  const loadedThemes = highlighter.getLoadedThemes();
-  if (!loadedThemes.includes(theme)) {
-    await highlighter.loadTheme(theme);
-  }
-  
-  return highlighter;
-};
 
 // Simple SVG Icons
 const CopyIcon = () => (
@@ -75,7 +58,7 @@ const DownloadIcon = () => (
   </svg>
 );
 
-export const Code = forwardRef<HTMLDivElement, CodeProps>((
+export const Code = forwardRef<HTMLElement, CodeProps>((
   {
     className,
     code: propCode,
@@ -83,17 +66,19 @@ export const Code = forwardRef<HTMLDivElement, CodeProps>((
     language: propLanguage = 'javascript',
     theme = 'andromeeda',
     editable = false,
+    inline = false,
     showCopy = false,
     showDownload = false,
     showLanguageSelector = false,
     supportedLanguages = ['javascript', 'typescript', 'html', 'css', 'json', 'bash', 'tsx', 'jsx', 'scss'],
     fileName = 'snippet',
     onChange,
+    children, // If children is provided and code isn't, use children as string
     ...props
   },
   ref
 ) => {
-  const [internalCode, setInternalCode] = useState(propCode ?? defaultCode);
+  const [internalCode, setInternalCode] = useState(propCode ?? (typeof children === 'string' ? children : defaultCode));
   const [internalLang, setInternalLang] = useState(propLanguage);
   
   const [highlightedHtml, setHighlightedHtml] = useState<string>('');
@@ -111,19 +96,14 @@ export const Code = forwardRef<HTMLDivElement, CodeProps>((
     const processCode = async () => {
       try {
         setHighlightStatus('loading');
-        const highlighter = await getSharedHighlighter(theme, supportedLanguages);
         
-        // Ensure language is loaded (basic check)
-        const loadedLangs = highlighter.getLoadedLanguages();
-        if (!loadedLangs.includes(internalLang as any)) {
-            // We just catch and fallback if the language isn't bundled in our initial load, 
-            // for robust usage we could await highlighter.loadLanguage() here but for this 
-            // implementation we assume supportedLanguages are within our default bundle.
-        }
-
+        // We initialize the highlighter with our supported languages.
+        // The getShikiHighlighter function internally handles caching and the 'lyco-dark' theme setup.
+        const highlighter = await getShikiHighlighter(supportedLanguages);
+        
         const html = highlighter.codeToHtml(currentCode, {
           lang: internalLang,
-          theme,
+          theme: 'lyco-dark', // Use our custom OKLCH theme!
         });
 
         if (isMounted) {
@@ -190,13 +170,27 @@ export const Code = forwardRef<HTMLDivElement, CodeProps>((
   }, []);
 
   // Check if we need the header
-  const hasHeader = showCopy || showDownload || showLanguageSelector;
+  const hasHeader = !inline && (showCopy || showDownload || showLanguageSelector);
+
+  // If inline, render a simple <code> tag
+  if (inline) {
+    return (
+      <code 
+        ref={ref}
+        className={clsx('code', 'code--inline', className)}
+        {...props}
+      >
+        {currentCode}
+      </code>
+    );
+  }
 
   return (
     <div
-      ref={ref}
+      ref={ref as any}
       className={clsx(
-        'lyco-code',
+        'code',
+        'code--block',
         editable && 'is-editable',
         className
       )}
@@ -204,27 +198,25 @@ export const Code = forwardRef<HTMLDivElement, CodeProps>((
       {...props}
     >
       {hasHeader && (
-        <div className="lyco-code__header">
-          <div className="lyco-code__header-left">
+        <div className="code__header">
+          <div className="code__header-left">
             {showLanguageSelector ? (
-              <select 
-                className="lyco-code__lang-select"
+              <Select 
+                className="code__lang-select"
+                size="sm"
                 value={internalLang}
-                onChange={(e) => setInternalLang(e.target.value)}
-              >
-                {supportedLanguages.map(lang => (
-                  <option key={lang} value={lang}>{lang}</option>
-                ))}
-              </select>
+                onChange={(val) => setInternalLang(String(val))}
+                options={supportedLanguages.map(lang => ({ label: lang, value: lang }))}
+              />
             ) : (
-              <span className="lyco-code__lang-label">{internalLang}</span>
+              <span className="code__lang-label">{internalLang}</span>
             )}
           </div>
-          <div className="lyco-code__header-right">
+          <div className="code__header-right">
             {showCopy && (
               <button 
                 type="button" 
-                className={clsx('lyco-code__action', isCopied && 'is-copied')}
+                className={clsx('code__action', isCopied && 'is-copied')}
                 onClick={handleCopy}
                 title="Copy code"
                 aria-label="Copy code"
@@ -236,7 +228,7 @@ export const Code = forwardRef<HTMLDivElement, CodeProps>((
             {showDownload && (
               <button 
                 type="button" 
-                className="lyco-code__action" 
+                className="code__action" 
                 onClick={handleDownload}
                 title="Download code"
                 aria-label="Download code"
@@ -248,11 +240,11 @@ export const Code = forwardRef<HTMLDivElement, CodeProps>((
         </div>
       )}
 
-      <div className="lyco-code__body">
+      <div className="code__body">
         {editable && (
           <textarea
             ref={textareaRef}
-            className="lyco-code__textarea"
+            className="code__textarea"
             value={currentCode}
             onChange={handleChange}
             onScroll={handleScroll}
@@ -263,12 +255,12 @@ export const Code = forwardRef<HTMLDivElement, CodeProps>((
         
         {highlightedHtml && highlightStatus === 'success' ? (
           <div 
-            className="lyco-code__highlight"
+            className="code__highlight"
             dangerouslySetInnerHTML={{ __html: highlightedHtml }}
             aria-hidden={editable}
           />
         ) : (
-          <div className="lyco-code__highlight">
+          <div className="code__highlight">
             <pre style={{ color: highlightStatus === 'loading' ? 'transparent' : undefined }}>
               <code>{currentCode}</code>
             </pre>

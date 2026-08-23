@@ -19,7 +19,7 @@ export default function BasicExample() {
 
     return (
         <Row>
-            <Col span={12} md={6}>
+            <Col span={6}>
                 <Select
                     value={value}
                     onChange={setValue}
@@ -27,6 +27,16 @@ export default function BasicExample() {
                         {label: 'Option 1', value: '1'},
                         {label: 'Option 2', value: '2'},
                         {label: 'Option 3 (Disabled)', value: '3', disabled: true}
+                    ]}
+                />
+            </Col>
+            <Col span={6}>
+                <Select
+                    value={value}
+                    onChange={setValue}
+                    disabled
+                    options={[
+                        {label: 'Disabled Select', value: ''}
                     ]}
                 />
             </Col>

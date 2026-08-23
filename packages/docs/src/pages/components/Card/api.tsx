@@ -5,13 +5,13 @@ export const cardPropsData: PropDefinition[] = [
         name: 'elevation',
         type: '0 | 1 | 2 | 3 | 4',
         defaultValue: '1',
-        description: <>Controls the shadow depth and background lightness. Applies <code>.card-elevation-*</code>.</>
+        description: <>Controls the shadow depth and background lightness. Applies <code>.card--elevation-*</code>.</>
     },
     {
         name: 'padding',
         type: "'none' | 'sm' | 'md' | 'lg'",
-        defaultValue: "'md'",
-        description: 'Controls the internal spacing of the card container.'
+        defaultValue: "'none'",
+        description: 'Controls the internal spacing of the main card container (useful if not using compound sections).'
     },
     {
         name: 'variant',
@@ -30,10 +30,30 @@ export const cardPropsData: PropDefinition[] = [
         name: 'isFlat',
         type: 'boolean',
         defaultValue: 'false',
-        description: 'Strips shadows and background gradients for a clean flat appearance. Applies .card-flat class.'
+        description: 'Strips shadows and background gradients for a clean flat appearance. Applies .card--flat class.'
+    },
+    {
+        name: 'interactive',
+        type: 'boolean',
+        defaultValue: 'false',
+        description: 'If true, hovering the card smoothly elevates it and intensifies its border. Applies .card--interactive class.'
+    }
+];
+
+export const cardSectionPropsData: PropDefinition[] = [
+    {
+        name: 'children',
+        type: 'ReactNode',
+        description: 'Content to be rendered inside the section.'
+    },
+    {
+        name: 'className',
+        type: 'string',
+        description: 'Optional additional CSS classes.'
     }
 ];
 
 export const apiConfig = [
-    {name: 'cardPropsData', data: cardPropsData}
+    {name: 'Card Props', data: cardPropsData},
+    {name: 'Card.Header / Card.Body / Card.Footer Props', data: cardSectionPropsData}
 ];

@@ -63,6 +63,7 @@ export interface NotificationProps extends Omit<React.HTMLAttributes<HTMLDivElem
   variant?: FullVariant | 'white';
   icon?: React.ReactNode;
   title?: React.ReactNode;
+  description?: React.ReactNode;
   closable?: boolean;
   isFlat?: boolean;
   isExiting?: boolean;
@@ -78,6 +79,7 @@ export const Notification = forwardRef<HTMLDivElement, NotificationProps>((
     variant = 'neutral',
     icon,
     title,
+    description,
     closable = true,
     isFlat = false,
     isExiting = false,
@@ -117,7 +119,9 @@ export const Notification = forwardRef<HTMLDivElement, NotificationProps>((
       {resolvedIcon && <span className="notification__icon">{resolvedIcon}</span>}
       <div className="notification__body">
         {title && <strong className="notification__title">{title}</strong>}
-        <p className="notification__message">{children}</p>
+        {(description || children) && (
+          <p className="notification__message">{description || children}</p>
+        )}
       </div>
       {closable && (
         <button

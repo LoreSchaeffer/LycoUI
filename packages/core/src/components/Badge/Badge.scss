@@ -5,26 +5,19 @@
   align-items: center;
   justify-content: center;
   font-family: var(--font-family-base);
-  font-weight: var(--font-weight-semibold);
+  font-weight: var(--font-weight-medium);
   font-size: 0.75em;
   line-height: 1;
   text-align: center;
   white-space: nowrap;
   vertical-align: baseline;
-  padding: 0.35em 0.65em;
-  border-radius: var(--radius-sm);
-  box-shadow: var(--shadow-sm);
-  border: 1px solid transparent;
-
-  // Default color variables (will be overridden by variants)
-  --badge-color-base: var(--color-primary);
-  --badge-text-color: var(--white);
-  --badge-bg: var(--badge-color-base);
+  padding: 0.25em 0.6em;
+  border-radius: var(--radius-md);
   
+  // Default Solid styling
+  border: 1px solid transparent;
   background-color: var(--badge-bg);
   color: var(--badge-text-color);
-  background-image: linear-gradient(180deg, rgba(255, 255, 255, 0.15) 0%, rgba(255, 255, 255, 0) 100%);
-  border-color: color-mix(in srgb, var(--badge-color-base) 80%, black);
 
   &:empty {
     display: none;
@@ -33,81 +26,88 @@
   // ==========================================================================
   // MODIFIERS
   // ==========================================================================
-  &-pill {
-    border-radius: 9999px;
+  &--pill {
+    border-radius: var(--radius-full, 9999px);
     padding-left: 0.85em;
     padding-right: 0.85em;
   }
 
-  &-dim {
-    --badge-bg: color-mix(in srgb, var(--badge-color-base) 15%, transparent);
-    background-color: var(--badge-bg);
-    color: var(--badge-color-base);
-    background-image: none;
-    box-shadow: none;
-    border-color: transparent;
-  }
-
-  &-flat {
-    background-image: none;
-    box-shadow: none;
-    border-color: var(--badge-color-base);
+  &--dim {
+    background-color: var(--badge-bg-dim);
+    color: var(--badge-text-color-dim);
+    border-color: var(--badge-border-dim, transparent);
   }
 
   // ==========================================================================
   // VARIANTS
   // ==========================================================================
-  &-success {
-    --badge-color-base: var(--color-success);
-    --badge-text-color: var(--slate-950);
-  }
-  &-warning {
-    --badge-color-base: var(--color-warning);
-    --badge-text-color: var(--slate-950);
-  }
-  &-danger {
-    --badge-color-base: var(--color-danger);
+  &--primary {
+    --badge-bg: var(--color-primary);
     --badge-text-color: var(--white);
-  }
-  &-info {
-    --badge-color-base: var(--color-info);
-    --badge-text-color: var(--slate-950);
+    --badge-bg-dim: var(--color-primary-dim);
+    --badge-text-color-dim: var(--color-primary);
+    --badge-border-dim: color-mix(in srgb, var(--color-primary) 20%, transparent);
   }
   
-  &-neutral { 
-    --badge-color-base: var(--slate-500); 
+  &--success {
+    --badge-bg: var(--color-success);
     --badge-text-color: var(--white);
+    --badge-bg-dim: var(--color-success-dim);
+    --badge-text-color-dim: var(--color-success);
+    --badge-border-dim: color-mix(in srgb, var(--color-success) 20%, transparent);
+  }
+  &--warning {
+    --badge-bg: var(--color-warning);
+    --badge-text-color: var(--color-void);
+    --badge-bg-dim: var(--color-warning-dim);
+    --badge-text-color-dim: var(--color-warning);
+    --badge-border-dim: color-mix(in srgb, var(--color-warning) 20%, transparent);
+  }
+  &--danger {
+    --badge-bg: var(--color-danger);
+    --badge-text-color: var(--white);
+    --badge-bg-dim: var(--color-danger-dim);
+    --badge-text-color-dim: var(--color-danger);
+    --badge-border-dim: color-mix(in srgb, var(--color-danger) 20%, transparent);
+  }
+  &--info {
+    --badge-bg: var(--color-info);
+    --badge-text-color: var(--white);
+    --badge-bg-dim: var(--color-info-dim);
+    --badge-text-color-dim: var(--color-info);
+    --badge-border-dim: color-mix(in srgb, var(--color-info) 20%, transparent);
   }
   
-  &-white {
-    --badge-color-base: var(--white);
-    --badge-text-color: var(--slate-950);
+  &--neutral { 
+    --badge-bg: var(--color-carbon); 
+    --badge-text-color: var(--white);
+    --badge-bg-dim: var(--color-surface-floating);
+    --badge-text-color-dim: var(--color-text-primary);
+    --badge-border-dim: var(--color-border-base);
   }
+  
+  &--white {
+    --badge-bg: var(--white);
+    --badge-text-color: var(--color-void);
+    --badge-bg-dim: rgba(255, 255, 255, 0.1);
+    --badge-text-color-dim: var(--white);
+    --badge-border-dim: rgba(255, 255, 255, 0.2);
+  }
+}
 
+.badge- {
   @include for-each-theme-color using($color, $is-light) {
     @if $color != 'white' and $color != 'neutral' {
-      &-#{$color} { 
-        --badge-color-base: var(--#{$color}-500); 
-        @if $is-light {
-          --badge-text-color: var(--slate-950);
-        } @else {
-          --badge-text-color: var(--white);
-        }
+      --badge-bg: var(--#{$color}-500); 
+      @if $is-light {
+        --badge-text-color: var(--color-void);
+      } @else {
+        --badge-text-color: var(--white);
       }
-    }
-  }
-  
-  // Specific fix for dim mode on light text variants
-  &.badge-dim.badge-white,
-  &.badge-dim.badge-warning,
-  &.badge-dim.badge-success,
-  &.badge-dim.badge-info {
-    // In dim mode, the text is based on the color base.
-    // If the base is light (e.g., white, yellow), it may not have enough contrast on a light dim background.
-    // However, since it's a dynamic theme, we just use the color base as text color. 
-    // To ensure contrast on white dim, we use text-primary.
-    &.badge-white {
-      color: var(--color-text-primary);
+      
+      --badge-bg-dim: var(--#{$color}-dim); 
+      --badge-text-color-dim: var(--#{$color}-500);
+      --badge-border-dim: color-mix(in srgb, var(--#{$color}-500) 25%, transparent);
     }
   }
 }

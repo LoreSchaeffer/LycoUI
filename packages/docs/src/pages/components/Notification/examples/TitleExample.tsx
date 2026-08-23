@@ -22,26 +22,26 @@ export default function TitleExample() {
         <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap' }}>
             <Button onClick={() => showNotification({
                 title: 'Deployment Complete',
-                message: 'Your application has been deployed to production.',
+                description: 'Your application has been deployed to production.',
                 variant: 'success',
-                duration: 'medium',
+                duration: 5000,
             })}>
-                Deploy Notification
+                Show Success Notification
             </Button>
             <Button variant="danger" onClick={() => showNotification({
                 title: 'Build Failed',
-                message: 'Error in src/index.ts:42 — Cannot find module.',
+                description: 'Error in src/index.ts:42 — Cannot find module.',
                 variant: 'danger',
-                duration: 'long',
+                duration: 8000,
             })}>
-                Error Notification
+                Show Error Notification
             </Button>
             <Button variant="info" onClick={() => showNotification({
                 title: 'New Message',
-                message: 'You have 3 unread messages from the design team.',
+                description: 'You have 3 unread messages from the design team.',
                 variant: 'info',
             })}>
-                Message Notification
+                Show Info Notification
             </Button>
         </div>
     );

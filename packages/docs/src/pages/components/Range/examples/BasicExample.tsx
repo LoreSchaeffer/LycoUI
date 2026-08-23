@@ -1,25 +1,13 @@
 import { Col, Range, Row } from '@loreschaeffer/lyco-ui';
 
 export const title = 'Basic Usage';
-export const description = <p>A simple range slider with a droplet tooltip.</p>;
+export const description = <p>A simple range slider. Use the <code>defaultValue</code> for uncontrolled usage, or <code>value</code> and <code>onChange</code> for controlled usage.</p>;
 export const order = 1;
 
 export const vanillaHtml = `
 <div class="mb-4">
-  <div class="text-sm fw-bold mb-2">Primary Variant (Default)</div>
-  <input type="range" class="range-custom" data-variant="primary" min="0" max="100" value="50" />
-</div>
-<div class="mb-4">
-  <div class="text-sm fw-bold mb-2">Success Variant</div>
-  <input type="range" class="range-custom" data-variant="success" min="0" max="100" value="75" />
-</div>
-<div class="mb-4">
-  <div class="text-sm fw-bold mb-2">Danger Variant (No Tooltip)</div>
-  <input type="range" class="range-custom" data-variant="danger" data-show-tooltip="false" min="0" max="100" value="40" />
-</div>
-<div class="mb-4">
-  <div class="text-sm fw-bold mb-2">Purple Variant (Unfilled Track)</div>
-  <input type="range" class="range-custom" data-variant="purple" data-filled="false" min="0" max="100" value="60" />
+  <div class="text-sm fw-bold mb-2">Default Range</div>
+  <input type="range" class="range-custom" min="0" max="100" value="50" />
 </div>
 <div>
   <div class="text-sm fw-bold mb-2">Disabled State</div>
@@ -30,23 +18,11 @@ export const vanillaHtml = `
 export default function BasicExample() {
   return (
     <Row>
-      <Col span={12} className="mb-8">
-        <div className="text-sm fw-bold mb-2 text-secondary">Primary Variant (Default)</div>
-        <Range defaultValue={50} variant="primary" />
+      <Col span={6} className="mb-8">
+        <div className="text-sm fw-bold mb-2 text-secondary">Default Range</div>
+        <Range defaultValue={50} />
       </Col>
-      <Col span={12} className="mb-8">
-        <div className="text-sm fw-bold mb-2 text-secondary">Success Variant</div>
-        <Range defaultValue={75} variant="success" />
-      </Col>
-      <Col span={12} className="mb-8">
-        <div className="text-sm fw-bold mb-2 text-secondary">Danger Variant (No Tooltip)</div>
-        <Range defaultValue={40} variant="danger" showTooltip={false} />
-      </Col>
-      <Col span={12} className="mb-8">
-        <div className="text-sm fw-bold mb-2 text-secondary">Purple Variant (Unfilled Track)</div>
-        <Range defaultValue={60} variant="purple" filled={false} />
-      </Col>
-      <Col span={12}>
+      <Col span={6}>
         <div className="text-sm fw-bold mb-2 text-secondary">Disabled State</div>
         <Range defaultValue={25} disabled />
       </Col>

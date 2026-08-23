@@ -10,82 +10,85 @@
 @use "tokens/typography" as typo;
 
 // ==========================================================================
-// DYNAMIC COLOR & SURFACE MIXIN
+// ROOT START
 // ==========================================================================
-@mixin generate-dynamic-slate {
-  @each $step, $lightness in colors.$slate-steps {
-    --slate-#{$step}: hsl(var(--theme-hue), var(--theme-sat), #{$lightness});
+:root {
+  // ==========================================================================
+  // NEUTRAL COLORS (Base, Hover, Active)
+  // ==========================================================================
+  @each $name, $color in colors.$neutral-colors {
+    --color-#{$name}: #{$color};
+    --color-#{$name}-hover: #{mix(white, $color, 4%)};
+    --color-#{$name}-active: #{mix(black, $color, 4%)};
   }
 
   // Core Backgrounds
-  --color-bg-root: var(--slate-950);
-  --color-bg-surface: var(--slate-900);
-  --color-surface-elevated: var(--slate-850);
-  --color-surface-flat: var(--slate-900); // Fallback for flat mode
+  --color-bg-root: var(--surface-root);
+  --color-bg-surface: var(--surface-base);
+  --color-surface-elevated: var(--surface-elevated);
+  --color-surface-floating: var(--surface-floating);
 
   // Typography Colors
-  --color-text-primary: var(--slate-50);
-  --color-text-secondary: var(--slate-400);
-  --color-text-muted: var(--slate-500);
+  --color-text-primary: var(--color-paper);
+  --color-text-secondary: var(--color-fog);
+  --color-text-muted: var(--color-ash);
 
   // Borders
-  --color-border-base: var(--slate-800);
+  --color-border-subtle: rgba(255, 255, 255, 0.08);
+  --color-border-base: rgba(255, 255, 255, 0.12);
+  --color-border-strong: rgba(255, 255, 255, 0.18);
 
-  // Gradient Stops for Modern Depth
-  --color-surface-start: var(--slate-850);
-  --color-surface-end: var(--slate-950);
-}
-
-// ==========================================================================
-// ROOT START
-// ==========================================================================
-
-:root {
   // ==========================================================================
   // COLORS
   // ==========================================================================
-  --theme-hue: #{map.get(colors.$theme-hues, 'blue')};
-  --theme-sat: 15%;
-
-  @each $name, $hue in colors.$theme-hues {
-    @each $step, $lightness in colors.$lightness-steps {
-      --#{$name}-#{$step}: hsl(#{$hue}, #{colors.$sat-base}, #{$lightness});
+  @each $name, $scale in colors.$semantic-colors {
+    @each $step, $color in $scale {
+      --#{$name}-#{$step}: #{$color};
     }
-    // Aliases for primary colors
+
+    // Aliases
     --#{$name}: var(--#{$name}-500);
     // Dim version
-    --#{$name}-dim: color-mix(in srgb, var(--#{$name}) 15%, transparent);
+    --#{$name}-dim: #{rgba(map.get($scale, 500), 0.15)};
   }
+
+  // Fallbacks for lyco-all-colors if missing
+  --white: #ffffff;
+  --black: #000000;
+  --neutral: var(--color-ash);
 
   // Brand Palette
   --color-primary: var(--blue-500);
   --color-primary-hover: var(--blue-400);
-  --color-primary-dim: color-mix(in srgb, var(--color-primary) 15%, transparent);
+  --color-primary-active: var(--blue-600);
+  --color-primary-dim: var(--blue-dim);
 
   --color-success: var(--green-500);
-  --color-warning: var(--yellow-500);
+  --color-success-hover: var(--green-400);
+  --color-success-active: var(--green-600);
+  --color-success-dim: var(--green-dim);
+
+  --color-warning: var(--amber-500);
+  --color-warning-hover: var(--amber-400);
+  --color-warning-active: var(--amber-600);
+  --color-warning-dim: var(--amber-dim);
+
   --color-danger: var(--red-500);
+  --color-danger-hover: var(--red-400);
+  --color-danger-active: var(--red-600);
+  --color-danger-dim: var(--red-dim);
+
   --color-info: var(--cyan-500);
+  --color-info-hover: var(--cyan-400);
+  --color-info-active: var(--cyan-600);
+  --color-info-dim: var(--cyan-dim);
 
-  --white: #ffffff;
-  --black: #000000;
-
-  --white-300: var(--white);
-  --white-400: var(--slate-25);
-  --white-500: var(--slate-50);
-  --white-600: var(--slate-200);
-
-  --neutral-300: var(--slate-700);
-  --neutral-400: var(--slate-800);
-  --neutral-500: var(--slate-850);
-  --neutral-600: var(--slate-900);
-  --neutral: var(--neutral-500);
-
-  // Brand Gradients
-  --color-brand-start: var(--blue-400);
-  --color-brand-end: var(--blue-600);
-
-  @include generate-dynamic-slate;
+  // ==========================================================================
+  // SURFACES
+  // ==========================================================================
+  @each $name, $value in surface.$surface-treatments {
+    --surface-#{$name}: #{$value};
+  }
 
   // ==========================================================================
   // TYPOGRAPHY
@@ -94,7 +97,7 @@
   --font-family-mono: #{map.get(typo.$font-families, 'mono')};
 
   @each $name, $size in typo.$font-sizes {
-    --font-size-#{$name}: #{$size};
+    --text-#{$name}: #{$size};
   }
 
   @each $name, $weight in typo.$font-weights {
@@ -102,10 +105,12 @@
   }
 
   @each $name, $height in typo.$line-heights {
-    --line-height-#{$name}: #{$height};
+    --leading-#{$name}: #{$height};
   }
 
-
+  @each $name, $spacing in typo.$letter-spacing {
+    --tracking-#{$name}: #{$spacing};
+  }
 
   // ==========================================================================
   // SPACING, RADIUS, Z-INDEX & MOTION
@@ -131,67 +136,29 @@
   }
 
   // ==========================================================================
-  // SHADOWS
+  // SHADOWS & GLOWS
   // ==========================================================================
   @each $name, $value in shadow.$shadow-steps {
     --shadow-#{$name}: #{$value};
   }
 
-  // ==========================================================================
-  // SURFACES (Textures & Gradients)
-  // ==========================================================================
-  @each $name, $value in surface.$surface-treatments {
-    --surface-#{$name}: #{$value};
+  @each $name, $value in shadow.$glow-steps {
+    --glow-#{$name}: #{$value};
   }
-
 }
-
-// ==========================================================================
-// UTILITIES
-// ==========================================================================
-@layer utilities {
-  .text-center { text-align: center; }
-  .text-primary { color: var(--color-text-primary); }
-  .text-secondary { color: var(--color-text-secondary); }
-  .text-muted { color: var(--color-text-muted); }
-
-  // Spacing Utilities
-  .mb-0 { margin-bottom: 0; }
-  .mb-2 { margin-bottom: var(--spacing-2); }
-  .mb-4 { margin-bottom: var(--spacing-4); }
-  .mb-6 { margin-bottom: var(--spacing-6); }
-  .mb-8 { margin-bottom: var(--spacing-8); }
-  .mb-10 { margin-bottom: var(--spacing-10); }
-
-  .mt-0 { margin-top: 0; }
-  .mt-4 { margin-top: var(--spacing-4); }
-  .mt-8 { margin-top: var(--spacing-8); }
-}
-
-// ==========================================================================
-// ROOT END
-// ==========================================================================
 
 // ==========================================================================
 // THEMES & MODES
 // ==========================================================================
-@each $name, $hue in colors.$theme-hues {
+@each $name, $scale in colors.$semantic-colors {
   .theme-#{$name} {
-    --theme-hue: #{$hue};
-    @include generate-dynamic-slate;
+    // Left empty for variant targeting, no neutral re-generation needed
   }
 }
 
 .theme-oled {
-  --theme-sat: 0%;
-  @include generate-dynamic-slate;
-  --color-bg-root: var(--slate-1000);
-}
-
-// Flat Mode Toggle (Can be applied to :root, <body>, or specific components)
-[data-mode="flat"], .mode-flat {
-  --surface-gradient-subtle: var(--surface-flat-base);
-  --surface-gradient-strong: var(--color-primary);
+  --surface-root: var(--black);
+  --color-bg-root: var(--surface-root);
 }
 
 // ==========================================================================
@@ -219,8 +186,9 @@ body {
   overflow-wrap: break-word;
   font-family: var(--font-family-base);
   color: var(--color-text-primary);
-  font-size: var(--font-size-base);
-  line-height: var(--line-height-normal);
+  font-size: var(--text-body-sm);
+  line-height: var(--leading-body-sm);
+  letter-spacing: var(--tracking-body-sm);
 }
 
 img, picture, svg, video {
@@ -232,6 +200,7 @@ img, picture, svg, video {
 input, button, textarea, select {
   font: inherit;
   color: inherit;
+  letter-spacing: inherit;
 }
 
 button {
@@ -246,28 +215,43 @@ button {
 h1, h2, h3, h4, h5, h6 {
   color: var(--color-text-primary);
   font-weight: var(--font-weight-bold);
-  line-height: var(--line-height-tight);
   margin-bottom: var(--spacing-4);
 }
 
-h1 {
-  font-size: var(--font-size-3xl);
+h1 { 
+  font-size: var(--text-display); 
+  line-height: var(--leading-display); 
+  letter-spacing: var(--tracking-display); 
 }
 
-h2 {
-  font-size: var(--font-size-2xl);
+h2 { 
+  font-size: var(--text-heading-lg); 
+  line-height: var(--leading-heading-lg); 
+  letter-spacing: var(--tracking-heading-lg); 
 }
 
-h3 {
-  font-size: var(--font-size-xl);
+h3 { 
+  font-size: var(--text-heading); 
+  line-height: var(--leading-heading); 
+  letter-spacing: var(--tracking-heading); 
 }
 
-h4 {
-  font-size: var(--font-size-lg);
+h4 { 
+  font-size: var(--text-heading-sm); 
+  line-height: var(--leading-heading-sm); 
+  letter-spacing: var(--tracking-heading-sm); 
 }
 
-h5, h6 {
-  font-size: var(--font-size-base);
+h5 { 
+  font-size: var(--text-subheading); 
+  line-height: var(--leading-subheading); 
+  letter-spacing: var(--tracking-subheading); 
+}
+
+h6 { 
+  font-size: var(--text-body-lg); 
+  line-height: var(--leading-body-lg); 
+  letter-spacing: var(--tracking-body-lg); 
 }
 
 p {
@@ -280,7 +264,8 @@ p {
 }
 
 small {
-  font-size: var(--font-size-xs);
+  font-size: var(--text-caption);
+  line-height: var(--leading-caption);
   color: var(--color-text-muted);
 }
 
@@ -311,7 +296,7 @@ pre,
 
 pre {
   overflow-x: auto;
-  font-size: var(--font-size-sm);
+  font-size: var(--text-body-sm);
 
   code {
     font-size: inherit;
@@ -322,11 +307,24 @@ pre {
 // ==========================================================================
 // UTILITIES
 // ==========================================================================
-
 @layer utilities {
-  .hidden {
-    display: none;
-  }
+  .hidden { display: none; }
+  .text-center { text-align: center; }
+  .text-primary { color: var(--color-text-primary); }
+  .text-secondary { color: var(--color-text-secondary); }
+  .text-muted { color: var(--color-text-muted); }
+
+  // Spacing Utilities
+  .mb-0 { margin-bottom: 0; }
+  .mb-2 { margin-bottom: var(--spacing-2); }
+  .mb-4 { margin-bottom: var(--spacing-4); }
+  .mb-6 { margin-bottom: var(--spacing-6); }
+  .mb-8 { margin-bottom: var(--spacing-8); }
+  .mb-10 { margin-bottom: var(--spacing-10); }
+
+  .mt-0 { margin-top: 0; }
+  .mt-4 { margin-top: var(--spacing-4); }
+  .mt-8 { margin-top: var(--spacing-8); }
 }
 
 // ==========================================================================
@@ -334,7 +332,7 @@ pre {
 // ==========================================================================
 * {
   scrollbar-width: thin;
-  scrollbar-color: var(--slate-600) transparent;
+  scrollbar-color: var(--color-ash) transparent;
 }
 
 *::-webkit-scrollbar {
@@ -348,13 +346,13 @@ pre {
 }
 
 *::-webkit-scrollbar-thumb {
-  background-color: var(--slate-700);
+  background-color: var(--color-ash);
   border-radius: var(--radius-md);
   border: 2px solid transparent;
   background-clip: padding-box;
 
   &:hover {
-    background-color: var(--slate-500);
+    background-color: var(--color-fog);
   }
 }
 

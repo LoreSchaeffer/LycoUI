@@ -17,7 +17,7 @@
   display: flex;
   align-items: center;
   width: 100%;
-  background-color: var(--color-surface-elevated);
+  background-color: var(--color-void, transparent);
   border: 1px solid var(--color-border-base);
   
   --input-radius: var(--radius-md);
@@ -31,8 +31,12 @@
   --input-color-base: var(--color-primary);
   --input-height: 2.75rem;
   --input-padding-x: var(--spacing-3);
-  --input-font-size: var(--font-size-base);
+  --input-font-size: var(--font-size-sm);
   --input-icon-size: 1.25rem;
+
+  &:hover:not(.is-disabled):not(.is-invalid):not(.is-valid) {
+    border-color: var(--color-border-strong);
+  }
 
   // ==========================================================================
   // NATIVE INPUT
@@ -48,6 +52,7 @@
     color: var(--color-text-primary);
     font-family: var(--font-family-base);
     font-size: var(--input-font-size);
+    font-weight: 400;
     caret-color: var(--input-color-base);
 
     &::placeholder {
@@ -78,7 +83,7 @@
         height: 100%;
         padding: 0 var(--input-padding-x);
         margin-right: var(--spacing-3);
-        background-color: var(--color-surface-elevated);
+        background-color: var(--color-carbon);
         border: none;
         border-right: 1px solid var(--color-border-base);
         border-top-left-radius: calc(var(--input-radius) - 1px);
@@ -91,7 +96,7 @@
         transition: background-color var(--duration-fast) var(--ease-default);
 
         &:hover {
-          background-color: color-mix(in srgb, var(--color-surface-elevated) 80%, var(--color-text-primary));
+          background-color: var(--color-carbon-active);
         }
       }
     }
@@ -141,7 +146,7 @@
   }
 
   // Adjust label position when icon-start is present
-  &.input-has-icon-start .input__label {
+  &--has-icon-start .input__label {
     left: calc(var(--input-padding-x) + var(--input-icon-size) + var(--spacing-2));
   }
 
@@ -172,7 +177,7 @@
     align-items: center;
     justify-content: center;
     flex-shrink: 0;
-    color: var(--color-text-muted);
+    color: var(--color-text-secondary);
     width: var(--input-icon-size);
     height: var(--input-icon-size);
 
@@ -209,11 +214,11 @@
   }
 
   // Remove left padding from field when icon-start is present (icon has its own margin)
-  &.input-has-icon-start .input__field {
+  &--has-icon-start .input__field {
     padding-left: var(--spacing-2);
   }
 
-  &.input-has-icon-end .input__field {
+  &--has-icon-end .input__field {
     padding-right: var(--spacing-2);
   }
 
@@ -272,16 +277,22 @@
   // ==========================================================================
   &.is-focused {
     border-color: var(--input-color-base);
-    box-shadow: 0 0 0 3px color-mix(in srgb, var(--input-color-base) 20%, transparent);
+    box-shadow: 0 0 0 1px var(--color-void), 0 0 0 3px var(--input-color-base);
   }
 
   // ==========================================================================
   // DISABLED STATE
   // ==========================================================================
   &.is-disabled {
-    opacity: 0.55;
+    opacity: 0.6;
     cursor: not-allowed;
     pointer-events: none;
+    background-color: var(--color-carbon);
+    
+    .input__field {
+      color: var(--color-text-muted);
+      -webkit-text-fill-color: var(--color-text-muted); // Required for Safari
+    }
   }
 
   // ==========================================================================
@@ -289,11 +300,13 @@
   // ==========================================================================
   &.is-readonly,
   &:has(.input__field[readonly]) {
-    background-color: var(--color-surface-base);
-    border-color: var(--color-border-base);
+    background-color: var(--color-carbon);
+    border-color: var(--color-border-subtle);
     
     .input__field {
       cursor: default;
+      color: var(--color-text-muted);
+      -webkit-text-fill-color: var(--color-text-muted);
     }
 
     .input__icon--clickable {
@@ -314,39 +327,49 @@
   // ==========================================================================
   &.is-valid {
     border-color: var(--color-success);
+    --input-color-base: var(--color-success);
 
     &.is-focused {
-      box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-success) 20%, transparent);
+      box-shadow: 0 0 0 1px var(--color-void), 0 0 0 3px var(--color-success);
     }
   }
 
   &.is-invalid {
     border-color: var(--color-danger);
+    --input-color-base: var(--color-danger);
 
     &.is-focused {
-      box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-danger) 20%, transparent);
+      box-shadow: 0 0 0 1px var(--color-void), 0 0 0 3px var(--color-danger);
     }
   }
 
   // ==========================================================================
   // FLAT MODIFIER
   // ==========================================================================
-  &.input-flat {
+  &--flat {
     box-shadow: none;
     background-image: none;
+    background-color: var(--color-carbon);
+    border-color: transparent;
+
+    &:hover:not(.is-disabled):not(.is-invalid):not(.is-valid) {
+      background-color: var(--color-carbon-active);
+    }
 
     &.is-focused {
-      box-shadow: 0 0 0 3px color-mix(in srgb, var(--input-color-base) 20%, transparent);
+      background-color: var(--color-void);
+      border-color: var(--input-color-base);
+      box-shadow: 0 0 0 1px var(--color-void), 0 0 0 3px var(--input-color-base);
     }
   }
 
   // ==========================================================================
   // SIZES
   // ==========================================================================
-  &-sm {
+  &--sm {
     --input-height: 2.25rem;
     --input-padding-x: var(--spacing-2);
-    --input-font-size: var(--font-size-sm);
+    --input-font-size: var(--font-size-xs);
     --input-icon-size: 1rem;
     --input-radius: var(--radius-sm);
 
@@ -360,12 +383,12 @@
     }
   }
 
-  &-lg {
+  &--lg {
     --input-height: 3.25rem;
     --input-padding-x: var(--spacing-4);
-    --input-font-size: var(--font-size-lg);
+    --input-font-size: var(--font-size-base);
     --input-icon-size: 1.5rem;
-    --input-radius: var(--radius-base);
+    --input-radius: var(--radius-lg);
 
     .input__step-btn {
       width: 2.5rem;
@@ -376,46 +399,37 @@
       }
     }
   }
+}
 
-  // ==========================================================================
-  // VARIANT — Primary
-  // ==========================================================================
-  &-primary {
-    --input-color-base: var(--color-primary);
-  }
-
-  // ==========================================================================
-  // VARIANTS — Semantic
-  // ==========================================================================
-  &-success {
-    --input-color-base: var(--color-success);
-  }
-  &-warning {
-    --input-color-base: var(--color-warning);
-  }
-  &-danger {
-    --input-color-base: var(--color-danger);
-  }
-  &-info {
-    --input-color-base: var(--color-info);
-  }
-
-  // ==========================================================================
-  // VARIANTS — Theme Colors
-  // ==========================================================================
+// ==========================================================================
+// MIXINS EXTRACTED OUTSIDE BLOCK TO PREVENT BEM NESTING ISSUES
+// ==========================================================================
+.input- {
   @include for-each-theme-color using($color, $is-light) {
-    --input-color-base: var(--#{$color}-500);
+    &--#{$color} {
+      --input-color-base: var(--color-#{$color}, var(--#{$color}-500));
+    }
   }
 }
+
+// Ensure correct semantic variable names mapping
+.input--primary { --input-color-base: var(--color-primary); }
+.input--success { --input-color-base: var(--color-success); }
+.input--warning { --input-color-base: var(--color-warning); }
+.input--danger { --input-color-base: var(--color-danger); }
+.input--info { --input-color-base: var(--color-info); }
+.input--neutral { --input-color-base: var(--color-fog); }
+.input--white { --input-color-base: var(--white); }
 
 // ==========================================================================
 // VALIDATION MESSAGE — Outside .input to avoid BEM nesting issues
 // ==========================================================================
 .input__message {
-  font-size: var(--font-size-sm);
+  font-size: var(--font-size-xs);
   margin-top: var(--spacing-1);
   padding-left: var(--spacing-1);
   line-height: 1.4;
+  color: var(--color-text-secondary);
 
   &--valid {
     color: var(--color-success);
@@ -427,7 +441,7 @@
 }
 
 // ==========================================================================
-// SPINNER INSIDE INPUT — scoped outside .input to avoid BEM nesting
+// SPINNER INSIDE INPUT
 // ==========================================================================
 .input .input__spinner {
   color: var(--input-color-base, currentColor);

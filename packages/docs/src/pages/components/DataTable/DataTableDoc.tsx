@@ -11,18 +11,11 @@ const rawSources = import.meta.glob('./examples/*.tsx', {
 export default function DataTableDoc() {
     return (
         <DocTemplate
-            title="DataTable"
-            description={
-                <p>
-                    A high-level, data-driven table component with built-in search, sortable columns,
-                    pagination, loading states, and optional drag-and-drop reordering. Composes the
-                    existing <code>Table</code>, <code>Input</code>, <code>Select</code>,
-                    <code>Pagination</code>, and <code>Spinner</code> components internally.
-                </p>
-            }
+            title="Data Table"
+            description="A premium, feature-rich data grid component supporting sorting, pagination, search filtering, row selection, and drag-and-drop reordering out of the box."
             exampleModules={exampleModules}
-            rawSources={rawSources as Record<string, string>}
-            apiConfig={apiConfig}
+            rawSources={rawSources as any}
+            apiConfig={apiConfig as any}
         />
     );
 }

@@ -28,9 +28,9 @@ export const Spinner = memo(forwardRef<HTMLSpanElement, SpinnerProps>((
             aria-label={ariaLabel}
             className={clsx(
                 'spinner',
-                `spinner-${type}`,
-                variant && `spinner-${variant}`,
-                size !== 'md' && `spinner-${size}`,
+                type && `spinner--${type}`,
+                variant && `spinner--${variant}`,
+                size && size !== 'md' && `spinner--${size}`,
                 className
             )}
             {...props}

@@ -1,5 +1,5 @@
 import './Navbar.scss';
-import React, { forwardRef, useState, useCallback, useMemo, createContext, useContext, useEffect } from 'react';
+import React, { forwardRef, useState, useCallback, useMemo, createContext, useContext, useEffect, useRef } from 'react';
 import clsx from 'clsx';
 import type { Alignment, FullVariant } from '../../types/types';
 
@@ -262,6 +262,160 @@ const NavbarLink = forwardRef<HTMLAnchorElement, NavbarLinkProps>((
 });
 NavbarLink.displayName = 'Navbar.Link';
 
+// --- Navbar Dropdown ---
+
+const NavbarDropdownContext = createContext<{ isOpen: boolean; toggle: () => void; close: () => void } | null>(null);
+
+export interface NavbarDropdownProps extends React.HTMLAttributes<HTMLLIElement> {
+  /** The content of the trigger button */
+  title: React.ReactNode;
+}
+
+const NavbarDropdown = forwardRef<HTMLLIElement, NavbarDropdownProps>((
+  { className, title, children, ...props },
+  ref
+) => {
+  const [isOpen, setIsOpen] = useState(false);
+  const dropdownRef = useRef<HTMLLIElement>(null);
+
+  const toggle = useCallback(() => setIsOpen(p => !p), []);
+  const close = useCallback(() => setIsOpen(false), []);
+
+  useEffect(() => {
+    if (!isOpen) return;
+    const handleOutsideClick = (e: MouseEvent) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(e.target as Node)) {
+        close();
+      }
+    };
+    document.addEventListener('mousedown', handleOutsideClick);
+    return () => document.removeEventListener('mousedown', handleOutsideClick);
+  }, [isOpen, close]);
+
+  const contextValue = useMemo(() => ({ isOpen, toggle, close }), [isOpen, toggle, close]);
+
+  return (
+    <NavbarDropdownContext.Provider value={contextValue}>
+      <li
+        ref={(node) => {
+          dropdownRef.current = node;
+          if (typeof ref === 'function') ref(node);
+          else if (ref) (ref as React.MutableRefObject<HTMLLIElement | null>).current = node;
+        }}
+        className={clsx('navbar__item', 'navbar__dropdown', isOpen && 'is-open', className)}
+        {...props}
+      >
+        <button
+          type="button"
+          className="navbar__dropdown-trigger"
+          onClick={toggle}
+          aria-expanded={isOpen}
+          aria-haspopup="true"
+        >
+          {title}
+          <svg className="navbar__dropdown-caret" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+        </button>
+        <div className={clsx('navbar__dropdown-menu', isOpen && 'is-open')}>
+          {children}
+        </div>
+      </li>
+    </NavbarDropdownContext.Provider>
+  );
+});
+NavbarDropdown.displayName = 'Navbar.Dropdown';
+
+export interface NavbarDropdownItemProps extends React.AnchorHTMLAttributes<HTMLAnchorElement> {
+  /** Custom component to render as (e.g., React Router Link) */
+  as?: React.ElementType;
+}
+
+const NavbarDropdownItem = forwardRef<HTMLAnchorElement, NavbarDropdownItemProps>((
+  { className, as: Component = 'a', onClick, children, ...props },
+  ref
+) => {
+  const context = useContext(NavbarDropdownContext);
+  
+  const handleClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    context?.close();
+    onClick?.(e);
+  };
+
+  return (
+    <Component
+      ref={ref}
+      className={clsx('navbar__dropdown-item', className)}
+      onClick={handleClick}
+      {...props}
+    >
+      {children}
+    </Component>
+  );
+});
+NavbarDropdownItem.displayName = 'Navbar.DropdownItem';
+
+export interface NavbarDropdownSubMenuProps extends React.HTMLAttributes<HTMLDivElement> {
+  /** The content of the submenu trigger */
+  title: React.ReactNode;
+}
+
+const NavbarDropdownSubMenu = forwardRef<HTMLDivElement, NavbarDropdownSubMenuProps>((
+  { className, title, children, ...props },
+  ref
+) => {
+  const [isOpen, setIsOpen] = useState(false);
+  const [isFlipped, setIsFlipped] = useState(false);
+  const menuRef = useRef<HTMLDivElement>(null);
+
+  const toggle = useCallback((e: React.MouseEvent) => {
+    e.stopPropagation();
+    setIsOpen(p => !p);
+  }, []);
+
+  const handleMouseEnter = useCallback(() => {
+    if (menuRef.current) {
+      const rect = menuRef.current.getBoundingClientRect();
+      const viewportWidth = window.innerWidth || document.documentElement.clientWidth;
+      if (rect.right > viewportWidth) {
+        setIsFlipped(true);
+      }
+    }
+  }, []);
+
+  const handleMouseLeave = useCallback(() => {
+    setIsFlipped(false);
+    // On desktop we rely on hover, but we should not close the click state here
+    // as it conflicts with mobile touch logic. CSS hover handles desktop visibility.
+  }, []);
+
+  return (
+    <div
+      ref={ref}
+      className={clsx('navbar__dropdown-submenu', isFlipped && 'navbar__dropdown-submenu--flip-left', isOpen && 'is-open', className)}
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
+      {...props}
+    >
+      <button
+        type="button"
+        className="navbar__dropdown-submenu-trigger"
+        aria-haspopup="true"
+        aria-expanded={isOpen}
+        onClick={toggle}
+      >
+        <span>{title}</span>
+        <svg className="navbar__dropdown-caret" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+      </button>
+      <div 
+        ref={menuRef} 
+        className={clsx('navbar__dropdown-menu navbar__dropdown-menu--nested', isOpen && 'is-open')}
+      >
+        {children}
+      </div>
+    </div>
+  );
+});
+NavbarDropdownSubMenu.displayName = 'Navbar.DropdownSubMenu';
+
 // Assemble compound component
 export const Navbar = Object.assign(NavbarComponent, {
   Brand: NavbarBrand,
@@ -270,4 +424,7 @@ export const Navbar = Object.assign(NavbarComponent, {
   Nav: NavbarNav,
   Item: NavbarItem,
   Link: NavbarLink,
+  Dropdown: NavbarDropdown,
+  DropdownSubMenu: NavbarDropdownSubMenu,
+  DropdownItem: NavbarDropdownItem,
 });

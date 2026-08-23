@@ -6,11 +6,11 @@ export const order = 5;
 
 export const vanillaHtml = `
 <div class="row">
-    <div class="col col-6">
+    <div class="col col--6">
         <div class="col-example" style="height: 150px;">Fixed height content</div>
     </div>
-    <div class="col col-6 col-stretch">
-        <div class="col-example">I automatically stretch...</div>
+    <div class="col col--6 col--stretch">
+        <div class="col-example" style="background-color: var(--color-primary-dim); border-color: var(--color-primary);">I automatically stretch to fill the 150px height dictacted by my sibling.</div>
     </div>
 </div>
 `;

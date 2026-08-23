@@ -1,0 +1,125 @@
+.docs-colors {
+  &__section {
+    margin-bottom: var(--spacing-10);
+  }
+
+  &__title {
+    font-size: var(--font-size-2xl);
+    font-weight: var(--font-weight-bold);
+    margin-bottom: var(--spacing-2);
+    color: var(--color-text-primary);
+  }
+
+  &__description {
+    color: var(--color-text-secondary);
+    margin-bottom: var(--spacing-6);
+    line-height: 1.6;
+  }
+
+  &__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: var(--spacing-4);
+  }
+
+  &__swatch {
+    display: flex;
+    flex-direction: column;
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    border: 1px solid var(--color-border-subtle);
+    background: var(--surface-base);
+  }
+
+  &__swatch-color {
+    height: 80px;
+    width: 100%;
+  }
+
+  &__swatch-info {
+    padding: var(--spacing-3);
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-1);
+  }
+
+  &__swatch-name {
+    font-weight: var(--font-weight-medium);
+    color: var(--color-text-primary);
+    font-size: var(--font-size-sm);
+  }
+
+  &__swatch-value {
+    font-family: var(--font-family-mono);
+    color: var(--color-text-muted);
+    font-size: var(--font-size-xs);
+  }
+
+  &__palette-row {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: var(--spacing-4);
+    margin-bottom: var(--spacing-2);
+  }
+  
+  &__palette-title {
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-text-primary);
+    text-transform: capitalize;
+    font-size: var(--font-size-sm);
+    width: 70px;
+    flex-shrink: 0;
+  }
+  
+  &__palette-steps {
+    display: flex;
+    height: 40px;
+    flex: 1;
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    border: 1px solid var(--color-border-subtle);
+  }
+  
+  &__palette-step {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-family-mono);
+    font-size: var(--font-size-xs);
+    cursor: pointer;
+    position: relative;
+    transition: transform var(--duration-fast) var(--ease-default);
+    
+    &:active {
+      transform: scale(0.95);
+    }
+    
+    .docs-colors__step-label {
+      opacity: 1;
+      transition: opacity var(--duration-fast) var(--ease-default);
+    }
+    
+    .docs-colors__step-hex {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 4px;
+      opacity: 0;
+      transition: opacity var(--duration-fast) var(--ease-default);
+      font-size: 11px;
+    }
+    
+    &:hover {
+      .docs-colors__step-label {
+        opacity: 0;
+      }
+      .docs-colors__step-hex {
+        opacity: 1;
+      }
+    }
+  }
+}

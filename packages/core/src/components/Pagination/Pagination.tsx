@@ -7,7 +7,7 @@ export interface PaginationProps extends Omit<HTMLAttributes<HTMLElement>, 'onCh
     variant?: 'standard' | 'compact';
     currentPage: number;
     totalPages: number;
-    onPageChange?: (page: number) => void;
+    onChange?: (page: number) => void;
     size?: SizeVariant;
     colorVariant?: FullVariant;
     prevIcon?: ReactNode;
@@ -33,7 +33,7 @@ export const Pagination = forwardRef<HTMLElement, PaginationProps>((
         variant = 'standard',
         currentPage,
         totalPages,
-        onPageChange,
+        onChange,
         size = 'md',
         colorVariant = 'primary',
         prevIcon = <ChevronLeft />,
@@ -63,9 +63,9 @@ export const Pagination = forwardRef<HTMLElement, PaginationProps>((
 
     const handlePageChange = useCallback((page: number) => {
         if (page !== safeCurrentPage && page >= 1 && page <= totalPages) {
-            onPageChange?.(page);
+            onChange?.(page);
         }
-    }, [safeCurrentPage, totalPages, onPageChange]);
+    }, [safeCurrentPage, totalPages, onChange]);
 
     const handlePrev = useCallback(() => handlePageChange(safeCurrentPage - 1), [handlePageChange, safeCurrentPage]);
     const handleNext = useCallback(() => handlePageChange(safeCurrentPage + 1), [handlePageChange, safeCurrentPage]);

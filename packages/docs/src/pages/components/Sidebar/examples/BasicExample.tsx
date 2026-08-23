@@ -1,4 +1,4 @@
-import { Sidebar } from '@loreschaeffer/lyco-ui';
+import { Sidebar, Row, Col } from '@loreschaeffer/lyco-ui';
 import React from 'react';
 
 export const title = 'Basic Navigation';
@@ -46,35 +46,39 @@ const SettingsIcon = () => (
 
 export default function BasicExample() {
     return (
-        <div style={{ height: '400px', display: 'flex', border: '1px solid var(--color-border-base)', borderRadius: 'var(--radius-lg)', overflow: 'hidden' }}>
-            <Sidebar variant="fixed" style={{ position: 'relative' }}>
-                <Sidebar.Header>
-                    <strong>LycoUI Admin</strong>
-                </Sidebar.Header>
-                
-                <Sidebar.Content>
-                    <Sidebar.Nav>
-                        <Sidebar.Item>
-                            <Sidebar.Link href="#" active icon={<HomeIcon />}>
-                                Dashboard
-                            </Sidebar.Link>
-                        </Sidebar.Item>
-                        <Sidebar.Item>
-                            <Sidebar.Link href="#" icon={<SettingsIcon />}>
-                                Settings
-                            </Sidebar.Link>
-                        </Sidebar.Item>
-                    </Sidebar.Nav>
-                </Sidebar.Content>
+        <Row>
+            <Col span={12}>
+                <div style={{ height: '400px', display: 'flex', border: '1px solid var(--color-border-subtle)', borderRadius: 'var(--radius-lg)', overflow: 'hidden' }}>
+                    <Sidebar variant="fixed" style={{ position: 'relative' }}>
+                        <Sidebar.Header>
+                            <strong>LycoUI Admin</strong>
+                        </Sidebar.Header>
+                        
+                        <Sidebar.Content>
+                            <Sidebar.Nav>
+                                <Sidebar.Item>
+                                    <Sidebar.Link href="#" active icon={<HomeIcon />}>
+                                        Dashboard
+                                    </Sidebar.Link>
+                                </Sidebar.Item>
+                                <Sidebar.Item>
+                                    <Sidebar.Link href="#" icon={<SettingsIcon />}>
+                                        Settings
+                                    </Sidebar.Link>
+                                </Sidebar.Item>
+                            </Sidebar.Nav>
+                        </Sidebar.Content>
 
-                <Sidebar.Footer>
-                    <small>v1.0.0</small>
-                </Sidebar.Footer>
-            </Sidebar>
-            <div style={{ padding: '2rem', flex: 1, backgroundColor: 'var(--color-bg-root)' }}>
-                <h1>Main Content</h1>
-                <p>Select an item from the sidebar.</p>
-            </div>
-        </div>
+                        <Sidebar.Footer>
+                            <small>v1.0.0</small>
+                        </Sidebar.Footer>
+                    </Sidebar>
+                    <div style={{ padding: '2rem', flex: 1, backgroundColor: 'var(--color-bg-base)' }}>
+                        <h1>Main Content</h1>
+                        <p>Select an item from the sidebar.</p>
+                    </div>
+                </div>
+            </Col>
+        </Row>
     );
 }

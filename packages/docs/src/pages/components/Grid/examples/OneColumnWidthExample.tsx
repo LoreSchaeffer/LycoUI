@@ -7,7 +7,7 @@ export const order = 1;
 export const vanillaHtml = `
 <div class="row">
     <div class="col"><div class="col-example">Auto-layout</div></div>
-    <div class="col col-6"><div class="col-example">col-6</div></div>
+    <div class="col col--6"><div class="col-example">col--6</div></div>
     <div class="col"><div class="col-example">Auto-layout</div></div>
 </div>
 `;

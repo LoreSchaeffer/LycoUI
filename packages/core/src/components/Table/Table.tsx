@@ -10,29 +10,26 @@ export interface TableProps extends HTMLAttributes<HTMLTableElement> {
     striped?: boolean;
     /** Enables hover state on table rows */
     hover?: boolean;
-    /** Adds borders on all sides of the table and cells */
+    /** Adds borders to inner columns to create a full grid */
     bordered?: boolean;
-    /** Removes all borders */
+    /** Removes all internal horizontal borders */
     borderless?: boolean;
     /** Makes table more compact by cutting cell padding in half */
     size?: 'sm' | 'md';
-    /** Wraps the table in a responsive div to enable horizontal scrolling */
-    responsive?: boolean;
 }
 
 export const Table = forwardRef<HTMLTableElement, TableProps>((
     {
         variant,
         striped,
-        hover,
+        hover = true,
         bordered,
         borderless,
         size,
-        responsive,
         className,
         ...props
     }, ref) => {
-    
+
     const tableClasses = clsx(
         'table',
         variant && `table-${variant}`,
@@ -46,15 +43,11 @@ export const Table = forwardRef<HTMLTableElement, TableProps>((
 
     const table = <table ref={ref} className={tableClasses} {...props} />;
 
-    if (responsive) {
-        return (
-            <div className="table-responsive">
-                {table}
-            </div>
-        );
-    }
-
-    return table;
+    return (
+        <div className="table-container">
+            {table}
+        </div>
+    );
 });
 
 Table.displayName = 'Table';
@@ -92,10 +85,10 @@ export interface TableRowProps extends HTMLAttributes<HTMLTableRowElement> {
 export const TableRow = forwardRef<HTMLTableRowElement, TableRowProps>((
     { variant, className, ...props }, ref
 ) => (
-    <tr 
-        ref={ref} 
-        className={clsx(variant && `table-${variant}`, className)} 
-        {...props} 
+    <tr
+        ref={ref}
+        className={clsx(variant && `table-${variant}`, className)}
+        {...props}
     />
 ));
 TableRow.displayName = 'TableRow';
@@ -115,10 +108,10 @@ export const TableCell = forwardRef<HTMLTableCellElement, TableCellProps>((
 ) => {
     // @ts-ignore
     return (
-        <Component 
-            ref={ref} 
-            className={clsx(variant && `table-${variant}`, className)} 
-            {...props} 
+        <Component
+            ref={ref}
+            className={clsx(variant && `table-${variant}`, className)}
+            {...props}
         />
     );
 });

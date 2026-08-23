@@ -18,7 +18,7 @@ export interface ModalProps {
     id?: string;
 }
 
-export const Modal: React.FC<ModalProps> = ({
+export const ModalBase = React.forwardRef<HTMLDivElement, ModalProps>(({
     isOpen,
     onClose,
     size = 'md',
@@ -27,7 +27,7 @@ export const Modal: React.FC<ModalProps> = ({
     children,
     className = '',
     id
-}) => {
+}, ref) => {
     const dialogRef = useRef<HTMLDivElement>(null);
     const previouslyFocusedElement = useRef<HTMLElement | null>(null);
 
@@ -112,6 +112,7 @@ export const Modal: React.FC<ModalProps> = ({
             aria-modal="true"
             tabIndex={-1}
             onClick={handleBackdropClick}
+            ref={ref}
         >
             <div 
                 className={`modal__dialog modal__dialog--${size} ${centered ? 'modal__dialog--centered' : ''} ${scrollable ? 'modal__dialog--scrollable' : ''}`}
@@ -125,10 +126,9 @@ export const Modal: React.FC<ModalProps> = ({
         </div>
     );
 
-    // Render directly or via portal if React 18 createPortal is available.
-    // For LycoUI, we'll use a Portal to match standard Modal practices.
     return typeof document !== 'undefined' ? createPortal(modalContent, document.body) : null;
-};
+});
+ModalBase.displayName = 'Modal';
 
 export interface ModalHeaderProps {
     children: React.ReactNode;
@@ -174,3 +174,13 @@ export const ModalFooter: React.FC<ModalFooterProps> = ({ children, className = 
         {children}
     </div>
 );
+
+// Compound components assignments
+const ModalCompound = Object.assign(ModalBase, {
+  Header: ModalHeader,
+  Title: ModalTitle,
+  Body: ModalBody,
+  Footer: ModalFooter
+});
+
+export { ModalCompound as Modal };

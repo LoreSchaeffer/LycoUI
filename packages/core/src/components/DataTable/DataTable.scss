@@ -1,5 +1,10 @@
 .data-table {
   width: 100%;
+  border: 1px solid var(--color-border-subtle);
+  border-radius: var(--radius-xl);
+  overflow: hidden;
+  background-color: var(--color-surface-base);
+  box-shadow: var(--shadow-sm);
 
   // ========================================================================
   // TOOLBAR
@@ -8,8 +13,16 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
+    flex-wrap: nowrap;
     gap: var(--spacing-4);
-    padding: var(--spacing-3) 0;
+    padding: var(--spacing-4);
+    border-bottom: 1px solid var(--color-border-subtle);
+  }
+
+  &__toolbar-actions {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-4);
   }
 
   &__search {
@@ -51,15 +64,25 @@
   // TABLE CONTAINER
   // ========================================================================
   &__container {
-    background: var(--color-bg-surface);
-    border-radius: var(--radius-lg);
-    overflow: hidden;
-    box-shadow: var(--shadow-base);
-    border: 1px solid var(--color-border-base);
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+
+    // We strip the inner .table-container styles to prevent "double borders" or matryoshka effect
+    .table-container {
+      border: none !important;
+      border-radius: 0 !important;
+      box-shadow: none !important;
+      background-color: transparent !important;
+      margin-bottom: 0 !important;
+    }
 
     // Override Table's default margin-bottom inside the container
     .table {
       margin-bottom: 0;
+
+      > :not(caption)>*:last-child>* {
+        border-bottom: 0; // Remove bottom border of the last row so it doesn't double up with the footer
+      }
     }
   }
 
@@ -76,15 +99,19 @@
 
     &--sortable {
       cursor: pointer;
-      transition: background var(--duration-fast) var(--ease-default);
+      transition: background var(--duration-fast) var(--ease-default), color var(--duration-fast) var(--ease-default);
 
       &:hover {
-        background: var(--color-surface-elevated);
+        background: var(--color-surface-hover);
       }
     }
 
     &--sorted {
       color: var(--color-primary);
+
+      .data-table__sort-icon {
+        color: var(--color-primary);
+      }
     }
   }
 
@@ -101,6 +128,8 @@
     width: 1rem;
     height: 1rem;
     flex-shrink: 0;
+    color: var(--color-text-secondary);
+    transition: color var(--duration-fast) var(--ease-default);
 
     svg {
       width: 100%;
@@ -109,10 +138,18 @@
   }
 
   // ========================================================================
-  // ROWS
+  // ROWS & CELLS
   // ========================================================================
   &__row--clickable {
     cursor: pointer;
+  }
+  
+  &__select-cell {
+    width: 3rem;
+    min-width: 3rem;
+    max-width: 3rem;
+    padding-right: 0 !important; // Minimize gap to the next column
+    text-align: center;
   }
 
   // ========================================================================
@@ -120,7 +157,7 @@
   // ========================================================================
   &__empty-cell {
     text-align: center;
-    padding: var(--spacing-10) var(--spacing-4);
+    padding: var(--spacing-12) var(--spacing-4);
     color: var(--color-text-muted);
     font-size: var(--font-size-sm);
   }
@@ -130,17 +167,16 @@
   // ========================================================================
   &__drag-header,
   &__drag-cell {
-    width: 2.5rem;
-    min-width: 2.5rem;
-    max-width: 2.5rem;
+    width: 3rem;
+    min-width: 3rem;
+    max-width: 3rem;
     text-align: center;
-    padding-left: var(--spacing-2);
-    padding-right: 0;
+    padding: 0; // Remove horizontal padding for perfect centering
   }
 
   &__drag-cell {
     cursor: grab;
-    color: var(--color-text-muted);
+    color: var(--color-text-secondary);
     transition: color var(--duration-fast) var(--ease-default);
 
     &:active {
@@ -174,6 +210,25 @@
     > * {
       box-shadow: inset 0 -2px 0 0 var(--color-primary);
     }
+  }
+
+  // ========================================================================
+  // FOOTER
+  // ========================================================================
+  &__footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--spacing-4);
+    padding: var(--spacing-3) var(--spacing-4);
+    border-top: 1px solid var(--color-border-subtle);
+    background: var(--color-surface-base);
+  }
+
+  &__footer-controls {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-6);
   }
 
   // ========================================================================

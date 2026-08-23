@@ -4,14 +4,14 @@ import '../../components/api-reference/ApiReference.scss';
 export default function TypesDoc() {
     const getColorBg = (val: string) => {
         if (val === 'primary') return 'var(--color-primary)';
-        if (val === 'neutral') return 'var(--slate-500)';
+        if (val === 'neutral') return 'var(--neutral)';
         if (val === 'white') return 'white';
         return `var(--${val}-500)`;
     };
     
     const getTextColor = (val: string) => {
-        const lightColors = ['yellow', 'green', 'cyan', 'orange', 'teal', 'white', 'success', 'warning', 'info'];
-        return lightColors.includes(val) ? 'var(--slate-950)' : 'white';
+        const lightColors = ['yellow', 'lime', 'green', 'cyan', 'white', 'success', 'warning', 'info'];
+        return lightColors.includes(val) ? 'var(--color-void)' : 'white';
     };
 
     return (
@@ -38,11 +38,11 @@ export default function TypesDoc() {
                             </tr>
                         </thead>
                         <tbody>
-                            {['primary', 'neutral', 'red', 'orange', 'yellow', 'green', 'teal', 'cyan', 'blue', 'indigo', 'purple', 'magenta', 'white'].map(val => (
+                            {['primary', 'neutral', 'red', 'orange', 'amber', 'yellow', 'lime', 'green', 'teal', 'cyan', 'blue', 'indigo', 'purple', 'fuchsia', 'pink', 'white'].map(val => (
                                 <tr key={val}>
                                     <td className="td-prop"><code>'{val}'</code></td>
                                     <td className="td-description">
-                                        Maps to the <code style={{ backgroundColor: getColorBg(val), color: getTextColor(val) }}>--{val}</code> theme palette color.
+                                        Maps to the <code style={{ backgroundColor: getColorBg(val), color: getTextColor(val) }}>{val === 'primary' ? '--color-primary' : `--${val}`}</code> theme palette color.
                                     </td>
                                 </tr>
                             ))}

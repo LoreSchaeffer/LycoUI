@@ -12,7 +12,7 @@ export default function InputDoc() {
   return (
     <DocTemplate
       title="Input"
-      description="A versatile text and number input component with floating labels, icons, validation, and step buttons."
+      description="A premium, Linear-style text and number input component with strict BEM architecture, floating labels, icons, validation, and step buttons."
       exampleModules={exampleModules}
       rawSources={rawSources as any}
       apiConfig={apiConfig}

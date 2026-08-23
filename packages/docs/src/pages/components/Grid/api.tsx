@@ -5,13 +5,13 @@ export const rowPropsData: PropDefinition[] = [
         name: 'align',
         type: "'stretch' | 'start' | 'center' | 'end'",
         defaultValue: "'stretch'",
-        description: <>Vertical alignment of children columns. Applies <code>.row-align-*</code>.</>
+        description: <>Vertical alignment of children columns. Applies <code>.row--align-*</code>.</>
     },
     {
         name: 'justify',
         type: "'start' | 'center' | 'end' | 'between'",
         defaultValue: "'start'",
-        description: <>Horizontal distribution of children columns. Applies <code>.row-justify-*</code>.</>
+        description: <>Horizontal distribution of children columns. Applies <code>.row--justify-*</code>.</>
     }
 ];
 
@@ -30,13 +30,13 @@ export const colPropsData: PropDefinition[] = [
         name: 'stretch',
         type: 'boolean',
         defaultValue: 'false',
-        description: <>Converts column into a flex container forcing children to stretch vertically (<code>.col-stretch</code>).</>
+        description: <>Converts column into a flex container forcing children to stretch vertically (<code>.col--stretch</code>).</>
     },
     {
         name: 'align',
         type: "'auto' | 'start' | 'center' | 'end' | 'stretch'",
         defaultValue: "'auto'",
-        description: <>Overrides the row's vertical alignment for this specific column. Applies <code>.col-align-*</code>.</>
+        description: <>Overrides the row's vertical alignment for this specific column. Applies <code>.col--align-*</code>.</>
     }
 ];
 

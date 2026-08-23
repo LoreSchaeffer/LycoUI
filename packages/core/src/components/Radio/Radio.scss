@@ -1,8 +1,8 @@
 @use "../../styles/mixins/theme-variants" as *;
 
-.radio-wrapper {
+.radio {
   display: inline-flex;
-  align-items: center;
+  align-items: flex-start;
   gap: var(--spacing-2);
   cursor: pointer;
   position: relative;
@@ -13,103 +13,111 @@
 
   &.is-disabled {
     cursor: not-allowed;
-    opacity: 0.6;
+    opacity: 0.5;
+    color: var(--color-text-muted);
   }
-}
 
-.radio {
-  appearance: none;
-  -webkit-appearance: none;
-  background-color: var(--color-bg-surface);
-  --radio-dot-color: var(--white);
-  margin: 0.125em 0 0;
-  font: inherit;
-  color: currentColor;
-  width: 1.15em;
-  height: 1.15em;
-  border: 1px solid var(--color-border-base);
-  border-radius: 50%;
-  display: grid;
-  place-content: center;
-  transition: all var(--duration-fast) var(--ease-default);
-  cursor: pointer;
+  &__input {
+    position: absolute;
+    opacity: 0;
+    width: 0;
+    height: 0;
+    margin: 0;
+  }
 
-  &::before {
-    content: "";
-    width: 0.5em;
-    height: 0.5em;
+  &__control {
+    width: var(--control-size, 1.125rem);
+    height: var(--control-size, 1.125rem);
+    flex-shrink: 0;
+    margin-top: 0.125em;
+    background-color: var(--color-void, transparent);
+    border: 1px solid var(--color-border-base);
     border-radius: 50%;
-    transform: scale(0);
-    transition: transform 120ms var(--ease-default);
-    background-color: var(--radio-dot-color);
+    display: grid;
+    place-content: center;
+    transition: all var(--duration-fast) var(--ease-default);
+    --radio-dot-color: var(--white);
+
+    &::before {
+      content: "";
+      width: 0.5em;
+      height: 0.5em;
+      border-radius: 50%;
+      transform: scale(0);
+      transition: transform 120ms var(--ease-default);
+      background-color: var(--radio-dot-color);
+    }
   }
 
-  &:disabled {
-    cursor: not-allowed;
+  &:hover:not(.is-disabled) &__control {
+    border-color: var(--color-border-strong);
   }
 
-  &:focus-visible {
+  &__input:focus-visible + &__control {
     outline: none;
-    box-shadow: 0 0 0 2px var(--color-bg-root), 0 0 0 4px var(--radio-color-base, var(--color-primary));
+    box-shadow: 0 0 0 1px var(--color-void), 0 0 0 3px var(--radio-color-base, var(--color-primary));
   }
 
-  &:checked {
-    background-color: var(--radio-color-base);
-    border-color: var(--radio-color-base);
+  &__input:checked + &__control {
+    background-color: var(--radio-color-base, var(--color-primary));
+    border-color: var(--radio-color-base, var(--color-primary));
 
     &::before {
       transform: scale(1);
     }
   }
 
+  &__label {
+    user-select: none;
+  }
+
   // ==========================================================================
   // SIZES
   // ==========================================================================
-  &-sm {
+  &--sm {
     font-size: var(--font-size-sm);
-    width: 1em;
-    height: 1em;
+    --control-size: 0.875rem;
+  }
+  
+  &--md {
+    font-size: var(--font-size-base);
+    --control-size: 1.125rem;
   }
 
-  &-lg {
+  &--lg {
     font-size: var(--font-size-lg);
-    width: 1.25em;
-    height: 1.25em;
+    --control-size: 1.375rem;
   }
+}
 
-  // ==========================================================================
-  // SEMANTIC COLOR MAPPINGS
-  // ==========================================================================
-  &-primary {
-    --radio-color-base: var(--color-primary);
-  }
+// ==========================================================================
+// SEMANTIC COLOR MAPPINGS
+// ==========================================================================
+.radio--primary { --radio-color-base: var(--color-primary); }
+.radio--success {
+  --radio-color-base: var(--color-success);
+  --radio-dot-color: var(--color-void);
+}
+.radio--warning {
+  --radio-color-base: var(--color-warning);
+  --radio-dot-color: var(--color-void);
+}
+.radio--danger { --radio-color-base: var(--color-danger); }
+.radio--info {
+  --radio-color-base: var(--color-info);
+  --radio-dot-color: var(--color-void);
+}
 
-  &-success {
-    --radio-color-base: var(--color-success);
-    --radio-dot-color: var(--slate-950);
-  }
-
-  &-warning {
-    --radio-color-base: var(--color-warning);
-    --radio-dot-color: var(--slate-950);
-  }
-
-  &-danger {
-    --radio-color-base: var(--color-danger);
-  }
-
-  &-info {
-    --radio-color-base: var(--color-info);
-    --radio-dot-color: var(--slate-950);
-  }
-
-  // ==========================================================================
-  // PALETTE COLOR MAPPINGS
-  // ==========================================================================
+// ==========================================================================
+// PALETTE COLOR MAPPINGS
+// ==========================================================================
+.radio- {
   @include for-each-theme-color using($color, $is-light) {
-    --radio-color-base: var(--#{$color});
+    --radio-color-base: var(--#{$color}-500);
     @if $is-light {
-      --radio-dot-color: var(--slate-950);
+      --radio-dot-color: var(--color-void);
+    } @else {
+      --radio-dot-color: var(--white);
     }
   }
 }

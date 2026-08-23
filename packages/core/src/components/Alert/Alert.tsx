@@ -54,8 +54,8 @@ export const Alert = forwardRef<HTMLDivElement, AlertProps>((
       ref={ref}
       className={clsx(
         'alert',
-        `alert-${variant}`,
-        (closable || duration) && 'alert-closable',
+        `alert--${variant}`,
+        (closable || duration) && 'alert--closable',
         icon && 'has-icon',
         className
       )}

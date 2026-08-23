@@ -6,66 +6,70 @@
   justify-content: center;
   vertical-align: middle;
   flex-shrink: 0;
-  width: 1.75rem;
-  height: 1.75rem;
+  width: 1.5rem;
+  height: 1.5rem;
 
   // ==========================================================================
   // SIZES
   // ==========================================================================
-  &-sm {
-    width: 1.25rem;
-    height: 1.25rem;
+  &--sm {
+    width: 1rem;
+    height: 1rem;
+    border-width: 1.5px;
   }
 
-  &-lg {
-    width: 2.5rem;
-    height: 2.5rem;
+  &--lg {
+    width: 2.25rem;
+    height: 2.25rem;
+    border-width: 3px;
   }
 
   // ==========================================================================
   // TYPES
   // ==========================================================================
-  &-classic {
-    border: 0.25em solid currentColor;
-    border-right-color: transparent;
+  &--classic {
+    border: 2px solid var(--color-border-subtle);
+    border-top-color: currentColor;
     border-radius: var(--radius-full, 50%);
-    animation: spinner-rotate 0.75s linear infinite;
+    animation: spinner-rotate 0.8s linear infinite;
   }
 
-  &-growing {
+  &--growing {
     background-color: currentColor;
     border-radius: var(--radius-full, 50%);
-    animation: spinner-grow 0.75s linear infinite;
+    animation: spinner-grow 1s var(--ease-default) infinite;
   }
 
   // ==========================================================================
   // COLOR VARIANTS
   // ==========================================================================
-  &-primary {
+  &--primary {
     color: var(--color-primary);
   }
   
-  &-success {
+  &--success {
     color: var(--color-success);
   }
 
-  &-warning {
+  &--warning {
     color: var(--color-warning);
   }
 
-  &-danger {
+  &--danger {
     color: var(--color-danger);
   }
 
-  &-info {
+  &--info {
     color: var(--color-info);
   }
+}
 
+.spinner- {
   @include for-each-theme-color using($color, $is-light) {
     @if $color == 'white' {
       color: var(--white);
     } @else if $color == 'neutral' {
-      color: var(--neutral-500);
+      color: var(--color-fog);
     } @else {
       color: var(--#{$color}-500);
     }
@@ -76,6 +80,9 @@
 // KEYFRAMES
 // ==========================================================================
 @keyframes spinner-rotate {
+  0% {
+    transform: rotate(0deg);
+  }
   100% {
     transform: rotate(360deg);
   }
@@ -83,11 +90,11 @@
 
 @keyframes spinner-grow {
   0% {
-    transform: scale(0);
+    transform: scale(0.1);
     opacity: 1;
   }
   70% {
-    opacity: 1;
+    opacity: 0.5;
   }
   100% {
     transform: scale(1);

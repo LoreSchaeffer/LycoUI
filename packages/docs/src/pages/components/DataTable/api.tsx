@@ -73,6 +73,23 @@ export const dataTableProps: PropDefinition[] = [
         description: 'Fires whenever the page size changes. Use this callback to persist the page size externally (e.g. to localStorage).',
     },
     {
+        name: 'paginationPosition',
+        type: "'top' | 'bottom'",
+        defaultValue: "'top'",
+        description: 'Where to position the pagination controls relative to the table container.',
+    },
+    {
+        name: 'paginationInfo',
+        type: "'full' | 'compact' | 'none'",
+        defaultValue: "'full'",
+        description: 'How to display the results info text (e.g. "Showing 1 to 10...").',
+    },
+    {
+        name: 'localization',
+        type: '{ rowsPerPage?: string, showingResults?: (from, to, total) => string }',
+        description: 'Override default English text strings for internationalization support.',
+    },
+    {
         name: 'loading',
         type: 'boolean',
         defaultValue: 'false',
@@ -110,6 +127,27 @@ export const dataTableProps: PropDefinition[] = [
         description: 'Enables drag-and-drop row reordering. When provided, pagination and sorting are disabled. Receives the drag source and destination indices.',
     },
     {
+        name: 'selectable',
+        type: 'boolean',
+        defaultValue: 'false',
+        description: 'Enable row selection checkboxes. Renders a checkbox column.',
+    },
+    {
+        name: 'selectedRowKeys',
+        type: '(string | number)[]',
+        description: 'Controlled array of selected row keys.',
+    },
+    {
+        name: 'defaultSelectedRowKeys',
+        type: '(string | number)[]',
+        description: 'Uncontrolled initial array of selected row keys.',
+    },
+    {
+        name: 'onSelectionChange',
+        type: '(keys: (string | number)[]) => void',
+        description: 'Fires when the selection changes, receiving the array of selected row keys.',
+    },
+    {
         name: 'variant',
         type: 'FullVariant',
         typeLink: '/docs/custom-types/full-variant',
@@ -118,7 +156,7 @@ export const dataTableProps: PropDefinition[] = [
     {
         name: 'striped',
         type: 'boolean',
-        defaultValue: 'true',
+        defaultValue: 'false',
         description: 'Adds zebra-striping to rows.',
     },
     {
@@ -131,7 +169,13 @@ export const dataTableProps: PropDefinition[] = [
         name: 'bordered',
         type: 'boolean',
         defaultValue: 'false',
-        description: 'Adds borders to all cells.',
+        description: 'Adds vertical borders to all cells.',
+    },
+    {
+        name: 'borderless',
+        type: 'boolean',
+        defaultValue: 'false',
+        description: 'Removes all internal table borders (except the outer wrapper).',
     },
     {
         name: 'size',

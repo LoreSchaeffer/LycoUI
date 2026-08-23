@@ -9,7 +9,9 @@ export interface RangeProps extends Omit<React.InputHTMLAttributes<HTMLInputElem
   tooltipFormatter?: (value: number) => React.ReactNode;
   showTooltip?: boolean;
   tooltipSize?: SizeVariant;
+  tooltipTrigger?: 'active' | 'hover';
   filled?: boolean;
+  coloredThumb?: boolean;
 }
 
 export const Range = forwardRef<HTMLInputElement, RangeProps>(
@@ -28,16 +30,27 @@ export const Range = forwardRef<HTMLInputElement, RangeProps>(
       tooltipFormatter,
       showTooltip = true,
       tooltipSize = 'md',
+      tooltipTrigger = 'active',
       filled = true,
+      coloredThumb,
       disabled,
       style,
       ...props
     },
     ref
   ) => {
+    const internalRef = React.useRef<HTMLInputElement>(null);
     const [currentValue, setCurrentValue] = useState<number>(
       value !== undefined ? Number(value) : defaultValue !== undefined ? Number(defaultValue) : Number(min)
     );
+    const [isHovered, setIsHovered] = useState(false);
+
+    // Merge refs
+    const setRefs = useCallback((node: HTMLInputElement | null) => {
+      internalRef.current = node;
+      if (typeof ref === 'function') ref(node);
+      else if (ref) (ref as React.MutableRefObject<HTMLInputElement | null>).current = node;
+    }, [ref]);
 
     useEffect(() => {
       if (value !== undefined) {
@@ -57,6 +70,18 @@ export const Range = forwardRef<HTMLInputElement, RangeProps>(
     const numericMax = Number(max);
     const percent = Math.max(0, Math.min(100, ((currentValue - numericMin) / (numericMax - numericMin)) * 100));
 
+    const handlePointerMove = useCallback((e: React.PointerEvent<HTMLInputElement>) => {
+      if (tooltipTrigger !== 'hover' || !internalRef.current) return;
+      const rect = internalRef.current.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      
+      const thumbSizeMap = { sm: 12, md: 16, lg: 20 };
+      const thumbSize = thumbSizeMap[size as keyof typeof thumbSizeMap] || 16;
+      const thumbX = (percent / 100) * (rect.width - thumbSize) + (thumbSize / 2);
+      
+      setIsHovered(Math.abs(x - thumbX) <= thumbSize / 2 + 4);
+    }, [tooltipTrigger, size, percent]);
+
     const tooltipValue = tooltipFormatter ? tooltipFormatter(currentValue) : currentValue.toString();
     
     // Calculate char count for dynamic font sizing
@@ -64,14 +89,18 @@ export const Range = forwardRef<HTMLInputElement, RangeProps>(
       ? String(tooltipValue).length 
       : 2;
 
+    const isThumbColored = coloredThumb ?? !filled;
+
     return (
       <div 
         className={clsx(
           'range',
-          `range-${variant}`,
-          `range-${size}`,
-          `range-tooltip-${tooltipSize}`,
-          !filled && 'range-unfilled',
+          `range--${variant}`,
+          `range--${size}`,
+          `range--tooltip-${tooltipSize}`,
+          !filled && 'range--unfilled',
+          !isThumbColored && 'range--thumb-white',
+          (isHovered && tooltipTrigger === 'hover') && 'range--tooltip-visible',
           disabled && 'is-disabled',
           className
         )}
@@ -92,7 +121,9 @@ export const Range = forwardRef<HTMLInputElement, RangeProps>(
           defaultValue={defaultValue}
           disabled={disabled}
           onChange={handleInput}
-          ref={ref}
+          onPointerMove={handlePointerMove}
+          onPointerLeave={() => setIsHovered(false)}
+          ref={setRefs}
           aria-valuemin={numericMin}
           aria-valuemax={numericMax}
           aria-valuenow={currentValue}

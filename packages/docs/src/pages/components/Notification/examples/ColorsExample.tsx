@@ -5,18 +5,15 @@ export const description = <p>Notifications support the full LycoUI color palett
 export const order = 5;
 
 export const vanillaHtml = `
-<button class="btn btn-blue" onclick="LycoUI.notification.show({ message: 'Blue notification', variant: 'blue' })">
-  Blue
+<button class="btn btn-primary" onclick="LycoUI.notification.show({ message: 'Primary notification', variant: 'primary' })">
+  Primary
 </button>
 <button class="btn btn-purple" onclick="LycoUI.notification.show({ message: 'Purple notification', variant: 'purple' })">
   Purple
 </button>
-<button class="btn btn-teal" onclick="LycoUI.notification.show({ message: 'Teal notification', variant: 'teal' })">
-  Teal
-</button>
 `;
 
-const colors = ['blue', 'purple', 'teal', 'orange', 'magenta', 'indigo'] as const;
+const colors = ['primary', 'success', 'warning', 'danger', 'info', 'purple'] as const;
 
 export default function ColorsExample() {
     const { showNotification } = useNotification();
@@ -26,10 +23,10 @@ export default function ColorsExample() {
             {colors.map(color => (
                 <Button
                     key={color}
-                    variant={color}
+                    variant={color as any}
                     onClick={() => showNotification({
-                        message: `This is a ${color} notification.`,
-                        variant: color,
+                        description: `This is a ${color} notification.`,
+                        variant: color as any,
                         icon: null,
                     })}
                 >

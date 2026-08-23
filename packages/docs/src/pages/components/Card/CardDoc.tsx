@@ -13,7 +13,7 @@ const CardDoc: React.FC = () => {
     return (
         <DocTemplate
             title="Card"
-            description={<p>Flexible and extensible content containers with multiple variants, paddings, and depth elevations.</p>}
+            description={<p>A premium layout component with a compound architecture (Header, Body, Footer), interactive states, and semantic variants.</p>}
             exampleModules={exampleModules}
             rawSources={rawSources}
             apiConfig={apiConfig}

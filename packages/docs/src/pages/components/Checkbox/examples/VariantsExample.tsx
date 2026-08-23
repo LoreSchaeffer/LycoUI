@@ -6,17 +6,20 @@ export const description = <p>Use the <code>variant</code> prop to apply semanti
 export const order = 2;
 
 export const vanillaHtml = `
-<label for="c-green" class="checkbox-wrapper">
-    <input type="checkbox" id="c-green" class="checkbox checkbox-green" checked>
-    <span>Variant green</span>
+<label for="c-green" class="checkbox checkbox--green">
+    <input type="checkbox" id="c-green" class="checkbox__input" checked>
+    <span class="checkbox__control" aria-hidden="true"></span>
+    <span class="checkbox__label">Variant green</span>
 </label>
-<label for="c-red" class="checkbox-wrapper">
-    <input type="checkbox" id="c-red" class="checkbox checkbox-red" checked>
-    <span>Variant red</span>
+<label for="c-red" class="checkbox checkbox--red">
+    <input type="checkbox" id="c-red" class="checkbox__input" checked>
+    <span class="checkbox__control" aria-hidden="true"></span>
+    <span class="checkbox__label">Variant red</span>
 </label>
-<label for="c-success" class="checkbox-wrapper">
-    <input type="checkbox" id="c-success" class="checkbox checkbox-success" checked>
-    <span>Variant success</span>
+<label for="c-success" class="checkbox checkbox--success">
+    <input type="checkbox" id="c-success" class="checkbox__input" checked>
+    <span class="checkbox__control" aria-hidden="true"></span>
+    <span class="checkbox__label">Variant success</span>
 </label>
 `;
 
@@ -26,7 +29,7 @@ export default function VariantsExample() {
     return (
         <Row>
             {variants.map((v) => (
-                <Col key={v} span={12} md={4} className="mb-4">
+                <Col key={v} span={6} md={4} lg={3} className="mb-4">
                     <Checkbox variant={v} label={`Variant ${v}`} defaultChecked/>
                 </Col>
             ))}

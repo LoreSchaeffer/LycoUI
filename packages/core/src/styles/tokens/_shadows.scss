@@ -1,29 +1,20 @@
-$shadow-color: '0, 0%, 0%';
-$highlight-color: '255, 255%, 255%';
+// ==========================================================================
+// SHADOWS & INSET BORDERS
+// Linear-style shadows emphasize borders and subtle depth rather than heavy blurs.
+// ==========================================================================
 
 $shadow-steps: (
-        'sm': (
-                '0 1px 2px 0 hsla(#{$shadow-color}, 0.5)',
-                'inset 0 1px 0 0 hsla(#{$highlight-color}, 0.05)'
-        ),
-        'base': (
-                '0 4px 6px -1px hsla(#{$shadow-color}, 0.6)',
-                '0 2px 4px -2px hsla(#{$shadow-color}, 0.5)',
-                'inset 0 1px 0 0 hsla(#{$highlight-color}, 0.07)'
-        ),
-        'md': (
-                '0 10px 15px -3px hsla(#{$shadow-color}, 0.7)',
-                '0 4px 6px -4px hsla(#{$shadow-color}, 0.6)',
-                'inset 0 1px 0 0 hsla(#{$highlight-color}, 0.1)'
-        ),
-        'lg': (
-                '0 20px 25px -5px hsla(#{$shadow-color}, 0.8)',
-                '0 8px 10px -6px hsla(#{$shadow-color}, 0.7)',
-                'inset 0 1px 1px 0 hsla(#{$highlight-color}, 0.15)'
-        ),
-        'xl': (
-                '0 25px 50px -12px hsla(#{$shadow-color}, 0.9)',
-                'inset 0 1px 1px 0 hsla(#{$highlight-color}, 0.2)'
-        ),
-        'inner': 'inset 0 2px 4px 0 hsla(#{$shadow-color}, 0.5)'
+  'sm': 'rgba(0, 0, 0, 0.4) 0px 2px 4px 0px',
+  'md': 'rgba(0, 0, 0, 0.2) 0px 0px 12px 0px inset',
+  'subtle': 'rgb(35, 37, 42) 0px 0px 0px 1px inset',
+  'subtle-2': 'rgba(0, 0, 0, 0.2) 0px 0px 0px 1px',
+  'xl': 'rgba(8, 9, 10, 0.6) 0px 4px 32px 0px'
+);
+
+// Ambient Radial Glows (used behind charts, key components)
+$glow-steps: (
+  'primary': 'radial-gradient(circle at 50% 50%, color-mix(in oklch, var(--color-primary) 15%, transparent) 0%, transparent 60%)',
+  'success': 'radial-gradient(circle at 50% 50%, color-mix(in oklch, var(--color-success) 15%, transparent) 0%, transparent 60%)',
+  'danger': 'radial-gradient(circle at 50% 50%, color-mix(in oklch, var(--color-danger) 15%, transparent) 0%, transparent 60%)',
+  'warning': 'radial-gradient(circle at 50% 50%, color-mix(in oklch, var(--color-warning) 15%, transparent) 0%, transparent 60%)'
 );

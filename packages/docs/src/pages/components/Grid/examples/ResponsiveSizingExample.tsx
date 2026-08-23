@@ -6,8 +6,8 @@ export const order = 2;
 
 export const vanillaHtml = `
 <div class="row">
-    <div class="col col-12 col-md-8"><div class="col-example">span=12 md=8</div></div>
-    <div class="col col-12 col-md-4"><div class="col-example">span=12 md=4</div></div>
+    <div class="col col--12 col--md-8"><div class="col-example">span=12 md=8</div></div>
+    <div class="col col--12 col--md-4"><div class="col-example">span=12 md=4</div></div>
 </div>
 `;
 

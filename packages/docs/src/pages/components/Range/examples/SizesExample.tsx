@@ -2,7 +2,7 @@ import { Col, Range, Row } from '@loreschaeffer/lyco-ui';
 
 export const title = 'Sizes';
 export const description = <p>Range supports multiple sizes: <code>sm</code>, <code>md</code> (default), and <code>lg</code>.</p>;
-export const order = 3;
+export const order = 4;
 
 export const vanillaHtml = `
 <input type="range" class="range-custom" data-size="sm" min="0" max="100" value="25" />

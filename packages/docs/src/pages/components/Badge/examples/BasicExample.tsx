@@ -5,9 +5,9 @@ export const description = <p>Badges support all standard theme colors. By defau
 export const order = 1;
 
 export const vanillaHtml = `
-<span class="badge badge-primary">Primary</span>
-<span class="badge badge-success">Success</span>
-<span class="badge badge-neutral">Neutral</span>
+<span class="badge badge--primary">Primary</span>
+<span class="badge badge--success">Success</span>
+<span class="badge badge--neutral">Neutral</span>
 `;
 
 export default function BasicExample() {

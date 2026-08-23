@@ -1,11 +1,11 @@
 @keyframes modalFadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
+  from { opacity: 0; backdrop-filter: blur(0px); }
+  to { opacity: 1; backdrop-filter: blur(4px); }
 }
 
 @keyframes modalSlideUp {
-  from { transform: translateY(20px) scale(0.98); }
-  to { transform: translateY(0) scale(1); }
+  from { opacity: 0; transform: translateY(10px) scale(0.97); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
 }
 
 .modal-open {
@@ -18,8 +18,9 @@
   left: 0;
   width: 100vw;
   height: 100vh;
-  z-index: var(--z-modal);
-  background-color: color-mix(in srgb, var(--black) 60%, transparent); // Backdrop
+  z-index: var(--z-backdrop, 1000);
+  background-color: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(4px);
   display: flex;
   justify-content: center;
   align-items: flex-start;
@@ -29,16 +30,17 @@
   padding: var(--spacing-4);
 
   // Animation for React (conditional rendering) and Vanilla (.is-open)
-  animation: modalFadeIn var(--duration-normal) var(--ease-default) forwards;
+  animation: modalFadeIn var(--duration-normal) var(--ease-out) forwards;
 
   &__dialog {
     position: relative;
     width: 100%;
     margin: var(--spacing-8) auto;
     pointer-events: none;
+    z-index: var(--z-modal, 1010);
     
     // Animation
-    animation: modalSlideUp var(--duration-normal) var(--ease-default) forwards;
+    animation: modalSlideUp var(--duration-normal) var(--ease-out) forwards;
 
     &--sm { max-width: 300px; }
     &--md { max-width: 500px; }
@@ -71,9 +73,9 @@
     flex-direction: column;
     width: 100%;
     pointer-events: auto;
-    background-color: var(--color-bg-surface);
-    border: 1px solid var(--color-border-base);
-    border-radius: var(--radius-xl);
+    background-color: var(--surface-base, var(--color-bg-surface));
+    border: 1px solid var(--color-border-subtle);
+    border-radius: var(--radius-2xl);
     box-shadow: var(--shadow-xl);
     outline: 0;
   }
@@ -83,14 +85,14 @@
     flex-shrink: 0;
     align-items: center;
     justify-content: space-between;
-    padding: var(--spacing-4) var(--spacing-6);
-    border-bottom: 1px solid var(--color-border-base);
+    padding: var(--spacing-5) var(--spacing-6);
+    border-bottom: 1px solid var(--color-border-subtle);
   }
 
   &__title {
     margin-bottom: 0;
     line-height: var(--line-height-tight);
-    font-size: var(--font-size-xl);
+    font-size: var(--font-size-lg);
     font-weight: var(--font-weight-semibold);
   }
 
@@ -123,7 +125,7 @@
     align-items: center;
     justify-content: flex-end;
     padding: var(--spacing-4) var(--spacing-6);
-    border-top: 1px solid var(--color-border-base);
-    gap: var(--spacing-2);
+    border-top: 1px solid var(--color-border-subtle);
+    gap: var(--spacing-3);
   }
 }

@@ -7,7 +7,9 @@ export interface NotificationOptions {
   /** Bold heading displayed above the message. */
   title?: React.ReactNode;
   /** Body text of the notification. */
-  message: React.ReactNode;
+  description?: React.ReactNode;
+  /** @deprecated use `description` instead */
+  message?: React.ReactNode;
   /** Color variant. Semantic variants auto-assign an icon. */
   variant?: FullVariant | 'white';
   /** Custom icon. Overrides the auto-semantic icon if provided. Pass `null` to suppress. */

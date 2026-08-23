@@ -5,9 +5,9 @@ export const description = <p>Use the <code>justify</code> prop to change the ho
 export const order = 4;
 
 export const vanillaHtml = `
-<div class="row row-justify-center">
-    <div class="col col-4"><div class="col-example">Center aligned</div></div>
-    <div class="col col-4"><div class="col-example">Center aligned</div></div>
+<div class="row row--justify-center mb-4">
+    <div class="col col--4"><div class="col-example">Center aligned</div></div>
+    <div class="col col--4"><div class="col-example">Center aligned</div></div>
 </div>
 `;
 

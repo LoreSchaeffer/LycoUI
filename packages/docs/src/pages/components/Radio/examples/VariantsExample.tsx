@@ -6,17 +6,20 @@ export const description = <p>Customize the active color using the <code>variant
 export const order = 2;
 
 export const vanillaHtml = `
-<label for="r-green" class="radio-wrapper">
-    <input type="radio" id="r-green" name="variant-group-green" class="radio radio-green" checked>
-    <span>Variant green</span>
+<label for="r-green" class="radio radio--green">
+    <input type="radio" id="r-green" name="variant-group-green" class="radio__input" checked>
+    <span class="radio__control" aria-hidden="true"></span>
+    <span class="radio__label">Variant green</span>
 </label>
-<label for="r-red" class="radio-wrapper">
-    <input type="radio" id="r-red" name="variant-group-red" class="radio radio-red" checked>
-    <span>Variant red</span>
+<label for="r-red" class="radio radio--red">
+    <input type="radio" id="r-red" name="variant-group-red" class="radio__input" checked>
+    <span class="radio__control" aria-hidden="true"></span>
+    <span class="radio__label">Variant red</span>
 </label>
-<label for="r-success" class="radio-wrapper">
-    <input type="radio" id="r-success" name="variant-group-success" class="radio radio-success" checked>
-    <span>Variant success</span>
+<label for="r-success" class="radio radio--success">
+    <input type="radio" id="r-success" name="variant-group-success" class="radio__input" checked>
+    <span class="radio__control" aria-hidden="true"></span>
+    <span class="radio__label">Variant success</span>
 </label>
 `;
 
@@ -26,7 +29,7 @@ export default function VariantsExample() {
     return (
         <Row>
             {variants.map((v) => (
-                <Col key={v} span={12} md={4} className="mb-4">
+                <Col key={v} span={6} md={4} lg={3} className="mb-4">
                     <Radio variant={v} name={`variant-group-${v}`} label={`Variant ${v}`} defaultChecked/>
                 </Col>
             ))}

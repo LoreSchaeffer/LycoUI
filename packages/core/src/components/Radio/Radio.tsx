@@ -24,28 +24,27 @@ export const Radio = memo(forwardRef<HTMLInputElement, RadioProps>((
     const inputId = id ?? generatedId;
     const isColored = variant !== 'default';
 
-    const inputNode = (
-        <input
-            ref={ref}
-            type="radio"
-            id={inputId}
-            disabled={disabled}
+    return (
+        <label 
+            htmlFor={inputId} 
             className={clsx(
-                'radio',
-                isColored && `radio-${variant}`,
-                size !== 'md' && `radio-${size}`,
+                'radio', 
+                disabled && 'is-disabled',
+                isColored && `radio--${variant}`,
+                size !== 'md' && `radio--${size}`,
                 className
             )}
-            {...props}
-        />
-    );
-
-    if (!label) return inputNode;
-
-    return (
-        <label htmlFor={inputId} className={clsx('radio-wrapper', disabled && 'is-disabled')}>
-            {inputNode}
-            <span>{label}</span>
+        >
+            <input
+                ref={ref}
+                type="radio"
+                id={inputId}
+                disabled={disabled}
+                className="radio__input"
+                {...props}
+            />
+            <span className="radio__control" aria-hidden="true" />
+            {label && <span className="radio__label">{label}</span>}
         </label>
     );
 }));

@@ -9,27 +9,28 @@
   flex-direction: column;
   align-items: center;
   gap: var(--spacing-3);
-  z-index: 9999;
-  pointer-events: none; // The container shouldn't block clicks
+  z-index: var(--z-fixed, 9999);
+  pointer-events: none;
 }
 
 .snackbar {
   --snackbar-color-base: var(--slate-900);
-  --snackbar-bg: color-mix(in srgb, var(--snackbar-color-base) 15%, var(--color-bg-surface));
+  --snackbar-bg: var(--surface-floating, var(--color-bg-surface));
   --snackbar-text: var(--color-text-primary);
   --snackbar-border: var(--snackbar-color-base);
   --snackbar-radius: var(--radius-md);
   
-  pointer-events: auto; // The snackbar itself should receive clicks
+  pointer-events: auto;
   position: relative;
   display: flex;
   align-items: flex-start;
-  padding: var(--spacing-4) var(--spacing-5);
+  padding: var(--spacing-3) var(--spacing-4);
   background-color: var(--snackbar-bg);
   color: var(--snackbar-text);
   border-radius: var(--snackbar-radius);
-  border: 1px solid var(--snackbar-border);
-  box-shadow: var(--shadow-lg);
+  border: 1px solid var(--color-border-subtle);
+  border-left: 3px solid var(--snackbar-border);
+  box-shadow: var(--shadow-xl);
   font-family: var(--font-family-base);
   font-size: var(--font-size-sm);
   line-height: 1.5;
@@ -49,39 +50,35 @@
     }
   }
 
-  &.snackbar-closable {
+  &--closable {
     padding-right: 3rem;
   }
 
   // Generate variants
-  &-success { --snackbar-color-base: var(--color-success); }
-  &-warning { 
-    --snackbar-color-base: var(--color-warning); 
-    --snackbar-text: var(--color-text-primary);
-  }
-  &-danger { --snackbar-color-base: var(--color-danger); }
-  &-info { --snackbar-color-base: var(--color-info); }
+  &--success { --snackbar-border: var(--color-success); }
+  &--warning { --snackbar-border: var(--color-warning); }
+  &--danger { --snackbar-border: var(--color-danger); }
+  &--info { --snackbar-border: var(--color-info); }
   
-  &-neutral { 
-    --snackbar-color-base: var(--slate-800); 
+  &--neutral { 
+    --snackbar-border: var(--color-border-base); 
   }
   
-  &-white {
-    --snackbar-color-base: var(--white);
-    --snackbar-text: var(--color-text-primary);
-    --snackbar-border: var(--color-border-base);
+  &--white {
+    --snackbar-border: var(--white);
   }
 
   @include for-each-theme-color using($color, $is-light) {
     @if $color != 'white' and $color != 'neutral' {
-      &-#{$color} { 
-        --snackbar-color-base: var(--#{$color}-500); 
+      &--#{$color} { 
+        --snackbar-border: var(--#{$color}-500); 
       }
     }
   }
 
-  &.snackbar-flat {
+  &--flat {
     box-shadow: none;
+    background-color: transparent;
     border-color: transparent;
   }
 }
@@ -120,7 +117,7 @@
   padding: 0;
   background: transparent;
   border: none;
-  border-radius: var(--radius-sm);
+  border-radius: var(--radius-full);
   color: inherit;
   opacity: 0.7;
   cursor: pointer;

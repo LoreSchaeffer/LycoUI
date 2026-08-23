@@ -6,13 +6,13 @@ export const order = 2;
 
 export const vanillaHtml = `
 <!-- Pill -->
-<span class="badge badge-primary badge-pill">Primary</span>
+<span class="badge badge--primary badge--pill">Primary</span>
 
 <!-- Dim -->
-<span class="badge badge-success badge-dim">Success</span>
+<span class="badge badge--success badge--dim">Success</span>
 
 <!-- Dim Pill -->
-<span class="badge badge-danger badge-pill badge-dim">Danger</span>
+<span class="badge badge--danger badge--pill badge--dim">Danger</span>
 `;
 
 export default function PillExample() {

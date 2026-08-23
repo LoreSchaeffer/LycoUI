@@ -2,7 +2,7 @@ import { Col, Range, Row } from '@loreschaeffer/lyco-ui';
 
 export const title = 'Custom Formatter (Time)';
 export const description = <p>Supply a custom function to format the tooltip value. In Vanilla JS, register your function in <code>window.lycoFormatters</code>.</p>;
-export const order = 2;
+export const order = 6;
 
 export const vanillaHtml = `
 <!-- To use a custom formatter in Vanilla JS: -->
@@ -21,7 +21,7 @@ export default function FormatterExample() {
 
   return (
     <Row>
-      <Col span={12}>
+      <Col span={6}>
         <Range variant="warning" min={0} max={300} defaultValue={125} tooltipFormatter={formatTime} />
       </Col>
     </Row>

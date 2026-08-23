@@ -24,5 +24,10 @@ export * from './components/Notification';
 export * from './components/Pagination';
 export * from './components/Table';
 export * from './components/DataTable';
+export * from './components/Tabs';
+export * from './components/Tooltip';
+export * from './components/Divider';
+export * from './components/Carousel';
+export * from './components/ContextMenu';
 
 export * from "./types/types";

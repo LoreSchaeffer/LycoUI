@@ -3,9 +3,9 @@
 $svg-check-white: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='20 6 9 17 4 12'%3E%3C/polyline%3E%3C/svg%3E";
 $svg-check-dark: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23020617' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='20 6 9 17 4 12'%3E%3C/polyline%3E%3C/svg%3E";
 
-.checkbox-wrapper {
+.checkbox {
   display: inline-flex;
-  align-items: center;
+  align-items: flex-start;
   gap: var(--spacing-2);
   cursor: pointer;
   position: relative;
@@ -16,95 +16,103 @@ $svg-check-dark: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' v
 
   &.is-disabled {
     cursor: not-allowed;
-    opacity: 0.6;
-  }
-}
-
-.checkbox {
-  appearance: none;
-  -webkit-appearance: none;
-  background-color: var(--color-bg-surface);
-  margin: 0.125em 0 0;
-  font: inherit;
-  color: currentColor;
-  width: 1.15em;
-  height: 1.15em;
-  border: 1px solid var(--color-border-base);
-  border-radius: var(--radius-sm);
-  display: grid;
-  place-content: center;
-  transition: all var(--duration-fast) var(--ease-default);
-  cursor: pointer;
-
-  --checkbox-icon: url("#{$svg-check-white}");
-  background-image: var(--checkbox-icon);
-  background-size: 0;
-  background-position: center;
-  background-repeat: no-repeat;
-
-  &:disabled {
-    cursor: not-allowed;
+    opacity: 0.5;
+    color: var(--color-text-muted);
   }
 
-  &:focus-visible {
+  &__input {
+    position: absolute;
+    opacity: 0;
+    width: 0;
+    height: 0;
+    margin: 0;
+  }
+
+  &__control {
+    width: var(--control-size, 1.125rem);
+    height: var(--control-size, 1.125rem);
+    flex-shrink: 0;
+    margin-top: 0.125em;
+    background-color: var(--color-void, transparent);
+    border: 1px solid var(--color-border-base);
+    border-radius: var(--radius-sm);
+    display: grid;
+    place-content: center;
+    transition: all var(--duration-fast) var(--ease-default);
+
+    --checkbox-icon: url("#{$svg-check-white}");
+    background-image: var(--checkbox-icon);
+    background-size: 0;
+    background-position: center;
+    background-repeat: no-repeat;
+  }
+
+  &:hover:not(.is-disabled) &__control {
+    border-color: var(--color-border-strong);
+  }
+
+  &__input:focus-visible + &__control {
     outline: none;
-    box-shadow: 0 0 0 2px var(--color-bg-root), 0 0 0 4px var(--checkbox-color-base, var(--color-primary));
+    box-shadow: 0 0 0 1px var(--color-void), 0 0 0 3px var(--checkbox-color-base, var(--color-primary));
   }
 
-  &:checked {
-    background-color: var(--checkbox-color-base);
-    border-color: var(--checkbox-color-base);
+  &__input:checked + &__control {
+    background-color: var(--checkbox-color-base, var(--color-primary));
+    border-color: var(--checkbox-color-base, var(--color-primary));
     background-size: 75%;
+  }
+
+  &__label {
+    user-select: none;
   }
 
   // ==========================================================================
   // SIZES
   // ==========================================================================
-  &-sm {
+  &--sm {
     font-size: var(--font-size-sm);
-    width: 1em;
-    height: 1em;
+    --control-size: 0.875rem;
   }
 
-  &-lg {
+  &--md {
+    font-size: var(--font-size-base);
+    --control-size: 1.125rem;
+  }
+
+  &--lg {
     font-size: var(--font-size-lg);
-    width: 1.25em;
-    height: 1.25em;
+    --control-size: 1.375rem;
   }
+}
 
-  // ==========================================================================
-  // SEMANTIC COLOR MAPPINGS
-  // ==========================================================================
-  &-primary {
-    --checkbox-color-base: var(--color-primary);
-  }
+// ==========================================================================
+// SEMANTIC COLOR MAPPINGS (Extracted to avoid BEM nesting bugs)
+// ==========================================================================
+.checkbox--primary { --checkbox-color-base: var(--color-primary); }
+.checkbox--success {
+  --checkbox-color-base: var(--color-success);
+  --checkbox-icon: url("#{$svg-check-dark}");
+}
+.checkbox--warning {
+  --checkbox-color-base: var(--color-warning);
+  --checkbox-icon: url("#{$svg-check-dark}");
+}
+.checkbox--danger { --checkbox-color-base: var(--color-danger); }
+.checkbox--info {
+  --checkbox-color-base: var(--color-info);
+  --checkbox-icon: url("#{$svg-check-dark}");
+}
 
-  &-success {
-    --checkbox-color-base: var(--color-success);
-    --checkbox-icon: url("#{$svg-check-dark}");
-  }
-
-  &-warning {
-    --checkbox-color-base: var(--color-warning);
-    --checkbox-icon: url("#{$svg-check-dark}");
-  }
-
-  &-danger {
-    --checkbox-color-base: var(--color-danger);
-  }
-
-  &-info {
-    --checkbox-color-base: var(--color-info);
-    --checkbox-icon: url("#{$svg-check-dark}");
-  }
-
-  // ==========================================================================
-  // PALETTE COLOR MAPPINGS
-  // ==========================================================================
+// ==========================================================================
+// PALETTE COLOR MAPPINGS
+// ==========================================================================
+.checkbox- {
   @include for-each-theme-color using($color, $is-light) {
-    --checkbox-color-base: var(--#{$color});
+    --checkbox-color-base: var(--#{$color}-500);
     @if $is-light {
       --checkbox-icon: url("#{$svg-check-dark}");
+    } @else {
+      --checkbox-icon: url("#{$svg-check-white}");
     }
   }
 }
