@@ -1,0 +1,59 @@
+@use "../../styles/mixins/theme-variants" as *;
+
+.tooltip-wrapper {
+  position: relative;
+  display: inline-block; 
+}
+
+.tooltip__content {
+  position: absolute; // It's attached to body, absolute to the page
+  z-index: var(--z-index-tooltip, 1000);
+  background-color: var(--color-obsidian, var(--color-carbon, #1a1a1a));
+  color: var(--color-text-primary, #ffffff);
+  font-size: var(--font-size-xs);
+  font-family: var(--font-family-base);
+  font-weight: var(--font-weight-medium);
+  padding: var(--spacing-2) var(--spacing-3);
+  border: 1px solid var(--color-border-subtle);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-lg);
+  white-space: nowrap;
+  pointer-events: none; 
+
+  &--top {
+    animation: tooltipSlideUp var(--duration-fast) var(--ease-out);
+  }
+
+  &--bottom {
+    animation: tooltipSlideDown var(--duration-fast) var(--ease-out);
+  }
+
+  &--left {
+    animation: tooltipSlideLeft var(--duration-fast) var(--ease-out);
+  }
+
+  &--right {
+    animation: tooltipSlideRight var(--duration-fast) var(--ease-out);
+  }
+}
+
+// Since top/left are fully calculated in JS, we just animate opacity and a small translation offset
+@keyframes tooltipSlideUp {
+  from { opacity: 0; transform: translateY(4px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes tooltipSlideDown {
+  from { opacity: 0; transform: translateY(-4px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes tooltipSlideLeft {
+  from { opacity: 0; transform: translateX(4px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes tooltipSlideRight {
+  from { opacity: 0; transform: translateX(-4px); }
+  to { opacity: 1; transform: translateX(0); }
+}
