@@ -14,8 +14,6 @@ export const vanillaHtml = `
 </script>
 `;
 
-const positions: NotificationPosition[] = ['bottom-right', 'bottom-left', 'top-right', 'top-left'];
-
 function PositionButton({ position }: { position: NotificationPosition }) {
     const { showNotification } = useNotification();
     const label = position.replace('-', ' ');

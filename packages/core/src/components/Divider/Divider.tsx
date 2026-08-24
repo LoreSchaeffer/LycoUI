@@ -43,7 +43,7 @@ export const Divider = memo(forwardRef<HTMLHRElement | HTMLDivElement, DividerPr
     
     return (
         <Component
-            ref={ref as any}
+            ref={ref as React.Ref<HTMLHRElement & HTMLDivElement>}
             role="separator"
             aria-orientation={orientation}
             className={clsx(

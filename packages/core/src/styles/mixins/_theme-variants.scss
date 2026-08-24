@@ -1,7 +1,7 @@
 @use "sass:list";
 
-$lyco-all-colors: 'red', 'orange', 'amber', 'yellow', 'lime', 'green', 'teal', 'cyan', 'blue', 'indigo', 'purple', 'fuchsia', 'pink', 'neutral', 'white';
-$lyco-light-colors: 'orange', 'amber', 'yellow', 'lime', 'green', 'teal', 'cyan', 'white';
+$lyco-all-colors: 'red', 'orange', 'amber', 'yellow', 'lime', 'green', 'teal', 'cyan', 'blue', 'indigo', 'purple', 'fuchsia', 'pink';
+$lyco-light-colors: 'orange', 'amber', 'yellow', 'lime', 'green', 'teal', 'cyan';
 
 @mixin for-each-theme-color {
   @each $color in $lyco-all-colors {

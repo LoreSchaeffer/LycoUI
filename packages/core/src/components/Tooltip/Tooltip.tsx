@@ -1,5 +1,6 @@
 import './Tooltip.scss';
-import React, { forwardRef, useState, useRef, ReactElement, useEffect, useLayoutEffect, useCallback } from 'react';
+import React, { forwardRef, useState, useRef, useEffect, useLayoutEffect, useCallback } from 'react';
+import type { ReactElement } from 'react';
 import { createPortal } from 'react-dom';
 import clsx from 'clsx';
 
@@ -31,13 +32,11 @@ export const Tooltip = forwardRef<HTMLDivElement, TooltipProps>((
     const triggerRect = triggerRef.current.getBoundingClientRect();
     const tooltipRect = tooltipRef.current.getBoundingClientRect();
     
-    // Viewport dimensions
     const vWidth = window.innerWidth;
     const vHeight = window.innerHeight;
 
     let targetPosition = position;
     
-    // Smart Positioning / Collision Detection (Auto-flip)
     if (position === 'top' && triggerRect.top - tooltipRect.height - offset < 0) {
       targetPosition = 'bottom';
     } else if (position === 'bottom' && triggerRect.bottom + tooltipRect.height + offset > vHeight) {
@@ -75,22 +74,18 @@ export const Tooltip = forwardRef<HTMLDivElement, TooltipProps>((
         break;
     }
     
-    // Additional boundary enforcement so it doesn't bleed horizontally off-screen
     if (left < 0) left = offset;
     if (left + tooltipRect.width > vWidth) left = vWidth - tooltipRect.width - offset;
 
     setCoords({ top, left });
   }, [isVisible, position, offset]);
 
-  // Use layout effect to calculate position synchronously before paint
   useLayoutEffect(() => {
     updatePosition();
   }, [updatePosition]);
 
-  // Handle scroll and resize globally
   useEffect(() => {
     if (isVisible) {
-      // true for capturing phase to catch scroll events on any internal container
       window.addEventListener('scroll', updatePosition, true); 
       window.addEventListener('resize', updatePosition);
       return () => {
@@ -115,10 +110,9 @@ export const Tooltip = forwardRef<HTMLDivElement, TooltipProps>((
       {isVisible && typeof document !== 'undefined' && createPortal(
         <div
           ref={(node) => {
-            // Forward ref and local ref
-            (tooltipRef as any).current = node;
+            (tooltipRef as React.MutableRefObject<HTMLDivElement | null>).current = node;
             if (typeof ref === 'function') ref(node);
-            else if (ref) (ref as any).current = node;
+            else if (ref) (ref as React.MutableRefObject<HTMLDivElement | null>).current = node;
           }}
           role="tooltip"
           className={clsx('tooltip__content', `tooltip__content--${actualPosition}`, className)}

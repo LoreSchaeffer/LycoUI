@@ -2,6 +2,9 @@ import React, { useEffect, useRef, useCallback } from 'react';
 import { createPortal } from 'react-dom';
 import './Modal.scss';
 
+/**
+ * Props for the Modal component.
+ */
 export interface ModalProps {
     /** Whether the modal is open */
     isOpen: boolean;
@@ -18,7 +21,7 @@ export interface ModalProps {
     id?: string;
 }
 
-export const ModalBase = React.forwardRef<HTMLDivElement, ModalProps>(({
+export const ModalBase = React.forwardRef<HTMLDialogElement, ModalProps>(({
     isOpen,
     onClose,
     size = 'md',
@@ -36,7 +39,6 @@ export const ModalBase = React.forwardRef<HTMLDivElement, ModalProps>(({
             onClose();
         }
         
-        // Focus trap
         if (e.key === 'Tab' && dialogRef.current) {
             const focusableElements = dialogRef.current.querySelectorAll(
                 'a[href], button:not([disabled]), textarea:not([disabled]), input[type="text"]:not([disabled]), input[type="radio"]:not([disabled]), input[type="checkbox"]:not([disabled]), select:not([disabled]), [tabindex]:not([tabindex="-1"])'
@@ -67,7 +69,6 @@ export const ModalBase = React.forwardRef<HTMLDivElement, ModalProps>(({
             document.addEventListener('keydown', handleKeyDown);
             document.body.classList.add('modal-open');
             
-            // Wait for next tick to ensure modal is rendered
             setTimeout(() => {
                 if (dialogRef.current) {
                     const focusableElements = dialogRef.current.querySelectorAll(
@@ -96,16 +97,16 @@ export const ModalBase = React.forwardRef<HTMLDivElement, ModalProps>(({
         };
     }, [isOpen, handleKeyDown]);
 
-    const handleBackdropClick = (e: React.MouseEvent<HTMLDivElement>) => {
+    const handleBackdropClick = React.useCallback((e: React.MouseEvent<HTMLDialogElement>) => {
         if (e.target === e.currentTarget) {
             onClose();
         }
-    };
+    }, [onClose]);
 
     if (!isOpen) return null;
 
     const modalContent = (
-        <div 
+        <dialog 
             className={`modal ${className}`}
             id={id}
             role="dialog"
@@ -123,59 +124,66 @@ export const ModalBase = React.forwardRef<HTMLDivElement, ModalProps>(({
                     {children}
                 </div>
             </div>
-        </div>
+        </dialog>
     );
 
     return typeof document !== 'undefined' ? createPortal(modalContent, document.body) : null;
 });
 ModalBase.displayName = 'Modal';
 
-export interface ModalHeaderProps {
+export interface ModalHeaderProps extends React.HTMLAttributes<HTMLDivElement> {
     children: React.ReactNode;
-    className?: string;
 }
 
-export const ModalHeader: React.FC<ModalHeaderProps> = ({ children, className = '' }) => (
-    <div className={`modal__header ${className}`}>
-        {children}
-    </div>
+export const ModalHeader = React.forwardRef<HTMLDivElement, ModalHeaderProps>(
+    ({ children, className = '', ...props }, ref) => (
+        <div ref={ref} className={`modal__header ${className}`} {...props}>
+            {children}
+        </div>
+    )
 );
+ModalHeader.displayName = 'ModalHeader';
 
-export interface ModalTitleProps {
+export interface ModalTitleProps extends React.HTMLAttributes<HTMLHeadingElement> {
     children: React.ReactNode;
-    className?: string;
     as?: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6';
 }
 
-export const ModalTitle: React.FC<ModalTitleProps> = ({ children, className = '', as: Component = 'h3' }) => (
-    <Component className={`modal__title ${className}`}>
-        {children}
-    </Component>
+export const ModalTitle = React.forwardRef<HTMLHeadingElement, ModalTitleProps>(
+    ({ children, className = '', as: Component = 'h3', ...props }, ref) => (
+        <Component ref={ref} className={`modal__title ${className}`} {...props}>
+            {children}
+        </Component>
+    )
 );
+ModalTitle.displayName = 'ModalTitle';
 
-export interface ModalBodyProps {
+export interface ModalBodyProps extends React.HTMLAttributes<HTMLDivElement> {
     children: React.ReactNode;
-    className?: string;
 }
 
-export const ModalBody: React.FC<ModalBodyProps> = ({ children, className = '' }) => (
-    <div className={`modal__body ${className}`}>
-        {children}
-    </div>
+export const ModalBody = React.forwardRef<HTMLDivElement, ModalBodyProps>(
+    ({ children, className = '', ...props }, ref) => (
+        <div ref={ref} className={`modal__body ${className}`} {...props}>
+            {children}
+        </div>
+    )
 );
+ModalBody.displayName = 'ModalBody';
 
-export interface ModalFooterProps {
+export interface ModalFooterProps extends React.HTMLAttributes<HTMLDivElement> {
     children: React.ReactNode;
-    className?: string;
 }
 
-export const ModalFooter: React.FC<ModalFooterProps> = ({ children, className = '' }) => (
-    <div className={`modal__footer ${className}`}>
-        {children}
-    </div>
+export const ModalFooter = React.forwardRef<HTMLDivElement, ModalFooterProps>(
+    ({ children, className = '', ...props }, ref) => (
+        <div ref={ref} className={`modal__footer ${className}`} {...props}>
+            {children}
+        </div>
+    )
 );
+ModalFooter.displayName = 'ModalFooter';
 
-// Compound components assignments
 const ModalCompound = Object.assign(ModalBase, {
   Header: ModalHeader,
   Title: ModalTitle,

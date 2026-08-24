@@ -37,7 +37,6 @@ class LycoAlertController {
     }
 
     private startTimer(durationSeconds: number): void {
-        // If the HTML doesn't have the progress bar, inject it automatically for vanilla users
         let progress = this.element.querySelector<HTMLDivElement>('.alert__progress');
         if (!progress) {
             progress = document.createElement('div');
@@ -63,7 +62,6 @@ class LycoAlertController {
 
     public close(): void {
         this.destroy();
-        // Remove from DOM safely
         this.element.remove();
     }
 }

@@ -10,34 +10,46 @@ export const order = 2;
 
 export const vanillaHtml = `
 <!-- Bordered Table -->
-<table class="table table-bordered mb-4">
-    <thead>
-        <tr><th>#</th><th>First Name</th><th>Last Name</th></tr>
-    </thead>
-    <tbody>
-        <tr><td>1</td><td>Mark</td><td>Otto</td></tr>
-    </tbody>
-</table>
+<div class="table-wrapper">
+  <div class="table-responsive">
+    <table class="table table-bordered mb-4">
+        <thead>
+            <tr><th scope="col">#</th><th scope="col">First Name</th><th scope="col">Last Name</th></tr>
+        </thead>
+        <tbody>
+            <tr><td>1</td><td>Mark</td><td>Otto</td></tr>
+        </tbody>
+    </table>
+  </div>
+</div>
 
 <!-- Borderless Table -->
-<table class="table table-borderless mb-4">
-    <thead>
-        <tr><th>#</th><th>First Name</th><th>Last Name</th></tr>
-    </thead>
-    <tbody>
-        <tr><td>1</td><td>Mark</td><td>Otto</td></tr>
-    </tbody>
-</table>
+<div class="table-wrapper">
+  <div class="table-responsive">
+    <table class="table table-borderless mb-4">
+        <thead>
+            <tr><th scope="col">#</th><th scope="col">First Name</th><th scope="col">Last Name</th></tr>
+        </thead>
+        <tbody>
+            <tr><td>1</td><td>Mark</td><td>Otto</td></tr>
+        </tbody>
+    </table>
+  </div>
+</div>
 
 <!-- Small Table -->
-<table class="table table-sm">
-    <thead>
-        <tr><th>#</th><th>First Name</th><th>Last Name</th></tr>
-    </thead>
-    <tbody>
-        <tr><td>1</td><td>Mark</td><td>Otto</td></tr>
-    </tbody>
-</table>
+<div class="table-wrapper">
+  <div class="table-responsive">
+    <table class="table table-sm">
+        <thead>
+            <tr><th scope="col">#</th><th scope="col">First Name</th><th scope="col">Last Name</th></tr>
+        </thead>
+        <tbody>
+            <tr><td>1</td><td>Mark</td><td>Otto</td></tr>
+        </tbody>
+    </table>
+  </div>
+</div>
 `;
 
 export default function VariantsExample() {

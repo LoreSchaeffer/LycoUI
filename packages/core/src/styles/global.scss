@@ -219,39 +219,53 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 h1 { 
-  font-size: var(--text-display); 
-  line-height: var(--leading-display); 
-  letter-spacing: var(--tracking-display); 
-}
-
-h2 { 
-  font-size: var(--text-heading-lg); 
-  line-height: var(--leading-heading-lg); 
-  letter-spacing: var(--tracking-heading-lg); 
-}
-
-h3 { 
   font-size: var(--text-heading); 
   line-height: var(--leading-heading); 
   letter-spacing: var(--tracking-heading); 
 }
 
-h4 { 
+h2 { 
   font-size: var(--text-heading-sm); 
   line-height: var(--leading-heading-sm); 
   letter-spacing: var(--tracking-heading-sm); 
 }
 
-h5 { 
+h3 { 
   font-size: var(--text-subheading); 
   line-height: var(--leading-subheading); 
   letter-spacing: var(--tracking-subheading); 
 }
 
-h6 { 
+h4 { 
   font-size: var(--text-body-lg); 
   line-height: var(--leading-body-lg); 
   letter-spacing: var(--tracking-body-lg); 
+}
+
+h5 { 
+  font-size: var(--text-body-sm); 
+  line-height: var(--leading-body-sm); 
+  letter-spacing: var(--tracking-body-sm); 
+}
+
+h6 { 
+  font-size: var(--text-caption); 
+  line-height: var(--leading-caption); 
+  letter-spacing: var(--tracking-caption); 
+  text-transform: uppercase;
+}
+
+// TYPOGRAPHY UTILITIES
+.text-display {
+  font-size: var(--text-display);
+  line-height: var(--leading-display);
+  letter-spacing: var(--tracking-display);
+}
+
+.text-heading-lg {
+  font-size: var(--text-heading-lg);
+  line-height: var(--leading-heading-lg);
+  letter-spacing: var(--tracking-heading-lg);
 }
 
 p {
@@ -307,25 +321,37 @@ pre {
 // ==========================================================================
 // UTILITIES
 // ==========================================================================
-@layer utilities {
-  .hidden { display: none; }
-  .text-center { text-align: center; }
-  .text-primary { color: var(--color-text-primary); }
-  .text-secondary { color: var(--color-text-secondary); }
-  .text-muted { color: var(--color-text-muted); }
+.hidden { display: none; }
+.text-center { text-align: center; }
+.text-primary { color: var(--color-text-primary); }
+.text-secondary { color: var(--color-text-secondary); }
+.text-muted { color: var(--color-text-muted); }
 
-  // Spacing Utilities
-  .mb-0 { margin-bottom: 0; }
-  .mb-2 { margin-bottom: var(--spacing-2); }
-  .mb-4 { margin-bottom: var(--spacing-4); }
-  .mb-6 { margin-bottom: var(--spacing-6); }
-  .mb-8 { margin-bottom: var(--spacing-8); }
-  .mb-10 { margin-bottom: var(--spacing-10); }
+.mt-1 { margin-top: var(--spacing-1); }
+.mt-2 { margin-top: var(--spacing-2); }
+.mt-3 { margin-top: var(--spacing-3); }
+.mt-4 { margin-top: var(--spacing-4); }
+.mt-5 { margin-top: var(--spacing-5); }
+.mt-6 { margin-top: var(--spacing-6); }
+.mt-7 { margin-top: var(--spacing-7); }
+.mt-8 { margin-top: var(--spacing-8); }
+.mt-9 { margin-top: var(--spacing-9); }
+.mt-10 { margin-top: var(--spacing-10); }
+.mt-11 { margin-top: var(--spacing-11); }
+.mt-12 { margin-top: var(--spacing-12); }
 
-  .mt-0 { margin-top: 0; }
-  .mt-4 { margin-top: var(--spacing-4); }
-  .mt-8 { margin-top: var(--spacing-8); }
-}
+.mb-1 { margin-bottom: var(--spacing-1); }
+.mb-2 { margin-bottom: var(--spacing-2); }
+.mb-3 { margin-bottom: var(--spacing-3); }
+.mb-4 { margin-bottom: var(--spacing-4); }
+.mb-5 { margin-bottom: var(--spacing-5); }
+.mb-6 { margin-bottom: var(--spacing-6); }
+.mb-7 { margin-bottom: var(--spacing-7); }
+.mb-8 { margin-bottom: var(--spacing-8); }
+.mb-9 { margin-bottom: var(--spacing-9); }
+.mb-10 { margin-bottom: var(--spacing-10); }
+.mb-11 { margin-bottom: var(--spacing-11); }
+.mb-12 { margin-bottom: var(--spacing-12); }
 
 // ==========================================================================
 // SCROLLBAR STYLES

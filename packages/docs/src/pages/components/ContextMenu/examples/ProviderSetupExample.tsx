@@ -1,4 +1,3 @@
-import { ContextMenuProvider } from '@loreschaeffer/lyco-ui';
 
 export const title = 'Provider Setup';
 export const description = <p>To use the global Context Menu system, you must wrap your application (or the specific subtree where you want menus to work) in the <code>&lt;ContextMenuProvider&gt;</code>. This handles the rendering Portal and global escape/click-away events.</p>;

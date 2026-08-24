@@ -5,7 +5,7 @@ import type {IconType} from "react-icons";
 export interface DocNavigationItem {
     name: string;
     path: string;
-    component: LazyExoticComponent<ComponentType<any>>;
+    component: LazyExoticComponent<ComponentType<Record<string, unknown>>>;
     subItems?: { name: string; hash: string }[];
 }
 
@@ -18,7 +18,7 @@ export interface DocNavigationCategory {
 
 type ReactComponent = ComponentType<Record<string, unknown>>;
 
-const componentModules = import.meta.glob('../pages/components/**/*Doc.tsx');
+const componentModules = import.meta.glob<{ default: ReactComponent }>('../pages/components/**/*Doc.tsx');
 
 const excludedComponents = ['Grid'];
 
@@ -33,7 +33,7 @@ const generateComponentRoutes = (): DocNavigationItem[] => {
                 items.push({
                     name,
                     path: `/docs/components/${name.toLocaleLowerCase()}`,
-                    component: lazy(componentModules[path] as () => Promise<{ default: ReactComponent }>)
+                    component: lazy(componentModules[path])
                 });
             }
         }

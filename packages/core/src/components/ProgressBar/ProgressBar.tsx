@@ -41,7 +41,7 @@ export const ProgressBar = forwardRef<HTMLDivElement, ProgressBarProps>(
       >
         <div 
           className="progress__bar" 
-          style={{ width: `${percent}%` }}
+          style={{ transform: `scaleX(${percent / 100})` }}
         />
       </div>
     );

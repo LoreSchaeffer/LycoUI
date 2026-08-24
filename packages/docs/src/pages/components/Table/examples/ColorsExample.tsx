@@ -9,47 +9,51 @@ export const description = (
 export const order = 3;
 
 export const vanillaHtml = `
-<table class="table">
-    <thead>
-        <tr>
-            <th>Class</th>
-            <th>Heading</th>
-            <th>Heading</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr class="table-primary">
-            <td>Primary</td>
-            <td>Cell</td>
-            <td>Cell</td>
-        </tr>
-        <tr class="table-success">
-            <td>Success</td>
-            <td>Cell</td>
-            <td>Cell</td>
-        </tr>
-        <tr class="table-danger">
-            <td>Danger</td>
-            <td>Cell</td>
-            <td>Cell</td>
-        </tr>
-        <tr class="table-warning">
-            <td>Warning</td>
-            <td>Cell</td>
-            <td>Cell</td>
-        </tr>
-        <tr class="table-info">
-            <td>Info</td>
-            <td>Cell</td>
-            <td>Cell</td>
-        </tr>
-        <tr>
-            <td>Mixed</td>
-            <td class="table-success">Success Cell</td>
-            <td class="table-danger">Danger Cell</td>
-        </tr>
-    </tbody>
-</table>
+<div class="table-wrapper">
+  <div class="table-responsive">
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">Class</th>
+                <th scope="col">Heading</th>
+                <th scope="col">Heading</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr class="table-primary">
+                <td>Primary</td>
+                <td>Cell</td>
+                <td>Cell</td>
+            </tr>
+            <tr class="table-success">
+                <td>Success</td>
+                <td>Cell</td>
+                <td>Cell</td>
+            </tr>
+            <tr class="table-danger">
+                <td>Danger</td>
+                <td>Cell</td>
+                <td>Cell</td>
+            </tr>
+            <tr class="table-warning">
+                <td>Warning</td>
+                <td>Cell</td>
+                <td>Cell</td>
+            </tr>
+            <tr class="table-info">
+                <td>Info</td>
+                <td>Cell</td>
+                <td>Cell</td>
+            </tr>
+            <tr>
+                <td>Mixed</td>
+                <td class="table-success">Success Cell</td>
+                <td class="table-danger">Danger Cell</td>
+            </tr>
+        </tbody>
+    </table>
+  </div>
+</div>
 `;
 
 export default function ColorsExample() {

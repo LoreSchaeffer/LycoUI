@@ -1,7 +1,17 @@
 import './Table.scss';
-import { forwardRef, type HTMLAttributes, type TdHTMLAttributes } from 'react';
+import {
+    createElement,
+    forwardRef,
+    memo,
+    type HTMLAttributes,
+    type TdHTMLAttributes,
+} from 'react';
 import clsx from 'clsx';
 import type { FullVariant } from '../../types/types.ts';
+
+// ---------------------------------------------------------------------------
+// Table
+// ---------------------------------------------------------------------------
 
 export interface TableProps extends HTMLAttributes<HTMLTableElement> {
     /** Contextual variant color for the entire table */
@@ -41,48 +51,60 @@ export const Table = forwardRef<HTMLTableElement, TableProps>((
         className
     );
 
-    const table = <table ref={ref} className={tableClasses} {...props} />;
-
     return (
-        <div className="table-container">
-            {table}
+        <div className="table-wrapper">
+            <div className="table-responsive">
+                <table ref={ref} className={tableClasses} {...props} />
+            </div>
         </div>
     );
 });
 
 Table.displayName = 'Table';
 
-// --- TableHead ---
-export const TableHead = forwardRef<HTMLTableSectionElement, HTMLAttributes<HTMLTableSectionElement>>((
+// ---------------------------------------------------------------------------
+// TableHead
+// ---------------------------------------------------------------------------
+
+export const TableHead = memo(forwardRef<HTMLTableSectionElement, HTMLAttributes<HTMLTableSectionElement>>((
     { className, ...props }, ref
 ) => (
     <thead ref={ref} className={className} {...props} />
-));
+)));
 TableHead.displayName = 'TableHead';
 
-// --- TableBody ---
-export const TableBody = forwardRef<HTMLTableSectionElement, HTMLAttributes<HTMLTableSectionElement>>((
+// ---------------------------------------------------------------------------
+// TableBody
+// ---------------------------------------------------------------------------
+
+export const TableBody = memo(forwardRef<HTMLTableSectionElement, HTMLAttributes<HTMLTableSectionElement>>((
     { className, ...props }, ref
 ) => (
     <tbody ref={ref} className={className} {...props} />
-));
+)));
 TableBody.displayName = 'TableBody';
 
-// --- TableFoot ---
-export const TableFoot = forwardRef<HTMLTableSectionElement, HTMLAttributes<HTMLTableSectionElement>>((
+// ---------------------------------------------------------------------------
+// TableFoot
+// ---------------------------------------------------------------------------
+
+export const TableFoot = memo(forwardRef<HTMLTableSectionElement, HTMLAttributes<HTMLTableSectionElement>>((
     { className, ...props }, ref
 ) => (
     <tfoot ref={ref} className={className} {...props} />
-));
+)));
 TableFoot.displayName = 'TableFoot';
 
-// --- TableRow ---
+// ---------------------------------------------------------------------------
+// TableRow
+// ---------------------------------------------------------------------------
+
 export interface TableRowProps extends HTMLAttributes<HTMLTableRowElement> {
     /** Contextual variant color for the row */
     variant?: FullVariant;
 }
 
-export const TableRow = forwardRef<HTMLTableRowElement, TableRowProps>((
+export const TableRow = memo(forwardRef<HTMLTableRowElement, TableRowProps>((
     { variant, className, ...props }, ref
 ) => (
     <tr
@@ -90,10 +112,13 @@ export const TableRow = forwardRef<HTMLTableRowElement, TableRowProps>((
         className={clsx(variant && `table-${variant}`, className)}
         {...props}
     />
-));
+)));
 TableRow.displayName = 'TableRow';
 
-// --- TableCell ---
+// ---------------------------------------------------------------------------
+// TableCell
+// ---------------------------------------------------------------------------
+
 export interface TableCellProps extends TdHTMLAttributes<HTMLTableCellElement> {
     /** Contextual variant color for the cell */
     variant?: FullVariant;
@@ -101,18 +126,23 @@ export interface TableCellProps extends TdHTMLAttributes<HTMLTableCellElement> {
     isHeader?: boolean;
     /** Explicitly set the HTML element */
     as?: 'td' | 'th';
+    /** Scope attribute for header cells (e.g. "col", "row"). Auto-set to "col" when isHeader is true. */
+    scope?: string;
 }
 
-export const TableCell = forwardRef<HTMLTableCellElement, TableCellProps>((
-    { variant, isHeader, as: Component = isHeader ? 'th' : 'td', className, ...props }, ref
+export const TableCell = memo(forwardRef<HTMLTableCellElement, TableCellProps>((
+    { variant, isHeader, as: tag, scope, className, ...props }, ref
 ) => {
-    // @ts-ignore
-    return (
-        <Component
-            ref={ref}
-            className={clsx(variant && `table-${variant}`, className)}
-            {...props}
-        />
-    );
-});
+    const element = tag ?? (isHeader ? 'th' : 'td');
+
+    // Auto-apply scope="col" when rendering as a header and no explicit scope is provided
+    const resolvedScope = scope ?? (element === 'th' ? 'col' : undefined);
+
+    return createElement(element, {
+        ref,
+        scope: resolvedScope,
+        className: clsx(variant && `table-${variant}`, className),
+        ...props,
+    });
+}));
 TableCell.displayName = 'TableCell';

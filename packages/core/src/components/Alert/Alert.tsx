@@ -1,5 +1,5 @@
 import './Alert.scss';
-import React, { forwardRef, useEffect, useState, useRef } from 'react';
+import React, { forwardRef, useState, useEffect, useRef, useCallback } from 'react';
 import clsx from 'clsx';
 import type { FullVariant } from '../../types/types';
 
@@ -41,11 +41,11 @@ export const Alert = forwardRef<HTMLDivElement, AlertProps>((
     };
   }, [duration, onClose]);
 
-  const handleClose = () => {
+  const handleClose = useCallback(() => {
     if (timerRef.current) clearTimeout(timerRef.current);
     setIsVisible(false);
     onClose?.();
-  };
+  }, [onClose]);
 
   if (!isVisible) return null;
 

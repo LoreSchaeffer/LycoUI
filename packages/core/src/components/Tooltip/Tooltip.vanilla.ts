@@ -58,7 +58,6 @@ export class TooltipController {
 
     let targetPosition = this.position;
 
-    // Collision Detection (auto-flip)
     if (this.position === 'top' && rect.top - tooltipRect.height - offset < 0) {
       targetPosition = 'bottom';
     } else if (this.position === 'bottom' && rect.bottom + tooltipRect.height + offset > vHeight) {
@@ -69,7 +68,6 @@ export class TooltipController {
       targetPosition = 'left';
     }
 
-    // Update class for correct animation direction
     this.tooltipEl.className = `tooltip__content tooltip__content--${targetPosition}`;
 
     const scrollY = window.scrollY || window.pageYOffset;
@@ -97,12 +95,11 @@ export class TooltipController {
         break;
     }
 
-    // Horizontal boundary enforcement
     if (left < 0) left = offset;
     if (left + tooltipRect.width > vWidth) left = vWidth - tooltipRect.width - offset;
 
-    this.tooltipEl.style.top = \`\${top}px\`;
-    this.tooltipEl.style.left = \`\${left}px\`;
+    this.tooltipEl.style.top = `${top}px`;
+    this.tooltipEl.style.left = `${left}px`;
     this.tooltipEl.style.bottom = 'auto';
     this.tooltipEl.style.right = 'auto';
   }
@@ -126,9 +123,8 @@ export class TooltipController {
   }
 }
 
-// Auto-initialization
 export const initTooltips = () => {
-  const elements = document.querySelectorAll('[data-lyco-tooltip]');
+  const elements = document.querySelectorAll('[data-lyco-tooltip]:not([data-lyco-initialized])');
   elements.forEach(element => {
     new TooltipController(element as HTMLElement);
   });

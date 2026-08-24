@@ -4,20 +4,38 @@ import clsx from 'clsx';
 import type {Alignment, FullVariant, SizeVariant} from '../../types/types';
 import {Spinner, type SpinnerType} from '../Spinner';
 
+/**
+ * Props for the Button component.
+ */
 export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
+    /** The content of the button. */
     children?: ReactNode;
+    /** The semantic color variant of the button. Default is 'primary'. */
     variant?: FullVariant;
+    /** The size of the button (sm, md, lg). Default is 'md'. */
     size?: SizeVariant;
+    /** Text alignment inside the button. Default is 'center'. */
     align?: Alignment;
+    /** If true, renders an outlined button instead of a solid filled one. */
     outlined?: boolean;
+    /** If true, renders a borderless transparent ghost button. */
     ghost?: boolean;
+    /** If true, renders the button with fully rounded pill-shaped corners. */
     rounded?: boolean;
+    /** If true, disables hover and active state styles, making the button static. */
     static?: boolean;
+    /** If true, shows a loading spinner and disables the button. */
     isLoading?: boolean;
+    /** An icon element to display in the button. Overrides children if children is empty. */
     icon?: ReactNode;
+    /** An icon element to display at the start (left) of the text. */
     iconStart?: ReactNode;
+    /** An icon element to display at the end (right) of the text. */
     iconEnd?: ReactNode;
+    /** The visual style of the loading spinner. */
     spinnerType?: SpinnerType;
+    /** If true, renders the button without elevation/shadow. */
+    flat?: boolean;
 }
 
 export const Button = forwardRef<HTMLButtonElement, ButtonProps>((

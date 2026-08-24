@@ -47,14 +47,13 @@ class LycoSnackbarManager {
         const id = `snackbar-${++this.snackbarCount}`;
         
         const snackbar = document.createElement('div');
-        snackbar.className = `snackbar snackbar-${options.variant || 'neutral'}`;
-        if (options.closable) snackbar.classList.add('snackbar-closable');
+        snackbar.className = `snackbar snackbar--${options.variant || 'neutral'}`;
+        if (options.closable) snackbar.classList.add('snackbar--closable');
         if (options.icon) snackbar.classList.add('has-icon');
-        if (options.isFlat) snackbar.classList.add('snackbar-flat');
+        if (options.isFlat) snackbar.classList.add('snackbar--flat');
         snackbar.setAttribute('role', 'status');
         snackbar.id = id;
 
-        // Add Icon
         if (options.icon) {
             const iconSpan = document.createElement('span');
             iconSpan.className = 'snackbar__icon';
@@ -71,7 +70,6 @@ class LycoSnackbarManager {
             snackbar.appendChild(iconSpan);
         }
 
-        // Add Content
         const contentDiv = document.createElement('div');
         contentDiv.className = 'snackbar__content';
         if (typeof options.message === 'string') {
@@ -81,7 +79,6 @@ class LycoSnackbarManager {
         }
         snackbar.appendChild(contentDiv);
 
-        // Add Close Button
         let closeBtn: HTMLButtonElement | null = null;
         let timerId: number | undefined;
 
@@ -116,7 +113,6 @@ class LycoSnackbarManager {
 
         stack.appendChild(snackbar);
 
-        // Setup duration timer
         const durationType = options.duration || 'short';
         const durationMs = typeof durationType === 'number' ? durationType * 1000 : (DURATION_MAP[durationType] || DURATION_MAP.short);
 

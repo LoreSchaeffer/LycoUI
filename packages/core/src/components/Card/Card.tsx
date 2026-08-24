@@ -14,6 +14,7 @@ export interface CardProps extends HTMLAttributes<HTMLDivElement> {
     isFlat?: boolean;
     padding?: CardPadding;
     interactive?: boolean;
+    flat?: boolean;
 }
 
 const CardRoot = forwardRef<HTMLDivElement, CardProps>((
@@ -25,6 +26,7 @@ const CardRoot = forwardRef<HTMLDivElement, CardProps>((
         isFlat = false,
         padding = 'none',
         interactive = false,
+        flat = false,
         className,
         ...props
     }, ref) => {
@@ -44,7 +46,7 @@ const CardRoot = forwardRef<HTMLDivElement, CardProps>((
                     `card--${variant}`,
                     isDim ? 'card--dim' : 'card--solid'
                 ],
-                isFlat && 'card--flat',
+                (isFlat || flat) && 'card--flat',
                 className
             )}
             {...props}

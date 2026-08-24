@@ -1,10 +1,10 @@
 import React, { useLayoutEffect, useRef, useState } from 'react';
-import clsx from 'clsx';
+import { useKeyboardNav } from '../../hooks/useKeyboardNav';
 import type { ContextMenuItemDef } from './ContextMenuContext';
 import { ContextMenuItem } from './ContextMenuItem';
 import './ContextMenu.scss';
 
-export interface ContextMenuProps {
+export interface ContextMenuProps extends React.HTMLAttributes<HTMLUListElement> {
     items: ContextMenuItemDef[];
     x: number | string;
     y: number | string;
@@ -12,38 +12,35 @@ export interface ContextMenuProps {
     isRoot?: boolean;
 }
 
-export const ContextMenu: React.FC<ContextMenuProps> = ({ items, x, y, onClose, isRoot = false }) => {
-    const menuRef = useRef<HTMLUListElement>(null);
+export const ContextMenu = React.forwardRef<HTMLUListElement, ContextMenuProps>(
+    ({ items, x, y, onClose, isRoot = false, ...props }, ref) => {
+    const internalRef = useRef<HTMLUListElement>(null);
     const [position, setPosition] = useState<{ top: number | string, left: number | string, right?: number | string }>({ top: y, left: x });
     const [opacity, setOpacity] = useState(0); 
 
     useLayoutEffect(() => {
-        if (!menuRef.current) return;
+        if (!internalRef.current) return;
         
-        const rect = menuRef.current.getBoundingClientRect();
+        const rect = internalRef.current.getBoundingClientRect();
         
         if (isRoot) {
             let newLeft = typeof x === 'number' ? x : 0;
             let newTop = typeof y === 'number' ? y : 0;
 
             if (newLeft + rect.width > window.innerWidth) {
-                // Flip to the left of the cursor
                 newLeft = newLeft - rect.width;
             }
 
             if (newTop + rect.height > window.innerHeight) {
-                // Flip upwards from the cursor
                 newTop = newTop - rect.height;
             }
 
             setPosition({ top: Math.max(8, newTop), left: Math.max(8, newLeft) });
         } else {
-            // It's a submenu. The initial position (e.g. left: 100%, top: 0) is applied.
-            // We check if it overflows the window.
             let rightOverflow = rect.right > window.innerWidth;
             let bottomOverflow = rect.bottom > window.innerHeight;
             
-            const newPos: any = { top: y, left: x };
+            const newPos: { top: number | string, left: number | string, right?: number | string } = { top: y, left: x };
 
             if (rightOverflow) {
                 newPos.left = 'auto';
@@ -51,10 +48,7 @@ export const ContextMenu: React.FC<ContextMenuProps> = ({ items, x, y, onClose, 
             }
 
             if (bottomOverflow) {
-                // Shift it up by the overflow amount
                 const overflowAmount = rect.bottom - window.innerHeight + 8;
-                // If y is 0 (relative), we can just apply a negative top margin or transform, 
-                // but setting a negative top is easiest.
                 newPos.top = `calc(0px - ${overflowAmount}px)`;
             }
 
@@ -64,10 +58,22 @@ export const ContextMenu: React.FC<ContextMenuProps> = ({ items, x, y, onClose, 
         setOpacity(1);
     }, [x, y, isRoot]);
 
+    const setRefs = (node: HTMLUListElement | null) => {
+        internalRef.current = node;
+        if (typeof ref === 'function') ref(node);
+        else if (ref) (ref as React.MutableRefObject<HTMLUListElement | null>).current = node;
+    };
+
+    const handleKeyDown = useKeyboardNav({
+        horizontal: false,
+        itemSelector: ':scope > [role="menuitem"]:not(.is-disabled)'
+    });
+
     return (
         <ul 
+            ref={setRefs}
             className="context-menu" 
-            ref={menuRef}
+            role="menu"
             style={{ 
                 ...position,
                 opacity,
@@ -77,6 +83,11 @@ export const ContextMenu: React.FC<ContextMenuProps> = ({ items, x, y, onClose, 
                 e.preventDefault();
                 e.stopPropagation();
             }}
+            onKeyDown={(e) => {
+                handleKeyDown(e);
+                props.onKeyDown?.(e);
+            }}
+            {...props}
         >
             {items.map((item, idx) => (
                 <ContextMenuItem 
@@ -87,4 +98,5 @@ export const ContextMenu: React.FC<ContextMenuProps> = ({ items, x, y, onClose, 
             ))}
         </ul>
     );
-};
+});
+ContextMenu.displayName = 'ContextMenu';

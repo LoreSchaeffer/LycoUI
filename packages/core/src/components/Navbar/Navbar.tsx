@@ -3,7 +3,6 @@ import React, { forwardRef, useState, useCallback, useMemo, createContext, useCo
 import clsx from 'clsx';
 import type { Alignment, FullVariant } from '../../types/types';
 
-// Context to share state between Navbar and its children (e.g. for Collapse)
 interface NavbarContextType {
   isOpen: boolean;
   toggle: () => void;
@@ -21,7 +20,6 @@ function useNavbarContext() {
   return context;
 }
 
-// --- Navbar Root ---
 
 export interface NavbarProps extends React.HTMLAttributes<HTMLElement> {
   /** Visual color variant */
@@ -51,7 +49,6 @@ const NavbarComponent = forwardRef<HTMLElement, NavbarProps>((
   ref
 ) => {
   const [isOpen, setIsOpen] = useState(false);
-  // Generate a stable ID for ARIA linking
   const generatedId = useMemo(() => `lyco-navbar-${Math.random().toString(36).substr(2, 9)}`, []);
   const id = propId || generatedId;
 
@@ -100,7 +97,6 @@ const NavbarComponent = forwardRef<HTMLElement, NavbarProps>((
 });
 NavbarComponent.displayName = 'Navbar';
 
-// --- Navbar Brand ---
 
 export interface NavbarBrandProps extends React.AnchorHTMLAttributes<HTMLAnchorElement> {
   /** Custom component to render as (e.g., React Router Link) */
@@ -125,7 +121,6 @@ const NavbarBrand = forwardRef<HTMLAnchorElement, NavbarBrandProps>((
 });
 NavbarBrand.displayName = 'Navbar.Brand';
 
-// --- Navbar Toggle ---
 
 export interface NavbarToggleProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {}
 
@@ -159,7 +154,6 @@ const NavbarToggle = forwardRef<HTMLButtonElement, NavbarToggleProps>((
 });
 NavbarToggle.displayName = 'Navbar.Toggle';
 
-// --- Navbar Collapse ---
 
 export interface NavbarCollapseProps extends React.HTMLAttributes<HTMLDivElement> {}
 
@@ -185,7 +179,6 @@ const NavbarCollapse = forwardRef<HTMLDivElement, NavbarCollapseProps>((
 });
 NavbarCollapse.displayName = 'Navbar.Collapse';
 
-// --- Navbar Nav ---
 
 export interface NavbarNavProps extends React.HTMLAttributes<HTMLUListElement> {
   /** Alignment of the nav items */
@@ -208,7 +201,6 @@ const NavbarNav = forwardRef<HTMLUListElement, NavbarNavProps>((
 });
 NavbarNav.displayName = 'Navbar.Nav';
 
-// --- Navbar Item ---
 
 export interface NavbarItemProps extends React.LiHTMLAttributes<HTMLLIElement> {}
 
@@ -228,7 +220,6 @@ const NavbarItem = forwardRef<HTMLLIElement, NavbarItemProps>((
 });
 NavbarItem.displayName = 'Navbar.Item';
 
-// --- Navbar Link ---
 
 export interface NavbarLinkProps extends React.AnchorHTMLAttributes<HTMLAnchorElement> {
   /** Custom component to render as (e.g., React Router Link) */
@@ -262,17 +253,18 @@ const NavbarLink = forwardRef<HTMLAnchorElement, NavbarLinkProps>((
 });
 NavbarLink.displayName = 'Navbar.Link';
 
-// --- Navbar Dropdown ---
 
 const NavbarDropdownContext = createContext<{ isOpen: boolean; toggle: () => void; close: () => void } | null>(null);
 
-export interface NavbarDropdownProps extends React.HTMLAttributes<HTMLLIElement> {
+export interface NavbarDropdownProps extends Omit<React.HTMLAttributes<HTMLLIElement>, 'title'> {
   /** The content of the trigger button */
   title: React.ReactNode;
+  /** If true, strips default padding/background from the trigger button for custom trigger layouts */
+  unstyled?: boolean;
 }
 
 const NavbarDropdown = forwardRef<HTMLLIElement, NavbarDropdownProps>((
-  { className, title, children, ...props },
+  { className, title, unstyled = false, children, ...props },
   ref
 ) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -307,13 +299,15 @@ const NavbarDropdown = forwardRef<HTMLLIElement, NavbarDropdownProps>((
       >
         <button
           type="button"
-          className="navbar__dropdown-trigger"
+          className={clsx('navbar__dropdown-trigger', unstyled && 'navbar__dropdown-trigger--unstyled')}
           onClick={toggle}
           aria-expanded={isOpen}
           aria-haspopup="true"
         >
           {title}
-          <svg className="navbar__dropdown-caret" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+          {!unstyled && (
+            <svg className="navbar__dropdown-caret" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+          )}
         </button>
         <div className={clsx('navbar__dropdown-menu', isOpen && 'is-open')}>
           {children}
@@ -335,10 +329,10 @@ const NavbarDropdownItem = forwardRef<HTMLAnchorElement, NavbarDropdownItemProps
 ) => {
   const context = useContext(NavbarDropdownContext);
   
-  const handleClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
+  const handleClick = useCallback((e: React.MouseEvent<HTMLAnchorElement>) => {
     context?.close();
     onClick?.(e);
-  };
+  }, [context, onClick]);
 
   return (
     <Component
@@ -353,7 +347,7 @@ const NavbarDropdownItem = forwardRef<HTMLAnchorElement, NavbarDropdownItemProps
 });
 NavbarDropdownItem.displayName = 'Navbar.DropdownItem';
 
-export interface NavbarDropdownSubMenuProps extends React.HTMLAttributes<HTMLDivElement> {
+export interface NavbarDropdownSubMenuProps extends Omit<React.HTMLAttributes<HTMLDivElement>, 'title'> {
   /** The content of the submenu trigger */
   title: React.ReactNode;
 }
@@ -383,8 +377,6 @@ const NavbarDropdownSubMenu = forwardRef<HTMLDivElement, NavbarDropdownSubMenuPr
 
   const handleMouseLeave = useCallback(() => {
     setIsFlipped(false);
-    // On desktop we rely on hover, but we should not close the click state here
-    // as it conflicts with mobile touch logic. CSS hover handles desktop visibility.
   }, []);
 
   return (
@@ -416,7 +408,6 @@ const NavbarDropdownSubMenu = forwardRef<HTMLDivElement, NavbarDropdownSubMenuPr
 });
 NavbarDropdownSubMenu.displayName = 'Navbar.DropdownSubMenu';
 
-// Assemble compound component
 export const Navbar = Object.assign(NavbarComponent, {
   Brand: NavbarBrand,
   Toggle: NavbarToggle,

@@ -1,4 +1,7 @@
-export const lycoDarkTheme = {
+import type { Highlighter } from 'shiki';
+import type { ThemeRegistrationRaw } from '@shikijs/types';
+
+export const lycoDarkTheme: ThemeRegistrationRaw = {
   name: 'lyco-dark',
   type: 'dark',
   colors: {
@@ -50,9 +53,9 @@ export const lycoDarkTheme = {
   ]
 };
 
-let highlighterPromise: Promise<any> | null = null;
+let highlighterPromise: Promise<Highlighter> | null = null;
 
-export const getShikiHighlighter = async (langs: string[]): Promise<any> => {
+export const getShikiHighlighter = async (langs: string[]): Promise<Highlighter> => {
   if (!highlighterPromise) {
     highlighterPromise = import('shiki').then(async ({ createHighlighter }) => {
       const highlighter = await createHighlighter({
@@ -71,7 +74,7 @@ export const getShikiHighlighter = async (langs: string[]): Promise<any> => {
   
   if (missingLangs.length > 0) {
     try {
-      await highlighter.loadLanguage(...missingLangs);
+      await highlighter.loadLanguage(...(missingLangs as any));
     } catch (e) {
       console.warn('Failed to load some shiki languages:', missingLangs, e);
     }

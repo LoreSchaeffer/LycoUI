@@ -108,6 +108,23 @@
   }
 }
 
+
+// ==========================================================================
+// PALETTE COLOR MAPPINGS
+// ==========================================================================
+.card- {
+  @include for-each-theme-color using($color, $is-light) {
+    --card-color-base: var(--#{$color}-500);
+    --card-color-dim: var(--#{$color}-dim);
+
+    @if $is-light {
+      --card-text-color: var(--slate-950);
+    } @else {
+      --card-text-color: var(--white);
+    }
+  }
+}
+
 // ==========================================================================
 // SEMANTIC COLOR MAPPINGS
 // ==========================================================================
@@ -136,19 +153,8 @@
   --card-color-dim: color-mix(in srgb, var(--color-info) 15%, transparent);
   --card-text-color: var(--slate-950);
 }
-
-// ==========================================================================
-// PALETTE COLOR MAPPINGS
-// ==========================================================================
-.card- {
-  @include for-each-theme-color using($color, $is-light) {
-    --card-color-base: var(--#{$color}-500);
-    --card-color-dim: var(--#{$color}-dim);
-
-    @if $is-light {
-      --card-text-color: var(--slate-950);
-    } @else {
-      --card-text-color: var(--white);
-    }
-  }
+.card--neutral {
+  --card-color-base: var(--color-ash);
+  --card-color-dim: color-mix(in srgb, var(--color-ash) 15%, transparent);
+  --card-text-color: var(--white);
 }

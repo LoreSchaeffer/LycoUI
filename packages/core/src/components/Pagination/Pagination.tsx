@@ -93,7 +93,6 @@ export const Pagination = forwardRef<HTMLElement, PaginationProps>((
         setInputValue(e.target.value);
     }, []);
 
-    // Generate page numbers for standard variant
     const generatePages = useCallback(() => {
         const totalNumbers = siblingCount * 2 + 3;
         const totalBlocks = totalNumbers + 2;
@@ -107,7 +106,6 @@ export const Pagination = forwardRef<HTMLElement, PaginationProps>((
             if (startPage > 2) {
                 pages.push('ellipsis-start');
             } else if (startPage === 2) {
-                // If it's just 2, don't show ellipsis, just show 2
             }
             
             for (let i = startPage; i <= endPage; i++) {

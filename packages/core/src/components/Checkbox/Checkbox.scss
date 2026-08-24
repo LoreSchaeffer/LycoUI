@@ -5,7 +5,7 @@ $svg-check-dark: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' v
 
 .checkbox {
   display: inline-flex;
-  align-items: flex-start;
+  align-items: center;
   gap: var(--spacing-2);
   cursor: pointer;
   position: relative;
@@ -32,13 +32,15 @@ $svg-check-dark: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' v
     width: var(--control-size, 1.125rem);
     height: var(--control-size, 1.125rem);
     flex-shrink: 0;
-    margin-top: 0.125em;
+    margin: 0;
     background-color: var(--color-void, transparent);
-    border: 1px solid var(--color-border-base);
+    border: var(--border-width, 1px) solid var(--color-border-base);
     border-radius: var(--radius-sm);
     display: grid;
     place-content: center;
-    transition: all var(--duration-fast) var(--ease-default);
+    transition: background-color var(--duration-fast) var(--ease-default),
+                border-color var(--duration-fast) var(--ease-default),
+                box-shadow var(--duration-fast) var(--ease-default);
 
     --checkbox-icon: url("#{$svg-check-white}");
     background-image: var(--checkbox-icon);
@@ -53,7 +55,7 @@ $svg-check-dark: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' v
 
   &__input:focus-visible + &__control {
     outline: none;
-    box-shadow: 0 0 0 1px var(--color-void), 0 0 0 3px var(--checkbox-color-base, var(--color-primary));
+    box-shadow: 0 0 0 var(--border-width, 1px) var(--color-void), 0 0 0 var(--border-width-3, 3px) var(--checkbox-color-base, var(--color-primary));
   }
 
   &__input:checked + &__control {

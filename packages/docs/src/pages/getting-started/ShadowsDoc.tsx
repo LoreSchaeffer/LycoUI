@@ -1,91 +1,104 @@
 import React, { useState } from 'react';
-import { PiCheckBold } from 'react-icons/pi';
-import './FoundationDocs.scss';
-
+import { PiCheckBold, PiCopy } from 'react-icons/pi';
+import { Table, TableHead, TableBody, TableRow, TableCell } from '@loreschaeffer/lyco-ui';
 const shadowSteps = ['sm', 'md', 'subtle', 'subtle-2', 'xl'];
 const glowSteps = ['primary', 'success', 'danger', 'warning'];
 
 export const ShadowsDoc: React.FC = () => {
     return (
-        <article className="docs-foundation">
-            <h1 className="docs-foundation__title">Shadows & Glows</h1>
-            <p className="docs-foundation__description">
+        <article className="mb-10">
+            <h1 className="mb-8">Shadows & Glows</h1>
+            <p className="text-secondary mb-6">
                 Our shadow system emphasizes borders and subtle depth rather than heavy blurs. It's built perfectly for dark mode aesthetics.
             </p>
 
-            <section className="docs-foundation__section">
-                <h2 className="docs-foundation__subtitle">Shadows</h2>
-                <div className="docs-foundation__grid">
-                    {shadowSteps.map(step => {
-                        const cssVar = `--shadow-${step}`;
-                        const [copied, setCopied] = useState(false);
-                        const handleCopy = () => {
-                            navigator.clipboard.writeText(`var(${cssVar})`);
-                            setCopied(true);
-                            setTimeout(() => setCopied(false), 2000);
-                        };
-
-                        return (
-                            <div
-                                key={step}
-                                className="docs-foundation__card docs-foundation__card--interactive"
-                                onClick={handleCopy}
-                                title={`Copy var(${cssVar})`}
-                            >
-                                <div className="docs-foundation__card-visual" style={{ minHeight: 120, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                                    <div style={{ width: '60px', height: '60px', backgroundColor: 'var(--surface-base)', borderRadius: 'var(--radius-md)', boxShadow: `var(${cssVar})` }} />
-                                </div>
-                                <div className="docs-foundation__card-info">
-                                    <span className="docs-foundation__card-name">
-                                        shadow-{step}
-                                        {copied && <PiCheckBold style={{ marginLeft: 8, color: 'var(--color-success)' }} />}
-                                    </span>
-                                    <span className="docs-foundation__card-value">var({cssVar})</span>
-                                </div>
-                            </div>
-                        );
-                    })}
-                </div>
+            <section className="mb-10">
+                <h2 className="mt-12 mb-6">Shadows</h2>
+                <Table>
+                    <TableHead>
+                        <TableRow>
+                            <TableCell isHeader>Name</TableCell>
+                            <TableCell isHeader>Token</TableCell>
+                            <TableCell isHeader>Preview</TableCell>
+                        </TableRow>
+                    </TableHead>
+                    <TableBody>
+                        {shadowSteps.map(step => (
+                            <ShadowRow key={step} step={step} prefix="shadow" isGlow={false} />
+                        ))}
+                    </TableBody>
+                </Table>
             </section>
 
-            <section className="docs-foundation__section">
-                <h2 className="docs-foundation__subtitle">Ambient Glows</h2>
-                <p className="docs-foundation__description">
+            <section className="mb-10">
+                <h2 className="mt-12 mb-6">Ambient Glows</h2>
+                <p className="text-secondary mb-6">
                     Used behind charts, key components, or highlights to provide a luminous effect.
                 </p>
-                <div className="docs-foundation__grid">
-                    {glowSteps.map(step => {
-                        const cssVar = `--glow-${step}`;
-                        const [copied, setCopied] = useState(false);
-                        const handleCopy = () => {
-                            navigator.clipboard.writeText(`var(${cssVar})`);
-                            setCopied(true);
-                            setTimeout(() => setCopied(false), 2000);
-                        };
-
-                        return (
-                            <div
-                                key={step}
-                                className="docs-foundation__card docs-foundation__card--interactive"
-                                onClick={handleCopy}
-                                title={`Copy var(${cssVar})`}
-                            >
-                                <div className="docs-foundation__card-visual docs-foundation__card-visual--dark" style={{ minHeight: 120, display: 'flex', alignItems: 'center', justifyContent: 'center', backgroundColor: 'var(--color-void)', position: 'relative', overflow: 'hidden' }}>
-                                    <div style={{ position: 'absolute', inset: '-50%', background: `var(${cssVar})` }} />
-                                </div>
-                                <div className="docs-foundation__card-info">
-                                    <span className="docs-foundation__card-name">
-                                        glow-{step}
-                                        {copied && <PiCheckBold style={{ marginLeft: 8, color: 'var(--color-success)' }} />}
-                                    </span>
-                                    <span className="docs-foundation__card-value">var({cssVar})</span>
-                                </div>
-                            </div>
-                        );
-                    })}
-                </div>
+                <Table>
+                    <TableHead>
+                        <TableRow>
+                            <TableCell isHeader>Name</TableCell>
+                            <TableCell isHeader>Token</TableCell>
+                            <TableCell isHeader>Preview</TableCell>
+                        </TableRow>
+                    </TableHead>
+                    <TableBody>
+                        {glowSteps.map(step => (
+                            <ShadowRow key={step} step={step} prefix="glow" isGlow={true} />
+                        ))}
+                    </TableBody>
+                </Table>
             </section>
         </article>
+    );
+};
+
+const ShadowRow = ({ step, prefix, isGlow }: { step: string; prefix: string; isGlow: boolean }) => {
+    const cssVar = `--${prefix}-${step}`;
+    const [copied, setCopied] = useState(false);
+    const [isHovered, setIsHovered] = useState(false);
+    
+    const handleCopy = () => {
+        navigator.clipboard.writeText(`var(${cssVar})`);
+        setCopied(true);
+        setTimeout(() => setCopied(false), 2000);
+    };
+
+    return (
+        <TableRow 
+            onClick={handleCopy} 
+            style={{ cursor: 'pointer' }} 
+            hover 
+            title={`Copy var(${cssVar})`}
+            onMouseEnter={() => setIsHovered(true)}
+            onMouseLeave={() => setIsHovered(false)}
+        >
+            <TableCell>{prefix}-{step}</TableCell>
+            <TableCell>
+                <code style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                    var({cssVar})
+                    <span style={{ 
+                        display: 'inline-flex', 
+                        width: '1em', 
+                        opacity: (copied || isHovered) ? 1 : 0, 
+                        transition: 'opacity 0.2s ease',
+                        color: copied ? 'var(--color-success)' : 'var(--color-text-secondary)'
+                    }}>
+                        {copied ? <PiCheckBold/> : <PiCopy/>}
+                    </span>
+                </code>
+            </TableCell>
+            <TableCell>
+                {isGlow ? (
+                    <div style={{ width: '120px', height: '80px', display: 'flex', alignItems: 'center', justifyContent: 'center', backgroundColor: 'var(--color-void)', position: 'relative', overflow: 'hidden', borderRadius: 'var(--radius-md)' }}>
+                        <div style={{ position: 'absolute', inset: '-50%', background: `var(${cssVar})` }} />
+                    </div>
+                ) : (
+                    <div style={{ width: '60px', height: '60px', backgroundColor: 'var(--surface-base)', borderRadius: 'var(--radius-md)', boxShadow: `var(${cssVar})` }} />
+                )}
+            </TableCell>
+        </TableRow>
     );
 };
 

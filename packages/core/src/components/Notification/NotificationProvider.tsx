@@ -4,14 +4,12 @@ import { NotificationContext, type NotificationOptions } from './NotificationCon
 import { Notification } from './Notification';
 import type { NotificationPosition } from '../../types/types';
 
-// ── Duration presets (seconds → ms) ──
 const DURATION_MAP: Record<string, number> = {
   short: 3000,
   medium: 5000,
   long: 8000,
 };
 
-// ── Internal state shape ──
 interface ActiveNotification extends NotificationOptions {
   id: string;
   isExiting: boolean;
@@ -19,7 +17,6 @@ interface ActiveNotification extends NotificationOptions {
   durationSec: number;
 }
 
-// ── Provider props ──
 export interface NotificationProviderProps {
   children: React.ReactNode;
   /** Screen corner for the notification stack. */
@@ -38,7 +35,6 @@ export const NotificationProvider: React.FC<NotificationProviderProps> = ({
   const [notifications, setNotifications] = useState<ActiveNotification[]>([]);
   const timersRef = useRef<Map<string, number>>(new Map());
 
-  // ── Close with exit animation ──
   const closeNotification = useCallback((id: string) => {
     if (timersRef.current.has(id)) {
       window.clearTimeout(timersRef.current.get(id));
@@ -52,7 +48,6 @@ export const NotificationProvider: React.FC<NotificationProviderProps> = ({
     }, 300);
   }, []);
 
-  // ── Show a new notification ──
   const showNotification = useCallback((options: NotificationOptions): string => {
     const id = `notification-${++idCounter}`;
 
@@ -96,7 +91,6 @@ export const NotificationProvider: React.FC<NotificationProviderProps> = ({
     return id;
   }, [closeNotification, maxNotifications]);
 
-  // ── Cleanup on unmount ──
   useEffect(() => {
     const timers = timersRef.current;
     return () => {
@@ -145,3 +139,4 @@ export const NotificationProvider: React.FC<NotificationProviderProps> = ({
     </NotificationContext.Provider>
   );
 };
+NotificationProvider.displayName = 'NotificationProvider';

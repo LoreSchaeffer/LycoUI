@@ -1,5 +1,5 @@
 export function initLycoSelects() {
-    const nativeSelects = document.querySelectorAll<HTMLSelectElement>('select.select-custom');
+    const nativeSelects = document.querySelectorAll<HTMLSelectElement>('select.select-custom:not([data-lyco-initialized])');
     nativeSelects.forEach(select => {
         if (!select.dataset.lycoInitialized) {
             new LycoSelectController(select);
@@ -24,7 +24,7 @@ function parseSafeSvg(svgString: string): SVGSVGElement | null {
 class LycoSelectController {
     private readonly nativeSelect: HTMLSelectElement;
     private readonly customContainer: HTMLDivElement;
-    private trigger!: HTMLDivElement;
+    private trigger!: HTMLButtonElement;
     private valueElement!: HTMLSpanElement;
     private dropdown!: HTMLUListElement;
     private options: HTMLLIElement[] = [];
@@ -64,16 +64,18 @@ class LycoSelectController {
 
         this.customContainer.className = `select select-${variant} select-${size}`;
         if (this.nativeSelect.disabled) this.customContainer.classList.add('is-disabled');
-        this.customContainer.setAttribute('tabindex', this.nativeSelect.disabled ? '-1' : '0');
-        this.customContainer.setAttribute('role', 'combobox');
-        this.customContainer.setAttribute('aria-haspopup', 'listbox');
-        this.customContainer.setAttribute('aria-expanded', 'false');
 
         const dropdownId = `lyco-select-${Math.random().toString(36).slice(2)}`;
-        this.customContainer.setAttribute('aria-controls', dropdownId);
 
-        this.trigger = document.createElement('div');
+        this.trigger = document.createElement('button');
+        this.trigger.type = 'button';
         this.trigger.className = 'select__trigger';
+        this.trigger.setAttribute('tabindex', this.nativeSelect.disabled ? '-1' : '0');
+        if (this.nativeSelect.disabled) this.trigger.disabled = true;
+        this.trigger.setAttribute('role', 'combobox');
+        this.trigger.setAttribute('aria-haspopup', 'listbox');
+        this.trigger.setAttribute('aria-expanded', 'false');
+        this.trigger.setAttribute('aria-controls', dropdownId);
 
         const content = document.createElement('div');
         content.className = 'select__content';
@@ -103,10 +105,10 @@ class LycoSelectController {
         this.dropdown.id = dropdownId;
         this.dropdown.setAttribute('role', 'listbox');
         this.dropdown.hidden = true;
+        this.dropdown.setAttribute('aria-hidden', 'true');
 
         Array.from(this.nativeSelect.options).forEach((opt, nativeIndex) => {
             const li = document.createElement('li');
-            // We use nativeIndex to unambiguously map li -> native option
             li.setAttribute('data-native-index', nativeIndex.toString());
 
             if (opt.hasAttribute('data-spacer')) {
@@ -129,7 +131,7 @@ class LycoSelectController {
 
             const variant = opt.getAttribute('data-variant');
             if (variant) {
-                li.classList.add(`select__option-${variant}`);
+                li.classList.add(`select__option--${variant}`);
             }
 
             const iconContent = opt.getAttribute('data-icon');
@@ -198,8 +200,9 @@ class LycoSelectController {
     private open(): void {
         this.isOpen = true;
         this.customContainer.classList.add('is-open');
-        this.customContainer.setAttribute('aria-expanded', 'true');
+        this.trigger.setAttribute('aria-expanded', 'true');
         this.dropdown.hidden = false;
+        this.dropdown.setAttribute('aria-hidden', 'false');
 
         const selectedNativeIndex = this.nativeSelect.selectedIndex;
         const initialListIndex = this.options.findIndex(
@@ -212,9 +215,10 @@ class LycoSelectController {
     private close(): void {
         this.isOpen = false;
         this.customContainer.classList.remove('is-open');
-        this.customContainer.setAttribute('aria-expanded', 'false');
+        this.trigger.setAttribute('aria-expanded', 'false');
         this.dropdown.hidden = true;
-        this.customContainer.removeAttribute('aria-activedescendant');
+        this.dropdown.setAttribute('aria-hidden', 'true');
+        this.trigger.removeAttribute('aria-activedescendant');
     }
 
     private selectOption(listIndex: number): void {
@@ -277,7 +281,7 @@ class LycoSelectController {
         });
 
         if (activeId) {
-            this.customContainer.setAttribute('aria-activedescendant', activeId);
+            this.trigger.setAttribute('aria-activedescendant', activeId);
         }
 
         if (this.focusedIndex >= 0) {

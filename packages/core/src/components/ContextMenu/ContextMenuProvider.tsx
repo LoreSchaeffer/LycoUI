@@ -91,3 +91,4 @@ export const ContextMenuProvider: React.FC<ContextMenuProviderProps> = ({ childr
         </ContextMenuContext.Provider>
     );
 };
+ContextMenuProvider.displayName = 'ContextMenuProvider';

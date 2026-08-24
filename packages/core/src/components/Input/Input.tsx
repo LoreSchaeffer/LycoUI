@@ -7,21 +7,39 @@ import { Spinner, type SpinnerType } from '../Spinner';
 
 export type InputValidation = 'disabled' | 'auto' | 'valid' | 'invalid';
 
+/**
+ * Props for the Input component.
+ */
 export interface InputProps extends Omit<InputHTMLAttributes<HTMLInputElement>, 'size'> {
+  /** The semantic color variant of the input. */
   variant?: FullVariant;
+  /** The size of the input (sm, md, lg). Default is 'md'. */
   size?: SizeVariant;
+  /** Label text for the input. Will float if the input has a value. */
   label?: string;
+  /** An icon element to display at the start (left) of the input. */
   iconStart?: React.ReactNode;
+  /** An icon element to display at the end (right) of the input. */
   iconEnd?: React.ReactNode;
+  /** Callback fired when the start icon is clicked. */
   onIconStartClick?: () => void;
+  /** Callback fired when the end icon is clicked. */
   onIconEndClick?: () => void;
+  /** If true, displays a loading spinner. */
   loading?: boolean;
+  /** The visual style of the loading spinner. */
   spinnerType?: SpinnerType;
+  /** Where to place the spinner ('start' or 'end'). Default is 'end'. */
   spinnerPlacement?: 'start' | 'end';
+  /** The validation state of the input ('valid', 'invalid', 'auto', 'disabled'). */
   validation?: InputValidation;
+  /** A custom validation function that returns an error message string or null. */
   validationFn?: (value: string) => string | null;
+  /** A static validation message to display. */
   validationMessage?: string;
+  /** If true, shows numeric up/down step buttons for type="number". */
   showStepButtons?: boolean;
+  /** If true, renders a flat version of the input without borders. */
   flat?: boolean;
 }
 
@@ -75,14 +93,12 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
     const [autoValidationMessage, setAutoValidationMessage] = useState<string>('');
     const [hasBlurred, setHasBlurred] = useState(false);
 
-    // Merge refs
     const mergedRef = useCallback((node: HTMLInputElement | null) => {
       (innerRef as React.MutableRefObject<HTMLInputElement | null>).current = node;
       if (typeof ref === 'function') ref(node);
       else if (ref) (ref as React.MutableRefObject<HTMLInputElement | null>).current = node;
     }, [ref]);
 
-    // Track filled state for floating label
     useEffect(() => {
       if (value !== undefined) {
         setIsFilled(String(value).length > 0);
@@ -100,7 +116,6 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
     }, [disabled, loading, readOnly, onIconEndClick]);
 
     const runAutoValidation = useCallback((inputEl: HTMLInputElement) => {
-      // First: native constraint validation
       const nativeValid = inputEl.checkValidity();
       if (!nativeValid) {
         setAutoValidationState('invalid');
@@ -108,7 +123,6 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
         return;
       }
 
-      // Second: custom validationFn
       if (validationFn) {
         const customError = validationFn(inputEl.value);
         if (customError) {
@@ -141,7 +155,6 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
     const handleChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
       setIsFilled(e.target.value.length > 0);
 
-      // Re-validate on change after first blur
       if (validation === 'auto' && hasBlurred) {
         runAutoValidation(e.target);
       }
@@ -149,7 +162,6 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
       onChange?.(e);
     }, [onChange, validation, hasBlurred, runAutoValidation]);
 
-    // Step button handlers for number inputs
     const handleStep = useCallback((e: React.MouseEvent, direction: 1 | -1) => {
       e.preventDefault();
       const input = innerRef.current;
@@ -161,7 +173,6 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
         input.stepDown();
       }
 
-      // Safely notify React of the value change using the native setter
       const nativeInputValueSetter = Object.getOwnPropertyDescriptor(window.HTMLInputElement.prototype, 'value')?.set;
       if (nativeInputValueSetter) {
         nativeInputValueSetter.call(input, input.value);
@@ -175,7 +186,6 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
       }
     }, [disabled, loading, readOnly, validation, hasBlurred, runAutoValidation]);
 
-    // Determine visual validation state
     let visualValidation: 'valid' | 'invalid' | null = null;
     if (validation === 'valid') {
       visualValidation = 'valid';
@@ -185,7 +195,6 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
       visualValidation = autoValidationState;
     }
 
-    // Determine displayed message
     let displayMessage = '';
     if (validation !== 'disabled') {
       if (validationMessage) {
@@ -195,7 +204,6 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
       }
     }
 
-    // Spinner positioning
     const showSpinnerStart = loading && spinnerPlacement === 'start';
     const showSpinnerEnd = loading && spinnerPlacement === 'end';
 

@@ -1,17 +1,18 @@
+/** Extends HTMLElement to include the attached controller reference. */
+interface LycoModalElement extends HTMLElement {
+    lycoModal?: LycoModalController;
+}
+
 export function initLycoModals() {
-    // 1. Initialize modals based on their own elements if they want programatic access later
-    const modals = document.querySelectorAll<HTMLElement>('.modal');
+    const modals = document.querySelectorAll<HTMLElement>('.modal:not([data-lyco-initialized])');
     modals.forEach(modal => {
         if (!modal.dataset.lycoInitialized) {
             new LycoModalController(modal);
-            // We do NOT set dataset.lycoInitialized here, because we want it on the controller mapping
-            // Actually, for simplicity we attach the controller to the DOM element
-            (modal as any).lycoModal = new LycoModalController(modal);
+            (modal as LycoModalElement).lycoModal = new LycoModalController(modal);
             modal.dataset.lycoInitialized = 'true';
         }
     });
 
-    // 2. Bind toggle buttons
     const toggles = document.querySelectorAll<HTMLElement>('[data-lyco-toggle="modal"]');
     toggles.forEach(toggle => {
         if (toggle.dataset.lycoToggleInitialized) return;
@@ -23,10 +24,10 @@ export function initLycoModals() {
 
             const targetModal = document.querySelector<HTMLElement>(targetSelector);
             if (targetModal) {
-                let controller = (targetModal as any).lycoModal as LycoModalController;
+                let controller = (targetModal as LycoModalElement).lycoModal;
                 if (!controller) {
                     controller = new LycoModalController(targetModal);
-                    (targetModal as any).lycoModal = controller;
+                    (targetModal as LycoModalElement).lycoModal = controller;
                     targetModal.dataset.lycoInitialized = 'true';
                 }
                 controller.show();
@@ -57,9 +58,7 @@ export class LycoModalController {
             this.hide();
         };
 
-        // Initialize state based on DOM
         if (this.modal.style.display !== 'none' && !this.modal.classList.contains('hidden')) {
-            // We assume it starts hidden in vanilla by having `style="display: none;"` or `hidden` attribute
             this.modal.style.display = 'none';
         }
         
@@ -82,7 +81,7 @@ export class LycoModalController {
             this.hide();
         }
         delete this.modal.dataset.lycoInitialized;
-        delete (this.modal as any).lycoModal;
+        delete (this.modal as LycoModalElement).lycoModal;
     }
 
     public show(): void {
@@ -98,10 +97,8 @@ export class LycoModalController {
         document.body.classList.add('modal-open');
         document.addEventListener('keydown', this._onKeyDown);
 
-        // Reset animation by triggering reflow
         void this.modal.offsetWidth;
 
-        // Ensure focus
         setTimeout(() => {
             if (this.dialog) {
                 const focusableElements = this.dialog.querySelectorAll(

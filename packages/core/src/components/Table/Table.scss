@@ -3,25 +3,24 @@
 .table {
   --table-bg: transparent;
   --table-color: var(--color-text-primary);
-  --table-border-color: var(--color-border-subtle); // Changed to subtle
+  --table-border-color: var(--color-border-subtle);
   --table-stripe-bg: color-mix(in srgb, var(--color-text-primary) 2%, transparent);
-  --table-hover-bg: var(--color-surface-hover); // High transparent hover
+  --table-hover-bg: var(--color-surface-hover);
   --table-active-bg: color-mix(in srgb, var(--color-text-primary) 8%, transparent);
   --table-padding-y: var(--spacing-3);
   --table-padding-x: var(--spacing-4);
-  --table-border-radius: var(--radius-lg);
 
   width: 100%;
-  margin: 0; // Margin is moved to container
+  margin: 0;
   vertical-align: top;
-  border-collapse: collapse; // Changed to collapse to remove double borders
+  border-collapse: collapse;
   text-align: left;
 
   > :not(caption)>*>* {
     padding: var(--table-padding-y) var(--table-padding-x);
     background-color: var(--table-bg);
     color: var(--table-color);
-    border-bottom: 1px solid var(--table-border-color);
+    border-bottom: var(--border-width, 1px) solid var(--table-border-color);
   }
 
   >tbody {
@@ -38,7 +37,7 @@
       text-transform: uppercase;
       letter-spacing: 0.05em;
       color: var(--color-text-secondary);
-      border-bottom: 2px solid var(--color-border-base) !important;
+      border-bottom: var(--border-width-2, 2px) solid var(--color-border-base) !important;
       padding-top: var(--spacing-4);
       padding-bottom: var(--spacing-4);
     }
@@ -63,7 +62,7 @@
   // Bordered (Full grid support)
   &-bordered {
     > :not(caption)>*>* {
-      border-right: 1px solid var(--color-border-subtle);
+      border-right: var(--border-width, 1px) solid var(--color-border-subtle);
 
       &:last-child {
         border-right: none;
@@ -142,27 +141,30 @@
     --table-stripe-bg: color-mix(in srgb, var(--#{$color}-500) 15%, transparent);
     --table-hover-bg: color-mix(in srgb, var(--#{$color}-500) 20%, transparent);
   }
+
+  tr:last-child td,
+  tr:last-child th {
+    border-bottom: none;
+  }
 }
 
-.table-container {
-  overflow-x: auto;
-  -webkit-overflow-scrolling: touch;
+.table-wrapper {
   width: 100%;
   margin-bottom: var(--spacing-4);
 
-  // Premium Linear-style container
-  border: 1px solid var(--color-border-subtle);
+  border: var(--border-width, 1px) solid var(--color-border-subtle);
   border-radius: var(--radius-xl);
   background-color: var(--color-surface-base, transparent);
   box-shadow: var(--shadow-sm);
+  overflow: hidden;
+}
 
-  // Prevent shadow clipping when scrolling
-  padding-bottom: 0;
+.table-responsive {
+  width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
 
-  // Inner table resets for the container
-  .table {
-    > :not(caption)>*:last-child>* {
-      border-bottom: 0; // Remove bottom border of the last row so it doesn't double up with container
-    }
+  .table, table {
+    margin: 0;
   }
 }

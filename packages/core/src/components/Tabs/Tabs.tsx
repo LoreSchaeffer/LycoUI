@@ -1,5 +1,6 @@
 import './Tabs.scss';
 import React, { createContext, forwardRef, useCallback, useContext, useState, useMemo } from 'react';
+import { useKeyboardNav } from '../../hooks/useKeyboardNav';
 import clsx from 'clsx';
 
 interface TabsContextValue {
@@ -47,10 +48,25 @@ Tabs.displayName = 'Tabs';
 export interface TabsListProps extends React.HTMLAttributes<HTMLDivElement> {}
 
 export const TabsList = forwardRef<HTMLDivElement, TabsListProps>((
-  { className, ...props }, ref
+  { className, onKeyDown, ...props }, ref
 ) => {
+  const handleKeyDown = useKeyboardNav({
+    horizontal: true,
+    itemSelector: '[role="tab"]:not(:disabled)',
+    onFocus: (item) => item.click()
+  });
+
   return (
-    <div ref={ref} className={clsx('tabs__list', className)} role="tablist" {...props} />
+    <div 
+      ref={ref} 
+      className={clsx('tabs__list', className)} 
+      role="tablist" 
+      onKeyDown={(e) => {
+        handleKeyDown(e);
+        onKeyDown?.(e);
+      }}
+      {...props} 
+    />
   );
 });
 TabsList.displayName = 'TabsList';

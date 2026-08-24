@@ -1,5 +1,5 @@
 import './Badge.scss';
-import React, { forwardRef } from 'react';
+import React, { forwardRef, memo } from 'react';
 import clsx from 'clsx';
 import type { FullVariant } from '../../types/types';
 
@@ -23,7 +23,7 @@ export interface BadgeProps extends React.HTMLAttributes<HTMLSpanElement> {
   dim?: boolean;
 }
 
-export const Badge = forwardRef<HTMLSpanElement, BadgeProps>((
+export const Badge = memo(forwardRef<HTMLSpanElement, BadgeProps>((
   { 
     className, 
     variant = 'primary', 
@@ -49,6 +49,6 @@ export const Badge = forwardRef<HTMLSpanElement, BadgeProps>((
       {children}
     </span>
   );
-});
+}));
 
 Badge.displayName = 'Badge';

@@ -37,12 +37,6 @@ export const tableProps: PropDefinition[] = [
         defaultValue: "'md'",
         description: 'Makes the table more compact by cutting cell padding in half.',
     },
-    {
-        name: 'responsive',
-        type: 'boolean',
-        defaultValue: 'false',
-        description: 'Wraps the table in a responsive div to enable horizontal scrolling on small screens.',
-    }
 ];
 
 export const tableRowProps: PropDefinition[] = [

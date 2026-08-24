@@ -17,11 +17,9 @@ const DURATION_MAP: Record<string, number> = {
 export const SnackbarProvider: React.FC<{ children: React.ReactNode }> = ({children}) => {
     const [snackbars, setSnackbars] = useState<ActiveSnackbar[]>([]);
 
-    // Ref to hold timers for each snackbar to ensure proper cleanup
     const timersRef = useRef<Map<string, number>>(new Map());
 
     const closeSnackbar = useCallback((id: string) => {
-        // Clear timeout if it exists
         if (timersRef.current.has(id)) {
             window.clearTimeout(timersRef.current.get(id));
             timersRef.current.delete(id);
@@ -29,7 +27,6 @@ export const SnackbarProvider: React.FC<{ children: React.ReactNode }> = ({child
 
         setSnackbars(prev => prev.map(sb => sb.id === id ? {...sb, isExiting: true} : sb));
 
-        // Remove from DOM after exit animation completes (duration-fast is typically 150-250ms, let's wait 300ms)
         window.setTimeout(() => {
             setSnackbars(prev => prev.filter(sb => sb.id !== id));
         }, 300);
@@ -64,7 +61,6 @@ export const SnackbarProvider: React.FC<{ children: React.ReactNode }> = ({child
         return id;
     }, [closeSnackbar]);
 
-    // Clean up timers on unmount
     useEffect(() => {
         const timers = timersRef.current;
         return () => {
@@ -101,3 +97,4 @@ export const SnackbarProvider: React.FC<{ children: React.ReactNode }> = ({child
         </SnackbarContext.Provider>
     );
 };
+SnackbarProvider.displayName = 'SnackbarProvider';

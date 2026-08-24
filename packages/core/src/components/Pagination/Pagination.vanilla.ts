@@ -1,5 +1,5 @@
 export function initLycoPagination() {
-    const paginations = document.querySelectorAll<HTMLElement>('.pagination-custom');
+    const paginations = document.querySelectorAll<HTMLElement>('.pagination-custom:not([data-lyco-initialized])');
     paginations.forEach(el => {
         if (!el.dataset.lycoInitialized) {
             new LycoPaginationController(el);
@@ -57,7 +57,6 @@ class LycoPaginationController {
             detail: { page },
             bubbles: true 
         }));
-        // Re-render
         this.buildUI();
     }
 
@@ -68,7 +67,6 @@ class LycoPaginationController {
     }
 
     private buildUI(): void {
-        // Clear previous event listeners and DOM
         this.listeners.forEach(({ el, type, fn }) => {
             el.removeEventListener(type, fn);
         });
@@ -77,12 +75,10 @@ class LycoPaginationController {
         this.currentInput = null;
         this.currentSpan = null;
 
-        // Apply classes
         const colorVariant = this.container.getAttribute('data-color-variant') || 'primary';
         const size = this.container.getAttribute('data-size') || 'md';
         this.disabled = this.container.hasAttribute('disabled') || this.container.getAttribute('aria-disabled') === 'true' || this.container.classList.contains('is-disabled');
 
-        // Keep existing custom classes but remove old variant classes if this is a re-render
         this.container.className = this.container.className
             .split(' ')
             .filter(c => !c.startsWith('pagination-') || c === 'pagination-custom')
@@ -141,13 +137,11 @@ class LycoPaginationController {
         const ul = document.createElement('ul');
         ul.className = 'pagination__list';
 
-        // Prev Button
         const liPrev = document.createElement('li');
         liPrev.className = 'pagination__item';
         liPrev.appendChild(this.createButton(false, this.currentPage <= 1));
         ul.appendChild(liPrev);
 
-        // Pages
         const totalNumbers = this.siblingCount * 2 + 3;
         const totalBlocks = totalNumbers + 2;
 
@@ -196,7 +190,6 @@ class LycoPaginationController {
             ul.appendChild(li);
         });
 
-        // Next Button
         const liNext = document.createElement('li');
         liNext.className = 'pagination__item';
         liNext.appendChild(this.createButton(true, this.currentPage >= this.totalPages));
@@ -225,7 +218,6 @@ class LycoPaginationController {
 
             info.appendChild(this.currentInput);
             
-            // Focus on next tick
             setTimeout(() => {
                 if (this.currentInput) {
                     this.currentInput.focus();

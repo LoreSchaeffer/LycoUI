@@ -1,39 +1,37 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect, useCallback } from 'react';
 import clsx from 'clsx';
 import type { ContextMenuItemDef } from './ContextMenuContext';
 import { ContextMenu } from './ContextMenu';
 
-export interface ContextMenuItemProps {
+export interface ContextMenuItemProps extends React.HTMLAttributes<HTMLLIElement> {
     item: ContextMenuItemDef;
     onClose: () => void;
 }
 
-export const ContextMenuItem: React.FC<ContextMenuItemProps> = ({ item, onClose }) => {
+export const ContextMenuItem = React.forwardRef<HTMLLIElement, ContextMenuItemProps>(
+    ({ item, onClose, ...props }, ref) => {
     const [isHovered, setIsHovered] = useState(false);
-    const hoverTimeout = useRef<any>(null);
+    const hoverTimeout = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
 
-    if (item.type === 'separator') {
-        return <li className="context-menu__separator" role="separator" />;
-    }
 
     const hasSubmenu = item.submenu && item.submenu.length > 0;
 
-    const handleMouseEnter = () => {
+    const handleMouseEnter = useCallback(() => {
         if (item.disabled) return;
         clearTimeout(hoverTimeout.current);
         hoverTimeout.current = setTimeout(() => {
             setIsHovered(true);
         }, 150); // 150ms intent delay
-    };
+    }, [item.disabled]);
 
-    const handleMouseLeave = () => {
+    const handleMouseLeave = useCallback(() => {
         clearTimeout(hoverTimeout.current);
         hoverTimeout.current = setTimeout(() => {
             setIsHovered(false);
         }, 150);
-    };
+    }, []);
 
-    const handleClick = (e: React.MouseEvent) => {
+    const handleClick = useCallback((e: React.MouseEvent) => {
         e.stopPropagation(); 
         if (item.disabled) return;
 
@@ -45,26 +43,34 @@ export const ContextMenuItem: React.FC<ContextMenuItemProps> = ({ item, onClose 
             item.onClick(e);
         }
         onClose();
-    };
+    }, [item, hasSubmenu, onClose]);
 
     useEffect(() => {
         return () => clearTimeout(hoverTimeout.current);
     }, []);
 
+    if (item.type === 'separator') {
+        return <li ref={ref} className="context-menu__separator" role="separator" {...props} />;
+    }
+
     return (
-        <li 
-            className={clsx('context-menu__item', {
-                'context-menu__item--danger': item.danger,
-                'is-disabled': item.disabled,
-                'is-hovered': isHovered
-            })}
+        <li
+            ref={ref}
+            className={clsx(
+                'context-menu__item',
+                item.danger && 'context-menu__item--danger',
+                item.disabled && 'is-disabled',
+                isHovered && 'is-hovered',
+                hasSubmenu && 'context-menu__item--has-submenu'
+            )}
+            role="menuitem"
             onMouseEnter={handleMouseEnter}
             onMouseLeave={handleMouseLeave}
             onClick={handleClick}
-            role="menuitem"
             aria-disabled={item.disabled}
             aria-haspopup={hasSubmenu}
             aria-expanded={isHovered}
+            {...props}
         >
             {item.icon && (
                 <span className="context-menu__icon">
@@ -95,4 +101,5 @@ export const ContextMenuItem: React.FC<ContextMenuItemProps> = ({ item, onClose 
             )}
         </li>
     );
-};
+});
+ContextMenuItem.displayName = 'ContextMenuItem';

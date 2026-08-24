@@ -18,11 +18,11 @@
   align-items: center;
   width: 100%;
   background-color: var(--color-void, transparent);
-  border: 1px solid var(--color-border-base);
-  
-  --input-radius: var(--radius-md);
-  border-radius: var(--input-radius);
-  
+  border: var(--border-width, 1px) solid var(--color-border-base);
+
+  border-radius: var(--input-radius, var(--radius-md));
+  overflow: hidden;
+
   transition:
     border-color var(--duration-fast) var(--ease-default),
     box-shadow var(--duration-fast) var(--ease-default);
@@ -32,7 +32,7 @@
   --input-height: 2.75rem;
   --input-padding-x: var(--spacing-3);
   --input-font-size: var(--font-size-sm);
-  --input-icon-size: 1.25rem;
+  --input-icon-size: var(--spacing-5, 1.25rem);
 
   &:hover:not(.is-disabled):not(.is-invalid):not(.is-valid) {
     border-color: var(--color-border-strong);
@@ -49,6 +49,7 @@
     background: transparent;
     border: none;
     outline: none;
+    border-radius: inherit;
     color: var(--color-text-primary);
     font-family: var(--font-family-base);
     font-size: var(--input-font-size);
@@ -80,14 +81,14 @@
       color: var(--color-text-secondary);
 
       &::file-selector-button {
-        height: 100%;
+        height: var(--input-height);
         padding: 0 var(--input-padding-x);
         margin-right: var(--spacing-3);
         background-color: var(--color-carbon);
         border: none;
-        border-right: 1px solid var(--color-border-base);
-        border-top-left-radius: calc(var(--input-radius) - 1px);
-        border-bottom-left-radius: calc(var(--input-radius) - 1px);
+        border-right: var(--border-width, 1px) solid var(--input-border-internal, var(--color-border-base));
+        border-start-start-radius: var(--input-radius);
+        border-end-start-radius: var(--input-radius);
         color: var(--color-text-primary);
         font-family: inherit;
         font-size: var(--input-font-size);
@@ -164,6 +165,7 @@
   &:has(.input__field[type="file"]) .input__field {
     color: transparent;
   }
+
   &.is-focused:has(.input__field[type="file"]) .input__field,
   &.is-filled:has(.input__field[type="file"]) .input__field {
     color: var(--color-text-secondary);
@@ -207,8 +209,8 @@
       }
 
       &:focus-visible {
-        outline: 2px solid var(--input-color-base);
-        outline-offset: 2px;
+        outline: var(--border-width-2, 2px) solid var(--input-color-base);
+        outline-offset: var(--border-width-2, 2px);
       }
     }
   }
@@ -229,7 +231,7 @@
     display: flex;
     flex-direction: column;
     align-self: stretch;
-    border-left: 1px solid var(--color-border-base);
+    border-left: var(--border-width, 1px) solid var(--input-border-internal, var(--color-border-base));
     flex-shrink: 0;
   }
 
@@ -238,7 +240,7 @@
     align-items: center;
     justify-content: center;
     flex: 1;
-    width: 2rem;
+    width: var(--spacing-8, 2rem);
     padding: 0;
     border: none;
     background: transparent;
@@ -249,8 +251,8 @@
       color var(--duration-fast) var(--ease-default);
 
     svg {
-      width: 0.75rem;
-      height: 0.75rem;
+      width: var(--spacing-3, 0.75rem);
+      height: var(--spacing-3, 0.75rem);
     }
 
     &:hover {
@@ -263,12 +265,12 @@
     }
 
     &--up {
-      border-bottom: 1px solid var(--color-border-base);
-      border-radius: 0 var(--radius-md) 0 0;
+      border-bottom: var(--border-width, 1px) solid var(--input-border-internal, var(--color-border-base));
+      border-start-end-radius: var(--input-radius, var(--radius-md));
     }
 
     &--down {
-      border-radius: 0 0 var(--radius-md) 0;
+      border-end-end-radius: var(--input-radius, var(--radius-md));
     }
   }
 
@@ -277,7 +279,8 @@
   // ==========================================================================
   &.is-focused {
     border-color: var(--input-color-base);
-    box-shadow: 0 0 0 1px var(--color-void), 0 0 0 3px var(--input-color-base);
+    box-shadow: 0 0 0 var(--border-width, 1px) var(--color-void), 0 0 0 var(--border-width-3, 3px) var(--input-color-base);
+    --input-border-internal: var(--input-color-base);
   }
 
   // ==========================================================================
@@ -288,7 +291,7 @@
     cursor: not-allowed;
     pointer-events: none;
     background-color: var(--color-carbon);
-    
+
     .input__field {
       color: var(--color-text-muted);
       -webkit-text-fill-color: var(--color-text-muted); // Required for Safari
@@ -302,7 +305,7 @@
   &:has(.input__field[readonly]) {
     background-color: var(--color-carbon);
     border-color: var(--color-border-subtle);
-    
+
     .input__field {
       cursor: default;
       color: var(--color-text-muted);
@@ -330,7 +333,7 @@
     --input-color-base: var(--color-success);
 
     &.is-focused {
-      box-shadow: 0 0 0 1px var(--color-void), 0 0 0 3px var(--color-success);
+      box-shadow: 0 0 0 var(--border-width, 1px) var(--color-void), 0 0 0 var(--border-width-3, 3px) var(--color-success);
     }
   }
 
@@ -339,7 +342,7 @@
     --input-color-base: var(--color-danger);
 
     &.is-focused {
-      box-shadow: 0 0 0 1px var(--color-void), 0 0 0 3px var(--color-danger);
+      box-shadow: 0 0 0 var(--border-width, 1px) var(--color-void), 0 0 0 var(--border-width-3, 3px) var(--color-danger);
     }
   }
 
@@ -359,7 +362,7 @@
     &.is-focused {
       background-color: var(--color-void);
       border-color: var(--input-color-base);
-      box-shadow: 0 0 0 1px var(--color-void), 0 0 0 3px var(--input-color-base);
+      box-shadow: 0 0 0 var(--border-width, 1px) var(--color-void), 0 0 0 var(--border-width-3, 3px) var(--input-color-base);
     }
   }
 
@@ -367,14 +370,14 @@
   // SIZES
   // ==========================================================================
   &--sm {
-    --input-height: 2.25rem;
+    --input-height: var(--spacing-8, 2rem);
     --input-padding-x: var(--spacing-2);
     --input-font-size: var(--font-size-xs);
-    --input-icon-size: 1rem;
+    --input-icon-size: var(--spacing-4, 1rem);
     --input-radius: var(--radius-sm);
 
     .input__step-btn {
-      width: 1.5rem;
+      width: var(--spacing-6, 1.5rem);
 
       svg {
         width: 0.625rem;
@@ -384,10 +387,10 @@
   }
 
   &--lg {
-    --input-height: 3.25rem;
+    --input-height: var(--spacing-12, 3rem);
     --input-padding-x: var(--spacing-4);
     --input-font-size: var(--font-size-base);
-    --input-icon-size: 1.5rem;
+    --input-icon-size: var(--spacing-6, 1.5rem);
     --input-radius: var(--radius-lg);
 
     .input__step-btn {
@@ -413,13 +416,33 @@
 }
 
 // Ensure correct semantic variable names mapping
-.input--primary { --input-color-base: var(--color-primary); }
-.input--success { --input-color-base: var(--color-success); }
-.input--warning { --input-color-base: var(--color-warning); }
-.input--danger { --input-color-base: var(--color-danger); }
-.input--info { --input-color-base: var(--color-info); }
-.input--neutral { --input-color-base: var(--color-fog); }
-.input--white { --input-color-base: var(--white); }
+.input--primary {
+  --input-color-base: var(--color-primary);
+}
+
+.input--success {
+  --input-color-base: var(--color-success);
+}
+
+.input--warning {
+  --input-color-base: var(--color-warning);
+}
+
+.input--danger {
+  --input-color-base: var(--color-danger);
+}
+
+.input--info {
+  --input-color-base: var(--color-info);
+}
+
+.input--neutral {
+  --input-color-base: var(--color-ash);
+}
+
+.input--white {
+  --input-color-base: var(--white);
+}
 
 // ==========================================================================
 // VALIDATION MESSAGE — Outside .input to avoid BEM nesting issues

@@ -8,51 +8,53 @@ export const order = 1;
 export const vanillaHtml = `
 <div class="row">
   <div class="col-12">
-    <div class="table-responsive">
-      <table class="table table-hover">
-        <thead>
-          <tr>
-            <th>User</th>
-            <th>Role</th>
-            <th>Status</th>
-            <th>Last Active</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>
-              <div style="display: flex; align-items: center; gap: 0.75rem;">
-                <div style="width: 2rem; height: 2rem; border-radius: 50%; background: var(--color-surface-elevated); display: flex; align-items: center; justify-content: center; font-size: 0.75rem; font-weight: bold;">
-                  JD
+    <div class="table-wrapper">
+      <div class="table-responsive">
+        <table class="table table-hover">
+          <thead>
+            <tr>
+              <th scope="col">User</th>
+              <th scope="col">Role</th>
+              <th scope="col">Status</th>
+              <th scope="col">Last Active</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>
+                <div style="display: flex; align-items: center; gap: 0.75rem;">
+                  <div style="width: 2rem; height: 2rem; border-radius: 50%; background: var(--color-surface-elevated); display: flex; align-items: center; justify-content: center; font-size: 0.75rem; font-weight: bold;">
+                    JD
+                  </div>
+                  <div>
+                    <div style="font-weight: 500;">John Doe</div>
+                    <div style="font-size: 0.75rem; color: var(--color-text-muted);">john@example.com</div>
+                  </div>
                 </div>
-                <div>
-                  <div style="font-weight: 500;">John Doe</div>
-                  <div style="font-size: 0.75rem; color: var(--color-text-muted);">john@example.com</div>
+              </td>
+              <td>Admin</td>
+              <td><span class="badge badge-success">Active</span></td>
+              <td>Just now</td>
+            </tr>
+            <tr>
+              <td>
+                <div style="display: flex; align-items: center; gap: 0.75rem;">
+                  <div style="width: 2rem; height: 2rem; border-radius: 50%; background: var(--color-surface-elevated); display: flex; align-items: center; justify-content: center; font-size: 0.75rem; font-weight: bold;">
+                    AS
+                  </div>
+                  <div>
+                    <div style="font-weight: 500;">Alice Smith</div>
+                    <div style="font-size: 0.75rem; color: var(--color-text-muted);">alice@example.com</div>
+                  </div>
                 </div>
-              </div>
-            </td>
-            <td>Admin</td>
-            <td><span class="badge badge-success">Active</span></td>
-            <td>Just now</td>
-          </tr>
-          <tr>
-            <td>
-              <div style="display: flex; align-items: center; gap: 0.75rem;">
-                <div style="width: 2rem; height: 2rem; border-radius: 50%; background: var(--color-surface-elevated); display: flex; align-items: center; justify-content: center; font-size: 0.75rem; font-weight: bold;">
-                  AS
-                </div>
-                <div>
-                  <div style="font-weight: 500;">Alice Smith</div>
-                  <div style="font-size: 0.75rem; color: var(--color-text-muted);">alice@example.com</div>
-                </div>
-              </div>
-            </td>
-            <td>Editor</td>
-            <td><span class="badge badge-warning">Pending</span></td>
-            <td>2 hours ago</td>
-          </tr>
-        </tbody>
-      </table>
+              </td>
+              <td>Editor</td>
+              <td><span class="badge badge-warning">Pending</span></td>
+              <td>2 hours ago</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
     </div>
   </div>
 </div>

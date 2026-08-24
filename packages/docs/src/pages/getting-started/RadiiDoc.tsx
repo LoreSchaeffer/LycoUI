@@ -1,51 +1,74 @@
 import React, { useState } from 'react';
-import { PiCheckBold } from 'react-icons/pi';
-import './FoundationDocs.scss';
-
+import { PiCheckBold, PiCopy } from 'react-icons/pi';
+import { Table, TableHead, TableBody, TableRow, TableCell } from '@loreschaeffer/lyco-ui';
 const radiiSteps = ['sm', 'md', 'xl', '2xl', 'full'];
 
 export const RadiiDoc: React.FC = () => {
     return (
-        <article className="docs-foundation">
-            <h1 className="docs-foundation__title">Border Radius</h1>
-            <p className="docs-foundation__description">
+        <article className="mb-10">
+            <h1 className="mb-8">Border Radius</h1>
+            <p className="text-secondary mb-6">
                 Our radii scale applies subtle rounding to components for a softer, premium aesthetic while maintaining a sharp overall geometry.
             </p>
 
-            <section className="docs-foundation__section">
-                <div className="docs-foundation__grid">
-                    {radiiSteps.map(step => {
-                        const cssVar = `--radius-${step}`;
-                        const [copied, setCopied] = useState(false);
-                        const handleCopy = () => {
-                            navigator.clipboard.writeText(`var(${cssVar})`);
-                            setCopied(true);
-                            setTimeout(() => setCopied(false), 2000);
-                        };
-
-                        return (
-                            <div
-                                key={step}
-                                className="docs-foundation__card docs-foundation__card--interactive"
-                                onClick={handleCopy}
-                                title={`Copy var(${cssVar})`}
-                            >
-                                <div className="docs-foundation__card-visual" style={{ minHeight: 120, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                                    <div style={{ width: '60px', height: '60px', backgroundColor: 'var(--color-primary)', borderRadius: `var(${cssVar})` }} />
-                                </div>
-                                <div className="docs-foundation__card-info">
-                                    <span className="docs-foundation__card-name">
-                                        radius-{step}
-                                        {copied && <PiCheckBold style={{ marginLeft: 8, color: 'var(--color-success)' }} />}
-                                    </span>
-                                    <span className="docs-foundation__card-value">var({cssVar})</span>
-                                </div>
-                            </div>
-                        );
-                    })}
-                </div>
+            <section className="mb-10">
+                <Table>
+                    <TableHead>
+                        <TableRow>
+                            <TableCell isHeader>Name</TableCell>
+                            <TableCell isHeader>Token</TableCell>
+                            <TableCell isHeader>Preview</TableCell>
+                        </TableRow>
+                    </TableHead>
+                    <TableBody>
+                        {radiiSteps.map(step => {
+                            const cssVar = `--radius-${step}`;
+                            return <RadiiRow key={step} step={step} cssVar={cssVar} />;
+                        })}
+                    </TableBody>
+                </Table>
             </section>
         </article>
+    );
+};
+
+const RadiiRow = ({ step, cssVar }: { step: string, cssVar: string }) => {
+    const [copied, setCopied] = useState(false);
+    const [isHovered, setIsHovered] = useState(false);
+    const handleCopy = () => {
+        navigator.clipboard.writeText(`var(${cssVar})`);
+        setCopied(true);
+        setTimeout(() => setCopied(false), 2000);
+    };
+
+    return (
+        <TableRow 
+            onClick={handleCopy} 
+            style={{ cursor: 'pointer' }} 
+            hover 
+            title={`Copy var(${cssVar})`}
+            onMouseEnter={() => setIsHovered(true)}
+            onMouseLeave={() => setIsHovered(false)}
+        >
+            <TableCell>radius-{step}</TableCell>
+            <TableCell>
+                <code style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                    var({cssVar})
+                    <span style={{ 
+                        display: 'inline-flex', 
+                        width: '1em', 
+                        opacity: (copied || isHovered) ? 1 : 0, 
+                        transition: 'opacity 0.2s ease',
+                        color: copied ? 'var(--color-success)' : 'var(--color-text-secondary)'
+                    }}>
+                        {copied ? <PiCheckBold/> : <PiCopy/>}
+                    </span>
+                </code>
+            </TableCell>
+            <TableCell>
+                <div style={{ width: '60px', height: '60px', backgroundColor: 'var(--color-primary)', borderRadius: `var(${cssVar})` }} />
+            </TableCell>
+        </TableRow>
     );
 };
 

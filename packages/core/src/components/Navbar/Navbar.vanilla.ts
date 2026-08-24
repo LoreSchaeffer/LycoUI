@@ -1,5 +1,5 @@
 export function initLycoNavbars(): void {
-    const navbars = document.querySelectorAll<HTMLElement>('.navbar');
+    const navbars = document.querySelectorAll<HTMLElement>('.navbar:not([data-lyco-initialized])');
     navbars.forEach(navbar => {
         if (!navbar.dataset.lycoInitialized) {
             new LycoNavbarController(navbar);
@@ -20,7 +20,6 @@ export class LycoNavbarController {
     constructor(navbar: HTMLElement) {
         this.navbar = navbar;
         
-        // Find toggles inside this navbar
         this.toggles = navbar.querySelectorAll<HTMLButtonElement>('.navbar__toggle');
         this.collapses = navbar.querySelectorAll<HTMLElement>('.navbar__collapse');
 
@@ -51,10 +50,8 @@ export class LycoNavbarController {
         const isExpanded = toggle.getAttribute('aria-expanded') === 'true';
         const nextState = !isExpanded;
         
-        // Update aria-expanded on toggle
         toggle.setAttribute('aria-expanded', String(nextState));
 
-        // Find associated collapse (if aria-controls is set) or just toggle all collapses in this navbar
         const controlsId = toggle.getAttribute('aria-controls');
         if (controlsId) {
             const target = document.getElementById(controlsId);
@@ -64,7 +61,6 @@ export class LycoNavbarController {
             }
         }
         
-        // Fallback: toggle all collapses in this navbar
         this.collapses.forEach(collapse => this.toggleCollapse(collapse, nextState));
     }
 

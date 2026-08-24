@@ -1,5 +1,5 @@
 export function initLycoRanges() {
-    const nativeRanges = document.querySelectorAll<HTMLInputElement>('input[type="range"].range-custom');
+    const nativeRanges = document.querySelectorAll<HTMLInputElement>('input[type="range"].range-custom:not([data-lyco-initialized])');
     nativeRanges.forEach(range => {
         if (!range.dataset.lycoInitialized) {
             new LycoRangeController(range);
@@ -32,18 +32,16 @@ class LycoRangeController {
         const filled = this.nativeInput.getAttribute('data-filled') !== 'false';
         const showTooltip = this.nativeInput.getAttribute('data-show-tooltip') !== 'false';
 
-        this.customContainer.className = `range range-${variant} range-${size} range-tooltip-${tooltipSize}`;
+        this.customContainer.className = `range range--${variant} ${size !== 'md' ? `range--${size}` : ''} range--tooltip-${tooltipSize}`;
         if (!filled) {
-            this.customContainer.classList.add('range-unfilled');
+            this.customContainer.classList.add('range--unfilled');
         }
         if (this.nativeInput.disabled) {
             this.customContainer.classList.add('is-disabled');
         }
 
-        // Replace native input with custom container and put native input inside
         this.nativeInput.parentNode?.insertBefore(this.customContainer, this.nativeInput);
         
-        // Match React parity
         this.nativeInput.classList.remove('lyco-range-custom');
         this.nativeInput.classList.add('range__input');
         
@@ -82,8 +80,8 @@ class LycoRangeController {
         let displayValue: string | number = value;
         
         const formatterName = this.nativeInput.getAttribute('data-tooltip-format');
-        if (formatterName && typeof (window as any).lycoFormatters?.[formatterName] === 'function') {
-            displayValue = (window as any).lycoFormatters[formatterName](Number(value));
+        if (formatterName && typeof window.lycoFormatters?.[formatterName] === 'function') {
+            displayValue = window.lycoFormatters[formatterName](Number(value));
         }
 
         const displayString = String(displayValue);

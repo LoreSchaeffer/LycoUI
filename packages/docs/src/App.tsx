@@ -143,10 +143,14 @@ const DocsLayout: React.FC = () => {
     );
 };
 
+import { NotificationProvider } from '@loreschaeffer/lyco-ui';
+
 export const App: React.FC = () => {
     return (
         <BrowserRouter>
-            <DocsLayout/>
+            <NotificationProvider>
+                <DocsLayout/>
+            </NotificationProvider>
         </BrowserRouter>
     );
 };

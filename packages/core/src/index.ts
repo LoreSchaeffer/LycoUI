@@ -16,10 +16,10 @@ export * from "./components/ProgressBar";
 export * from "./components/Input";
 export * from "./components/Snackbar";
 export * from "./components/Modal";
-export { Navbar } from './components/Navbar';
-export type { NavbarProps, NavbarBrandProps, NavbarToggleProps, NavbarCollapseProps, NavbarNavProps, NavbarItemProps, NavbarLinkProps } from './components/Navbar';
+export * from './components/Navbar';
+export * from './components/Avatar';
 
-export * from "./components/Sidebar/Sidebar";
+export * from './components/Sidebar';
 export * from './components/Notification';
 export * from './components/Pagination';
 export * from './components/Table';

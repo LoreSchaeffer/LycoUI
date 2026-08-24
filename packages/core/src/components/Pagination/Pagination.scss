@@ -10,13 +10,13 @@
   // SIZES
   // ==========================================================================
   &-sm {
-    --pagination-size: 1.5rem;
+    --pagination-size: var(--spacing-6, 1.5rem);
     --pagination-font-size: var(--font-size-xs);
     --pagination-padding: 0 var(--spacing-2);
   }
   
   &-md {
-    --pagination-size: 2rem;
+    --pagination-size: var(--spacing-8, 2rem);
     --pagination-font-size: var(--font-size-sm);
     --pagination-padding: 0 var(--spacing-3);
   }
@@ -28,7 +28,7 @@
   }
   
   // Default size if none specified
-  --pagination-size: 2rem;
+  --pagination-size: var(--spacing-8, 2rem);
   --pagination-font-size: var(--font-size-sm);
   --pagination-padding: 0 var(--spacing-3);
 
@@ -102,7 +102,11 @@
     background: transparent;
     border: none; // Minimalist Linear Aesthetic
     cursor: pointer;
-    transition: all var(--duration-fast) var(--ease-default);
+    transition: background-color var(--duration-fast) var(--ease-default),
+                color var(--duration-fast) var(--ease-default),
+                border-color var(--duration-fast) var(--ease-default),
+                box-shadow var(--duration-fast) var(--ease-default),
+                transform var(--duration-fast) var(--ease-default);
     user-select: none;
     text-decoration: none;
     outline: none;
@@ -113,8 +117,8 @@
     }
     
     &:focus-visible {
-      outline: 2px solid var(--color-primary);
-      outline-offset: 2px;
+      outline: var(--border-width-2, 2px) solid var(--color-primary);
+      outline-offset: var(--border-width-2, 2px);
     }
 
     &.is-active {
@@ -174,16 +178,16 @@
       width: calc(var(--compact-digits, 2) * 1ch + 2rem);
       text-align: center;
       background: var(--color-surface-elevated);
-      border: 1px solid var(--color-border-subtle);
+      border: var(--border-width, 1px) solid var(--color-border-subtle);
       color: var(--color-text-primary);
       border-radius: var(--radius-sm);
       height: var(--pagination-size);
       font-size: var(--pagination-font-size);
       outline: none;
       
-      &:focus {
+      &:focus-visible {
         border-color: var(--color-primary);
-        box-shadow: 0 0 0 1px var(--color-primary);
+        box-shadow: 0 0 0 var(--border-width, 1px) var(--color-primary);
       }
       
       // Remove spinner for number input

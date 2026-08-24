@@ -50,16 +50,13 @@ export const Carousel = React.forwardRef<HTMLDivElement, CarouselProps>(({
     const trackRef = useRef<HTMLDivElement>(null);
     const [activeIndex, setActiveIndex] = useState(0); 
     
-    // We need to disable scroll listener while programmatically silently jumping
     const isJumping = useRef(false);
 
     const childrenArray = Children.toArray(children);
     const count = childrenArray.length;
 
-    // Build the DOM items
     const domItems = useMemo(() => {
         if (!infinite || count <= 1) return childrenArray;
-        // Clone the last element to the front, and first element to the back
         const first = childrenArray[0];
         const last = childrenArray[count - 1];
         
@@ -82,7 +79,6 @@ export const Carousel = React.forwardRef<HTMLDivElement, CarouselProps>(({
         }
     }, []);
 
-    // Initial mount to the first REAL item if infinite
     useEffect(() => {
         if (infinite && count > 1) {
             isJumping.current = true;
@@ -112,22 +108,17 @@ export const Carousel = React.forwardRef<HTMLDivElement, CarouselProps>(({
             }
         });
 
-        // Determine logical index
         let newLogicIndex = closestDomIndex;
         if (infinite && count > 1) {
             if (closestDomIndex === 0) {
-                // Reached prepend clone
                 newLogicIndex = count - 1;
-                // Silently jump to the real last item
                 isJumping.current = true;
                 scrollToDomIndex(count, 'auto');
                 requestAnimationFrame(() => {
                     isJumping.current = false;
                 });
             } else if (closestDomIndex === count + 1) {
-                // Reached append clone
                 newLogicIndex = 0;
-                // Silently jump to real first item
                 isJumping.current = true;
                 scrollToDomIndex(1, 'auto');
                 requestAnimationFrame(() => {
@@ -146,7 +137,6 @@ export const Carousel = React.forwardRef<HTMLDivElement, CarouselProps>(({
     const scrollPrev = () => {
         if (!trackRef.current) return;
         if (infinite && count > 1) {
-            // Find current active DOM index by matching logical index
             const currentDomIndex = activeIndex + 1;
             scrollToDomIndex(currentDomIndex - 1, 'smooth');
         } else if (activeIndex > 0) {
@@ -172,7 +162,7 @@ export const Carousel = React.forwardRef<HTMLDivElement, CarouselProps>(({
     useEffect(() => {
         const track = trackRef.current;
         if (track) {
-            let timeoutId: any;
+            let timeoutId: ReturnType<typeof setTimeout>;
             const listener = () => {
                 clearTimeout(timeoutId);
                 timeoutId = setTimeout(() => {

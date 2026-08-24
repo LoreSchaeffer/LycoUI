@@ -1,5 +1,5 @@
 export function initLycoAccordions(): void {
-    const accordions = document.querySelectorAll<HTMLDivElement>('.accordion-custom');
+    const accordions = document.querySelectorAll<HTMLDivElement>('.accordion-custom:not([data-lyco-initialized])');
     accordions.forEach(accordion => {
         if (!accordion.dataset.lycoInitialized) {
             new LycoAccordionController(accordion);
@@ -20,7 +20,6 @@ class LycoAccordionController {
         const variant = customElement.getAttribute('data-variant') || 'primary';
         const flush = customElement.getAttribute('data-flush') === 'true';
 
-        // Create main wrapper
         this.wrapper = document.createElement('div');
         this.wrapper.className = `accordion accordion-${variant}`;
         if (flush) {
@@ -31,7 +30,6 @@ class LycoAccordionController {
             this.wrapper.id = customElement.id;
         }
 
-        // Process children
         const customItems = customElement.querySelectorAll<HTMLDivElement>(':scope > .accordion-item-custom');
         let index = 0;
         customItems.forEach(customItem => {
@@ -40,14 +38,12 @@ class LycoAccordionController {
             this.wrapper.appendChild(itemController.getElement());
         });
 
-        // Replace custom element with real one
         customElement.parentNode?.replaceChild(this.wrapper, customElement);
     }
 
     public handleToggle(toggledItem: AccordionItemController): void {
         const isNowOpen = toggledItem.isOpen();
 
-        // If exclusive mode and we just opened an item, close all others
         if (!this.allowMultiple && isNowOpen) {
             this.items.forEach(item => {
                 if (item !== toggledItem && item.isOpen()) {
@@ -83,7 +79,6 @@ class AccordionItemController {
         const disabled = customItem.hasAttribute('disabled');
         this.contentNodes = Array.from(customItem.childNodes);
 
-        // Generate IDs
         const baseId = `lyco-acc-${Math.random().toString(36).substr(2, 9)}-${index}`;
         const headerId = `${baseId}-header`;
         const collapseId = `${baseId}-collapse`;
@@ -92,12 +87,10 @@ class AccordionItemController {
         this.element.className = 'accordion__item';
         if (disabled) this.element.classList.add('is-disabled');
 
-        // Header
         const header = document.createElement('h2');
         header.className = 'accordion__header';
         header.id = headerId;
 
-        // Button
         this.button = document.createElement('button');
         this.button.type = 'button';
         this.button.className = 'accordion__button';
@@ -123,7 +116,6 @@ class AccordionItemController {
         header.appendChild(this.button);
         this.element.appendChild(header);
 
-        // Collapse wrapper
         const collapse = document.createElement('div');
         collapse.className = 'accordion__collapse';
         collapse.id = collapseId;
@@ -136,7 +128,6 @@ class AccordionItemController {
         const body = document.createElement('div');
         body.className = 'accordion__body';
         
-        // Move native children safely
         this.contentNodes.forEach(node => body.appendChild(node));
 
         collapseInner.appendChild(body);

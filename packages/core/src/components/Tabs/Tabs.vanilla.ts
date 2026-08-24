@@ -1,27 +1,43 @@
+import { handleListKeyboardNav } from '../../utils/keyboard';
+import { setAriaSelected } from '../../utils/aria';
+
+/**
+ * Controller for the Vanilla JS Tabs component.
+ * Manages WAI-ARIA states and keyboard navigation.
+ */
 export class TabsController {
   private element: HTMLElement;
   private triggers: NodeListOf<HTMLButtonElement>;
   private contents: NodeListOf<HTMLElement>;
   private boundHandleClick: (e: MouseEvent) => void;
+  private boundHandleKeyDown: (e: KeyboardEvent) => void;
 
+  /**
+   * Initializes the Tabs controller.
+   * @param element - The root DOM element containing the tabs.
+   */
   constructor(element: HTMLElement) {
     this.element = element;
     this.triggers = this.element.querySelectorAll('[data-lyco-tab-trigger]');
     this.contents = this.element.querySelectorAll('[data-lyco-tab-content]');
     this.boundHandleClick = this.handleClick.bind(this);
+    this.boundHandleKeyDown = this.handleKeyDown.bind(this);
 
     if (this.element.dataset.lycoInitialized === 'true') return;
 
     this.init();
   }
 
+  /**
+   * Binds event listeners and sets initial states.
+   */
   private init() {
     this.triggers.forEach(trigger => {
       trigger.addEventListener('click', this.boundHandleClick);
     });
+    this.element.addEventListener('keydown', this.boundHandleKeyDown);
     this.element.dataset.lycoInitialized = 'true';
 
-    // Hide non-active contents initially
     const activeTrigger = Array.from(this.triggers).find(t => t.classList.contains('is-active')) || this.triggers[0];
     const activeKey = activeTrigger ? activeTrigger.dataset.lycoTabTrigger : null;
     
@@ -30,6 +46,20 @@ export class TabsController {
         content.style.display = 'none';
       }
     });
+  }
+
+  private handleKeyDown(e: KeyboardEvent) {
+    const list = e.target as HTMLElement;
+    if (!list.closest('.tabs__list')) return;
+    
+    handleListKeyboardNav(
+      e,
+      this.element,
+      '[role="tab"]:not(.is-disabled):not(:disabled)',
+      true, // horizontal
+      true, // loop
+      (item) => item.click()
+    );
   }
 
   private handleClick(e: MouseEvent) {
@@ -41,18 +71,16 @@ export class TabsController {
     const eventKey = trigger.dataset.lycoTabTrigger;
     if (!eventKey) return;
 
-    // Update triggers
     this.triggers.forEach(t => {
       if (t === trigger) {
         t.classList.add('is-active');
-        t.setAttribute('aria-selected', 'true');
+        setAriaSelected(t, true);
       } else {
         t.classList.remove('is-active');
-        t.setAttribute('aria-selected', 'false');
+        setAriaSelected(t, false);
       }
     });
 
-    // Update contents
     this.contents.forEach(content => {
       if (content.dataset.lycoTabContent === eventKey) {
         content.style.display = ''; // Restore default display
@@ -62,17 +90,20 @@ export class TabsController {
     });
   }
 
+  /**
+   * Destroys the controller, removing all event listeners to prevent memory leaks.
+   */
   public destroy() {
     this.triggers.forEach(trigger => {
       trigger.removeEventListener('click', this.boundHandleClick);
     });
+    this.element.removeEventListener('keydown', this.boundHandleKeyDown);
     delete this.element.dataset.lycoInitialized;
   }
 }
 
-// Auto-initialization
 export const initTabs = () => {
-  const elements = document.querySelectorAll('[data-lyco-tabs]');
+  const elements = document.querySelectorAll('[data-lyco-tabs]:not([data-lyco-initialized])');
   elements.forEach(element => {
     new TabsController(element as HTMLElement);
   });

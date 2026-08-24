@@ -1,14 +1,12 @@
 import type { NotificationPosition } from '../../types/types';
 import { NOTIFICATION_SEMANTIC_SVG, NOTIFICATION_CLOSE_SVG } from './Notification';
 
-// ── Duration presets ──
 const DURATION_MAP: Record<string, number> = {
   short: 3000,
   medium: 5000,
   long: 8000,
 };
 
-// ── Types ──
 export type VanillaNotificationDuration = 'short' | 'medium' | 'long' | number;
 
 export interface VanillaNotificationOptions {
@@ -21,7 +19,6 @@ export interface VanillaNotificationOptions {
   isFlat?: boolean;
 }
 
-// ── Helpers ──
 function parseSafeSvg(svgString: string): SVGSVGElement | null {
   const template = document.createElement('template');
   template.innerHTML = svgString.trim();
@@ -34,7 +31,6 @@ function parseSafeSvg(svgString: string): SVGSVGElement | null {
   return svg;
 }
 
-// ── Manager ──
 class LycoNotificationManager {
   private stackContainers: Map<NotificationPosition, HTMLDivElement> = new Map();
   private position: NotificationPosition = 'bottom-right';
@@ -75,7 +71,6 @@ class LycoNotificationManager {
     const variant = options.variant || 'neutral';
     const closable = options.closable ?? true;
 
-    // ── Build DOM (parity with React) ──
     const el = document.createElement('div');
     el.className = `notification notification-${variant} notification-enter--${pos}`;
     if (closable) el.classList.add('notification-closable');
@@ -84,7 +79,6 @@ class LycoNotificationManager {
     el.setAttribute('aria-live', 'polite');
     el.id = id;
 
-    // Resolve icon
     const resolvedIcon = options.icon !== undefined
       ? options.icon
       : (NOTIFICATION_SEMANTIC_SVG[variant] ?? null);
@@ -107,7 +101,6 @@ class LycoNotificationManager {
       el.appendChild(iconSpan);
     }
 
-    // Body
     const body = document.createElement('div');
     body.className = 'notification__body';
 
@@ -128,7 +121,6 @@ class LycoNotificationManager {
     body.appendChild(msgEl);
     el.appendChild(body);
 
-    // Close handler
     let timerId: number | undefined;
     const closeHandler = (): void => {
       if (timerId) window.clearTimeout(timerId);
@@ -143,7 +135,6 @@ class LycoNotificationManager {
       }, 300);
     };
 
-    // Close button
     let closeBtn: HTMLButtonElement | null = null;
     if (closable) {
       closeBtn = document.createElement('button');
@@ -155,7 +146,6 @@ class LycoNotificationManager {
       el.appendChild(closeBtn);
     }
 
-    // Duration & progress bar
     const durationType = options.duration ?? 'short';
     const durationMs = typeof durationType === 'number'
       ? durationType * 1000
@@ -170,7 +160,6 @@ class LycoNotificationManager {
     progressContainer.appendChild(progressBar);
     el.appendChild(progressContainer);
 
-    // Pause progress on hover
     el.addEventListener('mouseenter', () => {
       progressBar.style.animationPlayState = 'paused';
       if (timerId) {
@@ -199,7 +188,6 @@ class LycoNotificationManager {
       }
     });
 
-    // Append to stack
     const isBottom = pos.startsWith('bottom');
     if (isBottom) {
       stack.appendChild(el);
@@ -207,7 +195,6 @@ class LycoNotificationManager {
       stack.insertBefore(el, stack.firstChild);
     }
 
-    // Auto-dismiss timer
     timerId = window.setTimeout(closeHandler, durationMs);
 
     return id;

@@ -1,6 +1,4 @@
 export type ColorVariant =
-    | 'primary'
-    | 'neutral'
     | 'red'
     | 'orange'
     | 'amber'
@@ -16,7 +14,7 @@ export type ColorVariant =
     | 'pink'
     | 'white';
 
-export type SemanticVariant = 'success' | 'warning' | 'danger' | 'info';
+export type SemanticVariant = 'primary' | 'neutral' | 'success' | 'warning' | 'danger' | 'info';
 
 export type FullVariant = ColorVariant | SemanticVariant;
 

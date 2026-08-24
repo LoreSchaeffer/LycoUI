@@ -1,51 +1,84 @@
 import React, { useState } from 'react';
-import { PiCopyBold, PiCheckBold } from 'react-icons/pi';
-import './FoundationDocs.scss';
-
+import { PiCheckBold, PiCopy } from 'react-icons/pi';
+import { Table, TableHead, TableBody, TableRow, TableCell, Code } from '@loreschaeffer/lyco-ui';
 const spacingSteps = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '12', '14', '16', '20', '24', '32'];
 
 export const SpacingDoc: React.FC = () => {
     return (
-        <article className="docs-foundation">
-            <h1 className="docs-foundation__title">Spacing</h1>
-            <p className="docs-foundation__description">
+        <article className="mb-10">
+            <h1 className="mb-8">Spacing</h1>
+            <p className="text-secondary mb-6">
                 Our spacing scale is built on a strict 4-point baseline grid. Use these variables for margin, padding, and gaps to ensure consistent rhythm across the UI.
             </p>
 
-            <section className="docs-foundation__section">
-                <div className="docs-foundation__grid">
-                    {spacingSteps.map(step => {
-                        const cssVar = `--spacing-${step}`;
-                        const [copied, setCopied] = useState(false);
-                        const handleCopy = () => {
-                            navigator.clipboard.writeText(`var(${cssVar})`);
-                            setCopied(true);
-                            setTimeout(() => setCopied(false), 2000);
-                        };
+            <section className="mb-10">
+                <Table>
+                    <TableHead>
+                        <TableRow>
+                            <TableCell isHeader>Name</TableCell>
+                            <TableCell isHeader>Token</TableCell>
+                            <TableCell isHeader>Preview</TableCell>
+                        </TableRow>
+                    </TableHead>
+                    <TableBody>
+                        {spacingSteps.map(step => {
+                            const cssVar = `--spacing-${step}`;
+                            return <SpacingRow key={step} step={step} cssVar={cssVar} />;
+                        })}
+                    </TableBody>
+                </Table>
+            </section>
 
-                        return (
-                            <div
-                                key={step}
-                                className="docs-foundation__card docs-foundation__card--interactive"
-                                onClick={handleCopy}
-                                title={`Copy var(${cssVar})`}
-                            >
-                                <div className="docs-foundation__card-visual" style={{ minHeight: 80, display: 'flex', alignItems: 'center' }}>
-                                    <div style={{ width: `var(${cssVar})`, height: '24px', backgroundColor: 'var(--color-primary)', borderRadius: 'var(--radius-sm)' }} />
-                                </div>
-                                <div className="docs-foundation__card-info">
-                                    <span className="docs-foundation__card-name">
-                                        spacing-{step}
-                                        {copied && <PiCheckBold style={{ marginLeft: 8, color: 'var(--color-success)' }} />}
-                                    </span>
-                                    <span className="docs-foundation__card-value">var({cssVar})</span>
-                                </div>
-                            </div>
-                        );
-                    })}
-                </div>
+            <section className="mb-10">
+                <h2 className="mt-12 mb-6">Margin Utilities</h2>
+                <p className="text-secondary mb-6">
+                    LycoUI provides a set of zero-runtime global utility classes for margins to maintain consistent vertical rhythm. The pattern is <code>.m{'{direction}'}-{'{step}'}</code> where <code>{'{direction}'}</code> is <code>t</code> (top) or <code>b</code> (bottom), and <code>{'{step}'}</code> is <code>1-12</code>.
+                </p>
+                <Code language="html">
+                    {`<div className="mt-8 mb-4">...</div>`}
+                </Code>
             </section>
         </article>
+    );
+};
+
+const SpacingRow = ({ step, cssVar }: { step: string; cssVar: string }) => {
+    const [copied, setCopied] = useState(false);
+    const [isHovered, setIsHovered] = useState(false);
+    const handleCopy = () => {
+        navigator.clipboard.writeText(`var(${cssVar})`);
+        setCopied(true);
+        setTimeout(() => setCopied(false), 2000);
+    };
+
+    return (
+        <TableRow 
+            onClick={handleCopy} 
+            style={{ cursor: 'pointer' }} 
+            hover 
+            title={`Copy var(${cssVar})`}
+            onMouseEnter={() => setIsHovered(true)}
+            onMouseLeave={() => setIsHovered(false)}
+        >
+            <TableCell>spacing-{step}</TableCell>
+            <TableCell>
+                <code style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                    var({cssVar})
+                    <span style={{ 
+                        display: 'inline-flex', 
+                        width: '1em', 
+                        opacity: (copied || isHovered) ? 1 : 0, 
+                        transition: 'opacity 0.2s ease',
+                        color: copied ? 'var(--color-success)' : 'var(--color-text-secondary)'
+                    }}>
+                        {copied ? <PiCheckBold/> : <PiCopy/>}
+                    </span>
+                </code>
+            </TableCell>
+            <TableCell>
+                <div style={{ width: `var(${cssVar})`, height: '24px', backgroundColor: 'var(--color-primary)', borderRadius: 'var(--radius-sm)' }} />
+            </TableCell>
+        </TableRow>
     );
 };
 

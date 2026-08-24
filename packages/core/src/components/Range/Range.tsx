@@ -45,7 +45,6 @@ export const Range = forwardRef<HTMLInputElement, RangeProps>(
     );
     const [isHovered, setIsHovered] = useState(false);
 
-    // Merge refs
     const setRefs = useCallback((node: HTMLInputElement | null) => {
       internalRef.current = node;
       if (typeof ref === 'function') ref(node);
@@ -62,7 +61,7 @@ export const Range = forwardRef<HTMLInputElement, RangeProps>(
       if (value === undefined) {
          setCurrentValue(Number(e.target.value));
       }
-      onInput?.(e as any);
+      onInput?.(e as unknown as React.InputEvent<HTMLInputElement>);
       onChange?.(e);
     }, [value, onInput, onChange]);
 
@@ -84,7 +83,6 @@ export const Range = forwardRef<HTMLInputElement, RangeProps>(
 
     const tooltipValue = tooltipFormatter ? tooltipFormatter(currentValue) : currentValue.toString();
     
-    // Calculate char count for dynamic font sizing
     const charCount = typeof tooltipValue === 'string' || typeof tooltipValue === 'number' 
       ? String(tooltipValue).length 
       : 2;

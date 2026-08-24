@@ -22,7 +22,7 @@
     --code-radius: var(--radius-xl);
 
     background-color: var(--code-bg);
-    border: 1px solid var(--code-border);
+    border: var(--border-width, 1px) solid var(--code-border);
     border-radius: var(--code-radius);
     display: flex;
     flex-direction: column;
@@ -48,7 +48,7 @@
     align-items: center;
     padding: var(--spacing-2) var(--spacing-4);
     background-color: var(--code-header-bg);
-    border-bottom: 1px solid var(--code-border);
+    border-bottom: var(--border-width, 1px) solid var(--code-border);
   }
 
   &__header-left,
@@ -85,14 +85,16 @@
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    width: 2rem;
-    height: 2rem;
+    width: var(--spacing-8, 2rem);
+    height: var(--spacing-8, 2rem);
     background: transparent;
     border: none;
     color: var(--color-text-muted);
     border-radius: var(--radius-sm);
     cursor: pointer;
-    transition: all var(--duration-fast) var(--ease-default);
+    transition: color var(--duration-fast) var(--ease-default),
+                background-color var(--duration-fast) var(--ease-default),
+                opacity var(--duration-fast) var(--ease-default);
 
     &:hover {
       background-color: var(--color-surface-hover);
@@ -100,8 +102,8 @@
     }
 
     &:focus-visible {
-      outline: 2px solid var(--color-primary);
-      outline-offset: 2px;
+      outline: var(--border-width-2, 2px) solid var(--color-primary);
+      outline-offset: var(--border-width-2, 2px);
     }
 
     .icon-success {

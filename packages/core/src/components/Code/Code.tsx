@@ -4,8 +4,6 @@ import type { HTMLAttributes, ChangeEvent, UIEvent } from 'react';
 import clsx from 'clsx';
 import { Select } from '../Select/Select';
 import { getShikiHighlighter } from '../../utils/shiki.config';
-// Shiki types (if available) for better developer experience.
-// Shiki is an optional peer dependency.
 
 
 export interface CodeProps extends Omit<HTMLAttributes<HTMLElement>, 'onChange'> {
@@ -36,7 +34,6 @@ export interface CodeProps extends Omit<HTMLAttributes<HTMLElement>, 'onChange'>
 }
 
 
-// Simple SVG Icons
 const CopyIcon = () => (
   <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" strokeWidth="2" fill="none" strokeLinecap="round" strokeLinejoin="round">
     <rect x="9" y="9" width="13" height="13" rx="2" ry="2" />
@@ -89,7 +86,6 @@ export const Code = forwardRef<HTMLElement, CodeProps>((
   const isControlled = propCode !== undefined;
   const currentCode = isControlled ? propCode : internalCode;
 
-  // Highlight code on change
   useEffect(() => {
     let isMounted = true;
 
@@ -97,8 +93,6 @@ export const Code = forwardRef<HTMLElement, CodeProps>((
       try {
         setHighlightStatus('loading');
         
-        // We initialize the highlighter with our supported languages.
-        // The getShikiHighlighter function internally handles caching and the 'lyco-dark' theme setup.
         const highlighter = await getShikiHighlighter(supportedLanguages);
         
         const html = highlighter.codeToHtml(currentCode, {
@@ -125,7 +119,6 @@ export const Code = forwardRef<HTMLElement, CodeProps>((
     };
   }, [currentCode, internalLang, theme, supportedLanguages]);
 
-  // Handle external language changes
   useEffect(() => {
     setInternalLang(propLanguage);
   }, [propLanguage]);
@@ -160,7 +153,6 @@ export const Code = forwardRef<HTMLElement, CodeProps>((
     URL.revokeObjectURL(url);
   }, [currentCode, fileName, internalLang]);
 
-  // Sync scroll between textarea and pre
   const handleScroll = useCallback((e: UIEvent<HTMLTextAreaElement>) => {
     const pre = e.currentTarget.nextElementSibling as HTMLPreElement | null;
     if (pre) {
@@ -169,10 +161,8 @@ export const Code = forwardRef<HTMLElement, CodeProps>((
     }
   }, []);
 
-  // Check if we need the header
   const hasHeader = !inline && (showCopy || showDownload || showLanguageSelector);
 
-  // If inline, render a simple <code> tag
   if (inline) {
     return (
       <code 
@@ -187,7 +177,7 @@ export const Code = forwardRef<HTMLElement, CodeProps>((
 
   return (
     <div
-      ref={ref as any}
+      ref={ref as React.Ref<HTMLDivElement>}
       className={clsx(
         'code',
         'code--block',

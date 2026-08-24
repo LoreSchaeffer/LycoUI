@@ -9,7 +9,7 @@
 .tabs__list {
   display: flex;
   align-items: center;
-  border-bottom: 1px solid var(--color-border-subtle);
+  border-bottom: var(--border-width, 1px) solid var(--color-border-subtle);
   margin-bottom: var(--spacing-4);
   overflow-x: auto;
   -webkit-overflow-scrolling: touch;
@@ -59,8 +59,8 @@
       position: absolute;
       left: 0;
       right: 0;
-      bottom: -1px; // Align perfectly over the list border
-      height: 2px;
+      bottom: calc(var(--border-width, 1px) * -1); // Align perfectly over the list border
+      height: var(--border-width-2, 2px);
       background-color: var(--color-primary);
     }
   }
@@ -75,7 +75,7 @@
 @keyframes tabFadeIn {
   from {
     opacity: 0;
-    transform: translateY(4px);
+    transform: translateY(var(--spacing-1, 4px));
   }
   to {
     opacity: 1;

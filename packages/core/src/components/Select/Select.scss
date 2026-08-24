@@ -22,7 +22,7 @@
 
   &:focus-visible .select__trigger {
     outline: none;
-    box-shadow: 0 0 0 1px var(--color-void), 0 0 0 3px var(--select-color-base);
+    box-shadow: 0 0 0 var(--border-width, 1px) var(--color-void), 0 0 0 var(--border-width-3, 3px) var(--select-color-base);
     border-color: var(--select-color-base);
   }
 
@@ -34,7 +34,7 @@
 
     .select__trigger {
       padding: var(--spacing-1) var(--spacing-3);
-      min-height: 2rem;
+      min-height: var(--spacing-8, 2rem);
     }
   }
 
@@ -43,7 +43,7 @@
 
     .select__trigger {
       padding: var(--spacing-3) var(--spacing-4);
-      min-height: 3rem;
+      min-height: var(--spacing-12, 3rem);
     }
   }
 
@@ -77,10 +77,11 @@
     min-height: 2.5rem;
     padding: var(--spacing-2) var(--spacing-3);
     background-color: var(--color-bg-surface);
-    border: 1px solid var(--color-border-base);
+    border: var(--border-width, 1px) solid var(--color-border-base);
     border-radius: var(--radius-md);
     cursor: pointer;
-    transition: all var(--duration-fast) var(--ease-default);
+    transition: transform var(--duration-fast) var(--ease-default),
+                color var(--duration-fast) var(--ease-default);
     box-sizing: border-box;
 
     &:hover {
@@ -90,7 +91,7 @@
 
   &.is-open .select__trigger {
     border-color: var(--select-color-base);
-    box-shadow: 0 0 0 1px var(--color-void), 0 0 0 3px var(--select-color-base);
+    box-shadow: 0 0 0 var(--border-width, 1px) var(--color-void), 0 0 0 var(--border-width-3, 3px) var(--select-color-base);
   }
 
   &__content {
@@ -145,7 +146,7 @@
     list-style: none;
     background-color: var(--color-bg-surface); // Fallback
     background-color: var(--surface-floating, var(--color-bg-surface));
-    border: 1px solid var(--color-border-subtle);
+    border: var(--border-width, 1px) solid var(--color-border-subtle);
     border-radius: var(--radius-md);
     box-shadow: var(--shadow-xl);
     z-index: var(--z-dropdown, 100);
@@ -196,7 +197,7 @@
   }
 
   &__spacer {
-    height: 1px;
+    height: var(--border-width, 1px);
     background-color: var(--color-border-subtle);
     margin: var(--spacing-2) 0;
     padding: 0;

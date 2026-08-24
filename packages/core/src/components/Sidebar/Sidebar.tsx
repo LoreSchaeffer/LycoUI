@@ -11,7 +11,6 @@ const SidebarContext = createContext<SidebarContextType | null>(null);
 
 
 
-// --- Sidebar Root ---
 
 export interface SidebarProps extends React.HTMLAttributes<HTMLElement> {
   /** Controls if the sidebar is open (for overlay mode) */
@@ -121,7 +120,6 @@ const SidebarComponent = forwardRef<HTMLElement, SidebarProps>((
 });
 SidebarComponent.displayName = 'Sidebar';
 
-// --- Sidebar Regions ---
 
 export interface SidebarRegionProps extends React.HTMLAttributes<HTMLDivElement> {}
 
@@ -155,7 +153,6 @@ const SidebarFooter = forwardRef<HTMLDivElement, SidebarRegionProps>((
 ));
 SidebarFooter.displayName = 'Sidebar.Footer';
 
-// --- Sidebar Navigation ---
 
 export interface SidebarNavProps extends React.HTMLAttributes<HTMLUListElement> {}
 
@@ -181,7 +178,6 @@ const SidebarItem = forwardRef<HTMLLIElement, SidebarItemProps>((
 ));
 SidebarItem.displayName = 'Sidebar.Item';
 
-// --- Sidebar Link ---
 
 export interface SidebarLinkProps extends React.AnchorHTMLAttributes<HTMLAnchorElement> {
   /** Custom component to render as */
@@ -209,6 +205,9 @@ const SidebarLink = forwardRef<HTMLAnchorElement, SidebarLinkProps>((
   { className, as: Component = 'a', active = false, icon, children, ...props },
   ref
 ) => {
+  const context = useContext(SidebarContext);
+  const isMini = context?.isMini || false;
+
   const renderedIcon = useMemo(() => {
     if (icon) return icon;
     return extractInitials(children);
@@ -222,15 +221,14 @@ const SidebarLink = forwardRef<HTMLAnchorElement, SidebarLinkProps>((
       {...props}
     >
       <span className="sidebar__icon">{renderedIcon}</span>
-      <span className="sidebar__label">{children}</span>
+      {!isMini && <span className="sidebar__label">{children}</span>}
     </Component>
   );
 });
 SidebarLink.displayName = 'Sidebar.Link';
 
-// --- Sidebar Dropdown ---
 
-export interface SidebarDropdownProps extends React.HTMLAttributes<HTMLLIElement> {
+export interface SidebarDropdownProps extends Omit<React.HTMLAttributes<HTMLLIElement>, 'title'> {
   title: React.ReactNode;
   icon?: React.ReactNode;
 }
@@ -272,9 +270,6 @@ const SidebarDropdown = forwardRef<HTMLLIElement, SidebarDropdownProps>((
 
   const handleMouseLeave = useCallback(() => {
     if (isMini) {
-      // We can clear the style or let it be. We'll clear it just in case.
-      // But clearing it immediately might disrupt CSS transitions.
-      // Better to just let CSS hide it via opacity/visibility.
     }
   }, [isMini]);
 
@@ -287,7 +282,7 @@ const SidebarDropdown = forwardRef<HTMLLIElement, SidebarDropdownProps>((
       {...props}
     >
       <Button
-        ref={triggerRef as any}
+        ref={triggerRef as React.Ref<HTMLButtonElement>}
         type="button"
         ghost
         className="sidebar__dropdown-trigger"
@@ -296,8 +291,8 @@ const SidebarDropdown = forwardRef<HTMLLIElement, SidebarDropdownProps>((
         aria-haspopup="true"
       >
         <span className="sidebar__icon">{renderedIcon}</span>
-        <span className="sidebar__label">{title}</span>
-        <svg className="sidebar__dropdown-caret" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+        {!isMini && <span className="sidebar__label">{title}</span>}
+        {!isMini && <svg className="sidebar__dropdown-caret" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>}
       </Button>
       <div className="sidebar__dropdown-menu-wrapper" style={isMini ? flyoutStyle : undefined}>
         <div className="sidebar__dropdown-menu">
@@ -309,7 +304,6 @@ const SidebarDropdown = forwardRef<HTMLLIElement, SidebarDropdownProps>((
 });
 SidebarDropdown.displayName = 'Sidebar.Dropdown';
 
-// --- Sidebar Dropdown Item ---
 
 export interface SidebarDropdownItemProps extends React.AnchorHTMLAttributes<HTMLAnchorElement> {
   as?: React.ElementType;
@@ -333,7 +327,6 @@ const SidebarDropdownItem = forwardRef<HTMLAnchorElement, SidebarDropdownItemPro
 });
 SidebarDropdownItem.displayName = 'Sidebar.DropdownItem';
 
-// Assemble compound component
 export const Sidebar = Object.assign(SidebarComponent, {
   Header: SidebarHeader,
   Content: SidebarContent,

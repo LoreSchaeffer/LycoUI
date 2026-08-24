@@ -1,4 +1,4 @@
-import { Navbar, Row, Col } from '@loreschaeffer/lyco-ui';
+import { Navbar, Row, Col, Avatar } from '@loreschaeffer/lyco-ui';
 
 export const title = 'Collapsed Mode (Mobile View)';
 export const description = <p>Use the <code>expand="never"</code> property to force the Navbar into a mobile-style collapsed state regardless of the screen width. This is useful for offcanvas menus or minimal layouts.</p>;
@@ -18,9 +18,13 @@ export const vanillaHtml = `
             <a class="navbar__link is-active" href="#" aria-current="page">Dashboard</a>
           </li>
           <li class="navbar__item navbar__dropdown">
-            <button type="button" class="navbar__dropdown-trigger" aria-expanded="false" aria-haspopup="true">
-              Profile
-              <svg class="navbar__dropdown-caret" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+            <button type="button" class="navbar__dropdown-trigger btn btn--unstyled" aria-expanded="false" aria-haspopup="true">
+              <div style="display: flex; align-items: center; gap: 8px;">
+                <div class="avatar avatar--sm avatar--circle">
+                  <div class="avatar__fallback">LR</div>
+                </div>
+                <span>Lorenzo R.</span>
+              </div>
             </button>
             <div class="navbar__dropdown-menu">
               <a href="#" class="navbar__dropdown-item">Settings</a>
@@ -56,7 +60,12 @@ export default function CollapsedExample() {
                                 <Navbar.Item>
                                     <Navbar.Link href="#" active>Dashboard</Navbar.Link>
                                 </Navbar.Item>
-                                <Navbar.Dropdown title="Profile">
+                                <Navbar.Dropdown unstyled title={
+                                    <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                                        <Avatar fallback="LR" size="sm" />
+                                        <span>Lorenzo R.</span>
+                                    </div>
+                                }>
                                     <Navbar.DropdownItem href="#">Settings</Navbar.DropdownItem>
                                     <Navbar.DropdownSubMenu title="Theme">
                                         <Navbar.DropdownItem href="#">Light</Navbar.DropdownItem>

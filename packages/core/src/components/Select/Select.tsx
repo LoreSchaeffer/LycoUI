@@ -13,23 +13,43 @@ import {
 import clsx from 'clsx';
 import type {FullVariant, SizeVariant} from '../../types/types.ts';
 
+/**
+ * Represents a single item in the Select dropdown.
+ */
 export interface SelectOption {
+    /** The text displayed for the option. */
     label?: string;
+    /** The underlying value of the option. Must be unique. */
     value?: string | number;
+    /** An optional icon element to render next to the label. */
     icon?: ReactNode;
+    /** If true, the option cannot be selected or focused. */
     disabled?: boolean;
+    /** If true, renders a non-interactive semantic separator. */
     isSpacer?: boolean;
+    /** The semantic color variant of the option. */
     variant?: FullVariant;
 }
 
+/**
+ * Props for the Select component.
+ */
 export interface SelectProps extends Omit<HTMLAttributes<HTMLDivElement>, 'onChange' | 'value'> {
+    /** An array of option objects to display in the dropdown list. */
     options: SelectOption[];
+    /** The currently selected value (controlled). */
     value?: string | number;
+    /** Callback fired when an option is selected. */
     onChange?: (value: string | number) => void;
+    /** Placeholder text displayed when no option is selected. */
     placeholder?: string;
+    /** An optional icon to display inside the Select trigger button. */
     icon?: ReactNode;
+    /** The semantic color variant of the Select component. */
     variant?: FullVariant | 'default';
+    /** The size of the Select component (sm, md, lg). Default is 'md'. */
     size?: SizeVariant;
+    /** If true, the entire Select component is disabled. */
     disabled?: boolean;
 }
 
@@ -116,7 +136,7 @@ export const Select = forwardRef<HTMLDivElement, SelectProps>((
         setIsOpen(false);
     }, [onChange]);
 
-    const handleKeyDown = useCallback((e: KeyboardEvent<HTMLDivElement>) => {
+    const handleKeyDown = useCallback((e: KeyboardEvent<HTMLButtonElement>) => {
         if (disabled) return;
 
         switch (e.key) {
@@ -167,16 +187,21 @@ export const Select = forwardRef<HTMLDivElement, SelectProps>((
                 isOpen && 'is-open',
                 className
             )}
-            onKeyDown={handleKeyDown}
-            tabIndex={disabled ? -1 : 0}
-            role="combobox"
-            aria-expanded={isOpen}
-            aria-haspopup="listbox"
-            aria-controls={dropdownId}
-            aria-activedescendant={activeDescendant}
             {...props}
         >
-            <div className="select__trigger" onClick={handleToggle}>
+            <button 
+                type="button" 
+                className="select__trigger" 
+                onClick={handleToggle}
+                onKeyDown={handleKeyDown}
+                tabIndex={disabled ? -1 : 0}
+                role="combobox"
+                aria-haspopup="listbox" 
+                aria-expanded={isOpen} 
+                aria-controls={dropdownId}
+                aria-activedescendant={activeDescendant}
+                disabled={disabled}
+            >
                 <div className="select__content">
                     {activeIcon && <span className="select__icon select__icon--start">{activeIcon}</span>}
                     <span className={clsx('select__value', !selectedOption && 'select__placeholder')}>
@@ -187,7 +212,7 @@ export const Select = forwardRef<HTMLDivElement, SelectProps>((
                 <svg className="select__chevron" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                     <polyline points="6 9 12 15 18 9"/>
                 </svg>
-            </div>
+            </button>
 
             <ul 
                 ref={listboxRef} 

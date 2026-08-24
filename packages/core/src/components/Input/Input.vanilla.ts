@@ -1,5 +1,5 @@
 export function initLycoInputs(): void {
-    const nativeInputs = document.querySelectorAll<HTMLInputElement>('input.input-custom');
+    const nativeInputs = document.querySelectorAll<HTMLInputElement>('input.input-custom:not([data-lyco-initialized])');
     nativeInputs.forEach(input => {
         if (!input.dataset.lycoInitialized) {
             new LycoInputController(input);
@@ -71,10 +71,8 @@ class LycoInputController {
         const hasIconEnd = Boolean(iconEndSvg);
         const showSteps = isNumber && showStepButtons && !isDisabled && !isReadonly;
 
-        // Build wrapper
         this.wrapper.className = 'input-wrapper';
 
-        // Build container
         const containerClasses = [
             'input',
             variant ? `input--${variant}` : '',
@@ -87,10 +85,8 @@ class LycoInputController {
         if (hasIconEnd || showSteps) containerClasses.push('input--has-icon-end');
         this.container.className = containerClasses.join(' ');
 
-        // Insert wrapper before native input, then move input inside
         this.nativeInput.parentNode?.insertBefore(this.wrapper, this.nativeInput);
 
-        // Icon start
         if (hasIconStart && iconStartSvg) {
             const iconEl = document.createElement('span');
             iconEl.className = 'input__icon input__icon--start';
@@ -99,12 +95,10 @@ class LycoInputController {
             this.container.appendChild(iconEl);
         }
 
-        // Move native input inside container
         this.nativeInput.classList.remove('input-custom');
         this.nativeInput.classList.add('input__field');
         this.container.appendChild(this.nativeInput);
 
-        // Floating label
         if (labelText) {
             const label = document.createElement('label');
             label.className = 'input__label';
@@ -122,7 +116,6 @@ class LycoInputController {
             this.container.appendChild(label);
         }
 
-        // Icon end
         if (hasIconEnd && !showSteps && iconEndSvg) {
             const iconEl = document.createElement('span');
             iconEl.className = 'input__icon input__icon--end';
@@ -131,7 +124,6 @@ class LycoInputController {
             this.container.appendChild(iconEl);
         }
 
-        // Step buttons for number
         if (showSteps) {
             const stepContainer = document.createElement('div');
             stepContainer.className = 'input__step-buttons';
@@ -159,7 +151,6 @@ class LycoInputController {
 
         this.wrapper.appendChild(this.container);
 
-        // Validation message element (created lazily if needed)
         const validationMsg = this.nativeInput.getAttribute('data-validation-message');
         if (this.validation !== 'disabled' || validationMsg) {
             this.messageEl = document.createElement('div');
@@ -167,7 +158,6 @@ class LycoInputController {
             this.wrapper.appendChild(this.messageEl);
         }
 
-        // Apply manual validation states
         if (this.validation === 'valid') {
             this.container.classList.add('is-valid');
             if (this.messageEl && validationMsg) {
@@ -256,10 +246,9 @@ class LycoInputController {
             return;
         }
 
-        // Check custom validation function if registered
         const fnName = this.nativeInput.getAttribute('data-validation-fn');
-        if (fnName && typeof (window as any).lycoValidators?.[fnName] === 'function') {
-            const customError = (window as any).lycoValidators[fnName](this.nativeInput.value);
+        if (fnName && typeof window.lycoValidators?.[fnName] === 'function') {
+            const customError = window.lycoValidators[fnName](this.nativeInput.value);
             if (customError) {
                 this.container.classList.add('is-invalid');
                 if (this.messageEl) {

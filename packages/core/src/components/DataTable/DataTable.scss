@@ -1,6 +1,6 @@
 .data-table {
   width: 100%;
-  border: 1px solid var(--color-border-subtle);
+  border: var(--border-width, 1px) solid var(--color-border-subtle);
   border-radius: var(--radius-xl);
   overflow: hidden;
   background-color: var(--color-surface-base);
@@ -16,7 +16,7 @@
     flex-wrap: nowrap;
     gap: var(--spacing-4);
     padding: var(--spacing-4);
-    border-bottom: 1px solid var(--color-border-subtle);
+    border-bottom: var(--border-width, 1px) solid var(--color-border-subtle);
   }
 
   &__toolbar-actions {
@@ -67,8 +67,7 @@
     overflow-x: auto;
     -webkit-overflow-scrolling: touch;
 
-    // We strip the inner .table-container styles to prevent "double borders" or matryoshka effect
-    .table-container {
+    .table-wrapper {
       border: none !important;
       border-radius: 0 !important;
       box-shadow: none !important;
@@ -76,12 +75,11 @@
       margin-bottom: 0 !important;
     }
 
-    // Override Table's default margin-bottom inside the container
     .table {
       margin-bottom: 0;
 
       > :not(caption)>*:last-child>* {
-        border-bottom: 0; // Remove bottom border of the last row so it doesn't double up with the footer
+        border-bottom: 0; 
       }
     }
   }
@@ -125,8 +123,8 @@
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    width: 1rem;
-    height: 1rem;
+    width: var(--spacing-4, 1rem);
+    height: var(--spacing-4, 1rem);
     flex-shrink: 0;
     color: var(--color-text-secondary);
     transition: color var(--duration-fast) var(--ease-default);
@@ -145,10 +143,10 @@
   }
   
   &__select-cell {
-    width: 3rem;
-    min-width: 3rem;
-    max-width: 3rem;
-    padding-right: 0 !important; // Minimize gap to the next column
+    width: var(--spacing-12, 3rem);
+    min-width: var(--spacing-12, 3rem);
+    max-width: var(--spacing-12, 3rem);
+    padding-right: 0 !important;
     text-align: center;
   }
 
@@ -167,11 +165,11 @@
   // ========================================================================
   &__drag-header,
   &__drag-cell {
-    width: 3rem;
-    min-width: 3rem;
-    max-width: 3rem;
+    width: var(--spacing-12, 3rem);
+    min-width: var(--spacing-12, 3rem);
+    max-width: var(--spacing-12, 3rem);
     text-align: center;
-    padding: 0; // Remove horizontal padding for perfect centering
+    padding: 0;
   }
 
   &__drag-cell {
@@ -201,14 +199,13 @@
     }
   }
 
-  // Drag state classes
   .is-dragging {
     opacity: 0.4;
   }
 
   .is-drag-over {
     > * {
-      box-shadow: inset 0 -2px 0 0 var(--color-primary);
+      box-shadow: inset 0 calc(var(--border-width-2, 2px) * -1) 0 0 var(--color-primary);
     }
   }
 
@@ -221,7 +218,7 @@
     justify-content: space-between;
     gap: var(--spacing-4);
     padding: var(--spacing-3) var(--spacing-4);
-    border-top: 1px solid var(--color-border-subtle);
+    border-top: var(--border-width, 1px) solid var(--color-border-subtle);
     background: var(--color-surface-base);
   }
 

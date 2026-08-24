@@ -7,6 +7,7 @@ export interface CheckboxProps extends Omit<InputHTMLAttributes<HTMLInputElement
     label?: ReactNode;
     variant?: FullVariant | 'default';
     size?: SizeVariant;
+    indeterminate?: boolean;
 }
 
 export const Checkbox = memo(forwardRef<HTMLInputElement, CheckboxProps>((

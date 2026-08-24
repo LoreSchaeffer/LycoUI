@@ -21,9 +21,6 @@ import { Pagination } from '../Pagination';
 import { Spinner } from '../Spinner';
 import { Checkbox } from '../Checkbox';
 
-// ==========================================================================
-// TYPES
-// ==========================================================================
 
 export type SortDirection = 'asc' | 'desc';
 
@@ -52,7 +49,6 @@ export interface DataTableProps<T> extends Omit<HTMLAttributes<HTMLDivElement>, 
     /** Array of row data objects. */
     data: T[];
 
-    // --- Search ---
     /** Show the search input. Defaults to `true`. */
     searchable?: boolean;
     /** Placeholder text for the search input. */
@@ -65,7 +61,6 @@ export interface DataTableProps<T> extends Omit<HTMLAttributes<HTMLDivElement>, 
      */
     onSearchChange?: (query: string) => void;
 
-    // --- Sort ---
     /** Column `id` to sort by initially. */
     defaultSortColumn?: string;
     /** Initial sort direction. Defaults to `'asc'`. */
@@ -77,7 +72,6 @@ export interface DataTableProps<T> extends Omit<HTMLAttributes<HTMLDivElement>, 
      */
     onSortChange?: (columnId: string, direction: SortDirection) => void;
 
-    // --- Pagination ---
     /** Available page size options. Defaults to `[10, 25, 50, 100]`. */
     pageSizeOptions?: number[];
     /** Initial page size. Defaults to `25`. */
@@ -104,7 +98,6 @@ export interface DataTableProps<T> extends Omit<HTMLAttributes<HTMLDivElement>, 
      */
     paginationInfo?: 'full' | 'compact' | 'none';
 
-    // --- Localization ---
     /** 
      * Override default English text for i18n support. 
      */
@@ -113,13 +106,11 @@ export interface DataTableProps<T> extends Omit<HTMLAttributes<HTMLDivElement>, 
         showingResults?: (from: number, to: number, total: number) => string;
     };
 
-    // --- State ---
     /** Shows a loading spinner instead of rows. */
     loading?: boolean;
     /** Message shown when `data` is empty and not loading. */
     emptyMessage?: string;
 
-    // --- Rows ---
     /** Key extractor for rows. Falls back to `row.id` or the row index. */
     rowKey?: (row: T, index: number) => string | number;
     /** Returns additional CSS class(es) for a row. */
@@ -129,7 +120,6 @@ export interface DataTableProps<T> extends Omit<HTMLAttributes<HTMLDivElement>, 
     /** Fires when a row is right-clicked. */
     onRowContextMenu?: (event: React.MouseEvent, row: T, index: number) => void;
 
-    // --- Selection (opt-in) ---
     /** Enable row selection checkboxes. */
     selectable?: boolean;
     /** Controlled array of selected row keys. */
@@ -139,7 +129,6 @@ export interface DataTableProps<T> extends Omit<HTMLAttributes<HTMLDivElement>, 
     /** Fires when the selection changes. */
     onSelectionChange?: (keys: (string | number)[]) => void;
 
-    // --- Drag-and-Drop (opt-in) ---
     /**
      * Fires when a row is dragged and dropped to a new position.
      * Providing this prop enables drag-and-drop reordering on the table.
@@ -150,7 +139,6 @@ export interface DataTableProps<T> extends Omit<HTMLAttributes<HTMLDivElement>, 
      */
     onRowReorder?: (sourceIndex: number, destinationIndex: number) => void;
 
-    // --- Table appearance ---
     /** Color variant for the table. */
     variant?: FullVariant;
     /** Adds zebra-striping to rows. Defaults to `false`. */
@@ -175,9 +163,6 @@ export interface DataTableRef {
     setPage: (page: number) => void;
 }
 
-// ==========================================================================
-// SORT ICONS
-// ==========================================================================
 
 const SortAscIcon = () => (
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"
@@ -229,9 +214,6 @@ const DragHandleIcon = () => (
     </svg>
 );
 
-// ==========================================================================
-// HELPERS
-// ==========================================================================
 
 function getRowValue<T>(row: T, colId: string): unknown {
     return (row as Record<string, unknown>)[colId];
@@ -247,27 +229,21 @@ function normalizeText(text: unknown): string {
 
 const DEFAULT_PAGE_SIZES = [10, 25, 50, 100];
 
-// ==========================================================================
-// INNER COMPONENT (generic)
-// ==========================================================================
 
 function DataTableInner<T>(
     {
         columns,
         data = [],
 
-        // Search
         searchable = true,
         searchPlaceholder = 'Search...',
         defaultSearchQuery = '',
         onSearchChange,
 
-        // Sort
         defaultSortColumn,
         defaultSortDirection = 'asc',
         onSortChange,
 
-        // Pagination
         pageSizeOptions = DEFAULT_PAGE_SIZES,
         defaultPageSize = 25,
         onPageChange,
@@ -275,29 +251,23 @@ function DataTableInner<T>(
         paginationPosition = 'top',
         paginationInfo = 'full',
 
-        // Localization
         localization,
 
-        // State
         loading = false,
         emptyMessage = 'No data available',
 
-        // Rows
         rowKey,
         rowClassName,
         onRowClick,
         onRowContextMenu,
 
-        // Selection
         selectable = false,
         selectedRowKeys,
         defaultSelectedRowKeys = [],
         onSelectionChange,
 
-        // Drag-and-drop
         onRowReorder,
 
-        // Table appearance
         variant,
         striped = false,
         hover = true,
@@ -306,13 +276,11 @@ function DataTableInner<T>(
         size,
         stickyToolbar = false,
 
-        // HTML
         className,
         ...props
     }: DataTableProps<T>,
     ref: Ref<DataTableRef>
 ) {
-    // --- State ---
     const [searchQuery, setSearchQuery] = useState(defaultSearchQuery);
     const [sortColumn, setSortColumn] = useState<string | undefined>(
         defaultSortColumn ?? columns.find(c => c.sortable !== false)?.id
@@ -321,18 +289,15 @@ function DataTableInner<T>(
     const [pageSize, setPageSize] = useState(defaultPageSize);
     const [currentPage, setCurrentPage] = useState(1);
 
-    // Selection state
     const [internalSelectedKeys, setInternalSelectedKeys] = useState<(string | number)[]>(defaultSelectedRowKeys);
     const activeSelectedKeys = selectedRowKeys ?? internalSelectedKeys;
 
-    // Drag state
     const [dragIndex, setDragIndex] = useState<number | null>(null);
     const [dragOverIndex, setDragOverIndex] = useState<number | null>(null);
 
     const toolbarRef = useRef<HTMLDivElement>(null);
     const isDragEnabled = Boolean(onRowReorder);
 
-    // --- Imperative ref ---
     useImperativeHandle(ref, () => ({
         setSearch: (query: string) => {
             setSearchQuery(query);
@@ -344,14 +309,12 @@ function DataTableInner<T>(
         },
     }));
 
-    // --- Search handler ---
     const handleSearch = useCallback((query: string) => {
         setSearchQuery(query);
         setCurrentPage(1);
         onSearchChange?.(query);
     }, [onSearchChange]);
 
-    // --- Sort handler ---
     const handleSort = useCallback((columnId: string) => {
         if (isDragEnabled) return; // Sorting disabled during drag mode
 
@@ -366,7 +329,6 @@ function DataTableInner<T>(
         });
     }, [sortDirection, onSortChange, isDragEnabled]);
 
-    // --- Page size handler ---
     const handlePageSizeChange = useCallback((value: string | number) => {
         const newSize = Number(value);
         setPageSize(newSize);
@@ -374,13 +336,11 @@ function DataTableInner<T>(
         onPageSizeChange?.(newSize);
     }, [onPageSizeChange]);
 
-    // --- Page change handler ---
     const handlePageChange = useCallback((page: number) => {
         setCurrentPage(page);
         onPageChange?.(page, pageSize);
     }, [pageSize, onPageChange]);
 
-    // --- Filtered data ---
     const filteredData = useMemo(() => {
         if (isDragEnabled) return data; // No filtering in drag mode
 
@@ -401,7 +361,6 @@ function DataTableInner<T>(
         );
     }, [data, searchQuery, columns, isDragEnabled]);
 
-    // --- Sorted data ---
     const sortedData = useMemo(() => {
         if (isDragEnabled) return filteredData; // No sorting in drag mode
         if (!sortColumn) return filteredData;
@@ -432,7 +391,6 @@ function DataTableInner<T>(
         });
     }, [filteredData, sortColumn, sortDirection, columns, isDragEnabled]);
 
-    // --- Pagination ---
     const totalPages = isDragEnabled
         ? 1
         : Math.max(1, Math.ceil(sortedData.length / pageSize));
@@ -440,7 +398,6 @@ function DataTableInner<T>(
         ? sortedData
         : sortedData.slice((currentPage - 1) * pageSize, currentPage * pageSize);
 
-    // --- Row key ---
     const getRowKey = useCallback((row: T, idx: number): string | number => {
         if (rowKey) return rowKey(row, idx);
         const r = row as Record<string, unknown>;
@@ -448,7 +405,6 @@ function DataTableInner<T>(
         return `idx_${idx}`;
     }, [rowKey]);
 
-    // --- Page size options for Select ---
     const pageSizeSelectOptions: SelectOption[] = useMemo(() =>
         pageSizeOptions.map(s => ({
             label: String(s),
@@ -456,12 +412,10 @@ function DataTableInner<T>(
         })),
     [pageSizeOptions]);
 
-    // --- Drag handlers (native HTML DnD) ---
     const handleDragStart = useCallback((e: DragEvent<HTMLTableRowElement>, index: number) => {
         setDragIndex(index);
         e.dataTransfer.effectAllowed = 'move';
         e.dataTransfer.setData('text/plain', String(index));
-        // Slight delay to allow the ghost to render before setting drag class
         requestAnimationFrame(() => {
             const target = e.target as HTMLElement;
             target.classList.add('is-dragging');
@@ -492,7 +446,6 @@ function DataTableInner<T>(
         setDragOverIndex(null);
     }, []);
 
-    // --- Selection handlers ---
     const handleSelectRow = useCallback((key: string | number, checked: boolean) => {
         const newSelection = checked 
             ? [...activeSelectedKeys, key] 
@@ -516,17 +469,20 @@ function DataTableInner<T>(
         onSelectionChange?.(newSelection);
     }, [sortedData, getRowKey, activeSelectedKeys, onSelectionChange]);
 
-    const isAllSelected = sortedData.length > 0 && sortedData.every((row, idx) => activeSelectedKeys.includes(getRowKey(row, idx)));
-    const isSomeSelected = sortedData.length > 0 && sortedData.some((row, idx) => activeSelectedKeys.includes(getRowKey(row, idx))) && !isAllSelected;
+    const isAllSelected = useMemo(() => 
+        sortedData.length > 0 && sortedData.every((row, idx) => activeSelectedKeys.includes(getRowKey(row, idx))),
+    [sortedData, activeSelectedKeys, getRowKey]);
+    
+    const isSomeSelected = useMemo(() => 
+        sortedData.length > 0 && sortedData.some((row, idx) => activeSelectedKeys.includes(getRowKey(row, idx))) && !isAllSelected,
+    [sortedData, activeSelectedKeys, getRowKey, isAllSelected]);
 
-    // --- Results count text ---
     const resultsStart = isDragEnabled ? 1 : (currentPage - 1) * pageSize + 1;
     const resultsEnd = isDragEnabled
         ? sortedData.length
         : Math.min(currentPage * pageSize, sortedData.length);
     const totalResults = sortedData.length;
 
-    // --- Pagination / Info Elements ---
     const renderPaginationInfo = () => {
         if (totalResults === 0 || paginationInfo === 'none') return null;
 
@@ -575,7 +531,7 @@ function DataTableInner<T>(
                         variant="compact"
                         currentPage={currentPage}
                         totalPages={totalPages}
-                        onPageChange={handlePageChange}
+                        onChange={handlePageChange}
                         size="sm"
                     />
                 )}
@@ -630,7 +586,6 @@ function DataTableInner<T>(
             {/* ========== TABLE ========== */}
             <div className="data-table__container">
                 <Table
-                    responsive
                     variant={variant}
                     striped={!isDragEnabled && striped}
                     hover={hover}
@@ -784,9 +739,6 @@ function DataTableInner<T>(
     );
 }
 
-// ==========================================================================
-// EXPORT (typed forwardRef for generics)
-// ==========================================================================
 
 export const DataTable = forwardRef(DataTableInner) as <T>(
     props: DataTableProps<T> & { ref?: Ref<DataTableRef> }

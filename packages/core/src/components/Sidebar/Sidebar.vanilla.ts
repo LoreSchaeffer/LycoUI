@@ -1,5 +1,5 @@
 export function initLycoSidebars(): void {
-    const sidebars = document.querySelectorAll<HTMLElement>('.sidebar');
+    const sidebars = document.querySelectorAll<HTMLElement>('.sidebar:not([data-lyco-initialized])');
     sidebars.forEach(sidebar => {
         if (!sidebar.dataset.lycoInitialized) {
             new LycoSidebarController(sidebar);
@@ -25,7 +25,6 @@ export class LycoSidebarController {
         
         this._onMouseMove = (e: MouseEvent) => {
             const newWidth = this.startWidth + (e.clientX - this.startX);
-            // simple min/max for now
             if (newWidth >= 200 && newWidth <= 500) {
                 this.sidebar.style.setProperty('--sidebar-width', `${newWidth}px`);
             }
