@@ -1,6 +1,6 @@
 {
   "name": "@loreschaeffer/lyco-ui",
-  "version": "1.0.1",
+  "version": "1.1.0",
   "description": "A dual-target UI component library for React and Vanilla HTML/CSS/JS",
   "type": "module",
   "repository": {
