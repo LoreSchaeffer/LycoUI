@@ -26,11 +26,12 @@ export default defineConfig({
             formats: ['es', 'cjs']
         },
         rollupOptions: {
-            external: ['react', 'react-dom', 'react/jsx-runtime', 'clsx'],
+            external: ['react', 'react-dom', 'react/jsx-runtime', 'clsx', 'shiki'],
             output: {
                 globals: {
                     react: 'React',
-                    'react-dom': 'ReactDOM'
+                    'react-dom': 'ReactDOM',
+                    shiki: 'shiki'
                 },
                 assetFileNames: (assetInfo) => {
                     if (assetInfo.name === 'style.css') return 'style.css';
