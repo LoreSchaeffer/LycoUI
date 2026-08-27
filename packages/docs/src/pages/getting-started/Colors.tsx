@@ -189,6 +189,36 @@ const Colors: React.FC = () => {
                             <TableCell><code>color: var(--color-text-muted)</code></TableCell>
                             <TableCell><span className="text-muted">Muted Text</span></TableCell>
                         </TableRow>
+                        <TableRow hover>
+                            <TableCell><code>.text-success</code></TableCell>
+                            <TableCell><code>color: var(--color-text-success)</code></TableCell>
+                            <TableCell><span className="text-success">Success Text</span></TableCell>
+                        </TableRow>
+                        <TableRow hover>
+                            <TableCell><code>.text-warning</code></TableCell>
+                            <TableCell><code>color: var(--color-text-warning)</code></TableCell>
+                            <TableCell><span className="text-warning">Warning Text</span></TableCell>
+                        </TableRow>
+                        <TableRow hover>
+                            <TableCell><code>.text-danger</code></TableCell>
+                            <TableCell><code>color: var(--color-text-danger)</code></TableCell>
+                            <TableCell><span className="text-danger">Danger Text</span></TableCell>
+                        </TableRow>
+                        <TableRow hover>
+                            <TableCell><code>.text-info</code></TableCell>
+                            <TableCell><code>color: var(--color-text-info)</code></TableCell>
+                            <TableCell><span className="text-info">Info Text</span></TableCell>
+                        </TableRow>
+                        <TableRow hover>
+                            <TableCell><code>.text-white</code></TableCell>
+                            <TableCell><code>color: var(--color-text-white)</code></TableCell>
+                            <TableCell><span className="text-white">White Text</span></TableCell>
+                        </TableRow>
+                        <TableRow hover>
+                            <TableCell><code>.text-black</code></TableCell>
+                            <TableCell><code>color: var(--color-text-black)</code></TableCell>
+                            <TableCell><span className="text-black">Black Text</span></TableCell>
+                        </TableRow>
                     </TableBody>
                 </Table>
             </section>

@@ -102,6 +102,7 @@ TableFoot.displayName = 'TableFoot';
 export interface TableRowProps extends HTMLAttributes<HTMLTableRowElement> {
     /** Contextual variant color for the row */
     variant?: FullVariant;
+    hover?: boolean;
 }
 
 export const TableRow = memo(forwardRef<HTMLTableRowElement, TableRowProps>((

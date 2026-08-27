@@ -30,12 +30,78 @@ export const SpacingDoc: React.FC = () => {
             </section>
 
             <section className="mb-10">
-                <h2 className="mt-12 mb-6">Margin Utilities</h2>
+                <h2 className="mt-12 mb-6">Spacing Utilities</h2>
                 <p className="text-secondary mb-6">
-                    LycoUI provides a set of zero-runtime global utility classes for margins to maintain consistent vertical rhythm. The pattern is <code>.m{'{direction}'}-{'{step}'}</code> where <code>{'{direction}'}</code> is <code>t</code> (top) or <code>b</code> (bottom), and <code>{'{step}'}</code> is <code>1-12</code>.
+                    LycoUI provides a set of zero-runtime global utility classes for margins and paddings.
+                    The naming convention follows the pattern <code>.{'{prefix}'}{'{direction}'}-{'{step}'}</code>.
                 </p>
+
+                <ul className="text-secondary mb-6 ml-6">
+                    <li><strong>Prefix:</strong> <code>m</code> for margin, <code>p</code> for padding.</li>
+                    <li><strong>Direction:</strong> Specifies the sides to apply the spacing to (see table below).</li>
+                    <li><strong>Step:</strong> A number from <code>1</code> to <code>12</code> matching our spacing scale.</li>
+                </ul>
+
+                <div className="mb-8">
+                    <Table>
+                        <TableHead>
+                            <TableRow>
+                                <TableCell isHeader>Format</TableCell>
+                                <TableCell isHeader>Target Sides</TableCell>
+                                <TableCell isHeader>CSS Properties Applied</TableCell>
+                                <TableCell isHeader>Example</TableCell>
+                            </TableRow>
+                        </TableHead>
+                        <TableBody>
+                            <TableRow>
+                                <TableCell><code>m-*</code> / <code>p-*</code></TableCell>
+                                <TableCell>All sides</TableCell>
+                                <TableCell><code>margin</code> / <code>padding</code></TableCell>
+                                <TableCell><code>m-4</code>, <code>p-4</code></TableCell>
+                            </TableRow>
+                            <TableRow>
+                                <TableCell><code>mt-*</code> / <code>pt-*</code></TableCell>
+                                <TableCell>Top</TableCell>
+                                <TableCell><code>margin-top</code> / <code>padding-top</code></TableCell>
+                                <TableCell><code>mt-2</code>, <code>pt-2</code></TableCell>
+                            </TableRow>
+                            <TableRow>
+                                <TableCell><code>mb-*</code> / <code>pb-*</code></TableCell>
+                                <TableCell>Bottom</TableCell>
+                                <TableCell><code>margin-bottom</code> / <code>padding-bottom</code></TableCell>
+                                <TableCell><code>mb-6</code>, <code>pb-6</code></TableCell>
+                            </TableRow>
+                            <TableRow>
+                                <TableCell><code>ml-*</code> / <code>pl-*</code></TableCell>
+                                <TableCell>Left</TableCell>
+                                <TableCell><code>margin-left</code> / <code>padding-left</code></TableCell>
+                                <TableCell><code>ml-3</code>, <code>pl-3</code></TableCell>
+                            </TableRow>
+                            <TableRow>
+                                <TableCell><code>mr-*</code> / <code>pr-*</code></TableCell>
+                                <TableCell>Right</TableCell>
+                                <TableCell><code>margin-right</code> / <code>padding-right</code></TableCell>
+                                <TableCell><code>mr-3</code>, <code>pr-3</code></TableCell>
+                            </TableRow>
+                            <TableRow>
+                                <TableCell><code>mx-*</code> / <code>px-*</code></TableCell>
+                                <TableCell>Horizontal (X-axis)</TableCell>
+                                <TableCell>left & right</TableCell>
+                                <TableCell><code>mx-auto</code>, <code>px-5</code></TableCell>
+                            </TableRow>
+                            <TableRow>
+                                <TableCell><code>my-*</code> / <code>py-*</code></TableCell>
+                                <TableCell>Vertical (Y-axis)</TableCell>
+                                <TableCell>top & bottom</TableCell>
+                                <TableCell><code>my-8</code>, <code>py-8</code></TableCell>
+                            </TableRow>
+                        </TableBody>
+                    </Table>
+                </div>
+
+                <p className="text-secondary mb-4">Usage Example:</p>
                 <Code language="html">
-                    {`<div className="mt-8 mb-4">...</div>`}
+                    {`<div className="mx-auto mt-8 mb-4 px-6 py-4">...</div>`}
                 </Code>
             </section>
         </article>
@@ -45,6 +111,7 @@ export const SpacingDoc: React.FC = () => {
 const SpacingRow = ({ step, cssVar }: { step: string; cssVar: string }) => {
     const [copied, setCopied] = useState(false);
     const [isHovered, setIsHovered] = useState(false);
+
     const handleCopy = () => {
         navigator.clipboard.writeText(`var(${cssVar})`);
         setCopied(true);
@@ -52,10 +119,10 @@ const SpacingRow = ({ step, cssVar }: { step: string; cssVar: string }) => {
     };
 
     return (
-        <TableRow 
-            onClick={handleCopy} 
-            style={{ cursor: 'pointer' }} 
-            hover 
+        <TableRow
+            onClick={handleCopy}
+            style={{ cursor: 'pointer' }}
+            hover
             title={`Copy var(${cssVar})`}
             onMouseEnter={() => setIsHovered(true)}
             onMouseLeave={() => setIsHovered(false)}
@@ -64,10 +131,10 @@ const SpacingRow = ({ step, cssVar }: { step: string; cssVar: string }) => {
             <TableCell>
                 <code style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
                     var({cssVar})
-                    <span style={{ 
-                        display: 'inline-flex', 
-                        width: '1em', 
-                        opacity: (copied || isHovered) ? 1 : 0, 
+                    <span style={{
+                        display: 'inline-flex',
+                        width: '1em',
+                        opacity: (copied || isHovered) ? 1 : 0,
                         transition: 'opacity 0.2s ease',
                         color: copied ? 'var(--color-success)' : 'var(--color-text-secondary)'
                     }}>

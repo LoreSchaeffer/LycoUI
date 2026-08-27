@@ -32,6 +32,10 @@
   --color-text-primary: var(--color-paper);
   --color-text-secondary: var(--color-fog);
   --color-text-muted: var(--color-ash);
+  --color-text-success: var(--color-green-500);
+  --color-text-warning: var(--color-amber-500);
+  --color-text-danger: var(--color-red-500);
+  --color-text-info: var(--color-cyan-500);
 
   // Borders
   --color-border-subtle: rgba(255, 255, 255, 0.08);
@@ -326,32 +330,31 @@ pre {
 .text-primary { color: var(--color-text-primary); }
 .text-secondary { color: var(--color-text-secondary); }
 .text-muted { color: var(--color-text-muted); }
+.text-success { color: var(--color-success); }
+.text-warning { color: var(--color-warning); }
+.text-danger { color: var(--color-danger); }
+.text-info { color: var(--color-info); }
+.text-white { color: var(--white); }
+.text-black { color: var(--black); }
 
-.mt-1 { margin-top: var(--spacing-1); }
-.mt-2 { margin-top: var(--spacing-2); }
-.mt-3 { margin-top: var(--spacing-3); }
-.mt-4 { margin-top: var(--spacing-4); }
-.mt-5 { margin-top: var(--spacing-5); }
-.mt-6 { margin-top: var(--spacing-6); }
-.mt-7 { margin-top: var(--spacing-7); }
-.mt-8 { margin-top: var(--spacing-8); }
-.mt-9 { margin-top: var(--spacing-9); }
-.mt-10 { margin-top: var(--spacing-10); }
-.mt-11 { margin-top: var(--spacing-11); }
-.mt-12 { margin-top: var(--spacing-12); }
+@for $i from 1 through 12 {
+  // Margins
+  .mt-#{$i} { margin-top: var(--spacing-#{$i}); }
+  .mb-#{$i} { margin-bottom: var(--spacing-#{$i}); }
+  .ml-#{$i} { margin-left: var(--spacing-#{$i}); }
+  .mr-#{$i} { margin-right: var(--spacing-#{$i}); }
+  .mx-#{$i} { margin-left: var(--spacing-#{$i}); margin-right: var(--spacing-#{$i}); }
+  .my-#{$i} { margin-top: var(--spacing-#{$i}); margin-bottom: var(--spacing-#{$i}); }
 
-.mb-1 { margin-bottom: var(--spacing-1); }
-.mb-2 { margin-bottom: var(--spacing-2); }
-.mb-3 { margin-bottom: var(--spacing-3); }
-.mb-4 { margin-bottom: var(--spacing-4); }
-.mb-5 { margin-bottom: var(--spacing-5); }
-.mb-6 { margin-bottom: var(--spacing-6); }
-.mb-7 { margin-bottom: var(--spacing-7); }
-.mb-8 { margin-bottom: var(--spacing-8); }
-.mb-9 { margin-bottom: var(--spacing-9); }
-.mb-10 { margin-bottom: var(--spacing-10); }
-.mb-11 { margin-bottom: var(--spacing-11); }
-.mb-12 { margin-bottom: var(--spacing-12); }
+  // Paddings
+  .p-#{$i}  { padding: var(--spacing-#{$i}); }
+  .pt-#{$i} { padding-top: var(--spacing-#{$i}); }
+  .pr-#{$i} { padding-right: var(--spacing-#{$i}); }
+  .pb-#{$i} { padding-bottom: var(--spacing-#{$i}); }
+  .pl-#{$i} { padding-left: var(--spacing-#{$i}); }
+  .px-#{$i} { padding-left: var(--spacing-#{$i}); padding-right: var(--spacing-#{$i}); }
+  .py-#{$i} { padding-top: var(--spacing-#{$i}); padding-bottom: var(--spacing-#{$i}); }
+}
 
 // ==========================================================================
 // SCROLLBAR STYLES
