@@ -34,8 +34,8 @@ export default defineConfig({
                     shiki: 'shiki'
                 },
                 assetFileNames: (assetInfo) => {
-                    if (assetInfo.name === 'style.css') return 'style.css';
-                    return assetInfo.name || 'style.css';
+                    if (assetInfo.name === 'style.css') return 'lyco-ui.css';
+                    return assetInfo.name || 'lyco-ui.css';
                 }
             }
         }

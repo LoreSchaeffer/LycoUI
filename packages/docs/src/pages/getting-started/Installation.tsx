@@ -113,7 +113,7 @@ const Installation: React.FC = () => {
                 <Code
                     language="tsx"
                     code={`// main.tsx or App.tsx
-import '@loreschaeffer/lyco-ui/style.css';
+import '@loreschaeffer/lyco-ui/lyco-ui.css'; // OR import '@loreschaeffer/lyco-ui/style.css';
 import { Button, Card, Select } from '@loreschaeffer/lyco-ui';
 
 export const App = () => (
