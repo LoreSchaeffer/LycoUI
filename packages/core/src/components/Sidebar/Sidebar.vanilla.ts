@@ -58,7 +58,7 @@ export class LycoSidebarController {
             const trigger = dropdown.querySelector<HTMLElement>('.sidebar__dropdown-trigger');
             const menu = dropdown.querySelector<HTMLElement>('.sidebar__dropdown-menu-wrapper');
 
-            const listeners: any = {el: dropdown};
+            const listeners: {el: HTMLElement; triggerEl?: HTMLElement; click?: (e: MouseEvent) => void; mouseenter?: () => void; mouseleave?: () => void} = {el: dropdown};
 
             if (trigger) {
                 const onClick = (e: MouseEvent) => {
