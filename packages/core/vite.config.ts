@@ -9,11 +9,13 @@ export default defineConfig({
         dts({
             outDirs: ['dist/types'],
             insertTypesEntry: true,
+            rollupTypes: true,
             include: ['src/**/*.ts', 'src/**/*.tsx'],
             tsconfigPath: './tsconfig.app.json'
         })
     ],
     build: {
+        cssMinify: 'esbuild',
         sourcemap: true,
         emptyOutDir: true,
         lib: {
