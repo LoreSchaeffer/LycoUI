@@ -1,4 +1,4 @@
-import {forwardRef, memo, type HTMLAttributes} from 'react';
+import {type CSSProperties, forwardRef, type HTMLAttributes, memo} from 'react';
 import clsx from 'clsx';
 import './Spinner.scss';
 import type {FullVariant, SizeVariant} from "../../types/types.ts";
@@ -17,6 +17,7 @@ export const Spinner = memo(forwardRef<HTMLSpanElement, SpinnerProps>((
         variant = 'primary',
         size = 'md',
         className,
+        style,
         'aria-label': ariaLabel = 'Loading',
         ...props
     }, ref) => {
@@ -29,10 +30,13 @@ export const Spinner = memo(forwardRef<HTMLSpanElement, SpinnerProps>((
             className={clsx(
                 'spinner',
                 type && `spinner--${type}`,
-                variant && `spinner--${variant}`,
                 size && size !== 'md' && `spinner--${size}`,
                 className
             )}
+            style={{
+                '--spinner-color-base': `var(--${variant}-500, var(--color-${variant}))`,
+                ...style
+            } as CSSProperties}
             {...props}
         />
     );

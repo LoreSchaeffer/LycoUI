@@ -15,7 +15,7 @@ export default function AccordionDoc() {
             description="Vertically collapsing accordions based on CSS Grid. Perfect for hiding and showing content panels."
             importCode="import { Accordion, AccordionItem } from '@loreschaeffer/lyco-ui';"
             exampleModules={exampleModules}
-            rawSources={rawSources as any}
+            rawSources={rawSources as Record<string, string>}
             apiConfig={apiConfig}
         />
     );

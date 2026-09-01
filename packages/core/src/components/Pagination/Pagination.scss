@@ -1,11 +1,9 @@
-@use "sass:list";
-@use "../../styles/mixins/theme-variants" as *;
 
 .pagination {
   display: flex;
   align-items: center;
   gap: var(--spacing-2);
-  
+
   // ==========================================================================
   // SIZES
   // ==========================================================================
@@ -14,19 +12,19 @@
     --pagination-font-size: var(--font-size-xs);
     --pagination-padding: 0 var(--spacing-2);
   }
-  
+
   &-md {
     --pagination-size: var(--spacing-8, 2rem);
     --pagination-font-size: var(--font-size-sm);
     --pagination-padding: 0 var(--spacing-3);
   }
-  
+
   &-lg {
     --pagination-size: 2.5rem;
     --pagination-font-size: var(--font-size-base);
     --pagination-padding: 0 var(--spacing-4);
   }
-  
+
   // Default size if none specified
   --pagination-size: var(--spacing-8, 2rem);
   --pagination-font-size: var(--font-size-sm);
@@ -35,41 +33,9 @@
   // ==========================================================================
   // VARIANTS
   // ==========================================================================
-  // Fallbacks if no variant class is provided
-  --pagination-color-active: var(--color-primary);
-  --pagination-text-active: var(--white);
-
-  &-primary {
-    --pagination-color-active: var(--color-primary);
-    --pagination-text-active: var(--white);
-  }
-
-  @include for-each-theme-color using($color, $is-light) {
-    --pagination-color-active: var(--#{$color}-500);
-    @if $is-light {
-      --pagination-text-active: var(--slate-950);
-    } @else {
-      --pagination-text-active: var(--white);
-    }
-  }
-  
-  // Semantic Variants
-  &-success {
-    --pagination-color-active: var(--color-success);
-    --pagination-text-active: var(--slate-950);
-  }
-  &-warning {
-    --pagination-color-active: var(--color-warning);
-    --pagination-text-active: var(--slate-950);
-  }
-  &-danger {
-    --pagination-color-active: var(--color-danger);
-    --pagination-text-active: var(--white);
-  }
-  &-info {
-    --pagination-color-active: var(--color-info);
-    --pagination-text-active: var(--white);
-  }
+  // Consume the injected variable with fallback
+  --pagination-color-active: var(--pagination-color-base, var(--color-primary));
+  --pagination-text-active: var(--pagination-color-contrast, var(--white));
 
   // ==========================================================================
   // STANDARD LIST
@@ -103,10 +69,10 @@
     border: none; // Minimalist Linear Aesthetic
     cursor: pointer;
     transition: background-color var(--duration-fast) var(--ease-default),
-                color var(--duration-fast) var(--ease-default),
-                border-color var(--duration-fast) var(--ease-default),
-                box-shadow var(--duration-fast) var(--ease-default),
-                transform var(--duration-fast) var(--ease-default);
+    color var(--duration-fast) var(--ease-default),
+    border-color var(--duration-fast) var(--ease-default),
+    box-shadow var(--duration-fast) var(--ease-default),
+    transform var(--duration-fast) var(--ease-default);
     user-select: none;
     text-decoration: none;
     outline: none;
@@ -115,7 +81,7 @@
       background: var(--color-surface-hover);
       color: var(--color-text-primary);
     }
-    
+
     &:focus-visible {
       outline: var(--border-width-2, 2px) solid var(--color-primary);
       outline-offset: var(--border-width-2, 2px);
@@ -139,7 +105,7 @@
     padding: 0;
     width: var(--pagination-size); // Make sure it's square for icons
     color: var(--color-text-secondary);
-    
+
     svg {
       width: 1.2em;
       height: 1.2em;
@@ -169,11 +135,11 @@
     padding: 0 var(--spacing-2);
     border-radius: var(--radius-sm);
     transition: background var(--duration-fast);
-    
+
     &:hover {
       background: var(--color-surface-hover);
     }
-    
+
     &--input {
       width: calc(var(--compact-digits, 2) * 1ch + 2rem);
       text-align: center;
@@ -184,22 +150,23 @@
       height: var(--pagination-size);
       font-size: var(--pagination-font-size);
       outline: none;
-      
+
       &:focus-visible {
         border-color: var(--color-primary);
         box-shadow: 0 0 0 var(--border-width, 1px) var(--color-primary);
       }
-      
+
       // Remove spinner for number input
       &::-webkit-outer-spin-button,
       &::-webkit-inner-spin-button {
         -webkit-appearance: none;
         margin: 0;
       }
+
       -moz-appearance: textfield;
     }
   }
-  
+
   &__separator {
     color: var(--color-text-muted);
   }

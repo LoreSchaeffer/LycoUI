@@ -1,5 +1,3 @@
-@use "../../styles/mixins/theme-variants" as *;
-
 // ==========================================================================
 // INPUT WRAPPER — Contains input + validation message
 // ==========================================================================
@@ -23,9 +21,8 @@
   border-radius: var(--input-radius, var(--radius-md));
   overflow: hidden;
 
-  transition:
-    border-color var(--duration-fast) var(--ease-default),
-    box-shadow var(--duration-fast) var(--ease-default);
+  transition: border-color var(--duration-fast) var(--ease-default),
+  box-shadow var(--duration-fast) var(--ease-default);
   cursor: text;
 
   --input-color-base: var(--color-primary);
@@ -115,10 +112,9 @@
     color: var(--color-text-muted);
     pointer-events: none;
     transform-origin: left center;
-    transition:
-      transform var(--duration-fast) var(--ease-default),
-      font-size var(--duration-fast) var(--ease-default),
-      color var(--duration-fast) var(--ease-default);
+    transition: transform var(--duration-fast) var(--ease-default),
+    font-size var(--duration-fast) var(--ease-default),
+    color var(--duration-fast) var(--ease-default);
     line-height: 1;
     white-space: nowrap;
     overflow: hidden;
@@ -246,9 +242,8 @@
     background: transparent;
     color: var(--color-text-muted);
     cursor: pointer;
-    transition:
-      background-color var(--duration-fast) var(--ease-default),
-      color var(--duration-fast) var(--ease-default);
+    transition: background-color var(--duration-fast) var(--ease-default),
+    color var(--duration-fast) var(--ease-default);
 
     svg {
       width: var(--spacing-3, 0.75rem);
@@ -404,45 +399,6 @@
   }
 }
 
-// ==========================================================================
-// MIXINS EXTRACTED OUTSIDE BLOCK TO PREVENT BEM NESTING ISSUES
-// ==========================================================================
-.input- {
-  @include for-each-theme-color using($color, $is-light) {
-    &--#{$color} {
-      --input-color-base: var(--color-#{$color}, var(--#{$color}-500));
-    }
-  }
-}
-
-// Ensure correct semantic variable names mapping
-.input--primary {
-  --input-color-base: var(--color-primary);
-}
-
-.input--success {
-  --input-color-base: var(--color-success);
-}
-
-.input--warning {
-  --input-color-base: var(--color-warning);
-}
-
-.input--danger {
-  --input-color-base: var(--color-danger);
-}
-
-.input--info {
-  --input-color-base: var(--color-info);
-}
-
-.input--neutral {
-  --input-color-base: var(--color-ash);
-}
-
-.input--white {
-  --input-color-base: var(--white);
-}
 
 // ==========================================================================
 // VALIDATION MESSAGE — Outside .input to avoid BEM nesting issues

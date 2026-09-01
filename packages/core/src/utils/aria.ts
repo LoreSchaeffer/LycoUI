@@ -1,6 +1,6 @@
 /**
  * Toggles the 'aria-expanded' state of an element.
- * 
+ *
  * @param element - The element to update.
  * @param isExpanded - The boolean state representing whether the controlled element is expanded.
  */
@@ -11,7 +11,7 @@ export function setAriaExpanded(element: HTMLElement | null, isExpanded: boolean
 
 /**
  * Toggles the 'aria-hidden' state of an element.
- * 
+ *
  * @param element - The element to update.
  * @param isHidden - The boolean state representing whether the element is hidden.
  */
@@ -22,7 +22,7 @@ export function setAriaHidden(element: HTMLElement | null, isHidden: boolean): v
 
 /**
  * Updates the 'aria-selected' state of an element.
- * 
+ *
  * @param element - The element to update.
  * @param isSelected - The boolean state representing whether the element is selected.
  */
@@ -34,7 +34,7 @@ export function setAriaSelected(element: HTMLElement | null, isSelected: boolean
 /**
  * Safely sets the 'aria-activedescendant' attribute on a container element.
  * If the activeId is null or empty, the attribute is removed.
- * 
+ *
  * @param element - The container element.
  * @param activeId - The ID of the currently active descendant element.
  */

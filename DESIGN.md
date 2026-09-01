@@ -431,7 +431,7 @@ Row (.row)
 
 ### Type System
 
-All variant types are defined in `src/types/types.ts`:
+All variant types are defined in `packages/core/src/types/types.ts`:
 
 ```typescript
 type ColorVariant =
@@ -643,9 +643,9 @@ Supports both controlled (`activeKey` prop) and uncontrolled (`defaultActiveKey`
 
 | Target | Entry | Build Output |
 |---|---|---|
-| **React** | `src/index.ts` | `dist/index.es.js`, `dist/index.cjs.js` |
-| **Vanilla** | `src/vanilla.ts` | `dist/vanilla.es.js`, `dist/vanilla.cjs.js` |
-| **Styles** | (imported by React entry) | `dist/lyco-ui.css` |
+| **React** | `packages/core/src/index.ts` | `packages/core/dist/index.es.js`, `packages/core/dist/index.cjs.js` |
+| **Vanilla** | `packages/core/src/vanilla.ts` | `packages/core/dist/vanilla.es.js`, `packages/core/dist/vanilla.cjs.js` |
+| **Styles** | (imported by React entry) | `packages/core/dist/lyco-ui.css` |
 
 ### Vanilla Auto-Initialization
 
@@ -689,8 +689,8 @@ window.lycoValidators = {
 - **Bundler:** Vite 8 with `@vitejs/plugin-react` and `vite-plugin-dts`
 - **Formats:** ES modules and CommonJS
 - **Externals:** `react`, `react-dom`, `react/jsx-runtime`, `clsx`, `shiki`
-- **CSS output:** All SCSS is compiled into a single `dist/lyco-ui.css`
-- **TypeScript:** Strict mode, declarations output to `dist/types/`
+- **CSS output:** All SCSS is compiled into a single `packages/core/dist/lyco-ui.css`
+- **TypeScript:** Strict mode, declarations output to `packages/core/dist/types`
 
 ---
 

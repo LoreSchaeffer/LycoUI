@@ -1,3 +1,5 @@
+import {FOCUSABLE_ELEMENTS_SELECTOR, trapFocus} from '../../utils/keyboard';
+
 /** Extends HTMLElement to include the attached controller reference. */
 interface LycoModalElement extends HTMLElement {
     lycoModal?: LycoModalController;
@@ -42,7 +44,7 @@ export class LycoModalController {
     private readonly dialog: HTMLElement | null;
     private isOpen: boolean = false;
     private previouslyFocusedElement: HTMLElement | null = null;
-    
+
     private readonly _onKeyDown: (e: KeyboardEvent) => void;
     private readonly _onBackdropClick: (e: MouseEvent) => void;
     private readonly _onCloseClick: (e: MouseEvent) => void;
@@ -50,7 +52,7 @@ export class LycoModalController {
     constructor(modalElement: HTMLElement) {
         this.modal = modalElement;
         this.dialog = this.modal.querySelector('.modal__dialog');
-        
+
         this._onKeyDown = (e: KeyboardEvent) => this.handleKeyDown(e);
         this._onBackdropClick = (e: MouseEvent) => this.handleBackdropClick(e);
         this._onCloseClick = (e: MouseEvent) => {
@@ -61,13 +63,13 @@ export class LycoModalController {
         if (this.modal.style.display !== 'none' && !this.modal.classList.contains('hidden')) {
             this.modal.style.display = 'none';
         }
-        
+
         this.bindEvents();
     }
 
     private bindEvents(): void {
         this.modal.addEventListener('click', this._onBackdropClick);
-        
+
         const closeButtons = this.modal.querySelectorAll('[data-lyco-dismiss="modal"]');
         closeButtons.forEach(btn => btn.addEventListener('click', this._onCloseClick as EventListener));
     }
@@ -76,7 +78,7 @@ export class LycoModalController {
         this.modal.removeEventListener('click', this._onBackdropClick);
         const closeButtons = this.modal.querySelectorAll('[data-lyco-dismiss="modal"]');
         closeButtons.forEach(btn => btn.removeEventListener('click', this._onCloseClick as EventListener));
-        
+
         if (this.isOpen) {
             this.hide();
         }
@@ -89,11 +91,11 @@ export class LycoModalController {
         this.isOpen = true;
         this.previouslyFocusedElement = document.activeElement as HTMLElement;
 
-        this.modal.style.display = 'flex'; // It's display flex in SCSS
+        this.modal.style.display = 'flex';
         this.modal.classList.remove('hidden');
         this.modal.removeAttribute('aria-hidden');
         this.modal.setAttribute('aria-modal', 'true');
-        
+
         document.body.classList.add('modal-open');
         document.addEventListener('keydown', this._onKeyDown);
 
@@ -102,16 +104,16 @@ export class LycoModalController {
         setTimeout(() => {
             if (this.dialog) {
                 const focusableElements = this.dialog.querySelectorAll(
-                    'a[href], button:not([disabled]), textarea:not([disabled]), input[type="text"]:not([disabled]), input[type="radio"]:not([disabled]), input[type="checkbox"]:not([disabled]), select:not([disabled]), [tabindex]:not([tabindex="-1"])'
+                    FOCUSABLE_ELEMENTS_SELECTOR
                 ) as NodeListOf<HTMLElement>;
-                
+
                 if (focusableElements.length > 0) {
                     focusableElements[0].focus();
                 } else {
                     this.dialog.focus();
                 }
             }
-        }, 50); // slight delay for animation frame
+        }, 50);
     }
 
     public hide(): void {
@@ -141,28 +143,10 @@ export class LycoModalController {
         if (e.key === 'Escape') {
             this.hide();
         }
-        
-        if (e.key === 'Tab' && this.dialog) {
-            const focusableElements = this.dialog.querySelectorAll(
-                'a[href], button:not([disabled]), textarea:not([disabled]), input[type="text"]:not([disabled]), input[type="radio"]:not([disabled]), input[type="checkbox"]:not([disabled]), select:not([disabled]), [tabindex]:not([tabindex="-1"])'
-            ) as NodeListOf<HTMLElement>;
 
-            if (focusableElements.length === 0) return;
-
-            const firstElement = focusableElements[0];
-            const lastElement = focusableElements[focusableElements.length - 1];
-
-            if (e.shiftKey) {
-                if (document.activeElement === firstElement || document.activeElement === this.dialog) {
-                    lastElement.focus();
-                    e.preventDefault();
-                }
-            } else {
-                if (document.activeElement === lastElement) {
-                    firstElement.focus();
-                    e.preventDefault();
-                }
-            }
+        if (this.dialog) {
+            trapFocus(e, this.dialog);
         }
     }
 }
+

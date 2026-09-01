@@ -1,5 +1,5 @@
 import './Card.scss';
-import {forwardRef, type HTMLAttributes, type ReactNode} from 'react';
+import {type CSSProperties, forwardRef, type HTMLAttributes, type ReactNode} from 'react';
 import clsx from 'clsx';
 import type {FullVariant} from '../../types/types.ts';
 
@@ -28,6 +28,7 @@ const CardRoot = forwardRef<HTMLDivElement, CardProps>((
         interactive = false,
         flat = false,
         className,
+        style,
         ...props
     }, ref) => {
 
@@ -43,12 +44,15 @@ const CardRoot = forwardRef<HTMLDivElement, CardProps>((
                 interactive && 'card--interactive',
                 isColored && [
                     'card--variant',
-                    `card--${variant}`,
                     isDim ? 'card--dim' : 'card--solid'
                 ],
                 (isFlat || flat) && 'card--flat',
                 className
             )}
+            style={isColored ? {
+                '--card-color-base': `var(--${variant}-500, var(--color-${variant}))`,
+                ...style
+            } as CSSProperties : style}
             {...props}
         >
             {children}
@@ -62,21 +66,21 @@ export interface CardSectionProps extends HTMLAttributes<HTMLDivElement> {
     children?: ReactNode;
 }
 
-const CardHeader = forwardRef<HTMLDivElement, CardSectionProps>(({ children, className, ...props }, ref) => (
+const CardHeader = forwardRef<HTMLDivElement, CardSectionProps>(({children, className, ...props}, ref) => (
     <div ref={ref} className={clsx('card__header', className)} {...props}>
         {children}
     </div>
 ));
 CardHeader.displayName = 'CardHeader';
 
-const CardBody = forwardRef<HTMLDivElement, CardSectionProps>(({ children, className, ...props }, ref) => (
+const CardBody = forwardRef<HTMLDivElement, CardSectionProps>(({children, className, ...props}, ref) => (
     <div ref={ref} className={clsx('card__body', className)} {...props}>
         {children}
     </div>
 ));
 CardBody.displayName = 'CardBody';
 
-const CardFooter = forwardRef<HTMLDivElement, CardSectionProps>(({ children, className, ...props }, ref) => (
+const CardFooter = forwardRef<HTMLDivElement, CardSectionProps>(({children, className, ...props}, ref) => (
     <div ref={ref} className={clsx('card__footer', className)} {...props}>
         {children}
     </div>
@@ -88,3 +92,4 @@ export const Card = Object.assign(CardRoot, {
     Body: CardBody,
     Footer: CardFooter
 });
+

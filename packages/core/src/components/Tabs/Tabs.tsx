@@ -1,137 +1,145 @@
 import './Tabs.scss';
-import React, { createContext, forwardRef, useCallback, useContext, useState, useMemo } from 'react';
-import { useKeyboardNav } from '../../hooks/useKeyboardNav';
+import React, {createContext, forwardRef, useCallback, useContext, useMemo, useState} from 'react';
+import {useKeyboardNav} from '../../hooks/useKeyboardNav';
 import clsx from 'clsx';
 
 interface TabsContextValue {
-  activeKey: string;
-  setActiveKey: (key: string) => void;
+    activeKey: string;
+    setActiveKey: (key: string) => void;
+    idPrefix: string;
 }
 
 const TabsContext = createContext<TabsContextValue | null>(null);
 
 export interface TabsProps extends Omit<React.HTMLAttributes<HTMLDivElement>, 'onChange'> {
-  defaultActiveKey?: string;
-  activeKey?: string;
-  onChange?: (key: string) => void;
+    defaultActiveKey?: string;
+    activeKey?: string;
+    onChange?: (key: string) => void;
 }
 
 export const Tabs = forwardRef<HTMLDivElement, TabsProps>((
-  { className, defaultActiveKey = '', activeKey: controlledKey, onChange, children, ...props }, ref
+    {className, defaultActiveKey = '', activeKey: controlledKey, onChange, children, ...props}, ref
 ) => {
-  const [internalKey, setInternalKey] = useState<string>(defaultActiveKey);
-  const isControlled = controlledKey !== undefined;
-  const currentKey = isControlled ? controlledKey : internalKey;
+    const [internalKey, setInternalKey] = useState<string>(defaultActiveKey);
+    const isControlled = controlledKey !== undefined;
+    const currentKey = isControlled ? controlledKey : internalKey;
+    const idPrefix = React.useId();
 
-  const setActiveKey = useCallback((key: string) => {
-    if (!isControlled) {
-      setInternalKey(key);
-    }
-    onChange?.(key);
-  }, [isControlled, onChange]);
+    const setActiveKey = useCallback((key: string) => {
+        if (!isControlled) {
+            setInternalKey(key);
+        }
+        onChange?.(key);
+    }, [isControlled, onChange]);
 
-  const contextValue = useMemo(() => ({
-    activeKey: currentKey,
-    setActiveKey
-  }), [currentKey, setActiveKey]);
+    const contextValue = useMemo(() => ({
+        activeKey: currentKey,
+        setActiveKey,
+        idPrefix
+    }), [currentKey, setActiveKey, idPrefix]);
 
-  return (
-    <TabsContext.Provider value={contextValue}>
-      <div ref={ref} className={clsx('tabs', className)} {...props}>
-        {children}
-      </div>
-    </TabsContext.Provider>
-  );
+    return (
+        <TabsContext.Provider value={contextValue}>
+            <div ref={ref} className={clsx('tabs', className)} {...props}>
+                {children}
+            </div>
+        </TabsContext.Provider>
+    );
 });
 Tabs.displayName = 'Tabs';
 
-export interface TabsListProps extends React.HTMLAttributes<HTMLDivElement> {}
+export interface TabsListProps extends React.HTMLAttributes<HTMLDivElement> {
+}
 
 export const TabsList = forwardRef<HTMLDivElement, TabsListProps>((
-  { className, onKeyDown, ...props }, ref
+    {className, onKeyDown, ...props}, ref
 ) => {
-  const handleKeyDown = useKeyboardNav({
-    horizontal: true,
-    itemSelector: '[role="tab"]:not(:disabled)',
-    onFocus: (item) => item.click()
-  });
+    const handleKeyDown = useKeyboardNav({
+        horizontal: true,
+        itemSelector: '[role="tab"]:not(:disabled)',
+        onFocus: (item) => item.click()
+    });
 
-  return (
-    <div 
-      ref={ref} 
-      className={clsx('tabs__list', className)} 
-      role="tablist" 
-      onKeyDown={(e) => {
-        handleKeyDown(e);
-        onKeyDown?.(e);
-      }}
-      {...props} 
-    />
-  );
+    return (
+        <div
+            ref={ref}
+            className={clsx('tabs__list', className)}
+            role="tablist"
+            onKeyDown={(e) => {
+                handleKeyDown(e);
+                onKeyDown?.(e);
+            }}
+            {...props}
+        />
+    );
 });
 TabsList.displayName = 'TabsList';
 
 export interface TabTriggerProps extends Omit<React.ButtonHTMLAttributes<HTMLButtonElement>, 'title'> {
-  eventKey: string;
+    eventKey: string;
 }
 
 export const TabTrigger = forwardRef<HTMLButtonElement, TabTriggerProps>((
-  { className, eventKey, children, disabled, onClick, ...props }, ref
+    {className, eventKey, children, disabled, onClick, ...props}, ref
 ) => {
-  const ctx = useContext(TabsContext);
-  if (!ctx) throw new Error('TabTrigger must be used within Tabs');
+    const ctx = useContext(TabsContext);
+    if (!ctx) throw new Error('TabTrigger must be used within Tabs');
 
-  const isActive = ctx.activeKey === eventKey;
+    const isActive = ctx.activeKey === eventKey;
 
-  const handleClick = useCallback((e: React.MouseEvent<HTMLButtonElement>) => {
-    if (!disabled) {
-      ctx.setActiveKey(eventKey);
-      onClick?.(e);
-    }
-  }, [disabled, ctx, eventKey, onClick]);
+    const handleClick = useCallback((e: React.MouseEvent<HTMLButtonElement>) => {
+        if (!disabled) {
+            ctx.setActiveKey(eventKey);
+            onClick?.(e);
+        }
+    }, [disabled, ctx, eventKey, onClick]);
 
-  return (
-    <button
-      ref={ref}
-      type="button"
-      role="tab"
-      aria-selected={isActive}
-      disabled={disabled}
-      className={clsx('tabs__trigger', isActive && 'is-active', disabled && 'is-disabled', className)}
-      onClick={handleClick}
-      data-lyco-tab-trigger={eventKey}
-      {...props}
-    >
-      {children}
-    </button>
-  );
+    return (
+        <button
+            ref={ref}
+            type="button"
+            role="tab"
+            id={`${ctx.idPrefix}-tab-${eventKey}`}
+            aria-controls={`${ctx.idPrefix}-panel-${eventKey}`}
+            aria-selected={isActive}
+            disabled={disabled}
+            className={clsx('tabs__trigger', isActive && 'is-active', disabled && 'is-disabled', className)}
+            onClick={handleClick}
+            data-lyco-tab-trigger={eventKey}
+            {...props}
+        >
+            {children}
+        </button>
+    );
 });
 TabTrigger.displayName = 'TabTrigger';
 
 export interface TabContentProps extends React.HTMLAttributes<HTMLDivElement> {
-  eventKey: string;
+    eventKey: string;
 }
 
 export const TabContent = forwardRef<HTMLDivElement, TabContentProps>((
-  { className, eventKey, children, ...props }, ref
+    {className, eventKey, children, ...props}, ref
 ) => {
-  const ctx = useContext(TabsContext);
-  if (!ctx) throw new Error('TabContent must be used within Tabs');
+    const ctx = useContext(TabsContext);
+    if (!ctx) throw new Error('TabContent must be used within Tabs');
 
-  const isActive = ctx.activeKey === eventKey;
+    const isActive = ctx.activeKey === eventKey;
 
-  if (!isActive) return null;
+    if (!isActive) return null;
 
-  return (
-    <div
-      ref={ref}
-      role="tabpanel"
-      className={clsx('tabs__content', className)}
-      data-lyco-tab-content={eventKey}
-      {...props}
-    >
-      {children}
-    </div>
-  );
+    return (
+        <div
+            ref={ref}
+            role="tabpanel"
+            id={`${ctx.idPrefix}-panel-${eventKey}`}
+            aria-labelledby={`${ctx.idPrefix}-tab-${eventKey}`}
+            className={clsx('tabs__content', className)}
+            data-lyco-tab-content={eventKey}
+            {...props}
+        >
+            {children}
+        </div>
+    );
 });
 TabContent.displayName = 'TabContent';

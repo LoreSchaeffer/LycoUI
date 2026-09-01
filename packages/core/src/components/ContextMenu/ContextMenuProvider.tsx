@@ -1,14 +1,14 @@
-import React, { useState, useEffect, useCallback, useMemo } from 'react';
-import { createPortal } from 'react-dom';
-import { ContextMenuContext } from './ContextMenuContext';
-import type { ContextMenuState, ContextMenuItemDef } from './ContextMenuContext';
-import { ContextMenu } from './ContextMenu';
+import React, {useCallback, useEffect, useMemo, useState} from 'react';
+import {createPortal} from 'react-dom';
+import type {ContextMenuItemDef, ContextMenuState} from './ContextMenuContext';
+import {ContextMenuContext} from './ContextMenuContext';
+import {ContextMenu} from './ContextMenu';
 
 export interface ContextMenuProviderProps {
     children: React.ReactNode;
 }
 
-export const ContextMenuProvider: React.FC<ContextMenuProviderProps> = ({ children }) => {
+export const ContextMenuProvider: React.FC<ContextMenuProviderProps> = ({children}) => {
     const [state, setState] = useState<ContextMenuState>({
         isOpen: false,
         x: 0,
@@ -17,13 +17,13 @@ export const ContextMenuProvider: React.FC<ContextMenuProviderProps> = ({ childr
     });
 
     const hideContextMenu = useCallback(() => {
-        setState(prev => prev.isOpen ? { ...prev, isOpen: false } : prev);
+        setState(prev => prev.isOpen ? {...prev, isOpen: false} : prev);
     }, []);
 
     const showContextMenu = useCallback((e: React.MouseEvent, items: ContextMenuItemDef[]) => {
         e.preventDefault();
         e.stopPropagation();
-        
+
         setState({
             isOpen: true,
             x: e.clientX,
@@ -57,7 +57,7 @@ export const ContextMenuProvider: React.FC<ContextMenuProviderProps> = ({ childr
         }, 10);
 
         document.addEventListener('keydown', handleEscape);
-        window.addEventListener('scroll', handleScroll, { passive: true, capture: true });
+        window.addEventListener('scroll', handleScroll, {passive: true, capture: true});
         window.addEventListener('blur', handleBlur);
 
         return () => {
@@ -65,7 +65,7 @@ export const ContextMenuProvider: React.FC<ContextMenuProviderProps> = ({ childr
             document.removeEventListener('click', handleOutsideClick);
             document.removeEventListener('contextmenu', handleOutsideClick);
             document.removeEventListener('keydown', handleEscape);
-            window.removeEventListener('scroll', handleScroll, { capture: true });
+            window.removeEventListener('scroll', handleScroll, {capture: true});
             window.removeEventListener('blur', handleBlur);
         };
     }, [state.isOpen, hideContextMenu]);
@@ -79,12 +79,12 @@ export const ContextMenuProvider: React.FC<ContextMenuProviderProps> = ({ childr
         <ContextMenuContext.Provider value={contextValue}>
             {children}
             {state.isOpen && typeof document !== 'undefined' && createPortal(
-                <ContextMenu 
-                    items={state.items} 
-                    x={state.x} 
-                    y={state.y} 
+                <ContextMenu
+                    items={state.items}
+                    x={state.x}
+                    y={state.y}
                     onClose={hideContextMenu}
-                    isRoot 
+                    isRoot
                 />,
                 document.body
             )}

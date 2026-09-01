@@ -1,5 +1,6 @@
-import React, { useEffect, useRef, useCallback } from 'react';
-import { createPortal } from 'react-dom';
+import React, {useCallback, useEffect, useRef} from 'react';
+import {createPortal} from 'react-dom';
+import {FOCUSABLE_ELEMENTS_SELECTOR, trapFocus} from '../../utils/keyboard';
 import './Modal.scss';
 
 /**
@@ -22,15 +23,15 @@ export interface ModalProps {
 }
 
 export const ModalBase = React.forwardRef<HTMLDialogElement, ModalProps>(({
-    isOpen,
-    onClose,
-    size = 'md',
-    centered = true,
-    scrollable = false,
-    children,
-    className = '',
-    id
-}, ref) => {
+                                                                              isOpen,
+                                                                              onClose,
+                                                                              size = 'md',
+                                                                              centered = true,
+                                                                              scrollable = false,
+                                                                              children,
+                                                                              className = '',
+                                                                              id
+                                                                          }, ref) => {
     const dialogRef = useRef<HTMLDivElement>(null);
     const previouslyFocusedElement = useRef<HTMLElement | null>(null);
 
@@ -38,28 +39,9 @@ export const ModalBase = React.forwardRef<HTMLDialogElement, ModalProps>(({
         if (e.key === 'Escape') {
             onClose();
         }
-        
-        if (e.key === 'Tab' && dialogRef.current) {
-            const focusableElements = dialogRef.current.querySelectorAll(
-                'a[href], button:not([disabled]), textarea:not([disabled]), input[type="text"]:not([disabled]), input[type="radio"]:not([disabled]), input[type="checkbox"]:not([disabled]), select:not([disabled]), [tabindex]:not([tabindex="-1"])'
-            ) as NodeListOf<HTMLElement>;
 
-            if (focusableElements.length === 0) return;
-
-            const firstElement = focusableElements[0];
-            const lastElement = focusableElements[focusableElements.length - 1];
-
-            if (e.shiftKey) {
-                if (document.activeElement === firstElement || document.activeElement === dialogRef.current) {
-                    lastElement.focus();
-                    e.preventDefault();
-                }
-            } else {
-                if (document.activeElement === lastElement) {
-                    firstElement.focus();
-                    e.preventDefault();
-                }
-            }
+        if (dialogRef.current) {
+            trapFocus(e, dialogRef.current);
         }
     }, [onClose]);
 
@@ -68,13 +50,13 @@ export const ModalBase = React.forwardRef<HTMLDialogElement, ModalProps>(({
             previouslyFocusedElement.current = document.activeElement as HTMLElement;
             document.addEventListener('keydown', handleKeyDown);
             document.body.classList.add('modal-open');
-            
+
             setTimeout(() => {
                 if (dialogRef.current) {
                     const focusableElements = dialogRef.current.querySelectorAll(
-                        'a[href], button:not([disabled]), textarea:not([disabled]), input[type="text"]:not([disabled]), input[type="radio"]:not([disabled]), input[type="checkbox"]:not([disabled]), select:not([disabled]), [tabindex]:not([tabindex="-1"])'
+                        FOCUSABLE_ELEMENTS_SELECTOR
                     ) as NodeListOf<HTMLElement>;
-                    
+
                     if (focusableElements.length > 0) {
                         focusableElements[0].focus();
                     } else {
@@ -90,7 +72,7 @@ export const ModalBase = React.forwardRef<HTMLDialogElement, ModalProps>(({
                 previouslyFocusedElement.current = null;
             }
         }
-        
+
         return () => {
             document.removeEventListener('keydown', handleKeyDown);
             document.body.classList.remove('modal-open');
@@ -106,7 +88,7 @@ export const ModalBase = React.forwardRef<HTMLDialogElement, ModalProps>(({
     if (!isOpen) return null;
 
     const modalContent = (
-        <dialog 
+        <dialog
             className={`modal ${className}`}
             id={id}
             role="dialog"
@@ -115,7 +97,7 @@ export const ModalBase = React.forwardRef<HTMLDialogElement, ModalProps>(({
             onClick={handleBackdropClick}
             ref={ref}
         >
-            <div 
+            <div
                 className={`modal__dialog modal__dialog--${size} ${centered ? 'modal__dialog--centered' : ''} ${scrollable ? 'modal__dialog--scrollable' : ''}`}
                 ref={dialogRef}
                 tabIndex={-1}
@@ -136,7 +118,7 @@ export interface ModalHeaderProps extends React.HTMLAttributes<HTMLDivElement> {
 }
 
 export const ModalHeader = React.forwardRef<HTMLDivElement, ModalHeaderProps>(
-    ({ children, className = '', ...props }, ref) => (
+    ({children, className = '', ...props}, ref) => (
         <div ref={ref} className={`modal__header ${className}`} {...props}>
             {children}
         </div>
@@ -150,7 +132,7 @@ export interface ModalTitleProps extends React.HTMLAttributes<HTMLHeadingElement
 }
 
 export const ModalTitle = React.forwardRef<HTMLHeadingElement, ModalTitleProps>(
-    ({ children, className = '', as: Component = 'h3', ...props }, ref) => (
+    ({children, className = '', as: Component = 'h3', ...props}, ref) => (
         <Component ref={ref} className={`modal__title ${className}`} {...props}>
             {children}
         </Component>
@@ -163,7 +145,7 @@ export interface ModalBodyProps extends React.HTMLAttributes<HTMLDivElement> {
 }
 
 export const ModalBody = React.forwardRef<HTMLDivElement, ModalBodyProps>(
-    ({ children, className = '', ...props }, ref) => (
+    ({children, className = '', ...props}, ref) => (
         <div ref={ref} className={`modal__body ${className}`} {...props}>
             {children}
         </div>
@@ -176,7 +158,7 @@ export interface ModalFooterProps extends React.HTMLAttributes<HTMLDivElement> {
 }
 
 export const ModalFooter = React.forwardRef<HTMLDivElement, ModalFooterProps>(
-    ({ children, className = '', ...props }, ref) => (
+    ({children, className = '', ...props}, ref) => (
         <div ref={ref} className={`modal__footer ${className}`} {...props}>
             {children}
         </div>
@@ -185,10 +167,10 @@ export const ModalFooter = React.forwardRef<HTMLDivElement, ModalFooterProps>(
 ModalFooter.displayName = 'ModalFooter';
 
 const ModalCompound = Object.assign(ModalBase, {
-  Header: ModalHeader,
-  Title: ModalTitle,
-  Body: ModalBody,
-  Footer: ModalFooter
+    Header: ModalHeader,
+    Title: ModalTitle,
+    Body: ModalBody,
+    Footer: ModalFooter
 });
 
-export { ModalCompound as Modal };
+export {ModalCompound as Modal};

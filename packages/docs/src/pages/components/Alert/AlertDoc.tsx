@@ -15,7 +15,7 @@ export default function AlertDoc() {
             description="Contextual feedback messages for typical user actions, featuring icons, manual closing, and timed progress bars."
             importCode="import { Alert } from '@loreschaeffer/lyco-ui';"
             exampleModules={exampleModules}
-            rawSources={rawSources as any}
+            rawSources={rawSources as Record<string, string>}
             apiConfig={apiConfig}
         />
     );

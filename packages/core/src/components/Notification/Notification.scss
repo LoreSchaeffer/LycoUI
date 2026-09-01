@@ -1,5 +1,3 @@
-@use "../../styles/mixins/theme-variants" as *;
-
 // ==========================================================================
 // NOTIFICATION STACK (Container)
 // ==========================================================================
@@ -103,31 +101,6 @@
   // Icon present modifier (padding handled by gap now)
   &.has-icon {
     // No extra padding needed, gap handles spacing
-  }
-
-  // ── Variant colors ──
-  &.notification-success {
-    --notification-color-base: var(--color-success);
-  }
-  &.notification-warning {
-    --notification-color-base: var(--color-warning);
-  }
-  &.notification-danger {
-    --notification-color-base: var(--color-danger);
-  }
-  &.notification-info {
-    --notification-color-base: var(--color-info);
-  }
-  &.notification-neutral {
-    --notification-color-base: var(--color-text-secondary);
-  }
-
-  @include for-each-theme-color using($color, $is-light) {
-    @if $color != 'white' and $color != 'neutral' {
-      &.notification-#{$color} {
-        --notification-color-base: var(--#{$color}-500);
-      }
-    }
   }
 
   // Flat modifier

@@ -1,7 +1,8 @@
 import './Pagination.scss';
-import { forwardRef, useCallback, useEffect, useRef, useState, type HTMLAttributes, type ReactNode } from 'react';
+import {type CSSProperties, forwardRef, type HTMLAttributes, type ReactNode, useCallback, useEffect, useRef, useState} from 'react';
 import clsx from 'clsx';
-import type { FullVariant, SizeVariant } from '../../types/types.ts';
+import type {FullVariant, SizeVariant} from '../../types/types.ts';
+import {getContrastColor} from '../../utils/theme.ts';
 
 export interface PaginationProps extends Omit<HTMLAttributes<HTMLElement>, 'onChange'> {
     variant?: 'standard' | 'compact';
@@ -36,8 +37,8 @@ export const Pagination = forwardRef<HTMLElement, PaginationProps>((
         onChange,
         size = 'md',
         colorVariant = 'primary',
-        prevIcon = <ChevronLeft />,
-        nextIcon = <ChevronRight />,
+        prevIcon = <ChevronLeft/>,
+        nextIcon = <ChevronRight/>,
         siblingCount = 1,
         disabled = false,
         className,
@@ -49,7 +50,7 @@ export const Pagination = forwardRef<HTMLElement, PaginationProps>((
     const inputRef = useRef<HTMLInputElement>(null);
 
     const safeCurrentPage = Math.max(1, Math.min(currentPage, Math.max(1, totalPages)));
-    
+
     useEffect(() => {
         setInputValue(safeCurrentPage.toString());
     }, [safeCurrentPage]);
@@ -88,7 +89,7 @@ export const Pagination = forwardRef<HTMLElement, PaginationProps>((
             setInputValue(safeCurrentPage.toString());
         }
     }, [handleInputBlur, safeCurrentPage]);
-    
+
     const handleInputChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
         setInputValue(e.target.value);
     }, []);
@@ -100,36 +101,36 @@ export const Pagination = forwardRef<HTMLElement, PaginationProps>((
         if (totalPages > totalBlocks) {
             const startPage = Math.max(2, safeCurrentPage - siblingCount);
             const endPage = Math.min(totalPages - 1, safeCurrentPage + siblingCount);
-            
+
             let pages: (number | string)[] = [1];
-            
+
             if (startPage > 2) {
                 pages.push('ellipsis-start');
             } else if (startPage === 2) {
             }
-            
+
             for (let i = startPage; i <= endPage; i++) {
                 pages.push(i);
             }
-            
+
             if (endPage < totalPages - 1) {
                 pages.push('ellipsis-end');
             }
-            
+
             pages.push(totalPages);
             return pages;
         }
-        
-        return Array.from({ length: totalPages }, (_, i) => i + 1);
+
+        return Array.from({length: totalPages}, (_, i) => i + 1);
     }, [totalPages, safeCurrentPage, siblingCount]);
 
     const renderStandard = () => {
         const pages = generatePages();
-        
+
         return (
             <ul className="pagination__list">
                 <li className="pagination__item">
-                    <button 
+                    <button
                         className={clsx('pagination__btn', 'pagination__btn--prev', (disabled || safeCurrentPage <= 1) && 'is-disabled')}
                         onClick={handlePrev}
                         disabled={disabled || safeCurrentPage <= 1}
@@ -138,7 +139,7 @@ export const Pagination = forwardRef<HTMLElement, PaginationProps>((
                         {prevIcon}
                     </button>
                 </li>
-                
+
                 {pages.map((page, index) => {
                     if (typeof page === 'string') {
                         return (
@@ -147,7 +148,7 @@ export const Pagination = forwardRef<HTMLElement, PaginationProps>((
                             </li>
                         );
                     }
-                    
+
                     const isCurrent = page === safeCurrentPage;
                     return (
                         <li key={page} className="pagination__item">
@@ -163,9 +164,9 @@ export const Pagination = forwardRef<HTMLElement, PaginationProps>((
                         </li>
                     );
                 })}
-                
+
                 <li className="pagination__item">
-                    <button 
+                    <button
                         className={clsx('pagination__btn', 'pagination__btn--next', (disabled || safeCurrentPage >= totalPages) && 'is-disabled')}
                         onClick={handleNext}
                         disabled={disabled || safeCurrentPage >= totalPages}
@@ -180,7 +181,7 @@ export const Pagination = forwardRef<HTMLElement, PaginationProps>((
 
     const renderCompact = () => (
         <>
-            <button 
+            <button
                 className={clsx('pagination__btn', 'pagination__btn--prev', (disabled || safeCurrentPage <= 1) && 'is-disabled')}
                 onClick={handlePrev}
                 disabled={disabled || safeCurrentPage <= 1}
@@ -188,10 +189,10 @@ export const Pagination = forwardRef<HTMLElement, PaginationProps>((
             >
                 {prevIcon}
             </button>
-            
+
             <div className="pagination__compact-info">
                 {isEditing ? (
-                    <input 
+                    <input
                         ref={inputRef}
                         type="number"
                         className="pagination__current-page--input"
@@ -204,10 +205,12 @@ export const Pagination = forwardRef<HTMLElement, PaginationProps>((
                         aria-label="Current page"
                     />
                 ) : (
-                    <span 
-                        className={clsx('pagination__current-page', disabled && 'is-disabled')} 
+                    <span
+                        className={clsx('pagination__current-page', disabled && 'is-disabled')}
                         tabIndex={disabled ? -1 : 0}
-                        onClick={() => { if (!disabled) setIsEditing(true); }}
+                        onClick={() => {
+                            if (!disabled) setIsEditing(true);
+                        }}
                         onKeyDown={(e) => {
                             if (disabled) return;
                             if (e.key === 'Enter' || e.key === ' ') {
@@ -224,8 +227,8 @@ export const Pagination = forwardRef<HTMLElement, PaginationProps>((
                 <span className="pagination__separator" aria-hidden="true">/</span>
                 <span className="pagination__total-pages">{totalPages}</span>
             </div>
-            
-            <button 
+
+            <button
                 className={clsx('pagination__btn', 'pagination__btn--next', (disabled || safeCurrentPage >= totalPages) && 'is-disabled')}
                 onClick={handleNext}
                 disabled={disabled || safeCurrentPage >= totalPages}
@@ -242,7 +245,6 @@ export const Pagination = forwardRef<HTMLElement, PaginationProps>((
             aria-label="Pagination"
             className={clsx(
                 'pagination',
-                `pagination-${colorVariant}`,
                 size !== 'md' && `pagination-${size}`,
                 variant === 'compact' && 'pagination-compact',
                 disabled && 'is-disabled',
@@ -254,8 +256,10 @@ export const Pagination = forwardRef<HTMLElement, PaginationProps>((
             aria-disabled={disabled}
             style={{
                 ...props.style,
+                '--pagination-color-base': `var(--${colorVariant}-500, var(--color-${colorVariant}))`,
+                '--pagination-color-contrast': getContrastColor(colorVariant),
                 '--compact-digits': totalPages.toString().length
-            } as React.CSSProperties}
+            } as CSSProperties}
             {...props}
         >
             {variant === 'standard' ? renderStandard() : renderCompact()}

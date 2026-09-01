@@ -1,15 +1,5 @@
 import './Select.scss';
-import {
-    forwardRef,
-    useState,
-    useRef,
-    useEffect,
-    useId,
-    useCallback,
-    type ReactNode,
-    type KeyboardEvent,
-    type HTMLAttributes
-} from 'react';
+import {type CSSProperties, forwardRef, type HTMLAttributes, type KeyboardEvent, type ReactNode, useCallback, useEffect, useId, useRef, useState} from 'react';
 import clsx from 'clsx';
 import type {FullVariant, SizeVariant} from '../../types/types.ts';
 
@@ -181,23 +171,26 @@ export const Select = forwardRef<HTMLDivElement, SelectProps>((
             ref={mergedRef}
             className={clsx(
                 'select',
-                isColored && `select--${variant}`,
                 size !== 'md' && `select--${size}`,
                 disabled && 'is-disabled',
                 isOpen && 'is-open',
                 className
             )}
+            style={isColored ? {
+                '--select-color-base': `var(--${variant}-500, var(--color-${variant}))`,
+                ...props.style
+            } as CSSProperties : props.style}
             {...props}
         >
-            <button 
-                type="button" 
-                className="select__trigger" 
+            <button
+                type="button"
+                className="select__trigger"
                 onClick={handleToggle}
                 onKeyDown={handleKeyDown}
                 tabIndex={disabled ? -1 : 0}
                 role="combobox"
-                aria-haspopup="listbox" 
-                aria-expanded={isOpen} 
+                aria-haspopup="listbox"
+                aria-expanded={isOpen}
                 aria-controls={dropdownId}
                 aria-activedescendant={activeDescendant}
                 disabled={disabled}
@@ -214,10 +207,10 @@ export const Select = forwardRef<HTMLDivElement, SelectProps>((
                 </svg>
             </button>
 
-            <ul 
-                ref={listboxRef} 
-                id={dropdownId} 
-                className="select__dropdown" 
+            <ul
+                ref={listboxRef}
+                id={dropdownId}
+                className="select__dropdown"
                 role="listbox"
                 hidden={!isOpen}
                 aria-hidden={!isOpen}
@@ -240,11 +233,14 @@ export const Select = forwardRef<HTMLDivElement, SelectProps>((
                             aria-disabled={option.disabled}
                             className={clsx(
                                 'select__option',
-                                option.variant && `select__option--${option.variant}`,
+                                option.variant && 'select__option--variant',
                                 isSelected && 'is-selected',
                                 isFocused && 'is-focused',
                                 option.disabled && 'is-disabled'
                             )}
+                            style={option.variant ? {
+                                '--select-option-color': `var(--${option.variant}-500, var(--color-${option.variant}))`,
+                            } as CSSProperties : undefined}
                             onClick={() => handleSelect(option)}
                             onMouseEnter={() => setFocusedIndex(index)}
                         >

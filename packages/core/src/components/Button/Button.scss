@@ -1,7 +1,10 @@
-@use "sass:list";
-@use "../../styles/mixins/theme-variants" as *;
-
 .btn {
+  // Consume the injected variable with fallback
+  --btn-bg: var(--btn-color-base, var(--color-primary));
+  --btn-bg-hover: color-mix(in srgb, var(--btn-color-base, var(--color-primary)) 85%, white);
+  --btn-bg-active: color-mix(in srgb, var(--btn-color-base, var(--color-primary)) 85%, black);
+  --btn-text: var(--btn-color-contrast, var(--white));
+
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -14,10 +17,10 @@
   font-weight: var(--font-weight-medium);
   border-radius: var(--radius-md);
   transition: background-color var(--duration-fast) var(--ease-default),
-    color var(--duration-fast) var(--ease-default),
-    border-color var(--duration-fast) var(--ease-default),
-    box-shadow var(--duration-fast) var(--ease-default),
-    transform var(--duration-fast) var(--ease-default);
+  color var(--duration-fast) var(--ease-default),
+  border-color var(--duration-fast) var(--ease-default),
+  box-shadow var(--duration-fast) var(--ease-default),
+  transform var(--duration-fast) var(--ease-default);
   overflow: hidden;
 
   padding: var(--spacing-2) var(--spacing-4);
@@ -160,25 +163,6 @@
   }
 }
 
-// ==========================================================================
-// VARIANTS — Base Colors
-// ==========================================================================
-.btn- {
-  @include for-each-theme-color using($color, $is-light) {
-    --btn-bg: var(--#{$color}-500);
-    --btn-bg-hover: var(--#{$color}-400);
-    --btn-bg-active: var(--#{$color}-600);
-
-    @if $is-light {
-      --btn-text: var(--color-void);
-    }
-
-    @else {
-      --btn-text: var(--white);
-    }
-  }
-}
-
 // Spinner inside button — scoped outside .btn to avoid BEM nesting issues.
 .btn .btn__spinner {
   color: currentColor;
@@ -188,49 +172,4 @@
   // Override the default spinner track to match the button's text color perfectly
   border-color: color-mix(in srgb, currentColor 30%, transparent);
   border-top-color: currentColor;
-}
-
-// ==========================================================================
-// VARIANTS — Semantic
-// ==========================================================================
-.btn--primary {
-  --btn-bg: var(--color-primary);
-  --btn-bg-hover: var(--color-primary-hover);
-  --btn-bg-active: var(--color-primary-active);
-  --btn-text: var(--white);
-}
-
-.btn--success {
-  --btn-bg: var(--color-success);
-  --btn-bg-hover: var(--color-success-hover);
-  --btn-bg-active: var(--color-success-active);
-  --btn-text: var(--white);
-}
-
-.btn--warning {
-  --btn-bg: var(--color-warning);
-  --btn-bg-hover: var(--color-warning-hover);
-  --btn-bg-active: var(--color-warning-active);
-  --btn-text: var(--color-void);
-}
-
-.btn--danger {
-  --btn-bg: var(--color-danger);
-  --btn-bg-hover: var(--color-danger-hover);
-  --btn-bg-active: var(--color-danger-active);
-  --btn-text: var(--white);
-}
-
-.btn--neutral {
-  --btn-bg: var(--color-ash);
-  --btn-bg-hover: color-mix(in srgb, var(--color-ash) 85%, white);
-  --btn-bg-active: color-mix(in srgb, var(--color-ash) 70%, white);
-  --btn-text: var(--white);
-}
-
-.btn--info {
-  --btn-bg: var(--color-info);
-  --btn-bg-hover: var(--color-info-hover);
-  --btn-bg-active: var(--color-info-active);
-  --btn-text: var(--white);
 }

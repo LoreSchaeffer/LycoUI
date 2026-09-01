@@ -1,4 +1,3 @@
-@use "../../styles/mixins/theme-variants" as *;
 
 .code {
   // Base Variables
@@ -68,12 +67,12 @@
 
   &__lang-select {
     min-width: 120px;
-    
+
     // Slight adjustments to make the custom Select blend perfectly into the Code header
     --select-bg: transparent;
     --select-border: transparent;
     --select-hover-bg: var(--color-surface-hover);
-    
+
     .select__trigger {
       padding: var(--spacing-1) var(--spacing-2);
       font-size: var(--font-size-xs);
@@ -93,8 +92,8 @@
     border-radius: var(--radius-sm);
     cursor: pointer;
     transition: color var(--duration-fast) var(--ease-default),
-                background-color var(--duration-fast) var(--ease-default),
-                opacity var(--duration-fast) var(--ease-default);
+    background-color var(--duration-fast) var(--ease-default),
+    opacity var(--duration-fast) var(--ease-default);
 
     &:hover {
       background-color: var(--color-surface-hover);
@@ -110,7 +109,7 @@
       display: none;
       color: var(--color-success);
     }
-    
+
     .icon-default {
       display: block;
     }
@@ -119,6 +118,7 @@
       .icon-default {
         display: none;
       }
+
       .icon-success {
         display: block;
       }
@@ -148,7 +148,7 @@
     white-space: pre;
     word-break: normal;
   }
-  
+
   &__textarea,
   &__highlight pre {
     padding: var(--spacing-6) var(--spacing-6); // Perfect alignment via identical padding
@@ -157,7 +157,7 @@
   &__highlight {
     background: transparent !important; // Override shiki theme bg
     pointer-events: auto;
-    
+
     pre {
       background: transparent !important;
       min-height: 100%;
@@ -180,7 +180,7 @@
     outline: none; // Reset
     resize: none; // Reset
     overflow: auto; // Match the pre scrolling
-    
+
     &::selection {
       background-color: color-mix(in srgb, var(--color-primary) 30%, transparent);
       color: transparent;

@@ -14,7 +14,7 @@ export default function ProgressBarDoc() {
       title="ProgressBar"
       description="A visual indicator for progress or completion."
       exampleModules={exampleModules}
-      rawSources={rawSources as any}
+      rawSources={rawSources as Record<string, string>}
       apiConfig={apiConfig}
     />
   );

@@ -1,5 +1,3 @@
-@use "../../styles/mixins/theme-variants" as *;
-
 .card {
   display: flex;
   flex-direction: column;
@@ -10,9 +8,9 @@
   color: var(--color-text-primary);
   overflow: hidden;
   transition: box-shadow var(--duration-normal) var(--ease-default),
-              border-color var(--duration-normal) var(--ease-default),
-              transform var(--duration-normal) var(--ease-default),
-              background-color var(--duration-fast) var(--ease-default);
+  border-color var(--duration-normal) var(--ease-default),
+  transform var(--duration-normal) var(--ease-default),
+  background-color var(--duration-fast) var(--ease-default);
 
   // ==========================================================================
   // COMPOUND SECTIONS
@@ -50,16 +48,24 @@
   // ==========================================================================
   // ELEVATIONS
   // ==========================================================================
-  &--elevation-0 { box-shadow: none; }
-  &--elevation-1 { box-shadow: var(--shadow-sm); }
+  &--elevation-0 {
+    box-shadow: none;
+  }
+
+  &--elevation-1 {
+    box-shadow: var(--shadow-sm);
+  }
+
   &--elevation-2 {
     box-shadow: var(--shadow-md);
     background-color: var(--color-surface-elevated);
   }
+
   &--elevation-3 {
     box-shadow: var(--shadow-lg);
     background-color: var(--color-surface-elevated);
   }
+
   &--elevation-4 {
     box-shadow: var(--shadow-xl);
     background-color: var(--color-surface-elevated);
@@ -69,10 +75,21 @@
   // ==========================================================================
   // PADDING (For flat/non-compound usage)
   // ==========================================================================
-  &--padding-none { padding: 0; }
-  &--padding-sm { padding: var(--spacing-4); }
-  &--padding-md { padding: var(--spacing-6); }
-  &--padding-lg { padding: var(--spacing-8); }
+  &--padding-none {
+    padding: 0;
+  }
+
+  &--padding-sm {
+    padding: var(--spacing-4);
+  }
+
+  &--padding-md {
+    padding: var(--spacing-6);
+  }
+
+  &--padding-lg {
+    padding: var(--spacing-8);
+  }
 
   // ==========================================================================
   // FLAT MODIFIER
@@ -86,75 +103,27 @@
   // COLOR VARIANTS (Solid & Dim)
   // ==========================================================================
   &--variant {
+    --card-color-dim: color-mix(in srgb, var(--card-color-base, var(--color-primary)) 15%, transparent);
+    --card-text-color: var(--white);
+
     &.card--dim {
       background-color: var(--card-color-dim);
-      border-color: color-mix(in srgb, var(--card-color-base) 25%, transparent);
+      border-color: color-mix(in srgb, var(--card-color-base, var(--color-primary)) 25%, transparent);
     }
 
     &.card--solid {
-      background-color: var(--card-color-base);
-      border-color: var(--card-color-base);
+      background-color: var(--card-color-base, var(--color-primary));
+      border-color: var(--card-color-base, var(--color-primary));
       color: var(--card-text-color, var(--white));
 
       p, h1, h2, h3, h4, h5, h6, .text-secondary, .text-muted {
         color: inherit;
       }
-      
+
       .card__header, .card__footer {
         border-color: color-mix(in srgb, var(--white) 15%, transparent);
         background-color: transparent;
       }
     }
   }
-}
-
-
-// ==========================================================================
-// PALETTE COLOR MAPPINGS
-// ==========================================================================
-.card- {
-  @include for-each-theme-color using($color, $is-light) {
-    --card-color-base: var(--#{$color}-500);
-    --card-color-dim: var(--#{$color}-dim);
-
-    @if $is-light {
-      --card-text-color: var(--slate-950);
-    } @else {
-      --card-text-color: var(--white);
-    }
-  }
-}
-
-// ==========================================================================
-// SEMANTIC COLOR MAPPINGS
-// ==========================================================================
-.card--primary {
-  --card-color-base: var(--color-primary);
-  --card-color-dim: var(--color-primary-dim);
-  --card-text-color: var(--white);
-}
-.card--success {
-  --card-color-base: var(--color-success);
-  --card-color-dim: color-mix(in srgb, var(--color-success) 15%, transparent);
-  --card-text-color: var(--slate-950);
-}
-.card--warning {
-  --card-color-base: var(--color-warning);
-  --card-color-dim: color-mix(in srgb, var(--color-warning) 15%, transparent);
-  --card-text-color: var(--slate-950);
-}
-.card--danger {
-  --card-color-base: var(--color-danger);
-  --card-color-dim: color-mix(in srgb, var(--color-danger) 15%, transparent);
-  --card-text-color: var(--white);
-}
-.card--info {
-  --card-color-base: var(--color-info);
-  --card-color-dim: color-mix(in srgb, var(--color-info) 15%, transparent);
-  --card-text-color: var(--slate-950);
-}
-.card--neutral {
-  --card-color-base: var(--color-ash);
-  --card-color-dim: color-mix(in srgb, var(--color-ash) 15%, transparent);
-  --card-text-color: var(--white);
 }

@@ -13,7 +13,7 @@ function parseSafeSvg(svgString: string): SVGSVGElement | null {
     template.innerHTML = svgString;
     const svg = template.content.querySelector('svg');
     if (!svg) return null;
-    
+
     svg.querySelectorAll('script').forEach(s => s.remove());
     Array.from(svg.attributes).forEach(attr => {
         if (attr.name.startsWith('on')) svg.removeAttribute(attr.name);
@@ -32,7 +32,7 @@ class LycoSelectController {
 
     private isOpen: boolean = false;
     private focusedIndex: number = -1;
-    
+
     private readonly _onOutsideClick: (e: MouseEvent) => void;
     private readonly _onChange: () => void;
     private readonly _onKeyDown: (e: KeyboardEvent) => void;
@@ -62,7 +62,10 @@ class LycoSelectController {
         const variant = this.nativeSelect.getAttribute('data-variant') || 'primary';
         const size = this.nativeSelect.getAttribute('data-size') || 'md';
 
-        this.customContainer.className = `select select-${variant} select-${size}`;
+        this.customContainer.className = `select ${size !== 'md' ? `select--${size}` : ''}`.trim();
+        if (variant !== 'default') {
+            this.customContainer.style.setProperty('--select-color-base', `var(--${variant}-500, var(--color-${variant}))`);
+        }
         if (this.nativeSelect.disabled) this.customContainer.classList.add('is-disabled');
 
         const dropdownId = `lyco-select-${Math.random().toString(36).slice(2)}`;
@@ -131,7 +134,8 @@ class LycoSelectController {
 
             const variant = opt.getAttribute('data-variant');
             if (variant) {
-                li.classList.add(`select__option--${variant}`);
+                li.classList.add('select__option--variant');
+                li.style.setProperty('--select-option-color', `var(--${variant}-500, var(--color-${variant}))`);
             }
 
             const iconContent = opt.getAttribute('data-icon');
@@ -167,7 +171,7 @@ class LycoSelectController {
             const mouseFn = () => this.updateFocus(listIndex);
             optEl.addEventListener('click', clickFn);
             optEl.addEventListener('mouseenter', mouseFn);
-            this.optionListeners.push({ el: optEl, click: clickFn, mouseenter: mouseFn });
+            this.optionListeners.push({el: optEl, click: clickFn, mouseenter: mouseFn});
         });
 
         this.customContainer.addEventListener('keydown', this._onKeyDown);
@@ -179,7 +183,7 @@ class LycoSelectController {
         this.trigger.removeEventListener('click', this._onToggle);
         this.customContainer.removeEventListener('keydown', this._onKeyDown);
         this.nativeSelect.removeEventListener('change', this._onChange);
-        this.optionListeners.forEach(({ el, click, mouseenter }) => {
+        this.optionListeners.forEach(({el, click, mouseenter}) => {
             el.removeEventListener('click', click);
             el.removeEventListener('mouseenter', mouseenter);
         });
@@ -227,7 +231,7 @@ class LycoSelectController {
 
         const nativeIndexStr = li.getAttribute('data-native-index');
         if (nativeIndexStr == null) return;
-        
+
         const nativeIndex = parseInt(nativeIndexStr, 10);
         this.nativeSelect.selectedIndex = nativeIndex;
         this.nativeSelect.dispatchEvent(new Event('change', {bubbles: true}));

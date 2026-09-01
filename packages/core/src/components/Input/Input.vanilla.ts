@@ -13,7 +13,7 @@ function parseSafeSvg(svgString: string): SVGSVGElement | null {
     template.innerHTML = svgString;
     const svg = template.content.querySelector('svg');
     if (!svg) return null;
-    
+
     svg.querySelectorAll('script').forEach(s => s.remove());
     Array.from(svg.attributes).forEach(attr => {
         if (attr.name.startsWith('on')) svg.removeAttribute(attr.name);
@@ -75,7 +75,6 @@ class LycoInputController {
 
         const containerClasses = [
             'input',
-            variant ? `input--${variant}` : '',
             size && size !== 'md' ? `input--${size}` : '',
         ].filter(Boolean);
         if (flat) containerClasses.push('input--flat');
@@ -84,6 +83,10 @@ class LycoInputController {
         if (hasIconStart) containerClasses.push('input--has-icon-start');
         if (hasIconEnd || showSteps) containerClasses.push('input--has-icon-end');
         this.container.className = containerClasses.join(' ');
+
+        if (variant) {
+            this.container.style.setProperty('--input-color-base', `var(--${variant}-500, var(--color-${variant}))`);
+        }
 
         this.nativeInput.parentNode?.insertBefore(this.wrapper, this.nativeInput);
 
@@ -210,8 +213,8 @@ class LycoInputController {
             this.nativeInput.stepDown();
         }
 
-        this.nativeInput.dispatchEvent(new Event('input', { bubbles: true }));
-        this.nativeInput.dispatchEvent(new Event('change', { bubbles: true }));
+        this.nativeInput.dispatchEvent(new Event('input', {bubbles: true}));
+        this.nativeInput.dispatchEvent(new Event('change', {bubbles: true}));
         this.syncFilledState();
 
         if (this.validation === 'auto' && this.hasBlurred) {

@@ -40,8 +40,8 @@ export default function App() {
                     </div>
                 }
                 exampleModules={exampleModules}
-                rawSources={rawSources as any}
-                apiConfig={apiConfig as any}
+                rawSources={rawSources as Record<string, string>}
+                apiConfig={apiConfig}
             />
         </NotificationProvider>
     );

@@ -1,7 +1,8 @@
 import './Checkbox.scss';
-import {forwardRef, memo, type InputHTMLAttributes, type ReactNode, useId} from 'react';
+import {type CSSProperties, forwardRef, type InputHTMLAttributes, memo, type ReactNode, useId} from 'react';
 import clsx from 'clsx';
 import type {FullVariant, SizeVariant} from "../../types/types.ts";
+import {getContrastColor} from '../../utils/theme.ts';
 
 export interface CheckboxProps extends Omit<InputHTMLAttributes<HTMLInputElement>, 'size'> {
     label?: ReactNode;
@@ -18,6 +19,7 @@ export const Checkbox = memo(forwardRef<HTMLInputElement, CheckboxProps>((
         className,
         disabled,
         id,
+        style,
         ...props
     }, ref) => {
 
@@ -26,15 +28,19 @@ export const Checkbox = memo(forwardRef<HTMLInputElement, CheckboxProps>((
     const isColored = variant !== 'default';
 
     return (
-        <label 
-            htmlFor={inputId} 
+        <label
+            htmlFor={inputId}
             className={clsx(
-                'checkbox', 
+                'checkbox',
                 disabled && 'is-disabled',
-                isColored && `checkbox--${variant}`,
                 size !== 'md' && `checkbox--${size}`,
                 className
             )}
+            style={isColored ? {
+                '--checkbox-color-base': `var(--${variant}-500, var(--color-${variant}))`,
+                '--checkbox-color-contrast': getContrastColor(variant),
+                ...style
+            } as CSSProperties : style}
         >
             <input
                 ref={ref}
@@ -44,10 +50,11 @@ export const Checkbox = memo(forwardRef<HTMLInputElement, CheckboxProps>((
                 className="checkbox__input"
                 {...props}
             />
-            <span className="checkbox__control" aria-hidden="true" />
+            <span className="checkbox__control" aria-hidden="true"/>
             {label && <span className="checkbox__label">{label}</span>}
         </label>
     );
 }));
 
 Checkbox.displayName = 'Checkbox';
+

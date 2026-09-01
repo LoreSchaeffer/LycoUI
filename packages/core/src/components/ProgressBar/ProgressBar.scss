@@ -1,5 +1,3 @@
-@use "../../styles/mixins/theme-variants" as *;
-
 .progress {
   display: flex;
   height: var(--progress-height, 0.5rem);
@@ -9,7 +7,8 @@
   border-radius: var(--progress-radius, var(--radius-full));
   box-shadow: inset 0 var(--border-width, 1px) var(--border-width-3, 3px) var(--color-border-strong);
 
-  --progress-color-base: var(--color-primary);
+  // Consume the injected variable with fallback
+  --progress-color-base: var(--progress-color-base, var(--color-primary));
 
   &__bar {
     display: flex;
@@ -32,36 +31,14 @@
     --progress-height: var(--spacing-1, 0.25rem);
     --progress-radius: var(--radius-sm);
   }
+
   &--md {
     --progress-height: var(--spacing-2, 0.5rem);
     --progress-radius: var(--radius-full);
   }
+
   &--lg {
     --progress-height: 0.875rem;
     --progress-radius: var(--radius-full);
-  }
-
-  // ==========================================================================
-  // VARIANTS
-  // ==========================================================================
-  &--success {
-    --progress-color-base: var(--color-success);
-  }
-  &--warning {
-    --progress-color-base: var(--color-warning);
-  }
-  &--danger {
-    --progress-color-base: var(--color-danger);
-  }
-  &--info {
-    --progress-color-base: var(--color-info);
-  }
-}
-
-.progress- {
-  @include for-each-theme-color using($color, $is-light) {
-    &--#{$color} {
-      --progress-color-base: var(--#{$color}-500);
-    }
   }
 }

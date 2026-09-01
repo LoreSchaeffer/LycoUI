@@ -1,25 +1,13 @@
 import './DataTable.scss';
-import {
-    forwardRef,
-    useCallback,
-    useImperativeHandle,
-    useMemo,
-    useRef,
-    useState,
-    type HTMLAttributes,
-    type ReactElement,
-    type ReactNode,
-    type Ref,
-    type DragEvent
-} from 'react';
+import {type DragEvent, forwardRef, type HTMLAttributes, type ReactElement, type ReactNode, type Ref, useCallback, useImperativeHandle, useMemo, useRef, useState} from 'react';
 import clsx from 'clsx';
-import type { FullVariant } from '../../types/types.ts';
-import { Table, TableHead, TableBody, TableRow, TableCell } from '../Table';
-import { Input } from '../Input';
-import { Select, type SelectOption } from '../Select';
-import { Pagination } from '../Pagination';
-import { Spinner } from '../Spinner';
-import { Checkbox } from '../Checkbox';
+import type {FullVariant} from '../../types/types.ts';
+import {Table, TableBody, TableCell, TableHead, TableRow} from '../Table';
+import {Input} from '../Input';
+import {Select, type SelectOption} from '../Select';
+import {Pagination} from '../Pagination';
+import {Spinner} from '../Spinner';
+import {Checkbox} from '../Checkbox';
 
 
 export type SortDirection = 'asc' | 'desc';
@@ -89,7 +77,7 @@ export interface DataTableProps<T> extends Omit<HTMLAttributes<HTMLDivElement>, 
     onPageSizeChange?: (pageSize: number) => void;
     /** Where to position the pagination controls. Defaults to `'top'`. */
     paginationPosition?: 'top' | 'bottom';
-    /** 
+    /**
      * How to display the results info text.
      * `'full'`: "Showing 1 to 10 of 15 results"
      * `'compact'`: "1-10 of 15"
@@ -98,8 +86,8 @@ export interface DataTableProps<T> extends Omit<HTMLAttributes<HTMLDivElement>, 
      */
     paginationInfo?: 'full' | 'compact' | 'none';
 
-    /** 
-     * Override default English text for i18n support. 
+    /**
+     * Override default English text for i18n support.
      */
     localization?: {
         rowsPerPage?: string;
@@ -167,50 +155,50 @@ export interface DataTableRef {
 const SortAscIcon = () => (
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"
          strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-        <polyline points="18 15 12 9 6 15" />
+        <polyline points="18 15 12 9 6 15"/>
     </svg>
 );
 
 const SortDescIcon = () => (
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"
          strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-        <polyline points="6 9 12 15 18 9" />
+        <polyline points="6 9 12 15 18 9"/>
     </svg>
 );
 
 const SortNeutralIcon = () => (
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"
          strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"
-         style={{ opacity: 0.35 }}>
-        <polyline points="8 6 12 2 16 6" />
-        <polyline points="8 18 12 22 16 18" />
+         style={{opacity: 0.35}}>
+        <polyline points="8 6 12 2 16 6"/>
+        <polyline points="8 18 12 22 16 18"/>
     </svg>
 );
 
 const SearchIcon = () => (
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"
          strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-        <circle cx="11" cy="11" r="8" />
-        <line x1="21" y1="21" x2="16.65" y2="16.65" />
+        <circle cx="11" cy="11" r="8"/>
+        <line x1="21" y1="21" x2="16.65" y2="16.65"/>
     </svg>
 );
 
 const ClearIcon = () => (
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"
          strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-        <line x1="18" y1="6" x2="6" y2="18" />
-        <line x1="6" y1="6" x2="18" y2="18" />
+        <line x1="18" y1="6" x2="6" y2="18"/>
+        <line x1="6" y1="6" x2="18" y2="18"/>
     </svg>
 );
 
 const DragHandleIcon = () => (
     <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" width="16" height="16">
-        <circle cx="9" cy="6" r="1.5" />
-        <circle cx="15" cy="6" r="1.5" />
-        <circle cx="9" cy="12" r="1.5" />
-        <circle cx="15" cy="12" r="1.5" />
-        <circle cx="9" cy="18" r="1.5" />
-        <circle cx="15" cy="18" r="1.5" />
+        <circle cx="9" cy="6" r="1.5"/>
+        <circle cx="15" cy="6" r="1.5"/>
+        <circle cx="9" cy="12" r="1.5"/>
+        <circle cx="15" cy="12" r="1.5"/>
+        <circle cx="9" cy="18" r="1.5"/>
+        <circle cx="15" cy="18" r="1.5"/>
     </svg>
 );
 
@@ -316,7 +304,7 @@ function DataTableInner<T>(
     }, [onSearchChange]);
 
     const handleSort = useCallback((columnId: string) => {
-        if (isDragEnabled) return; // Sorting disabled during drag mode
+        if (isDragEnabled) return;
 
         setSortColumn(prev => {
             const newDirection = prev === columnId
@@ -342,7 +330,7 @@ function DataTableInner<T>(
     }, [pageSize, onPageChange]);
 
     const filteredData = useMemo(() => {
-        if (isDragEnabled) return data; // No filtering in drag mode
+        if (isDragEnabled) return data;
 
         const normalized = normalizeText(searchQuery);
         if (!normalized) return data;
@@ -362,7 +350,7 @@ function DataTableInner<T>(
     }, [data, searchQuery, columns, isDragEnabled]);
 
     const sortedData = useMemo(() => {
-        if (isDragEnabled) return filteredData; // No sorting in drag mode
+        if (isDragEnabled) return filteredData;
         if (!sortColumn) return filteredData;
 
         const col = columns.find(c => c.id === sortColumn);
@@ -406,11 +394,11 @@ function DataTableInner<T>(
     }, [rowKey]);
 
     const pageSizeSelectOptions: SelectOption[] = useMemo(() =>
-        pageSizeOptions.map(s => ({
-            label: String(s),
-            value: s,
-        })),
-    [pageSizeOptions]);
+            pageSizeOptions.map(s => ({
+                label: String(s),
+                value: s,
+            })),
+        [pageSizeOptions]);
 
     const handleDragStart = useCallback((e: DragEvent<HTMLTableRowElement>, index: number) => {
         setDragIndex(index);
@@ -447,10 +435,10 @@ function DataTableInner<T>(
     }, []);
 
     const handleSelectRow = useCallback((key: string | number, checked: boolean) => {
-        const newSelection = checked 
-            ? [...activeSelectedKeys, key] 
+        const newSelection = checked
+            ? [...activeSelectedKeys, key]
             : activeSelectedKeys.filter(k => k !== key);
-        
+
         setInternalSelectedKeys(newSelection);
         onSelectionChange?.(newSelection);
     }, [activeSelectedKeys, onSelectionChange]);
@@ -461,21 +449,21 @@ function DataTableInner<T>(
             onSelectionChange?.([]);
             return;
         }
-        
+
         const allKeys = sortedData.map((row, idx) => getRowKey(row, idx));
         const newSelection = Array.from(new Set([...activeSelectedKeys, ...allKeys]));
-        
+
         setInternalSelectedKeys(newSelection);
         onSelectionChange?.(newSelection);
     }, [sortedData, getRowKey, activeSelectedKeys, onSelectionChange]);
 
-    const isAllSelected = useMemo(() => 
-        sortedData.length > 0 && sortedData.every((row, idx) => activeSelectedKeys.includes(getRowKey(row, idx))),
-    [sortedData, activeSelectedKeys, getRowKey]);
-    
-    const isSomeSelected = useMemo(() => 
-        sortedData.length > 0 && sortedData.some((row, idx) => activeSelectedKeys.includes(getRowKey(row, idx))) && !isAllSelected,
-    [sortedData, activeSelectedKeys, getRowKey, isAllSelected]);
+    const isAllSelected = useMemo(() =>
+            sortedData.length > 0 && sortedData.every((row, idx) => activeSelectedKeys.includes(getRowKey(row, idx))),
+        [sortedData, activeSelectedKeys, getRowKey]);
+
+    const isSomeSelected = useMemo(() =>
+            sortedData.length > 0 && sortedData.some((row, idx) => activeSelectedKeys.includes(getRowKey(row, idx))) && !isAllSelected,
+        [sortedData, activeSelectedKeys, getRowKey, isAllSelected]);
 
     const resultsStart = isDragEnabled ? 1 : (currentPage - 1) * pageSize + 1;
     const resultsEnd = isDragEnabled
@@ -558,8 +546,8 @@ function DataTableInner<T>(
                             placeholder={searchPlaceholder}
                             value={searchQuery}
                             onChange={(e) => handleSearch(e.target.value)}
-                            iconStart={<SearchIcon />}
-                            iconEnd={searchQuery.length > 0 ? <ClearIcon /> : undefined}
+                            iconStart={<SearchIcon/>}
+                            iconEnd={searchQuery.length > 0 ? <ClearIcon/> : undefined}
                             onIconEndClick={searchQuery.length > 0 ? () => handleSearch('') : undefined}
                             flat
                         />
@@ -577,7 +565,7 @@ function DataTableInner<T>(
                 {/* Drag mode toolbar */}
                 {isDragEnabled && (
                     <div className="data-table__drag-info">
-                        <DragHandleIcon />
+                        <DragHandleIcon/>
                         <span>Drag rows to reorder</span>
                     </div>
                 )}
@@ -623,7 +611,7 @@ function DataTableInner<T>(
                                             isSortable && 'data-table__th--sortable',
                                             isSorted && 'data-table__th--sorted'
                                         )}
-                                        style={col.minWidth ? { minWidth: col.minWidth } : undefined}
+                                        style={col.minWidth ? {minWidth: col.minWidth} : undefined}
                                         onClick={isSortable ? () => handleSort(col.id) : undefined}
                                         aria-sort={
                                             isSorted
@@ -637,9 +625,9 @@ function DataTableInner<T>(
                                                 <span className="data-table__sort-icon">
                                                     {isSorted
                                                         ? (sortDirection === 'asc'
-                                                            ? <SortAscIcon />
-                                                            : <SortDescIcon />)
-                                                        : <SortNeutralIcon />
+                                                            ? <SortAscIcon/>
+                                                            : <SortDescIcon/>)
+                                                        : <SortNeutralIcon/>
                                                     }
                                                 </span>
                                             )}
@@ -656,7 +644,7 @@ function DataTableInner<T>(
                                     colSpan={columns.length + (isDragEnabled ? 1 : 0)}
                                     className="data-table__empty-cell"
                                 >
-                                    <Spinner size="lg" />
+                                    <Spinner size="lg"/>
                                 </TableCell>
                             </TableRow>
                         ) : paginatedData.length > 0 ? (
@@ -689,7 +677,7 @@ function DataTableInner<T>(
                                     >
                                         {isDragEnabled && (
                                             <TableCell className="data-table__drag-cell">
-                                                <DragHandleIcon />
+                                                <DragHandleIcon/>
                                             </TableCell>
                                         )}
                                         {selectable && (
@@ -745,3 +733,4 @@ export const DataTable = forwardRef(DataTableInner) as <T>(
 ) => ReactElement;
 
 (DataTable as { displayName?: string }).displayName = 'DataTable';
+

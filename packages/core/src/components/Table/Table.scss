@@ -1,5 +1,3 @@
-@use "../../styles/mixins/theme-variants" as *;
-
 .table {
   --table-bg: transparent;
   --table-color: var(--color-text-primary);
@@ -16,21 +14,21 @@
   border-collapse: collapse;
   text-align: left;
 
-  > :not(caption)>*>* {
+  > :not(caption) > * > * {
     padding: var(--table-padding-y) var(--table-padding-x);
     background-color: var(--table-bg);
     color: var(--table-color);
     border-bottom: var(--border-width, 1px) solid var(--table-border-color);
   }
 
-  >tbody {
+  > tbody {
     vertical-align: inherit;
   }
 
-  >thead {
+  > thead {
     vertical-align: bottom;
 
-    >*>* {
+    > * > * {
       background-color: var(--color-surface-elevated, var(--color-carbon));
       font-size: var(--font-size-xs);
       font-weight: var(--font-weight-medium);
@@ -45,7 +43,7 @@
 
   // Striped
   &-striped {
-    >tbody>tr:nth-of-type(odd)>* {
+    > tbody > tr:nth-of-type(odd) > * {
       --table-bg: var(--table-stripe-bg);
       color: var(--table-color);
     }
@@ -53,7 +51,7 @@
 
   // Hover
   &-hover {
-    >tbody>tr:hover>* {
+    > tbody > tr:hover > * {
       --table-bg: var(--table-hover-bg);
       color: var(--table-color);
     }
@@ -61,7 +59,7 @@
 
   // Bordered (Full grid support)
   &-bordered {
-    > :not(caption)>*>* {
+    > :not(caption) > * > * {
       border-right: var(--border-width, 1px) solid var(--color-border-subtle);
 
       &:last-child {
@@ -72,11 +70,11 @@
 
   // Borderless
   &-borderless {
-    > :not(caption)>*>* {
+    > :not(caption) > * > * {
       border-bottom: none !important;
     }
 
-    >thead>*>* {
+    > thead > * > * {
       border-bottom: none !important;
     }
   }
@@ -87,59 +85,21 @@
     --table-padding-x: var(--spacing-3);
     font-size: var(--font-size-sm);
 
-    >thead>*>* {
+    > thead > * > * {
       padding-top: var(--spacing-2) !important;
       padding-bottom: var(--spacing-2) !important;
     }
   }
 
-  // Semantic Variants
-  &-success {
-    --table-bg: color-mix(in srgb, var(--color-success) 10%, transparent);
+  // ==========================================================================
+  // UNIFIED VARIANT (applied at table, row, or cell level)
+  // ==========================================================================
+  &-variant {
+    --table-bg: color-mix(in srgb, var(--table-color-base, var(--color-primary)) 10%, transparent);
     --table-color: var(--color-text-primary);
-    --table-border-color: color-mix(in srgb, var(--color-success) 30%, transparent);
-    --table-stripe-bg: color-mix(in srgb, var(--color-success) 15%, transparent);
-    --table-hover-bg: color-mix(in srgb, var(--color-success) 20%, transparent);
-  }
-
-  &-danger {
-    --table-bg: color-mix(in srgb, var(--color-danger) 10%, transparent);
-    --table-color: var(--color-text-primary);
-    --table-border-color: color-mix(in srgb, var(--color-danger) 30%, transparent);
-    --table-stripe-bg: color-mix(in srgb, var(--color-danger) 15%, transparent);
-    --table-hover-bg: color-mix(in srgb, var(--color-danger) 20%, transparent);
-  }
-
-  &-warning {
-    --table-bg: color-mix(in srgb, var(--color-warning) 10%, transparent);
-    --table-color: var(--color-text-primary);
-    --table-border-color: color-mix(in srgb, var(--color-warning) 30%, transparent);
-    --table-stripe-bg: color-mix(in srgb, var(--color-warning) 15%, transparent);
-    --table-hover-bg: color-mix(in srgb, var(--color-warning) 20%, transparent);
-  }
-
-  &-info {
-    --table-bg: color-mix(in srgb, var(--color-info) 10%, transparent);
-    --table-color: var(--color-text-primary);
-    --table-border-color: color-mix(in srgb, var(--color-info) 30%, transparent);
-    --table-stripe-bg: color-mix(in srgb, var(--color-info) 15%, transparent);
-    --table-hover-bg: color-mix(in srgb, var(--color-info) 20%, transparent);
-  }
-
-  &-primary {
-    --table-bg: color-mix(in srgb, var(--color-primary) 10%, transparent);
-    --table-color: var(--color-text-primary);
-    --table-border-color: color-mix(in srgb, var(--color-primary) 30%, transparent);
-    --table-stripe-bg: color-mix(in srgb, var(--color-primary) 15%, transparent);
-    --table-hover-bg: color-mix(in srgb, var(--color-primary) 20%, transparent);
-  }
-
-  @include for-each-theme-color using($color, $is-light) {
-    --table-bg: color-mix(in srgb, var(--#{$color}-500) 10%, transparent);
-    --table-color: var(--color-text-primary);
-    --table-border-color: color-mix(in srgb, var(--#{$color}-500) 30%, transparent);
-    --table-stripe-bg: color-mix(in srgb, var(--#{$color}-500) 15%, transparent);
-    --table-hover-bg: color-mix(in srgb, var(--#{$color}-500) 20%, transparent);
+    --table-border-color: color-mix(in srgb, var(--table-color-base, var(--color-primary)) 30%, transparent);
+    --table-stripe-bg: color-mix(in srgb, var(--table-color-base, var(--color-primary)) 15%, transparent);
+    --table-hover-bg: color-mix(in srgb, var(--table-color-base, var(--color-primary)) 20%, transparent);
   }
 
   tr:last-child td,

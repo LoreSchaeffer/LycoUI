@@ -5,18 +5,14 @@
 // We use semantic neutral tokens (void, carbon, etc.) rather than numerical 
 // slate scales to ensure perfect depth in dark mode.
 $surface-treatments: (
-        // Base app background (near black)
+  // Base app background (near black)
         'root': 'var(--color-void)',
-        
-        // Default components/cards
+  // Default components/cards
         'base': 'var(--color-carbon)',
-        
-        // Hover states or elevated components
+  // Hover states or elevated components
         'elevated': 'var(--color-obsidian)',
-        
-        // Floating panels, dropdowns, popovers
+  // Floating panels, dropdowns, popovers
         'floating': 'var(--color-graphite)',
-        
-        // Active/Pressed states
+  // Active/Pressed states
         'active': 'var(--color-carbon-active)'
 );

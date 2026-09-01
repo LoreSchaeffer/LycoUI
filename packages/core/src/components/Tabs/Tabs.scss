@@ -1,4 +1,3 @@
-@use "../../styles/mixins/theme-variants" as *;
 
 .tabs {
   display: flex;
@@ -16,6 +15,7 @@
 
   /* Hide scrollbar for a cleaner look */
   scrollbar-width: none;
+
   &::-webkit-scrollbar {
     display: none;
   }
@@ -45,6 +45,7 @@
   &.is-disabled {
     opacity: 0.5;
     cursor: not-allowed;
+
     &:hover {
       color: var(--color-text-secondary);
       background-color: transparent;
@@ -53,7 +54,7 @@
 
   &.is-active {
     color: var(--color-text-primary);
-    
+
     &::after {
       content: '';
       position: absolute;

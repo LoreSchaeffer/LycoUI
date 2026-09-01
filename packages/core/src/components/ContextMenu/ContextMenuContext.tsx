@@ -1,4 +1,4 @@
-import React, { createContext, useContext } from 'react';
+import React, {createContext, useContext} from 'react';
 
 export interface ContextMenuItemDef {
     id: string;
@@ -24,6 +24,7 @@ export interface ContextMenuContextValue {
 }
 
 export const ContextMenuContext = createContext<ContextMenuContextValue | undefined>(undefined);
+ContextMenuContext.displayName = 'ContextMenuContext';
 
 export const useContextMenu = () => {
     const context = useContext(ContextMenuContext);

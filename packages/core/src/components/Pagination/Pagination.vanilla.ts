@@ -1,3 +1,5 @@
+import {getContrastColor} from '../../utils/theme';
+
 export function initLycoPagination() {
     const paginations = document.querySelectorAll<HTMLElement>('.pagination-custom:not([data-lyco-initialized])');
     paginations.forEach(el => {
@@ -24,7 +26,7 @@ class LycoPaginationController {
 
     constructor(container: HTMLElement) {
         this.container = container;
-        
+
         this.variant = (this.container.getAttribute('data-variant') as 'standard' | 'compact') || 'standard';
         this.currentPage = parseInt(this.container.getAttribute('data-current-page') || '1', 10);
         this.totalPages = parseInt(this.container.getAttribute('data-total-pages') || '1', 10);
@@ -38,24 +40,24 @@ class LycoPaginationController {
 
     private addListener(el: HTMLElement | Window, type: string, fn: EventListenerOrEventListenerObject) {
         el.addEventListener(type, fn);
-        this.listeners.push({ el, type, fn });
+        this.listeners.push({el, type, fn});
     }
 
     public destroy(): void {
-        this.listeners.forEach(({ el, type, fn }) => {
+        this.listeners.forEach(({el, type, fn}) => {
             el.removeEventListener(type, fn);
         });
         this.listeners = [];
-        this.container.innerHTML = ''; // Clear built UI
+        this.container.innerHTML = '';
         delete this.container.dataset.lycoInitialized;
     }
 
     private dispatchChange(page: number) {
         this.currentPage = page;
         this.container.setAttribute('data-current-page', page.toString());
-        this.container.dispatchEvent(new CustomEvent('pageChange', { 
-            detail: { page },
-            bubbles: true 
+        this.container.dispatchEvent(new CustomEvent('pageChange', {
+            detail: {page},
+            bubbles: true
         }));
         this.buildUI();
     }
@@ -67,7 +69,7 @@ class LycoPaginationController {
     }
 
     private buildUI(): void {
-        this.listeners.forEach(({ el, type, fn }) => {
+        this.listeners.forEach(({el, type, fn}) => {
             el.removeEventListener(type, fn);
         });
         this.listeners = [];
@@ -83,9 +85,12 @@ class LycoPaginationController {
             .split(' ')
             .filter(c => !c.startsWith('pagination-') || c === 'pagination-custom')
             .join(' ');
-        
+
         this.container.classList.add('pagination');
-        this.container.classList.add(`pagination-${colorVariant}`);
+        if (colorVariant) {
+            this.container.style.setProperty('--pagination-color-base', `var(--${colorVariant}-500, var(--color-${colorVariant}))`);
+            this.container.style.setProperty('--pagination-color-contrast', getContrastColor(colorVariant));
+        }
         if (size !== 'md') {
             this.container.classList.add(`pagination-${size}`);
         }
@@ -125,11 +130,11 @@ class LycoPaginationController {
         }
         btn.setAttribute('aria-label', isNext ? 'Next page' : 'Previous page');
         btn.innerHTML = isNext ? this.getChevronRight() : this.getChevronLeft();
-        
+
         this.addListener(btn, 'click', () => {
             this.handlePageChange(isNext ? this.currentPage + 1 : this.currentPage - 1);
         });
-        
+
         return btn;
     }
 
@@ -150,7 +155,7 @@ class LycoPaginationController {
         if (this.totalPages > totalBlocks) {
             const startPage = Math.max(2, this.currentPage - this.siblingCount);
             const endPage = Math.min(this.totalPages - 1, this.currentPage + this.siblingCount);
-            
+
             pages.push(1);
             if (startPage > 2) pages.push('ellipsis-start');
             for (let i = startPage; i <= endPage; i++) pages.push(i);
@@ -212,12 +217,12 @@ class LycoPaginationController {
             this.currentInput.min = '1';
             this.currentInput.max = this.totalPages.toString();
             this.currentInput.setAttribute('aria-label', 'Current page');
-            
+
             this.addListener(this.currentInput, 'blur', this.handleInputBlur.bind(this));
             this.addListener(this.currentInput, 'keydown', this.handleInputKeyDown.bind(this));
 
             info.appendChild(this.currentInput);
-            
+
             setTimeout(() => {
                 if (this.currentInput) {
                     this.currentInput.focus();
@@ -236,7 +241,7 @@ class LycoPaginationController {
                 this.currentSpan.setAttribute('aria-disabled', 'true');
             }
             this.currentSpan.textContent = this.currentPage.toString();
-            
+
             if (!this.disabled) {
                 this.addListener(this.currentSpan, 'click', () => {
                     this.isEditing = true;
@@ -276,10 +281,10 @@ class LycoPaginationController {
             const val = parseInt(this.currentInput.value, 10);
             if (!isNaN(val)) {
                 this.handlePageChange(val);
-                return; // buildUI is called by dispatchChange
+                return;
             }
         }
-        this.buildUI(); // Revert to span without changes
+        this.buildUI();
     }
 
     private handleInputKeyDown(e: Event): void {
@@ -292,3 +297,4 @@ class LycoPaginationController {
         }
     }
 }
+

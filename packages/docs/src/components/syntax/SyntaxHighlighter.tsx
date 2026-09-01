@@ -1,7 +1,7 @@
 import {useEffect, useState} from 'react';
-let highlighterPromise: Promise<any> | null = null;
+let highlighterPromise: Promise<unknown> | null = null;
 
-const getSharedHighlighter = async (): Promise<any> => {
+const getSharedHighlighter = async (): Promise<unknown> => {
     if (!highlighterPromise) {
         highlighterPromise = import('shiki').then(({ createHighlighter }) => {
             return createHighlighter({

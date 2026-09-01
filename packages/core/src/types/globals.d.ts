@@ -7,17 +7,17 @@
 
 /** Registry of named formatter functions (used by Range vanilla controller). */
 export interface LycoFormatters {
-  [name: string]: (value: number) => string | number;
+    [name: string]: (value: number) => string | number;
 }
 
 /** Registry of named validator functions (used by Input vanilla controller). */
 export interface LycoValidators {
-  [name: string]: (value: string) => string | null | undefined;
+    [name: string]: (value: string) => string | null | undefined;
 }
 
 declare global {
-  interface Window {
-    lycoFormatters?: LycoFormatters;
-    lycoValidators?: LycoValidators;
-  }
+    interface Window {
+        lycoFormatters?: LycoFormatters;
+        lycoValidators?: LycoValidators;
+    }
 }

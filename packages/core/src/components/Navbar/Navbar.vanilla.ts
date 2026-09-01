@@ -19,7 +19,7 @@ export class LycoNavbarController {
 
     constructor(navbar: HTMLElement) {
         this.navbar = navbar;
-        
+
         this.toggles = navbar.querySelectorAll<HTMLButtonElement>('.navbar__toggle');
         this.collapses = navbar.querySelectorAll<HTMLElement>('.navbar__collapse');
 
@@ -30,7 +30,7 @@ export class LycoNavbarController {
         });
 
         this.links = navbar.querySelectorAll<HTMLAnchorElement>('.navbar__link');
-        
+
         this._onDocumentClick = (e: MouseEvent) => {
             if (!this.navbar.contains(e.target as Node)) {
                 this.closeAll();
@@ -49,7 +49,7 @@ export class LycoNavbarController {
     private handleToggle(toggle: HTMLButtonElement): void {
         const isExpanded = toggle.getAttribute('aria-expanded') === 'true';
         const nextState = !isExpanded;
-        
+
         toggle.setAttribute('aria-expanded', String(nextState));
 
         const controlsId = toggle.getAttribute('aria-controls');
@@ -60,7 +60,7 @@ export class LycoNavbarController {
                 return;
             }
         }
-        
+
         this.collapses.forEach(collapse => this.toggleCollapse(collapse, nextState));
     }
 
@@ -89,10 +89,10 @@ export class LycoNavbarController {
             }
         });
         this._onClickMap.clear();
-        
+
         document.removeEventListener('mousedown', this._onDocumentClick);
         this.links.forEach(link => link.removeEventListener('click', this._onLinkClick));
-        
+
         delete this.navbar.dataset.lycoInitialized;
     }
 }

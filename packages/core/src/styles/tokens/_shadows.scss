@@ -4,17 +4,17 @@
 // ==========================================================================
 
 $shadow-steps: (
-  'sm': 'rgba(0, 0, 0, 0.4) 0px 2px 4px 0px',
-  'md': 'rgba(0, 0, 0, 0.2) 0px 0px 12px 0px inset',
-  'subtle': 'rgb(35, 37, 42) 0px 0px 0px 1px inset',
-  'subtle-2': 'rgba(0, 0, 0, 0.2) 0px 0px 0px 1px',
-  'xl': 'rgba(8, 9, 10, 0.6) 0px 4px 32px 0px'
+        'sm': 'rgba(0, 0, 0, 0.4) 0px 2px 4px 0px',
+        'md': 'rgba(0, 0, 0, 0.2) 0px 0px 12px 0px inset',
+        'subtle': 'rgb(35, 37, 42) 0px 0px 0px 1px inset',
+        'subtle-2': 'rgba(0, 0, 0, 0.2) 0px 0px 0px 1px',
+        'xl': 'rgba(8, 9, 10, 0.6) 0px 4px 32px 0px'
 );
 
 // Ambient Radial Glows (used behind charts, key components)
 $glow-steps: (
-  'primary': 'radial-gradient(circle at 50% 50%, color-mix(in oklch, var(--color-primary) 15%, transparent) 0%, transparent 60%)',
-  'success': 'radial-gradient(circle at 50% 50%, color-mix(in oklch, var(--color-success) 15%, transparent) 0%, transparent 60%)',
-  'danger': 'radial-gradient(circle at 50% 50%, color-mix(in oklch, var(--color-danger) 15%, transparent) 0%, transparent 60%)',
-  'warning': 'radial-gradient(circle at 50% 50%, color-mix(in oklch, var(--color-warning) 15%, transparent) 0%, transparent 60%)'
+        'primary': 'radial-gradient(circle at 50% 50%, color-mix(in oklch, var(--color-primary) 15%, transparent) 0%, transparent 60%)',
+        'success': 'radial-gradient(circle at 50% 50%, color-mix(in oklch, var(--color-success) 15%, transparent) 0%, transparent 60%)',
+        'danger': 'radial-gradient(circle at 50% 50%, color-mix(in oklch, var(--color-danger) 15%, transparent) 0%, transparent 60%)',
+        'warning': 'radial-gradient(circle at 50% 50%, color-mix(in oklch, var(--color-warning) 15%, transparent) 0%, transparent 60%)'
 );

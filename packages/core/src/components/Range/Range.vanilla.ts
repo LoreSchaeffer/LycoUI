@@ -32,7 +32,8 @@ class LycoRangeController {
         const filled = this.nativeInput.getAttribute('data-filled') !== 'false';
         const showTooltip = this.nativeInput.getAttribute('data-show-tooltip') !== 'false';
 
-        this.customContainer.className = `range range--${variant} ${size !== 'md' ? `range--${size}` : ''} range--tooltip-${tooltipSize}`;
+        this.customContainer.className = `range ${size !== 'md' ? `range--${size}` : ''} range--tooltip-${tooltipSize}`;
+        this.customContainer.style.setProperty('--range-color-base', `var(--${variant}-500, var(--color-${variant}))`);
         if (!filled) {
             this.customContainer.classList.add('range--unfilled');
         }
@@ -41,10 +42,10 @@ class LycoRangeController {
         }
 
         this.nativeInput.parentNode?.insertBefore(this.customContainer, this.nativeInput);
-        
+
         this.nativeInput.classList.remove('lyco-range-custom');
         this.nativeInput.classList.add('range__input');
-        
+
         this.customContainer.appendChild(this.nativeInput);
 
         if (showTooltip) {
@@ -70,7 +71,7 @@ class LycoRangeController {
         const value = parseFloat(this.nativeInput.value) || 0;
 
         const percent = Math.max(0, Math.min(100, ((value - min) / (max - min)) * 100));
-        
+
         this.customContainer.style.setProperty('--range-progress', `${percent}%`);
         this.customContainer.style.setProperty('--range-progress-ratio', `${percent / 100}`);
         this.nativeInput.setAttribute('aria-valuenow', value.toString());
@@ -78,7 +79,7 @@ class LycoRangeController {
         this.nativeInput.setAttribute('aria-valuemax', max.toString());
 
         let displayValue: string | number = value;
-        
+
         const formatterName = this.nativeInput.getAttribute('data-tooltip-format');
         if (formatterName && typeof window.lycoFormatters?.[formatterName] === 'function') {
             displayValue = window.lycoFormatters[formatterName](Number(value));

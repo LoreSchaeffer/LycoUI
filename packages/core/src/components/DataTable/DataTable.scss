@@ -78,8 +78,8 @@
     .table {
       margin-bottom: 0;
 
-      > :not(caption)>*:last-child>* {
-        border-bottom: 0; 
+      > :not(caption) > *:last-child > * {
+        border-bottom: 0;
       }
     }
   }
@@ -141,7 +141,7 @@
   &__row--clickable {
     cursor: pointer;
   }
-  
+
   &__select-cell {
     width: var(--spacing-12, 3rem);
     min-width: var(--spacing-12, 3rem);

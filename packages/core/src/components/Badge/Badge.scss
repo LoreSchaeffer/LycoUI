@@ -1,6 +1,11 @@
-@use "../../styles/mixins/theme-variants" as *;
-
 .badge {
+  // Consume the injected variable with a fallback
+  --badge-bg: var(--badge-color-base, var(--color-primary));
+  --badge-text-color: var(--badge-color-contrast, var(--white));
+  --badge-bg-dim: color-mix(in srgb, var(--badge-color-base, var(--color-primary)) 15%, transparent);
+  --badge-text-color-dim: var(--badge-color-base, var(--color-primary));
+  --badge-border-dim: color-mix(in srgb, var(--badge-color-base, var(--color-primary)) 25%, transparent);
+
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -38,84 +43,4 @@
     border-color: var(--badge-border-dim, transparent);
   }
 
-}
-
-.badge- {
-  @include for-each-theme-color using($color, $is-light) {
-    @if $color !='white' and $color !='neutral' {
-      --badge-bg: var(--#{$color}-500);
-
-      @if $is-light {
-        --badge-text-color: var(--color-void);
-      }
-
-      @else {
-        --badge-text-color: var(--white);
-      }
-
-      --badge-bg-dim: var(--#{$color}-dim);
-      --badge-text-color-dim: var(--#{$color}-500);
-      --badge-border-dim: color-mix(in srgb, var(--#{$color}-500) 25%, transparent);
-    }
-  }
-}
-
-// ==========================================================================
-// VARIANTS
-// ==========================================================================
-.badge--primary {
-  --badge-bg: var(--color-primary);
-  --badge-text-color: var(--white);
-  --badge-bg-dim: var(--color-primary-dim);
-  --badge-text-color-dim: var(--color-primary);
-  --badge-border-dim: color-mix(in srgb, var(--color-primary) 20%, transparent);
-}
-
-.badge--success {
-  --badge-bg: var(--color-success);
-  --badge-text-color: var(--white);
-  --badge-bg-dim: var(--color-success-dim);
-  --badge-text-color-dim: var(--color-success);
-  --badge-border-dim: color-mix(in srgb, var(--color-success) 20%, transparent);
-}
-
-.badge--warning {
-  --badge-bg: var(--color-warning);
-  --badge-text-color: var(--color-void);
-  --badge-bg-dim: var(--color-warning-dim);
-  --badge-text-color-dim: var(--color-warning);
-  --badge-border-dim: color-mix(in srgb, var(--color-warning) 20%, transparent);
-}
-
-.badge--danger {
-  --badge-bg: var(--color-danger);
-  --badge-text-color: var(--white);
-  --badge-bg-dim: var(--color-danger-dim);
-  --badge-text-color-dim: var(--color-danger);
-  --badge-border-dim: color-mix(in srgb, var(--color-danger) 20%, transparent);
-}
-
-.badge--info {
-  --badge-bg: var(--color-info);
-  --badge-text-color: var(--white);
-  --badge-bg-dim: var(--color-info-dim);
-  --badge-text-color-dim: var(--color-info);
-  --badge-border-dim: color-mix(in srgb, var(--color-info) 20%, transparent);
-}
-
-.badge--neutral {
-  --badge-bg: var(--color-ash);
-  --badge-text-color: var(--white);
-  --badge-bg-dim: color-mix(in srgb, var(--color-ash) 25%, transparent);
-  --badge-text-color-dim: var(--color-text-primary);
-  --badge-border-dim: var(--color-ash);
-  border-color: var(--color-ash);
-}
-
-.badge--white {
-  --badge-bg: var(--white);
-  --badge-text-color: var(--color-void);
-  --badge-bg-dim: rgba(255, 255, 255, 0.1);
-  --badge-text-color-dim: var(--white);
-  --badge-border-dim: rgba(255, 255, 255, 0.2);
 }

@@ -1,12 +1,10 @@
-@use "../../styles/mixins/theme-variants" as *;
-
 .alert {
-  --alert-color-base: var(--color-primary);
-  --alert-bg: var(--color-primary-dim);
+  --alert-color-base: var(--alert-color-base, var(--color-primary));
+  --alert-bg: color-mix(in srgb, var(--alert-color-base) 12%, transparent);
   --alert-text: var(--color-text-primary);
   --alert-border: var(--alert-color-base);
   --alert-radius: var(--radius-md);
-  
+
   position: relative;
   display: flex;
   align-items: flex-start;
@@ -31,17 +29,6 @@
     padding-right: var(--spacing-12, 3rem);
   }
 
-}
-
-.alert- {
-  @include for-each-theme-color using($color, $is-light) {
-    @if $color != 'white' and $color != 'neutral' {
-      &--#{$color} { 
-        --alert-color-base: var(--#{$color}-500); 
-        --alert-bg: color-mix(in srgb, var(--alert-color-base) 12%, transparent);
-      }
-    }
-  }
 }
 
 .alert__icon {
@@ -126,35 +113,4 @@
   100% {
     width: 0%;
   }
-}
-
-// ==========================================================================
-// VARIANTS
-// ==========================================================================
-.alert--success {
-  --alert-color-base: var(--color-success);
-  --alert-bg: var(--color-success-dim);
-}
-.alert--warning {
-  --alert-color-base: var(--color-warning);
-  --alert-bg: var(--color-warning-dim);
-}
-.alert--danger {
-  --alert-color-base: var(--color-danger);
-  --alert-bg: var(--color-danger-dim);
-}
-.alert--info {
-  --alert-color-base: var(--color-info);
-  --alert-bg: var(--color-info-dim);
-}
-.alert--neutral { 
-  --alert-color-base: var(--color-ash);
-  --alert-bg: var(--color-ash);
-  --alert-text: var(--white);
-  background-color: var(--color-ash);
-  color: var(--white);
-}
-.alert--white {
-  --alert-color-base: var(--white);
-  --alert-bg: var(--color-surface-base);
 }

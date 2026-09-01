@@ -1,7 +1,8 @@
 import './Radio.scss';
-import {forwardRef, memo, type InputHTMLAttributes, type ReactNode, useId} from 'react';
+import {type CSSProperties, forwardRef, type InputHTMLAttributes, memo, type ReactNode, useId} from 'react';
 import clsx from 'clsx';
 import type {FullVariant, SizeVariant} from "../../types/types.ts";
+import {getContrastColor} from '../../utils/theme.ts';
 
 export interface RadioProps extends Omit<InputHTMLAttributes<HTMLInputElement>, 'size'> {
     label?: ReactNode;
@@ -17,6 +18,7 @@ export const Radio = memo(forwardRef<HTMLInputElement, RadioProps>((
         className,
         disabled,
         id,
+        style,
         ...props
     }, ref) => {
 
@@ -25,15 +27,19 @@ export const Radio = memo(forwardRef<HTMLInputElement, RadioProps>((
     const isColored = variant !== 'default';
 
     return (
-        <label 
-            htmlFor={inputId} 
+        <label
+            htmlFor={inputId}
             className={clsx(
-                'radio', 
+                'radio',
                 disabled && 'is-disabled',
-                isColored && `radio--${variant}`,
                 size !== 'md' && `radio--${size}`,
                 className
             )}
+            style={isColored ? {
+                '--radio-color-base': `var(--${variant}-500, var(--color-${variant}))`,
+                '--radio-color-contrast': getContrastColor(variant),
+                ...style
+            } as CSSProperties : style}
         >
             <input
                 ref={ref}
@@ -43,10 +49,11 @@ export const Radio = memo(forwardRef<HTMLInputElement, RadioProps>((
                 className="radio__input"
                 {...props}
             />
-            <span className="radio__control" aria-hidden="true" />
+            <span className="radio__control" aria-hidden="true"/>
             {label && <span className="radio__label">{label}</span>}
         </label>
     );
 }));
 
 Radio.displayName = 'Radio';
+

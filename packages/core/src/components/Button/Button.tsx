@@ -1,8 +1,9 @@
 import './Button.scss';
-import {type ButtonHTMLAttributes, forwardRef, type ReactNode} from 'react';
+import {type ButtonHTMLAttributes, type CSSProperties, forwardRef, memo, type ReactNode} from 'react';
 import clsx from 'clsx';
 import type {Alignment, FullVariant, SizeVariant} from '../../types/types';
 import {Spinner, type SpinnerType} from '../Spinner';
+import {getContrastColor} from '../../utils/theme';
 
 /**
  * Props for the Button component.
@@ -38,7 +39,7 @@ export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
     flat?: boolean;
 }
 
-export const Button = forwardRef<HTMLButtonElement, ButtonProps>((
+export const Button = memo(forwardRef<HTMLButtonElement, ButtonProps>((
     {
         children,
         variant = 'primary',
@@ -58,16 +59,19 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>((
         style,
         ...props
     }, ref) => {
-    
+
     const isDisabled = disabled || isLoading;
     const isIconOnly = Boolean(icon && !children);
 
     const showSpinnerStart = isLoading && (Boolean(iconStart) || !iconEnd);
     const showSpinnerEnd = isLoading && Boolean(iconEnd) && !iconStart;
 
-    const mergedStyle = align !== 'center'
-        ? { justifyContent: align === 'start' ? 'flex-start' : 'flex-end', ...style }
-        : style;
+    const mergedStyle: CSSProperties = {
+        '--btn-color-base': `var(--${variant}-500, var(--color-${variant}))`,
+        '--btn-color-contrast': getContrastColor(variant),
+        ...(align !== 'center' ? {justifyContent: align === 'start' ? 'flex-start' : 'flex-end'} : {}),
+        ...style
+    } as CSSProperties;
 
     return (
         <button
@@ -75,7 +79,6 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>((
             disabled={isDisabled}
             className={clsx(
                 'btn',
-                variant && `btn--${variant}`,
                 size && size !== 'md' && `btn--${size}`,
                 outlined && 'btn--outlined',
                 ghost && 'btn--ghost',
@@ -113,6 +116,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>((
             )}
         </button>
     );
-});
-
+}));
 Button.displayName = 'Button';
+
+

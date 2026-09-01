@@ -1,4 +1,4 @@
-import { useCallback } from 'react';
+import {useCallback} from 'react';
 
 /**
  * Options for configuring keyboard navigation within a list.
@@ -16,11 +16,11 @@ export interface UseKeyboardNavOptions {
 
 /**
  * React hook that provides WAI-ARIA compliant arrow key navigation for lists and menus.
- * 
+ *
  * @param options - Configuration options for the navigation behavior.
  * @returns A keydown event handler to attach to the container element.
  */
-export function useKeyboardNav({ horizontal = false, itemSelector, loop = true, onFocus }: UseKeyboardNavOptions) {
+export function useKeyboardNav({horizontal = false, itemSelector, loop = true, onFocus}: UseKeyboardNavOptions) {
     return useCallback((e: React.KeyboardEvent<HTMLElement>) => {
         const prevKey = horizontal ? 'ArrowLeft' : 'ArrowUp';
         const nextKey = horizontal ? 'ArrowRight' : 'ArrowDown';
@@ -36,12 +36,12 @@ export function useKeyboardNav({ horizontal = false, itemSelector, loop = true, 
         let nextIndex = 0;
 
         if (e.key === nextKey) {
-            nextIndex = (currentIndex === -1 || currentIndex === items.length - 1) 
-                ? (loop ? 0 : currentIndex) 
+            nextIndex = (currentIndex === -1 || currentIndex === items.length - 1)
+                ? (loop ? 0 : currentIndex)
                 : currentIndex + 1;
         } else {
-            nextIndex = currentIndex <= 0 
-                ? (loop ? items.length - 1 : currentIndex) 
+            nextIndex = currentIndex <= 0
+                ? (loop ? items.length - 1 : currentIndex)
                 : currentIndex - 1;
         }
 

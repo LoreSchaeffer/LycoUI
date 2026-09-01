@@ -21,11 +21,12 @@ class LycoAccordionController {
         const flush = customElement.getAttribute('data-flush') === 'true';
 
         this.wrapper = document.createElement('div');
-        this.wrapper.className = `accordion accordion-${variant}`;
+        this.wrapper.className = 'accordion';
+        this.wrapper.style.setProperty('--accordion-color-base', `var(--${variant}-500, var(--color-${variant}))`);
         if (flush) {
             this.wrapper.classList.add('accordion-flush');
         }
-        
+
         if (customElement.id) {
             this.wrapper.id = customElement.id;
         }
@@ -73,7 +74,7 @@ class AccordionItemController {
     constructor(customItem: HTMLDivElement, parent: LycoAccordionController, index: number) {
         this.customItem = customItem;
         this.parent = parent;
-        
+
         const title = customItem.getAttribute('data-title') || 'Item';
         const initiallyOpen = customItem.getAttribute('data-open') === 'true';
         const disabled = customItem.hasAttribute('disabled');
@@ -112,7 +113,7 @@ class AccordionItemController {
         polyline.setAttribute('points', '6 9 12 15 18 9');
         svg.appendChild(polyline);
         this.button.appendChild(svg);
-        
+
         header.appendChild(this.button);
         this.element.appendChild(header);
 
@@ -124,10 +125,10 @@ class AccordionItemController {
 
         const collapseInner = document.createElement('div');
         collapseInner.className = 'accordion__collapse-inner';
-        
+
         const body = document.createElement('div');
         body.className = 'accordion__body';
-        
+
         this.contentNodes.forEach(node => body.appendChild(node));
 
         collapseInner.appendChild(body);
@@ -160,14 +161,14 @@ class AccordionItemController {
 
     public toggle(): void {
         if (this.button.disabled) return;
-        
+
         this.open = !this.open;
         if (this.open) {
             this.element.classList.add('is-open');
         } else {
             this.element.classList.remove('is-open');
         }
-        
+
         this.button.setAttribute('aria-expanded', String(this.open));
         this.parent.handleToggle(this);
     }
@@ -177,3 +178,4 @@ class AccordionItemController {
         this.contentNodes.forEach(node => this.customItem.appendChild(node));
     }
 }
+

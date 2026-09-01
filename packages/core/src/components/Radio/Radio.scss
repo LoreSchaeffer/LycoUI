@@ -1,5 +1,3 @@
-@use "../../styles/mixins/theme-variants" as *;
-
 .radio {
   display: inline-flex;
   align-items: center;
@@ -36,9 +34,9 @@
     display: grid;
     place-content: center;
     transition: background-color var(--duration-fast) var(--ease-default),
-                border-color var(--duration-fast) var(--ease-default),
-                box-shadow var(--duration-fast) var(--ease-default);
-    --radio-dot-color: var(--white);
+    border-color var(--duration-fast) var(--ease-default),
+    box-shadow var(--duration-fast) var(--ease-default);
+    --radio-dot-color: var(--radio-color-contrast, var(--white));
 
     &::before {
       content: "";
@@ -80,7 +78,7 @@
     font-size: var(--font-size-sm);
     --control-size: 0.875rem;
   }
-  
+
   &--md {
     font-size: var(--font-size-base);
     --control-size: 1.125rem;
@@ -89,37 +87,5 @@
   &--lg {
     font-size: var(--font-size-lg);
     --control-size: 1.375rem;
-  }
-}
-
-// ==========================================================================
-// SEMANTIC COLOR MAPPINGS
-// ==========================================================================
-.radio--primary { --radio-color-base: var(--color-primary); }
-.radio--success {
-  --radio-color-base: var(--color-success);
-  --radio-dot-color: var(--color-void);
-}
-.radio--warning {
-  --radio-color-base: var(--color-warning);
-  --radio-dot-color: var(--color-void);
-}
-.radio--danger { --radio-color-base: var(--color-danger); }
-.radio--info {
-  --radio-color-base: var(--color-info);
-  --radio-dot-color: var(--color-void);
-}
-
-// ==========================================================================
-// PALETTE COLOR MAPPINGS
-// ==========================================================================
-.radio- {
-  @include for-each-theme-color using($color, $is-light) {
-    --radio-color-base: var(--#{$color}-500);
-    @if $is-light {
-      --radio-dot-color: var(--color-void);
-    } @else {
-      --radio-dot-color: var(--white);
-    }
   }
 }

@@ -1,4 +1,4 @@
-import React, { forwardRef, memo } from 'react';
+import React, {forwardRef, memo} from 'react';
 import clsx from 'clsx';
 import './Divider.scss';
 
@@ -30,17 +30,17 @@ export interface DividerProps extends React.HTMLAttributes<HTMLHRElement | HTMLD
 }
 
 export const Divider = memo(forwardRef<HTMLHRElement | HTMLDivElement, DividerProps>(({
-    orientation = 'horizontal',
-    spacing = 'md',
-    length = 'full',
-    color,
-    thickness = '1px',
-    className,
-    style,
-    ...props
-}, ref) => {
+                                                                                          orientation = 'horizontal',
+                                                                                          spacing = 'md',
+                                                                                          length = 'full',
+                                                                                          color,
+                                                                                          thickness = '1px',
+                                                                                          className,
+                                                                                          style,
+                                                                                          ...props
+                                                                                      }, ref) => {
     const Component = orientation === 'horizontal' ? 'hr' : 'div';
-    
+
     return (
         <Component
             ref={ref as React.Ref<HTMLHRElement & HTMLDivElement>}
@@ -53,10 +53,10 @@ export const Divider = memo(forwardRef<HTMLHRElement | HTMLDivElement, DividerPr
                 `divider--length-${length}`,
                 className
             )}
-            style={{ 
+            style={{
                 '--divider-thickness': typeof thickness === 'number' ? `${thickness}px` : thickness,
-                ...(color ? { '--divider-color': color } : {}),
-                ...style 
+                ...(color ? {'--divider-color': color} : {}),
+                ...style
             } as React.CSSProperties}
             {...props}
         />
@@ -64,3 +64,6 @@ export const Divider = memo(forwardRef<HTMLHRElement | HTMLDivElement, DividerPr
 }));
 
 Divider.displayName = 'Divider';
+
+
+

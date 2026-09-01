@@ -1,11 +1,10 @@
-@use "../../styles/mixins/theme-variants" as *;
 
 .range {
   position: relative;
   display: flex;
   align-items: center;
   width: 100%;
-  
+
   // Track parameters
   --range-track-height: var(--spacing-2, 0.5rem);
   --range-thumb-size: var(--spacing-6, 1.5rem);
@@ -13,7 +12,7 @@
   --range-progress: 50%;
   --range-track-color: var(--color-carbon, var(--slate-800));
   --range-track-fill: var(--range-color-base);
-  
+
   height: calc(var(--range-thumb-size) + 1rem);
 
   // Tooltip
@@ -29,7 +28,7 @@
     justify-content: center;
     background-color: var(--range-color-base);
     color: var(--tooltip-text-color, var(--white));
-    
+
     min-width: var(--range-tooltip-size, 2rem);
     height: calc(var(--range-tooltip-size, 2rem) * 0.85); // Slightly less tall than wide
     padding: 0 var(--spacing-2);
@@ -99,7 +98,7 @@
       height: var(--range-track-height);
       background: linear-gradient(to right, var(--range-track-fill) var(--range-progress), var(--range-track-color) var(--range-progress));
       border-radius: var(--radius-full);
-      box-shadow: inset 0 var(--border-width, 1px) var(--border-width-2, 2px) rgba(0,0,0,0.2);
+      box-shadow: inset 0 var(--border-width, 1px) var(--border-width-2, 2px) var(--shadow-color, rgba(0, 0, 0, 0.2));
     }
 
     // Mozilla Track
@@ -108,14 +107,14 @@
       height: var(--range-track-height);
       background: linear-gradient(to right, var(--range-track-fill) var(--range-progress), var(--range-track-color) var(--range-progress));
       border-radius: var(--radius-full);
-      box-shadow: inset 0 var(--border-width, 1px) var(--border-width-2, 2px) rgba(0,0,0,0.2);
+      box-shadow: inset 0 var(--border-width, 1px) var(--border-width-2, 2px) var(--shadow-color, rgba(0, 0, 0, 0.2));
     }
 
     // Webkit Thumb
     &::-webkit-slider-thumb {
       @include thumb-styles;
     }
-    
+
     // Mozilla Thumb
     &::-moz-range-thumb {
       @include thumb-styles;
@@ -124,6 +123,7 @@
     &:focus-visible::-webkit-slider-thumb {
       box-shadow: 0 0 0 var(--border-width, 1px) var(--color-void), 0 0 0 var(--border-width-3, 3px) var(--range-color-base);
     }
+
     &:focus-visible::-moz-range-thumb {
       box-shadow: 0 0 0 var(--border-width, 1px) var(--color-void), 0 0 0 var(--border-width-3, 3px) var(--range-color-base);
     }
@@ -132,7 +132,7 @@
   &.is-disabled {
     opacity: 0.6;
     pointer-events: none;
-    
+
     .range__input {
       cursor: not-allowed;
     }
@@ -145,10 +145,12 @@
     --range-track-height: var(--spacing-1, 0.25rem);
     --range-thumb-size: var(--spacing-3, 0.75rem);
   }
+
   &--md {
     --range-track-height: 0.375rem;
     --range-thumb-size: var(--spacing-4, 1rem);
   }
+
   &--lg {
     --range-track-height: var(--spacing-2, 0.5rem);
     --range-thumb-size: var(--spacing-5, 1.25rem);
@@ -170,44 +172,17 @@
     --range-tooltip-size: var(--spacing-6, 1.5rem);
     --range-tooltip-font-size: 0.65rem;
   }
+
   &--tooltip-md {
     --range-tooltip-size: var(--spacing-8, 2rem);
     --range-tooltip-font-size: var(--font-size-xs);
   }
+
   &--tooltip-lg {
     --range-tooltip-size: 2.5rem;
     --range-tooltip-font-size: var(--font-size-sm);
   }
 
-  // ==========================================================================
-  // VARIANTS
-  // ==========================================================================
-  --tooltip-text-color: var(--white);
-  
-  &--success {
-    --range-color-base: var(--color-success);
-    --tooltip-text-color: var(--slate-950);
-  }
-  &--warning {
-    --range-color-base: var(--color-warning);
-    --tooltip-text-color: var(--slate-950);
-  }
-  &--danger {
-    --range-color-base: var(--color-danger);
-  }
-  &--info {
-    --range-color-base: var(--color-info);
-    --tooltip-text-color: var(--slate-950);
-  }
+
 }
 
-.range- {
-  @include for-each-theme-color using($color, $is-light) {
-    --range-color-base: var(--#{$color}-500);
-    @if $is-light {
-      --tooltip-text-color: var(--slate-950);
-    } @else {
-      --tooltip-text-color: var(--white);
-    }
-  }
-}

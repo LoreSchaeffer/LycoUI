@@ -1,4 +1,4 @@
-import React, { useRef, useState, useEffect, Children, useCallback, useMemo } from 'react';
+import React, {Children, useCallback, useEffect, useMemo, useRef, useState} from 'react';
 import clsx from 'clsx';
 import './Carousel.scss';
 
@@ -36,20 +36,21 @@ export interface CarouselProps extends React.HTMLAttributes<HTMLDivElement> {
 }
 
 export const Carousel = React.forwardRef<HTMLDivElement, CarouselProps>(({
-    children,
-    showArrows = true,
-    showDots = true,
-    gap = 'var(--spacing-4)',
-    slideWidth = '100%',
-    centerMode = false,
-    infinite = false,
-    className,
-    style,
-    ...props
-}, ref) => {
+                                                                             children,
+                                                                             showArrows = true,
+                                                                             showDots = true,
+                                                                             gap = 'var(--spacing-4)',
+                                                                             slideWidth = '100%',
+                                                                             centerMode = false,
+                                                                             infinite = false,
+                                                                             className,
+                                                                             style,
+                                                                             'aria-label': ariaLabel = 'Carousel',
+                                                                             ...props
+                                                                         }, ref) => {
     const trackRef = useRef<HTMLDivElement>(null);
-    const [activeIndex, setActiveIndex] = useState(0); 
-    
+    const [activeIndex, setActiveIndex] = useState(0);
+
     const isJumping = useRef(false);
 
     const childrenArray = Children.toArray(children);
@@ -59,11 +60,11 @@ export const Carousel = React.forwardRef<HTMLDivElement, CarouselProps>(({
         if (!infinite || count <= 1) return childrenArray;
         const first = childrenArray[0];
         const last = childrenArray[count - 1];
-        
+
         return [
-            React.cloneElement(last as React.ReactElement, { key: 'clone-prev' }),
+            React.cloneElement(last as React.ReactElement, {key: 'clone-prev'}),
             ...childrenArray,
-            React.cloneElement(first as React.ReactElement, { key: 'clone-next' })
+            React.cloneElement(first as React.ReactElement, {key: 'clone-next'})
         ];
     }, [childrenArray, infinite, count]);
 
@@ -93,7 +94,7 @@ export const Carousel = React.forwardRef<HTMLDivElement, CarouselProps>(({
         if (!trackRef.current || isJumping.current) return;
         const track = trackRef.current;
         const trackCenter = track.scrollLeft + track.clientWidth / 2;
-        
+
         let closestDomIndex = 0;
         let minDistance = Infinity;
 
@@ -101,7 +102,7 @@ export const Carousel = React.forwardRef<HTMLDivElement, CarouselProps>(({
             const htmlChild = child as HTMLElement;
             const childCenter = htmlChild.offsetLeft - track.offsetLeft + htmlChild.clientWidth / 2;
             const distance = Math.abs(trackCenter - childCenter);
-            
+
             if (distance < minDistance) {
                 minDistance = distance;
                 closestDomIndex = index;
@@ -167,10 +168,10 @@ export const Carousel = React.forwardRef<HTMLDivElement, CarouselProps>(({
                 clearTimeout(timeoutId);
                 timeoutId = setTimeout(() => {
                     handleScroll();
-                }, 50); // Debounce to allow snap to settle
+                }, 50);
             };
 
-            track.addEventListener('scroll', listener, { passive: true });
+            track.addEventListener('scroll', listener, {passive: true});
             return () => {
                 clearTimeout(timeoutId);
                 track.removeEventListener('scroll', listener);
@@ -179,15 +180,18 @@ export const Carousel = React.forwardRef<HTMLDivElement, CarouselProps>(({
     }, [handleScroll]);
 
     return (
-        <div 
+        <div
             ref={ref}
             className={clsx('carousel', {
                 'carousel--center-mode': centerMode,
-            }, className)} 
-            style={{ 
-                '--carousel-gap': gap, 
-                '--carousel-slide-width': slideWidth, 
-                ...style 
+            }, className)}
+            role="region"
+            aria-roledescription="carousel"
+            aria-label={ariaLabel}
+            style={{
+                '--carousel-gap': gap,
+                '--carousel-slide-width': slideWidth,
+                ...style
             } as React.CSSProperties}
             {...props}
         >
@@ -201,11 +205,14 @@ export const Carousel = React.forwardRef<HTMLDivElement, CarouselProps>(({
                     }
 
                     return (
-                        <div 
+                        <div
                             className={clsx('carousel__slide', {
                                 'is-active': activeIndex === itemLogicIndex
-                            })} 
+                            })}
                             key={React.isValidElement(child) ? child.key : index}
+                            role="group"
+                            aria-roledescription="slide"
+                            aria-label={`${itemLogicIndex + 1} of ${count}`}
                         >
                             {child}
                         </div>
@@ -215,8 +222,8 @@ export const Carousel = React.forwardRef<HTMLDivElement, CarouselProps>(({
 
             {showArrows && count > 1 && (
                 <>
-                    <button 
-                        className="carousel__arrow carousel__arrow--prev" 
+                    <button
+                        className="carousel__arrow carousel__arrow--prev"
                         onClick={scrollPrev}
                         disabled={!infinite && activeIndex === 0}
                         aria-label="Previous slide"
@@ -225,8 +232,8 @@ export const Carousel = React.forwardRef<HTMLDivElement, CarouselProps>(({
                             <polyline points="15 18 9 12 15 6"></polyline>
                         </svg>
                     </button>
-                    <button 
-                        className="carousel__arrow carousel__arrow--next" 
+                    <button
+                        className="carousel__arrow carousel__arrow--next"
                         onClick={scrollNext}
                         disabled={!infinite && activeIndex === count - 1}
                         aria-label="Next slide"
@@ -240,10 +247,10 @@ export const Carousel = React.forwardRef<HTMLDivElement, CarouselProps>(({
 
             {showDots && count > 1 && (
                 <div className="carousel__dots">
-                    {Array.from({ length: count }).map((_, idx) => (
+                    {Array.from({length: count}).map((_, idx) => (
                         <button
                             key={idx}
-                            className={clsx('carousel__dot', { 'is-active': activeIndex === idx })}
+                            className={clsx('carousel__dot', {'is-active': activeIndex === idx})}
                             onClick={() => goToIndex(idx)}
                             aria-label={`Go to slide ${idx + 1}`}
                         />
@@ -255,3 +262,4 @@ export const Carousel = React.forwardRef<HTMLDivElement, CarouselProps>(({
 });
 
 Carousel.displayName = 'Carousel';
+

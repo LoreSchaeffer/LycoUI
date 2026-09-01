@@ -1,5 +1,5 @@
 @use "../../styles/tokens/breakpoints" as *;
-@use "../../styles/mixins/theme-variants" as *;
+
 
 .navbar {
   // Variables
@@ -41,17 +41,17 @@
     --navbar-bg: var(--surface-base, var(--color-bg-root));
     --navbar-text: var(--color-text-primary);
   }
-  
+
   &--dark {
     --navbar-bg: var(--slate-900);
     --navbar-text: var(--white);
   }
-  
+
   &--light {
     --navbar-bg: var(--white);
     --navbar-text: var(--slate-900);
   }
-  
+
   &--transparent {
     --navbar-bg: transparent;
     --navbar-text: inherit;
@@ -59,11 +59,25 @@
   }
 
   // Elevations (Optional, but structural borders preferred in Linear)
-  &-elevation-0 { box-shadow: none; }
-  &-elevation-1 { box-shadow: var(--shadow-sm); }
-  &-elevation-2 { box-shadow: var(--shadow-md); }
-  &-elevation-3 { box-shadow: var(--shadow-lg); }
-  &-elevation-4 { box-shadow: var(--shadow-xl); }
+  &-elevation-0 {
+    box-shadow: none;
+  }
+
+  &-elevation-1 {
+    box-shadow: var(--shadow-sm);
+  }
+
+  &-elevation-2 {
+    box-shadow: var(--shadow-md);
+  }
+
+  &-elevation-3 {
+    box-shadow: var(--shadow-lg);
+  }
+
+  &-elevation-4 {
+    box-shadow: var(--shadow-xl);
+  }
 
   // Color Variants (Solid & Dim)
   &.navbar-variant {
@@ -77,13 +91,14 @@
       background-color: var(--navbar-color-base);
       color: var(--navbar-text-color, var(--white));
       border-bottom-color: transparent;
-      
+
       .navbar__link, .navbar__brand, .navbar__toggle {
         color: inherit;
       }
-      
+
       .navbar__link {
         color: color-mix(in srgb, currentColor 85%, transparent);
+
         &:hover, &:focus-visible, &.is-active {
           color: currentColor;
           background-color: color-mix(in srgb, currentColor 10%, transparent);
@@ -92,45 +107,6 @@
     }
   }
 
-  &-primary {
-    --navbar-color-base: var(--color-primary);
-    --navbar-color-dim: var(--color-primary-dim);
-    --navbar-text-color: var(--white);
-  }
-
-  &-success {
-    --navbar-color-base: var(--color-success);
-    --navbar-color-dim: color-mix(in srgb, var(--color-success) 15%, transparent);
-    --navbar-text-color: var(--slate-950);
-  }
-
-  &-warning {
-    --navbar-color-base: var(--color-warning);
-    --navbar-color-dim: color-mix(in srgb, var(--color-warning) 15%, transparent);
-    --navbar-text-color: var(--slate-950);
-  }
-
-  &-danger {
-    --navbar-color-base: var(--color-danger);
-    --navbar-color-dim: color-mix(in srgb, var(--color-danger) 15%, transparent);
-    --navbar-text-color: var(--white);
-  }
-
-  &-info {
-    --navbar-color-base: var(--color-info);
-    --navbar-color-dim: color-mix(in srgb, var(--color-info) 15%, transparent);
-    --navbar-text-color: var(--slate-950);
-  }
-
-  @include for-each-theme-color using($color, $is-light) {
-    --navbar-color-base: var(--#{$color});
-    --navbar-color-dim: var(--#{$color}-dim);
-    @if $is-light {
-      --navbar-text-color: var(--slate-950);
-    } @else {
-      --navbar-text-color: var(--white);
-    }
-  }
 
   // Elements
   &__container {
@@ -153,12 +129,12 @@
     display: flex;
     align-items: center;
     gap: var(--spacing-3);
-    
+
     &:hover, &:focus-visible {
       color: inherit;
       text-decoration: none;
     }
-    
+
     &--centered {
       position: absolute;
       left: 50%;
@@ -180,14 +156,14 @@
     cursor: pointer;
     color: var(--color-text-secondary);
     transition: opacity var(--duration-fast) var(--ease-default),
-                transform var(--duration-fast) var(--ease-default),
-                visibility var(--duration-fast) var(--ease-default);
-    
+    transform var(--duration-fast) var(--ease-default),
+    visibility var(--duration-fast) var(--ease-default);
+
     &:hover {
       background-color: var(--color-surface-hover);
       color: var(--color-text-primary);
     }
-    
+
     &:focus-visible {
       outline: var(--border-width-2, 2px) solid var(--color-primary);
       outline-offset: calc(var(--border-width-2, 2px) * -1);
@@ -200,17 +176,19 @@
       background-color: currentColor;
       border-radius: var(--border-width-2, 2px);
       transition: background-color var(--duration-normal) var(--ease-default),
-                  color var(--duration-normal) var(--ease-default),
-                  transform var(--duration-normal) var(--ease-default);
+      color var(--duration-normal) var(--ease-default),
+      transform var(--duration-normal) var(--ease-default);
     }
-    
+
     &[aria-expanded="true"] {
       span:nth-child(1) {
         transform: translateY(0.55rem) rotate(45deg);
       }
+
       span:nth-child(2) {
         opacity: 0;
       }
+
       span:nth-child(3) {
         transform: translateY(-0.55rem) rotate(-45deg);
       }
@@ -223,7 +201,7 @@
     display: grid;
     grid-template-rows: 0fr;
     transition: grid-template-rows var(--duration-normal) var(--ease-default);
-    
+
     &.is-open {
       grid-template-rows: 1fr;
     }
@@ -246,10 +224,19 @@
     padding-top: var(--spacing-4);
     padding-bottom: var(--spacing-2);
     width: 100%;
-    
-    &--align-start { margin-right: auto; }
-    &--align-center { margin-left: auto; margin-right: auto; }
-    &--align-end { margin-left: auto; }
+
+    &--align-start {
+      margin-right: auto;
+    }
+
+    &--align-center {
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    &--align-end {
+      margin-left: auto;
+    }
   }
 
   &__item {
@@ -266,17 +253,17 @@
     font-size: var(--font-size-sm);
     border-radius: var(--radius-md);
     transition: background-color var(--duration-fast) var(--ease-default), color var(--duration-fast) var(--ease-default);
-    
+
     &:hover, &:focus-visible {
       color: var(--color-text-primary);
       background-color: var(--color-surface-hover);
     }
-    
+
     &.is-active {
       color: var(--color-text-primary);
       background-color: color-mix(in srgb, var(--color-text-primary) 5%, transparent);
       font-weight: var(--font-weight-semibold);
-      
+
       // Bottom border indicator for horizontal navs (added in expand breakpoint)
     }
   }
@@ -298,7 +285,7 @@
     border-radius: var(--radius-md);
     cursor: pointer;
     transition: background-color var(--duration-fast) var(--ease-default), color var(--duration-fast) var(--ease-default);
-    
+
     &:hover, &:focus-visible {
       color: var(--color-text-primary);
       background-color: var(--color-surface-hover);
@@ -339,7 +326,7 @@
   &__dropdown.is-open > &__dropdown-trigger {
     color: var(--color-text-primary);
     background-color: var(--color-surface-hover);
-    
+
     .navbar__dropdown-caret {
       transform: rotate(180deg);
     }
@@ -355,7 +342,7 @@
     border: none;
     box-shadow: none;
     width: 100%;
-    
+
     &.is-open {
       display: flex;
     }
@@ -446,7 +433,7 @@
     border: var(--border-width, 1px) solid var(--color-border-subtle);
     border-radius: var(--radius-xl);
     box-shadow: var(--shadow-xl);
-    
+
     // Entry animation starting state
     opacity: 0;
     visibility: hidden;
@@ -468,10 +455,10 @@
       left: 100%;
       right: auto;
       margin-left: var(--spacing-1);
-      
+
       // Override animation for side-entry
       transform: translateX(-0.5rem);
-      
+
       &.is-open {
         transform: translateX(0);
       }
@@ -517,19 +504,19 @@
       .navbar__toggle {
         display: none;
       }
-      
+
       .navbar__collapse {
         display: flex !important;
         flex-basis: auto;
         grid-template-rows: 1fr; // Override grid animation
       }
-      
+
       .navbar__collapse-inner {
         overflow: visible;
         flex-direction: row;
         align-items: center;
       }
-      
+
       .navbar__nav {
         flex-direction: row;
         align-items: center;
@@ -538,11 +525,11 @@
         padding-bottom: 0;
         width: auto;
       }
-      
+
       .navbar__link {
         padding: var(--spacing-2) var(--spacing-3);
       }
-      
+
       @include navbar-desktop-dropdown;
     }
   }
@@ -553,19 +540,19 @@
   .navbar__toggle {
     display: none;
   }
-  
+
   .navbar__collapse {
     display: flex !important;
     flex-basis: auto;
     grid-template-rows: 1fr;
   }
-  
+
   .navbar__collapse-inner {
     overflow: visible;
     flex-direction: row;
     align-items: center;
   }
-  
+
   .navbar__nav {
     flex-direction: row;
     align-items: center;
@@ -574,10 +561,10 @@
     padding-bottom: 0;
     width: auto;
   }
-  
+
   .navbar__link {
     padding: var(--spacing-2) var(--spacing-3);
   }
-  
+
   @include navbar-desktop-dropdown;
 }

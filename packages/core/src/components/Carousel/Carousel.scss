@@ -1,115 +1,116 @@
 .carousel {
-    position: relative;
-    width: 100%;
-    
-    &__track {
-        display: flex;
-        overflow-x: auto;
-        scroll-snap-type: x mandatory;
-        gap: var(--carousel-gap, var(--spacing-4));
-        scrollbar-width: none;
-        -ms-overflow-style: none;
-        
-        &::-webkit-scrollbar {
-            display: none;
-        }
+  position: relative;
+  width: 100%;
+
+  &__track {
+    display: flex;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    gap: var(--carousel-gap, var(--spacing-4));
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
+  }
+
+  &__slide {
+    flex: 0 0 var(--carousel-slide-width, 100%);
+    scroll-snap-align: center;
+    min-width: 0;
+    transition: opacity var(--duration-normal) var(--ease-default),
+    transform var(--duration-normal) var(--ease-default);
+  }
+
+  &--center-mode {
+    .carousel__track {
+      padding: 0 calc(var(--spacing-8) * 3);
     }
 
-    &__slide {
-        flex: 0 0 var(--carousel-slide-width, 100%);
-        scroll-snap-align: center;
-        min-width: 0;
-        transition: opacity var(--duration-normal) var(--ease-default),
-                    transform var(--duration-normal) var(--ease-default);
+    .carousel__slide {
+      opacity: 0.6;
+      transform: scale(0.9);
+
+      &.is-active {
+        opacity: 1;
+        transform: scale(1);
+      }
     }
 
-    &--center-mode {
-        .carousel__track {
-            padding: 0 calc(var(--spacing-8) * 3);
-        }
+    .carousel__arrow {
+      // Position arrows over the padded gutters
+      &--prev {
+        left: var(--spacing-4);
+      }
 
-        .carousel__slide {
-            opacity: 0.6;
-            transform: scale(0.9);
-            
-            &.is-active {
-                opacity: 1;
-                transform: scale(1);
-            }
-        }
+      &--next {
+        right: var(--spacing-4);
+      }
+    }
+  }
 
-        .carousel__arrow {
-            // Position arrows over the padded gutters
-            &--prev {
-                left: var(--spacing-4);
-            }
-            &--next {
-                right: var(--spacing-4);
-            }
-        }
+  &__arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 2;
+    background: var(--color-overlay);
+    backdrop-filter: blur(4px);
+    border: var(--border-width, 1px) solid var(--color-border-subtle);
+    border-radius: 50%;
+    color: var(--white);
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: background var(--duration-fast) var(--ease-default);
+
+    &:hover:not(:disabled) {
+      background: var(--color-overlay-dark);
     }
 
-    &__arrow {
-        position: absolute;
-        top: 50%;
-        transform: translateY(-50%);
-        z-index: 2;
-        background: rgba(0, 0, 0, 0.4);
-        backdrop-filter: blur(4px);
-        border: var(--border-width, 1px) solid var(--color-border-subtle);
-        border-radius: 50%;
-        color: var(--white);
-        width: 40px;
-        height: 40px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        cursor: pointer;
-        transition: background var(--duration-fast) var(--ease-default);
-
-        &:hover:not(:disabled) {
-            background: rgba(0, 0, 0, 0.6);
-        }
-
-        &:disabled {
-            opacity: 0.5;
-            cursor: not-allowed;
-        }
-
-        &--prev {
-            left: var(--spacing-4);
-        }
-
-        &--next {
-            right: var(--spacing-4);
-        }
+    &:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
     }
 
-    &__dots {
-        position: absolute;
-        bottom: var(--spacing-4);
-        left: 50%;
-        transform: translateX(-50%);
-        display: flex;
-        gap: var(--spacing-2);
-        z-index: 2;
+    &--prev {
+      left: var(--spacing-4);
     }
 
-    &__dot {
-        width: var(--spacing-2, 8px);
-        height: var(--spacing-2, 8px);
-        border-radius: var(--radius-full);
-        background: var(--color-text-muted);
-        border: none;
-        padding: 0;
-        cursor: pointer;
-        transition: background-color var(--duration-fast) var(--ease-default),
-                    transform var(--duration-fast) var(--ease-default),
-                    opacity var(--duration-fast) var(--ease-default);
-
-        &.is-active {
-            width: 16px;
-            background: var(--color-primary);
-        }
+    &--next {
+      right: var(--spacing-4);
     }
+  }
+
+  &__dots {
+    position: absolute;
+    bottom: var(--spacing-4);
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: var(--spacing-2);
+    z-index: 2;
+  }
+
+  &__dot {
+    width: var(--spacing-2, 8px);
+    height: var(--spacing-2, 8px);
+    border-radius: var(--radius-full);
+    background: var(--color-text-muted);
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    transition: background-color var(--duration-fast) var(--ease-default),
+    transform var(--duration-fast) var(--ease-default),
+    opacity var(--duration-fast) var(--ease-default);
+
+    &.is-active {
+      width: 16px;
+      background: var(--color-primary);
+    }
+  }
 }

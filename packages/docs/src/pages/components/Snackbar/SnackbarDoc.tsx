@@ -16,8 +16,8 @@ export default function SnackbarDoc() {
                 title="Snackbar"
                 description="A floating, auto-dismissible alert for brief messages."
                 exampleModules={exampleModules}
-                rawSources={rawSources as any}
-                apiConfig={apiConfig as any}
+                rawSources={rawSources as Record<string, string>}
+                apiConfig={apiConfig}
             />
         </SnackbarProvider>
     );

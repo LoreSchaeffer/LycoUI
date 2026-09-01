@@ -4,46 +4,46 @@
 // ==========================================================================
 
 $font-families: (
-  'base': ('Noto Sans', system-ui, sans-serif),
-  'mono': ('JetBrains Mono', ui-monospace, 'Courier New', monospace)
+        'base': ('Noto Sans', system-ui, sans-serif),
+        'mono': ('JetBrains Mono', ui-monospace, 'Courier New', monospace)
 );
 
 $font-sizes: (
-  'caption': 13px,
-  'body-sm': 15px,
-  'body-lg': 20px,
-  'subheading': 24px,
-  'heading-sm': 32px,
-  'heading': 48px,
-  'heading-lg': 64px,
-  'display': 72px
+        'caption': 13px,
+        'body-sm': 15px,
+        'body-lg': 20px,
+        'subheading': 24px,
+        'heading-sm': 32px,
+        'heading': 48px,
+        'heading-lg': 64px,
+        'display': 72px
 );
 
 $line-heights: (
-  'caption': 1.2,
-  'body-sm': 1.6,
-  'body-lg': 1.33,
-  'subheading': 1.33,
-  'heading-sm': 1.13,
-  'heading': 1,
-  'heading-lg': 1,
-  'display': 1
+        'caption': 1.2,
+        'body-sm': 1.6,
+        'body-lg': 1.33,
+        'subheading': 1.33,
+        'heading-sm': 1.13,
+        'heading': 1,
+        'heading-lg': 1,
+        'display': 1
 );
 
 $letter-spacing: (
-  'caption': 0px,
-  'body-sm': -0.165px,
-  'body-lg': -0.24px,
-  'subheading': -0.288px,
-  'heading-sm': -0.704px,
-  'heading': -1.056px,
-  'heading-lg': -1.408px,
-  'display': -1.584px
+        'caption': 0px,
+        'body-sm': -0.165px,
+        'body-lg': -0.24px,
+        'subheading': -0.288px,
+        'heading-sm': -0.704px,
+        'heading': -1.056px,
+        'heading-lg': -1.408px,
+        'display': -1.584px
 );
 
 $font-weights: (
-  'regular': 400,
-  'medium': 500,
-  'semibold': 600,
-  'bold': 700
+        'regular': 400,
+        'medium': 500,
+        'semibold': 600,
+        'bold': 700
 );

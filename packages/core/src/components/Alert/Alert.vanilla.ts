@@ -3,7 +3,7 @@ export function initLycoAlerts(): void {
     alerts.forEach(alert => {
         const durationAttr = alert.getAttribute('data-duration');
         const hasCloseBtn = alert.querySelector('.alert__close') !== null;
-        
+
         if (durationAttr || hasCloseBtn) {
             new LycoAlertController(alert);
             alert.dataset.lycoInitialized = 'true';
@@ -20,7 +20,7 @@ class LycoAlertController {
     constructor(element: HTMLDivElement) {
         this.element = element;
         this.closeBtn = element.querySelector<HTMLButtonElement>('.alert__close');
-        
+
         this._onCloseClick = () => this.close();
 
         if (this.closeBtn) {

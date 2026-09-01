@@ -14,7 +14,7 @@ export default function InputDoc() {
       title="Input"
       description="A premium, Linear-style text and number input component with strict BEM architecture, floating labels, icons, validation, and step buttons."
       exampleModules={exampleModules}
-      rawSources={rawSources as any}
+      rawSources={rawSources as Record<string, string>}
       apiConfig={apiConfig}
     />
   );

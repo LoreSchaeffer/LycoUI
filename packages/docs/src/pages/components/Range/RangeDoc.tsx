@@ -14,7 +14,7 @@ export default function RangeDoc() {
       title="Range"
       description="An interactive slider component with a customizable droplet tooltip."
       exampleModules={exampleModules}
-      rawSources={rawSources as any}
+      rawSources={rawSources as Record<string, string>}
       apiConfig={apiConfig}
     />
   );

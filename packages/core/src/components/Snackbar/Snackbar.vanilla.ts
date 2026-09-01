@@ -1,3 +1,5 @@
+import {getContrastColor} from '../../utils/theme';
+
 export type SnackbarDurationVanilla = 'short' | 'medium' | 'long' | number;
 
 export interface VanillaSnackbarOptions {
@@ -20,7 +22,7 @@ function parseSafeSvg(svgString: string): SVGSVGElement | null {
     template.innerHTML = svgString;
     const svg = template.content.querySelector('svg');
     if (!svg) return null;
-    
+
     svg.querySelectorAll('script').forEach(s => s.remove());
     Array.from(svg.attributes).forEach(attr => {
         if (attr.name.startsWith('on')) svg.removeAttribute(attr.name);
@@ -45,9 +47,12 @@ class LycoSnackbarManager {
     public show(options: VanillaSnackbarOptions): string {
         const stack = this.ensureStackContainer();
         const id = `snackbar-${++this.snackbarCount}`;
-        
+
         const snackbar = document.createElement('div');
-        snackbar.className = `snackbar snackbar--${options.variant || 'neutral'}`;
+        const variant = options.variant || 'neutral';
+        snackbar.className = 'snackbar';
+        snackbar.style.setProperty('--snackbar-color-base', `var(--${variant}-500, var(--color-${variant}))`);
+        snackbar.style.setProperty('--snackbar-color-contrast', getContrastColor(variant));
         if (options.closable) snackbar.classList.add('snackbar--closable');
         if (options.icon) snackbar.classList.add('has-icon');
         if (options.isFlat) snackbar.classList.add('snackbar--flat');
@@ -85,7 +90,7 @@ class LycoSnackbarManager {
         const closeHandler = () => {
             if (timerId) window.clearTimeout(timerId);
             if (closeBtn) closeBtn.removeEventListener('click', closeHandler);
-            
+
             snackbar.classList.add('is-exiting');
             window.setTimeout(() => {
                 snackbar.remove();
@@ -93,7 +98,7 @@ class LycoSnackbarManager {
                     stack.remove();
                     this.stackContainer = null;
                 }
-            }, 300); // Wait for exit animation
+            }, 300);
         };
 
         if (options.closable) {
@@ -125,3 +130,4 @@ class LycoSnackbarManager {
 }
 
 export const snackbar = new LycoSnackbarManager();
+
