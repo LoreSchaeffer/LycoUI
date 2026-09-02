@@ -1,0 +1,79 @@
+// ==========================================================================
+// FILE UPLOAD (Dropzone)
+// ==========================================================================
+.fileupload {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  padding: var(--spacing-8) var(--spacing-4);
+  border: var(--border-width, 1px) dashed var(--color-border-base);
+  border-radius: var(--radius-md);
+  background-color: var(--color-void, transparent);
+  cursor: pointer;
+  transition: border-color var(--duration-fast) var(--ease-default),
+              background-color var(--duration-fast) var(--ease-default),
+              box-shadow var(--duration-fast) var(--ease-default);
+  
+  --fileupload-color-base: var(--color-primary);
+
+  &:hover:not(.is-disabled) {
+    background-color: var(--color-carbon);
+    border-color: var(--color-border-strong);
+  }
+
+  &:focus-visible {
+    outline: none;
+    border-color: var(--fileupload-color-base);
+    box-shadow: 0 0 0 var(--border-width, 1px) var(--color-void), 0 0 0 var(--border-width-3, 3px) var(--fileupload-color-base);
+  }
+
+  // ==========================================================================
+  // DRAG ACTIVE STATE
+  // ==========================================================================
+  &.is-drag-active {
+    border-style: solid;
+    border-color: var(--fileupload-color-base);
+    background-color: color-mix(in srgb, var(--fileupload-color-base) 10%, var(--color-void, transparent));
+  }
+
+  // ==========================================================================
+  // DISABLED STATE
+  // ==========================================================================
+  &.is-disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    background-color: var(--color-carbon);
+  }
+
+  // ==========================================================================
+  // CONTENT ELEMENTS (Typically passed as children)
+  // ==========================================================================
+  &__icon {
+    width: var(--spacing-8, 2rem);
+    height: var(--spacing-8, 2rem);
+    color: var(--color-text-muted);
+    margin-bottom: var(--spacing-2);
+    transition: color var(--duration-fast) var(--ease-default);
+  }
+
+  &__text {
+    font-size: var(--font-size-sm);
+    color: var(--color-text-primary);
+    font-weight: 500;
+    margin-bottom: var(--spacing-1);
+    text-align: center;
+  }
+
+  &__subtext {
+    font-size: var(--font-size-xs);
+    color: var(--color-text-muted);
+    text-align: center;
+  }
+
+  &.is-drag-active &__icon {
+    color: var(--fileupload-color-base);
+  }
+}
