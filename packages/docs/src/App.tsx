@@ -1,24 +1,33 @@
 import './App.scss';
 import React, {Suspense, useEffect, useMemo, useState} from 'react';
 import {BrowserRouter, Navigate, NavLink, Route, Routes, useLocation} from 'react-router';
-import {FiMenu, FiX} from 'react-icons/fi';
 import clsx from "clsx";
 import {PiBookBold, PiBookOpenBold} from "react-icons/pi";
 import {docsNavigation, flattenedRoutes} from "./routes/auto-discovery.ts";
+import {Navbar, NotificationProvider, Sidebar} from '@loreschaeffer/lyco-ui';
+
+const RouterSidebarLink = Sidebar.Link as unknown as React.FC<React.ComponentProps<typeof Sidebar.Link> & { to: string }>;
 
 const DocsLayout: React.FC = () => {
     const [isSidebarOpen, setIsSidebarOpen] = useState<boolean>(false);
+    const [isMobile, setIsMobile] = useState<boolean>(window.innerWidth < 768);
     const location = useLocation();
 
     useEffect(() => {
-        setIsSidebarOpen(false);
+        const handleResize = () => setIsMobile(window.innerWidth < 768);
+        window.addEventListener('resize', handleResize);
+        return () => window.removeEventListener('resize', handleResize);
+    }, []);
+
+    useEffect(() => {
+        if (isMobile) setIsSidebarOpen(false);
         if (location.hash) {
             const id = location.hash.substring(1);
             let attempts = 0;
             const scrollInterval = setInterval(() => {
                 const el = document.getElementById(id);
                 if (el) {
-                    el.scrollIntoView({ behavior: 'smooth' });
+                    el.scrollIntoView({behavior: 'smooth'});
                     clearInterval(scrollInterval);
                 }
                 attempts++;
@@ -28,7 +37,7 @@ const DocsLayout: React.FC = () => {
             window.scrollTo(0, 0);
             document.querySelector('.docs-content')?.scrollTo(0, 0);
         }
-    }, [location.pathname, location.hash]);
+    }, [location.pathname, location.hash, isMobile]);
 
     const processedNavigation = useMemo(() => {
         return docsNavigation.map(category => ({
@@ -41,88 +50,69 @@ const DocsLayout: React.FC = () => {
 
     return (
         <div className="docs-layout">
-            <header className="docs-mobile-header">
-                <button
-                    className="docs-menu-btn"
-                    onClick={() => setIsSidebarOpen(true)}
-                    aria-label="Open documentation menu"
-                >
-                    <FiMenu/>
-                </button>
-                <span className="docs-mobile-title">Lyco UI Docs</span>
-            </header>
-
-            {isSidebarOpen && (
-                <div
-                    className="docs-backdrop"
-                    onClick={() => setIsSidebarOpen(false)}
-                    aria-hidden="true"
-                />
+            {isMobile && (
+                <Navbar expand="never" className="docs-mobile-navbar" position="sticky" elevation="1">
+                    <Navbar.Brand>Lyco UI</Navbar.Brand>
+                    <Navbar.Toggle onClick={() => setIsSidebarOpen(true)}/>
+                </Navbar>
             )}
 
-            <aside className={`docs-sidebar ${isSidebarOpen ? 'is-open' : ''}`}>
-                <div className="docs-sidebar__header">
+            <Sidebar
+                isOpen={isSidebarOpen}
+                onClose={() => setIsSidebarOpen(false)}
+                variant={isMobile ? 'overlay' : 'fixed'}
+                className="docs-sidebar"
+            >
+                <Sidebar.Header>
                     <span className="docs-sidebar__logo">Lyco UI</span>
-                    <button
-                        className="docs-close-btn"
-                        onClick={() => setIsSidebarOpen(false)}
-                        aria-label="Close menu"
-                    >
-                        <FiX/>
-                    </button>
-                </div>
+                </Sidebar.Header>
 
-                <nav className="docs-sidebar__nav">
-                    {processedNavigation.map((category) => {
-                        const Icon = category.icon;
+                <Sidebar.Content>
+                    <Sidebar.Nav>
+                        {processedNavigation.map((category) => {
+                            const Icon = category.icon;
 
-                        return (
-                            <div key={category.title}>
-                                <h4 className="docs-sidebar__section-title">
-                                    <Icon/>
-                                    {category.title}
-                                </h4>
-                                <ul className="docs-sidebar__section-items">
-                                    {category.items.map((item) => (
-                                        <li key={item.path}>
-                                            <NavLink
-                                                className={({isActive}) =>
-                                                    clsx('docs-sidebar__nav-link', isActive && 'active')
-                                                }
-                                                to={item.path}
-                                            >
-                                                {({isActive}) => (
-                                                    <>
-                                                        {isActive
-                                                            ? <PiBookOpenBold style={{opacity: 0.7}}/>
-                                                            : <PiBookBold style={{opacity: 0.7}}/>
-                                                        }
-                                                        {item.name}
-                                                    </>
+                            return (
+                                <React.Fragment key={category.title}>
+                                    <div className="docs-sidebar__section-title">
+                                        {Icon && <Icon/>}
+                                        {category.title}
+                                    </div>
+                                    {category.items.map((item) => {
+                                        const isActive = location.pathname === item.path;
+                                        return (
+                                            <Sidebar.Item key={item.path}>
+                                                <RouterSidebarLink
+                                                    as={NavLink}
+                                                    to={item.path}
+                                                    active={isActive}
+                                                    icon={isActive ? <PiBookOpenBold style={{opacity: 0.7}}/> : <PiBookBold style={{opacity: 0.7}}/>}
+                                                >
+                                                    {item.name}
+                                                </RouterSidebarLink>
+                                                {item.subItems && isActive && (
+                                                    <ul className="docs-sidebar__subitems">
+                                                        {item.subItems.map(subItem => (
+                                                            <li key={subItem.hash}>
+                                                                <NavLink
+                                                                    className={() => clsx('docs-sidebar__sub-link', location.hash === subItem.hash && 'active')}
+                                                                    to={`${item.path}${subItem.hash}`}
+                                                                >
+                                                                    {subItem.name}
+                                                                </NavLink>
+                                                            </li>
+                                                        ))}
+                                                    </ul>
                                                 )}
-                                            </NavLink>
-                                            {item.subItems && location.pathname === item.path && (
-                                                <ul className="docs-sidebar__subitems">
-                                                    {item.subItems.map(subItem => (
-                                                        <li key={subItem.hash}>
-                                                            <NavLink
-                                                                className={() => clsx('docs-sidebar__sub-link', location.hash === subItem.hash && 'active')}
-                                                                to={`${item.path}${subItem.hash}`}
-                                                            >
-                                                                {subItem.name}
-                                                            </NavLink>
-                                                        </li>
-                                                    ))}
-                                                </ul>
-                                            )}
-                                        </li>
-                                    ))}
-                                </ul>
-                            </div>
-                        );
-                    })}
-                </nav>
-            </aside>
+                                            </Sidebar.Item>
+                                        );
+                                    })}
+                                </React.Fragment>
+                            );
+                        })}
+                    </Sidebar.Nav>
+                </Sidebar.Content>
+            </Sidebar>
 
             <main className="docs-content">
                 <Suspense fallback={<div style={{color: 'var(--color-text-muted)'}}>Loading page...</div>}>
@@ -142,8 +132,6 @@ const DocsLayout: React.FC = () => {
         </div>
     );
 };
-
-import { NotificationProvider } from '@loreschaeffer/lyco-ui';
 
 export const App: React.FC = () => {
     return (

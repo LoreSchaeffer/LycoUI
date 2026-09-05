@@ -1,4 +1,4 @@
-import { Navbar, Row, Col } from '@loreschaeffer/lyco-ui';
+import {Col, Navbar, Row} from '@loreschaeffer/lyco-ui';
 
 export const title = 'Responsive Navbar with Dropdown';
 export const description = <p>See how the dropdowns seamlessly transform into accordion-style inline menus when the Navbar is viewed on mobile devices (or explicitly collapsed).</p>;
@@ -51,11 +51,11 @@ export default function ResponsiveDropdownExample() {
         <Row>
             {/* We force a narrow column to simulate a mobile viewport */}
             <Col span={12} md={6}>
-                <div style={{ height: '400px', display: 'flex', flexDirection: 'column', border: '1px solid var(--color-border-subtle)', borderRadius: 'var(--radius-lg)', overflow: 'hidden' }}>
+                <div style={{minHeight: '450px', display: 'flex', flexDirection: 'column', border: '1px solid var(--color-border-subtle)', borderRadius: 'var(--radius-lg)'}}>
                     {/* By NOT passing 'expand', the navbar defaults to collapsed (mobile) view */}
                     <Navbar>
                         <Navbar.Brand href="#">LycoUI Mobile</Navbar.Brand>
-                        <Navbar.Toggle />
+                        <Navbar.Toggle/>
                         <Navbar.Collapse>
                             <Navbar.Nav>
                                 <Navbar.Item>
@@ -63,20 +63,20 @@ export default function ResponsiveDropdownExample() {
                                 </Navbar.Item>
                             </Navbar.Nav>
                             <Navbar.Nav align="end">
-                                <Navbar.Dropdown title="Profile">
+                                <Navbar.Dropdown title="Profile" align="right">
                                     <Navbar.DropdownItem href="#">Account Details</Navbar.DropdownItem>
-                                    
+
                                     <Navbar.DropdownSubMenu title="Theme Settings">
                                         <Navbar.DropdownItem href="#">Light Mode</Navbar.DropdownItem>
                                         <Navbar.DropdownItem href="#">Dark Mode</Navbar.DropdownItem>
                                     </Navbar.DropdownSubMenu>
-    
-                                    <Navbar.DropdownItem href="#" style={{ color: 'var(--color-danger)' }}>Sign Out</Navbar.DropdownItem>
+
+                                    <Navbar.DropdownItem href="#" style={{color: 'var(--color-danger)'}}>Sign Out</Navbar.DropdownItem>
                                 </Navbar.Dropdown>
                             </Navbar.Nav>
                         </Navbar.Collapse>
                     </Navbar>
-                    <div style={{ padding: '2rem', flex: 1, backgroundColor: 'var(--color-bg-base)' }}>
+                    <div style={{padding: '2rem', flex: 1, backgroundColor: 'var(--color-bg-base)', borderBottomLeftRadius: 'var(--radius-lg)', borderBottomRightRadius: 'var(--radius-lg)'}}>
                         <p className="text-secondary">Simulated mobile viewport. Try opening the hamburger menu and the dropdowns.</p>
                     </div>
                 </div>

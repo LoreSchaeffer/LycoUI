@@ -1,0 +1,191 @@
+.timeline {
+  display: flex;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  width: 100%;
+
+  // Orientation
+  &--horizontal {
+    flex-direction: row;
+    align-items: flex-start;
+  }
+
+  &--vertical {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+
+.timeline__item {
+  display: flex;
+  position: relative;
+
+  // Variables for theming
+  --timeline-color-pending: var(--color-border-strong);
+  // Default base color if explicitly colored
+  --timeline-color-base: var(--color-primary);
+
+  // If item is explicitly colored
+  &.has-color {
+    --timeline-color-pending: var(--timeline-color-base);
+  }
+
+  // Connecting line
+  &::after {
+    content: '';
+    position: absolute;
+    background-color: var(--timeline-color-pending);
+    transition: background-color var(--duration-fast) var(--ease-default);
+  }
+
+  // Prevent overflow on last item
+  &:last-child::after {
+    display: none !important;
+  }
+
+  // Horizontal Layout
+  .timeline--horizontal & {
+    flex: 1;
+    flex-direction: column;
+    align-items: flex-start;
+
+    // Spans from the right of the current icon to the left of the next
+    &::after {
+      top: calc(1rem - 1px); // 1rem is half of 2rem icon
+      left: calc(2rem + var(--spacing-2));
+      width: calc(100% - 2rem - var(--spacing-4));
+      height: 2px;
+    }
+  }
+
+  // Vertical Layout (Left Aligned by Default)
+  .timeline--vertical & {
+    flex-direction: row;
+    align-items: flex-start;
+    width: 100%;
+    padding-bottom: var(--spacing-6);
+
+    &:last-child {
+      padding-bottom: 0;
+    }
+
+    &::after {
+      top: 2rem; // Below the icon
+      left: calc(1rem - 1px); // Center of 2rem icon
+      bottom: 0; // Spans to the bottom of the item (touching next item)
+      width: 2px;
+    }
+  }
+
+  // Vertical Layout (Alternating)
+  .timeline--vertical.timeline--alternate & {
+    width: 50%;
+
+    // Odd items go to the left
+    &:nth-child(odd) {
+      align-self: flex-start;
+      flex-direction: row-reverse;
+      text-align: right;
+
+      &::after {
+        left: 100%;
+        margin-left: -1px; // Center 2px line on the right edge
+      }
+
+      .timeline__icon-wrapper {
+        // Move right by half its width (1rem) so its center is exactly on the container edge
+        transform: translateX(50%);
+      }
+
+      .timeline__content {
+        margin-left: 0;
+        margin-right: var(--spacing-4);
+      }
+    }
+
+    // Even items go to the right
+    &:nth-child(even) {
+      align-self: flex-end;
+
+      &::after {
+        left: 0;
+        margin-left: -1px; // Center 2px line on the left edge
+      }
+
+      .timeline__icon-wrapper {
+        // Move left by half its width (1rem) so its center is exactly on the container edge
+        transform: translateX(-50%);
+      }
+
+      .timeline__content {
+        margin-left: var(--spacing-4);
+      }
+    }
+  }
+}
+
+.timeline__icon-wrapper {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  width: 2rem;
+  flex-shrink: 0;
+  z-index: var(--z-base, 1); // Above the line
+}
+
+.timeline__icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2rem;
+  height: 2rem;
+  border-radius: 50%;
+  border: 2px solid var(--timeline-color-pending);
+  background-color: var(--color-bg-root);
+  color: var(--timeline-color-pending);
+  transition: color var(--duration-fast) var(--ease-default), border-color var(--duration-fast) var(--ease-default), background-color var(--duration-fast) var(--ease-default);
+
+  /* Ensure custom nodes/SVGs fit cleanly and are centered */
+  > * {
+    width: 1rem;
+    height: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: inherit;
+  }
+}
+
+// When item has a custom color, the icon becomes filled
+.timeline__item.has-color .timeline__icon {
+  background-color: var(--timeline-color-base);
+  color: var(--color-bg-root);
+  border-color: var(--timeline-color-base);
+}
+
+.timeline__content {
+  margin-top: var(--spacing-2);
+
+  .timeline--horizontal & {
+    padding: 0 var(--spacing-2);
+  }
+
+  .timeline--vertical & {
+    margin-top: 0;
+    margin-left: var(--spacing-4);
+    flex: 1;
+  }
+}
+
+.timeline__title {
+  color: var(--color-text-primary);
+  font-size: var(--text-body-sm);
+  font-weight: var(--font-weight-medium);
+}
+
+.timeline__time {
+  color: var(--color-text-muted);
+  font-size: var(--text-caption);
+  margin-top: var(--spacing-1);
+}

@@ -39,11 +39,15 @@ export function initLycoModals() {
     });
 }
 
+/**
+ * Controller for the Vanilla JS LycoModal component.
+ */
 export class LycoModalController {
     private readonly modal: HTMLElement;
     private readonly dialog: HTMLElement | null;
     private isOpen: boolean = false;
     private previouslyFocusedElement: HTMLElement | null = null;
+    private focusTimeoutId?: number;
 
     private readonly _onKeyDown: (e: KeyboardEvent) => void;
     private readonly _onBackdropClick: (e: MouseEvent) => void;
@@ -75,6 +79,7 @@ export class LycoModalController {
     }
 
     public destroy(): void {
+        if (this.focusTimeoutId) window.clearTimeout(this.focusTimeoutId);
         this.modal.removeEventListener('click', this._onBackdropClick);
         const closeButtons = this.modal.querySelectorAll('[data-lyco-dismiss="modal"]');
         closeButtons.forEach(btn => btn.removeEventListener('click', this._onCloseClick as EventListener));
@@ -101,8 +106,15 @@ export class LycoModalController {
 
         void this.modal.offsetWidth;
 
-        setTimeout(() => {
+        if (this.focusTimeoutId) window.clearTimeout(this.focusTimeoutId);
+        this.focusTimeoutId = window.setTimeout(() => {
             if (this.dialog) {
+                const autoFocusElement = this.dialog.querySelector('[autofocus]') as HTMLElement;
+                if (autoFocusElement) {
+                    autoFocusElement.focus();
+                    return;
+                }
+
                 const focusableElements = this.dialog.querySelectorAll(
                     FOCUSABLE_ELEMENTS_SELECTOR
                 ) as NodeListOf<HTMLElement>;
@@ -134,13 +146,15 @@ export class LycoModalController {
     }
 
     private handleBackdropClick(e: MouseEvent): void {
-        if (e.target === this.modal) {
+        const closeOnOverlayClick = this.modal.getAttribute('data-lyco-close-on-overlay-click') !== 'false';
+        if (closeOnOverlayClick && e.target === this.modal) {
             this.hide();
         }
     }
 
     private handleKeyDown(e: KeyboardEvent): void {
-        if (e.key === 'Escape') {
+        const closeOnEscape = this.modal.getAttribute('data-lyco-close-on-escape') !== 'false';
+        if (closeOnEscape && e.key === 'Escape') {
             this.hide();
         }
 

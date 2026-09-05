@@ -1,7 +1,8 @@
-import { Carousel, Card, Button } from '@loreschaeffer/lyco-ui';
+import {Button, Card, Carousel} from '@loreschaeffer/lyco-ui';
 
 export const title = 'Card Carousel with Center Mode';
-export const description = <p>Using <code>centerMode</code> combined with <code>infinite</code> looping creates a premium peeking layout. The active card is centered and visually promoted, while adjacent cards are dimmed and pushed to the edges. Arrows are automatically pushed into the gutters, ensuring they never overlap your actionable content.</p>;
+export const description = <p>Using <code>centerMode</code> combined with <code>infinite</code> looping creates a premium peeking layout. The active card is centered and visually promoted, while adjacent cards are dimmed and pushed to the
+    edges. Arrows are automatically pushed into the gutters, ensuring they never overlap your actionable content.</p>;
 export const order = 2;
 
 export const vanillaHtml = `
@@ -34,31 +35,39 @@ export const vanillaHtml = `
 `;
 
 export default function CardExample() {
-  return (
-    <Carousel gap="var(--spacing-6)" slideWidth="70%" showDots={false} centerMode infinite>
-      <Card elevation="elevated">
-        <h3>Feature A</h3>
-        <p>This is a detailed description of feature A highlighting its premium architecture.</p>
-        <Button variant="primary">Learn More</Button>
-      </Card>
+    return (
+        <Carousel gap="var(--spacing-6)" slideWidth="70%" showDots={false} centerMode infinite>
+            <Card elevation={2}>
+                <Card.Body>
+                    <h4 className="mb-2">Advanced Analytics</h4>
+                    <p className="text-secondary mb-4">Leverage our machine learning models to predict customer churn before it happens.</p>
+                    <Button variant="primary">Explore Analytics</Button>
+                </Card.Body>
+            </Card>
 
-      <Card elevation="elevated">
-        <h3>Feature B</h3>
-        <p>This is a detailed description of feature B highlighting its fast performance.</p>
-        <Button variant="primary">Learn More</Button>
-      </Card>
+            <Card elevation={2}>
+                <Card.Body>
+                    <h4 className="mb-2">Automated Workflows</h4>
+                    <p className="text-secondary mb-4">Connect your favorite tools and trigger actions automatically across your tech stack.</p>
+                    <Button variant="primary">View Integrations</Button>
+                </Card.Body>
+            </Card>
 
-      <Card elevation="elevated">
-        <h3>Feature C</h3>
-        <p>This is a detailed description of feature C highlighting its beautiful design.</p>
-        <Button variant="primary">Learn More</Button>
-      </Card>
+            <Card elevation={2}>
+                <Card.Body>
+                    <h4 className="mb-2">Enterprise Security</h4>
+                    <p className="text-secondary mb-4">Bank-grade encryption and SOC2 Type II compliance built-in from day one.</p>
+                    <Button variant="primary">Read Security Paper</Button>
+                </Card.Body>
+            </Card>
 
-      <Card elevation="elevated">
-        <h3>Feature D</h3>
-        <p>This is a detailed description of feature D showing the infinite loop in action.</p>
-        <Button variant="primary">Learn More</Button>
-      </Card>
-    </Carousel>
-  );
+            <Card elevation={2}>
+                <Card.Body>
+                    <h4 className="mb-2">24/7 Priority Support</h4>
+                    <p className="text-secondary mb-4">Get dedicated account managers and guaranteed 15-minute response times.</p>
+                    <Button variant="primary">Contact Sales</Button>
+                </Card.Body>
+            </Card>
+        </Carousel>
+    );
 }

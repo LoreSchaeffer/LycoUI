@@ -1,4 +1,4 @@
-import { Sidebar } from '@loreschaeffer/lyco-ui';
+import {Sidebar} from '@loreschaeffer/lyco-ui';
 import React from 'react';
 
 export const title = 'Resizable Sidebar';
@@ -24,8 +24,8 @@ export const vanillaHtml = `
 
 export default function ResizableExample() {
     return (
-        <div style={{ height: '300px', display: 'flex', border: '1px solid var(--color-border-base)', borderRadius: 'var(--radius-lg)', overflow: 'hidden' }}>
-            <Sidebar variant="fixed" resizable minWidth={150} maxWidth={400} style={{ position: 'relative' }}>
+        <div style={{height: '300px', display: 'flex', border: '1px solid var(--color-border-base)', borderRadius: 'var(--radius-lg)', overflow: 'hidden'}}>
+            <Sidebar variant="fixed" resizable minWidth={150} maxWidth={400} style={{position: 'relative'}}>
                 <Sidebar.Header>
                     <strong>Drag my right edge!</strong>
                 </Sidebar.Header>
@@ -44,7 +44,7 @@ export default function ResizableExample() {
                     </Sidebar.Nav>
                 </Sidebar.Content>
             </Sidebar>
-            <div style={{ padding: '2rem', flex: 1, backgroundColor: 'var(--color-bg-root)' }}>
+            <div style={{padding: '2rem', flex: 1, backgroundColor: 'var(--color-bg-root)'}}>
                 <p>Drag the border between the sidebar and this content to resize.</p>
             </div>
         </div>

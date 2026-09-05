@@ -1,4 +1,4 @@
-import { Col, Input, Row } from '@loreschaeffer/lyco-ui';
+import {Col, Input, Row} from '@loreschaeffer/lyco-ui';
 
 export const title = 'Basic Usage';
 export const description = <p>Simple text inputs with different color variants. The input border and focus ring reflect the chosen variant.</p>;
@@ -23,23 +23,23 @@ export const vanillaHtml = `
 `;
 
 export default function BasicExample() {
-  return (
-    <Row>
-      <Col span={12} md={6} className="mb-4">
-        <Input placeholder="Type something..." />
-      </Col>
-      <Col span={12} md={6} className="mb-4">
-        <Input variant="success" placeholder="Type something..." />
-      </Col>
-      <Col span={12} md={6} className="mb-4">
-        <Input variant="purple" placeholder="Type something..." />
-      </Col>
-      <Col span={12} md={6} className="mb-4">
-        <Input readOnly value="Cannot edit this" placeholder="Read-only input..." />
-      </Col>
-      <Col span={12} md={6} className="mb-4">
-        <Input placeholder="Cannot type here" disabled />
-      </Col>
-    </Row>
-  );
+    return (
+        <Row>
+            <Col span={12} md={6} className="mb-4">
+                <Input placeholder="Type something..."/>
+            </Col>
+            <Col span={12} md={6} className="mb-4">
+                <Input variant="success" placeholder="Type something..."/>
+            </Col>
+            <Col span={12} md={6} className="mb-4">
+                <Input variant="purple" placeholder="Type something..."/>
+            </Col>
+            <Col span={12} md={6} className="mb-4">
+                <Input readOnly value="Cannot edit this" placeholder="Read-only input..."/>
+            </Col>
+            <Col span={12} md={6} className="mb-4">
+                <Input placeholder="Cannot type here" disabled/>
+            </Col>
+        </Row>
+    );
 }

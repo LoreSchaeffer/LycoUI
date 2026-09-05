@@ -3,17 +3,31 @@ import React, {forwardRef, useCallback, useEffect, useState} from 'react';
 import clsx from 'clsx';
 import type {FullVariant, SizeVariant} from '../../types/types';
 
+/**
+ * Props for the Range component.
+ */
 export interface RangeProps extends Omit<React.InputHTMLAttributes<HTMLInputElement>, 'size' | 'type'> {
+    /** Semantic color variant */
     variant?: FullVariant;
+    /** Thickness of the track and thumb */
     size?: SizeVariant;
+    /** Function to format the tooltip value */
     tooltipFormatter?: (value: number) => React.ReactNode;
+    /** Whether to show the tooltip */
     showTooltip?: boolean;
+    /** Size of the tooltip */
     tooltipSize?: SizeVariant;
+    /** Interaction that triggers the tooltip */
     tooltipTrigger?: 'active' | 'hover';
+    /** Whether the track is filled from the start to the thumb */
     filled?: boolean;
+    /** Forces the thumb to use the variant color */
     coloredThumb?: boolean;
 }
 
+/**
+ * Range component.
+ */
 export const Range = forwardRef<HTMLInputElement, RangeProps>(
     (
         {

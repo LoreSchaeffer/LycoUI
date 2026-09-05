@@ -7,8 +7,14 @@ const DURATION_MAP: Record<string, number> = {
     long: 8000,
 };
 
+/**
+ * VanillaNotificationDuration.
+ */
 export type VanillaNotificationDuration = 'short' | 'medium' | 'long' | number;
 
+/**
+ * VanillaNotificationOptions.
+ */
 export interface VanillaNotificationOptions {
     title?: string;
     message: string | HTMLElement;
@@ -35,6 +41,20 @@ class LycoNotificationManager {
     private stackContainers: Map<NotificationPosition, HTMLDivElement> = new Map();
     private position: NotificationPosition = 'bottom-right';
     private notificationCount = 0;
+    private activeNotifications: Map<string, { el: HTMLDivElement, closeHandler: () => void, timerId?: number, mouseEnter?: () => void, mouseLeave?: () => void, exitTimerId?: number }> = new Map();
+
+    public destroy(): void {
+        this.activeNotifications.forEach((data) => {
+            if (data.timerId) window.clearTimeout(data.timerId);
+            if (data.exitTimerId) window.clearTimeout(data.exitTimerId);
+            if (data.mouseEnter) data.el.removeEventListener('mouseenter', data.mouseEnter);
+            if (data.mouseLeave) data.el.removeEventListener('mouseleave', data.mouseLeave);
+            data.el.remove();
+        });
+        this.activeNotifications.clear();
+        this.stackContainers.forEach(container => container.remove());
+        this.stackContainers.clear();
+    }
 
     /** Change the default position for future notifications. */
     public setPosition(pos: NotificationPosition): void {
@@ -68,7 +88,7 @@ class LycoNotificationManager {
         const pos = this.position;
         const stack = this.getStack(pos);
         const id = `notification-${++this.notificationCount}`;
-        const variant = options.variant || 'neutral';
+        const variant = options.variant || 'secondary';
         const closable = options.closable ?? true;
 
         const el = document.createElement('div');
@@ -124,17 +144,23 @@ class LycoNotificationManager {
         el.appendChild(body);
 
         let timerId: number | undefined;
+        let exitTimerId: number | undefined;
         const closeHandler = (): void => {
+            const active = this.activeNotifications.get(id);
+            if (active && active.timerId) window.clearTimeout(active.timerId);
             if (timerId) window.clearTimeout(timerId);
             if (closeBtn) closeBtn.removeEventListener('click', closeHandler);
 
             el.className = el.className.replace(/notification-enter--[\w-]+/, '').trim();
             el.classList.add(`notification-exit--${pos}`);
 
-            window.setTimeout(() => {
+            exitTimerId = window.setTimeout(() => {
                 el.remove();
                 this.cleanupStack(pos);
+                this.activeNotifications.delete(id);
             }, 300);
+
+            if (active) active.exitTimerId = exitTimerId;
         };
 
         let closeBtn: HTMLButtonElement | null = null;
@@ -162,15 +188,17 @@ class LycoNotificationManager {
         progressContainer.appendChild(progressBar);
         el.appendChild(progressContainer);
 
-        el.addEventListener('mouseenter', () => {
+        const mouseEnter = () => {
             progressBar.style.animationPlayState = 'paused';
             if (timerId) {
                 window.clearTimeout(timerId);
                 timerId = undefined;
+                const active = this.activeNotifications.get(id);
+                if (active) active.timerId = undefined;
             }
-        });
+        };
 
-        el.addEventListener('mouseleave', () => {
+        const mouseLeave = () => {
             progressBar.style.animationPlayState = 'running';
             const computed = getComputedStyle(progressBar);
             const matrix = computed.transform;
@@ -185,10 +213,15 @@ class LycoNotificationManager {
             const remaining = scaleX * durationMs;
             if (remaining > 0) {
                 timerId = window.setTimeout(closeHandler, remaining);
+                const active = this.activeNotifications.get(id);
+                if (active) active.timerId = timerId;
             } else {
                 closeHandler();
             }
-        });
+        };
+
+        el.addEventListener('mouseenter', mouseEnter);
+        el.addEventListener('mouseleave', mouseLeave);
 
         const isBottom = pos.startsWith('bottom');
         if (isBottom) {
@@ -198,6 +231,7 @@ class LycoNotificationManager {
         }
 
         timerId = window.setTimeout(closeHandler, durationMs);
+        this.activeNotifications.set(id, {el, closeHandler, timerId, mouseEnter, mouseLeave});
 
         return id;
     }

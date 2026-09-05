@@ -1,4 +1,4 @@
-import { Col, Input, Row } from '@loreschaeffer/lyco-ui';
+import {Col, Input, Row} from '@loreschaeffer/lyco-ui';
 
 export const title = 'File Input';
 export const description = <p>The Input component fully supports <code>type="file"</code>. The file selector button is styled to match the component's variant, and placeholders are hidden automatically.</p>;
@@ -20,24 +20,24 @@ export const vanillaHtml = `
 `;
 
 export default function FileExample() {
-  return (
-    <Row>
-      <Col span={12} md={6} className="mb-4">
-        <div className="text-sm fw-bold mb-2 text-secondary">Default (md)</div>
-        <Input type="file" />
-      </Col>
-      <Col span={12} md={6} className="mb-4">
-        <div className="text-sm fw-bold mb-2 text-secondary">Success Variant</div>
-        <Input type="file" variant="success" />
-      </Col>
-      <Col span={12} md={6} className="mb-4">
-        <div className="text-sm fw-bold mb-2 text-secondary">Purple Variant (sm)</div>
-        <Input type="file" variant="purple" size="sm" />
-      </Col>
-      <Col span={12} md={6} className="mb-4">
-        <div className="text-sm fw-bold mb-2 text-secondary">Primary Variant (lg)</div>
-        <Input type="file" size="lg" />
-      </Col>
-    </Row>
-  );
+    return (
+        <Row>
+            <Col span={12} md={6} className="mb-4">
+                <div className="text-sm fw-bold mb-2 text-secondary">Default (md)</div>
+                <Input type="file"/>
+            </Col>
+            <Col span={12} md={6} className="mb-4">
+                <div className="text-sm fw-bold mb-2 text-secondary">Success Variant</div>
+                <Input type="file" variant="success"/>
+            </Col>
+            <Col span={12} md={6} className="mb-4">
+                <div className="text-sm fw-bold mb-2 text-secondary">Purple Variant (sm)</div>
+                <Input type="file" variant="purple" size="sm"/>
+            </Col>
+            <Col span={12} md={6} className="mb-4">
+                <div className="text-sm fw-bold mb-2 text-secondary">Primary Variant (lg)</div>
+                <Input type="file" size="lg"/>
+            </Col>
+        </Row>
+    );
 }

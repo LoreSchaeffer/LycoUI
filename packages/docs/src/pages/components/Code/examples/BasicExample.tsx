@@ -1,4 +1,4 @@
-import { Code, Card, Row, Col } from '@loreschaeffer/lyco-ui';
+import {Code, Col, Row} from '@loreschaeffer/lyco-ui';
 
 export const title = 'Basic Code Block';
 export const description = <p>Display formatted code using the <code>language</code> prop. Syntax highlighting is handled automatically.</p>;
@@ -15,25 +15,23 @@ console.log(greeting);</code></pre>
 `;
 
 export default function BasicExample() {
-  const code = `function calculateSum(a, b) {
+    const code = `function calculateSum(a, b) {
   return a + b;
 }
 
 const result = calculateSum(5, 10);
 console.log('Result:', result);`;
 
-  return (
-    <Row>
-      <Col span={12}>
-        <Card>
-          <Card.Body>
-            <Code 
-              language="javascript" 
-              code={code} 
-            />
-          </Card.Body>
-        </Card>
-      </Col>
-    </Row>
-  );
+    return (
+        <Row>
+            <Col span={12}>
+                <div className="lyco-p-4">
+                    <Code
+                        language="javascript"
+                        code={code}
+                    />
+                </div>
+            </Col>
+        </Row>
+    );
 }

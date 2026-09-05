@@ -13,7 +13,8 @@ const RadioDoc: React.FC = () => {
     return (
         <DocTemplate
             title="Radio"
-            description={<p>A CSS-only customizable radio button component, fully accessible and themeable via global tokens.</p>}
+            description={<p>A group of mutually exclusive options where only one can be selected at a time.</p>}
+            a11yNotes={`Uses native \`<input type="radio">\`. The group must be wrapped in a \`<fieldset>\` or use \`role="radiogroup"\` with an accessible name.`}
             exampleModules={exampleModules}
             rawSources={rawSources}
             apiConfig={apiConfig}

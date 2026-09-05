@@ -1,4 +1,4 @@
-import type { PropDefinition } from '../../../components/api-reference/ApiReference.tsx';
+import type {PropDefinition} from '../../../components/api-reference/ApiReference.tsx';
 
 export const dataTableProps: PropDefinition[] = [
     {
@@ -250,7 +250,7 @@ export const dataTableRefProps: PropDefinition[] = [
 ];
 
 export const apiConfig = [
-    { name: 'DataTableProps', data: dataTableProps },
-    { name: 'DataTableColumn', data: dataTableColumnProps },
-    { name: 'DataTableRef', data: dataTableRefProps },
+    {name: 'DataTableProps', data: dataTableProps},
+    {name: 'DataTableColumn', data: dataTableColumnProps},
+    {name: 'DataTableRef', data: dataTableRefProps},
 ];

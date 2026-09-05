@@ -4,19 +4,31 @@ import clsx from 'clsx';
 import type {FullVariant} from '../../types/types';
 import {getContrastColor} from '../../utils/theme.ts';
 
+/**
+ * SnackbarProps.
+ */
 export interface SnackbarProps extends React.HTMLAttributes<HTMLDivElement> {
+    /** Semantic color variant */
     variant?: FullVariant | 'white';
+    /** Icon to display at the start */
     icon?: React.ReactNode;
+    /** Shows a close button */
     closable?: boolean;
+    /** Uses a flat style instead of elevated */
     isFlat?: boolean;
+    /** Indicates if the snackbar is animating out */
     isExiting?: boolean;
+    /** Callback when the close button is clicked */
     onClose?: () => void;
 }
 
+/**
+ * Snackbar component.
+ */
 export const Snackbar = forwardRef<HTMLDivElement, SnackbarProps>((
     {
         className,
-        variant = 'neutral',
+        variant = 'secondary',
         icon,
         closable = false,
         isFlat = false,

@@ -3,7 +3,7 @@ import type {PropDefinition} from "../../../components/api-reference/ApiReferenc
 export const badgeProps: PropDefinition[] = [
     {
         name: 'variant',
-        type: "FullVariant | 'white' | 'neutral'",
+        type: "FullVariant | 'white' | 'secondary'",
         typeLink: '/docs/types#full-variant',
         defaultValue: "'primary'",
         description: 'The visual style of the badge, mapping to the global theme hues (e.g., amber, lime, fuchsia) or semantic variants.'

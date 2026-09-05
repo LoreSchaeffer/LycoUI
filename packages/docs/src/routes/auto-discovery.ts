@@ -59,6 +59,11 @@ export const docsNavigation: DocNavigationCategory[] = [
                 component: lazy(() => import('../pages/getting-started/Installation'))
             },
             {
+                name: 'CSS Utilities',
+                path: '/docs/css-utilities',
+                component: lazy(() => import('../pages/getting-started/CssUtilities'))
+            },
+            {
                 name: 'Colors',
                 path: '/docs/colors',
                 component: lazy(() => import('../pages/getting-started/Colors'))
@@ -93,12 +98,12 @@ export const docsNavigation: DocNavigationCategory[] = [
                 path: '/docs/types',
                 component: lazy(() => import('../pages/types/TypesDoc.tsx')),
                 subItems: [
-                    { name: 'ColorVariant', hash: '#color-variant' },
-                    { name: 'SemanticVariant', hash: '#semantic-variant' },
-                    { name: 'FullVariant', hash: '#full-variant' },
-                    { name: 'SizeVariant', hash: '#size-variant' },
-                    { name: 'Alignment', hash: '#alignment' },
-                    { name: 'Orientation', hash: '#orientation' },
+                    {name: 'ColorVariant', hash: '#color-variant'},
+                    {name: 'SemanticVariant', hash: '#semantic-variant'},
+                    {name: 'FullVariant', hash: '#full-variant'},
+                    {name: 'SizeVariant', hash: '#size-variant'},
+                    {name: 'Alignment', hash: '#alignment'},
+                    {name: 'Orientation', hash: '#orientation'},
                 ]
             }
         ]

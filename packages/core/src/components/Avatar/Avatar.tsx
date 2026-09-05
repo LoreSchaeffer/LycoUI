@@ -2,6 +2,9 @@ import React, {forwardRef, memo, useState} from 'react';
 import './Avatar.scss';
 import clsx from 'clsx';
 
+/**
+ * AvatarProps.
+ */
 export interface AvatarProps extends React.HTMLAttributes<HTMLDivElement> {
     /**
      * The URL of the image to display.
@@ -28,6 +31,10 @@ export interface AvatarProps extends React.HTMLAttributes<HTMLDivElement> {
     shape?: 'circle' | 'square';
 }
 
+/**
+ * Avatar component.
+ * Displays a user profile image or a fallback node.
+ */
 export const Avatar = memo(forwardRef<HTMLDivElement, AvatarProps>(
     ({src, alt = '', fallback, size = 'md', shape = 'circle', className, ...props}, ref) => {
         const [imageFailed, setImageFailed] = useState(false);

@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
-import { PiCheckBold, PiCopy } from 'react-icons/pi';
-import { Table, TableHead, TableBody, TableRow, TableCell } from '@loreschaeffer/lyco-ui';
+import React, {useState} from 'react';
+import {PiCheckBold, PiCopy} from 'react-icons/pi';
+import {Badge, Table, TableBody, TableCell, TableHead, TableRow} from '@loreschaeffer/lyco-ui';
+
 const shadowSteps = ['sm', 'md', 'subtle', 'subtle-2', 'xl'];
 const glowSteps = ['primary', 'success', 'danger', 'warning'];
 
@@ -24,7 +25,7 @@ export const ShadowsDoc: React.FC = () => {
                     </TableHead>
                     <TableBody>
                         {shadowSteps.map(step => (
-                            <ShadowRow key={step} step={step} prefix="shadow" isGlow={false} />
+                            <ShadowRow key={step} step={step} prefix="shadow" isGlow={false}/>
                         ))}
                     </TableBody>
                 </Table>
@@ -45,7 +46,7 @@ export const ShadowsDoc: React.FC = () => {
                     </TableHead>
                     <TableBody>
                         {glowSteps.map(step => (
-                            <ShadowRow key={step} step={step} prefix="glow" isGlow={true} />
+                            <ShadowRow key={step} step={step} prefix="glow" isGlow={true}/>
                         ))}
                     </TableBody>
                 </Table>
@@ -54,11 +55,11 @@ export const ShadowsDoc: React.FC = () => {
     );
 };
 
-const ShadowRow = ({ step, prefix, isGlow }: { step: string; prefix: string; isGlow: boolean }) => {
+const ShadowRow = ({step, prefix, isGlow}: { step: string; prefix: string; isGlow: boolean }) => {
     const cssVar = `--${prefix}-${step}`;
     const [copied, setCopied] = useState(false);
     const [isHovered, setIsHovered] = useState(false);
-    
+
     const handleCopy = () => {
         navigator.clipboard.writeText(`var(${cssVar})`);
         setCopied(true);
@@ -66,36 +67,44 @@ const ShadowRow = ({ step, prefix, isGlow }: { step: string; prefix: string; isG
     };
 
     return (
-        <TableRow 
-            onClick={handleCopy} 
-            style={{ cursor: 'pointer' }} 
-            hover 
+        <TableRow
+            onClick={handleCopy}
+            style={{cursor: 'pointer'}}
+            hover
             title={`Copy var(${cssVar})`}
             onMouseEnter={() => setIsHovered(true)}
             onMouseLeave={() => setIsHovered(false)}
         >
             <TableCell>{prefix}-{step}</TableCell>
             <TableCell>
-                <code style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                <Badge variant="secondary" style={{display: "inline-flex", alignItems: "center", gap: "8px"}}>
                     var({cssVar})
-                    <span style={{ 
-                        display: 'inline-flex', 
-                        width: '1em', 
-                        opacity: (copied || isHovered) ? 1 : 0, 
-                        transition: 'opacity 0.2s ease',
-                        color: copied ? 'var(--color-success)' : 'var(--color-text-secondary)'
+                    <span style={{
+                        opacity: (copied || isHovered) ? 1 : 0,
+                        transition: "opacity 0.2s ease",
+                        color: copied ? "var(--color-success)" : "inherit"
                     }}>
                         {copied ? <PiCheckBold/> : <PiCopy/>}
                     </span>
-                </code>
+                </Badge>
             </TableCell>
             <TableCell>
                 {isGlow ? (
-                    <div style={{ width: '120px', height: '80px', display: 'flex', alignItems: 'center', justifyContent: 'center', backgroundColor: 'var(--color-void)', position: 'relative', overflow: 'hidden', borderRadius: 'var(--radius-md)' }}>
-                        <div style={{ position: 'absolute', inset: '-50%', background: `var(${cssVar})` }} />
+                    <div style={{
+                        width: '120px',
+                        height: '80px',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        backgroundColor: 'var(--color-void)',
+                        position: 'relative',
+                        overflow: 'hidden',
+                        borderRadius: 'var(--radius-md)'
+                    }}>
+                        <div style={{position: 'absolute', inset: '-50%', background: `var(${cssVar})`}}/>
                     </div>
                 ) : (
-                    <div style={{ width: '60px', height: '60px', backgroundColor: 'var(--surface-base)', borderRadius: 'var(--radius-md)', boxShadow: `var(${cssVar})` }} />
+                    <div style={{width: '60px', height: '60px', backgroundColor: 'var(--surface-base)', borderRadius: 'var(--radius-md)', boxShadow: `var(${cssVar})`}}/>
                 )}
             </TableCell>
         </TableRow>

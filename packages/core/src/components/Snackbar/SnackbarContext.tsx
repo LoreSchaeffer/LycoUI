@@ -1,8 +1,14 @@
 import React, {createContext, useContext} from 'react';
 import type {FullVariant} from '../../types/types';
 
+/**
+ * SnackbarDuration.
+ */
 export type SnackbarDuration = 'short' | 'medium' | 'long' | number;
 
+/**
+ * SnackbarOptions.
+ */
 export interface SnackbarOptions {
     message: React.ReactNode;
     variant?: FullVariant;
@@ -12,11 +18,17 @@ export interface SnackbarOptions {
     isFlat?: boolean;
 }
 
+/**
+ * SnackbarContextValue.
+ */
 export interface SnackbarContextValue {
     showSnackbar: (options: SnackbarOptions) => string;
     closeSnackbar: (id: string) => void;
 }
 
+/**
+ * SnackbarContext component.
+ */
 export const SnackbarContext = createContext<SnackbarContextValue | undefined>(undefined);
 SnackbarContext.displayName = 'SnackbarContext';
 

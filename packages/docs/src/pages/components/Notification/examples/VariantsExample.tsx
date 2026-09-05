@@ -1,7 +1,8 @@
-import { Button, useNotification } from '@loreschaeffer/lyco-ui';
+import {Button, useNotification} from '@loreschaeffer/lyco-ui';
 
 export const title = 'Semantic Variants';
-export const description = <p>When using a semantic variant (<code>success</code>, <code>warning</code>, <code>danger</code>, <code>info</code>), an appropriate icon is automatically injected. You can override it with a custom <code>icon</code> prop or suppress it with <code>icon={'{null}'}</code>.</p>;
+export const description = <p>When using a semantic variant (<code>success</code>, <code>warning</code>, <code>danger</code>, <code>info</code>), an appropriate icon is automatically injected. You can override it with a
+    custom <code>icon</code> prop or suppress it with <code>icon={'{null}'}</code>.</p>;
 export const order = 2;
 
 export const vanillaHtml = `
@@ -20,20 +21,20 @@ export const vanillaHtml = `
 `;
 
 export default function VariantsExample() {
-    const { showNotification } = useNotification();
+    const {showNotification} = useNotification();
 
     return (
-        <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap' }}>
-            <Button variant="success" onClick={() => showNotification({ message: 'Changes saved successfully.', variant: 'success' })}>
+        <div style={{display: 'flex', gap: '1rem', flexWrap: 'wrap'}}>
+            <Button variant="success" onClick={() => showNotification({message: 'Changes saved successfully.', variant: 'success'})}>
                 Success
             </Button>
-            <Button variant="warning" onClick={() => showNotification({ message: 'Disk space is running low.', variant: 'warning' })}>
+            <Button variant="warning" onClick={() => showNotification({message: 'Disk space is running low.', variant: 'warning'})}>
                 Warning
             </Button>
-            <Button variant="danger" onClick={() => showNotification({ message: 'Failed to connect to server.', variant: 'danger' })}>
+            <Button variant="danger" onClick={() => showNotification({message: 'Failed to connect to server.', variant: 'danger'})}>
                 Danger
             </Button>
-            <Button variant="info" onClick={() => showNotification({ message: 'A new update is available.', variant: 'info' })}>
+            <Button variant="info" onClick={() => showNotification({message: 'A new update is available.', variant: 'info'})}>
                 Info
             </Button>
         </div>

@@ -15,7 +15,7 @@ export const vanillaHtml = `
 `;
 
 export default function SolidExample() {
-    const variants: FullVariant[] = ['primary', 'warning', 'success', 'danger', 'purple', 'neutral'];
+    const variants: FullVariant[] = ['primary', 'warning', 'success', 'danger', 'purple', 'secondary'];
 
     return (
         <Row>
@@ -23,8 +23,8 @@ export default function SolidExample() {
                 <Col key={v} span={6} className="mb-4">
                     <Card variant={v} isDim={false}>
                         <Card.Body>
-                            <h4 className="mb-2" style={{textTransform: 'capitalize'}}>{v}</h4>
-                            <p className="mb-0">Solid variant with automatic contrast.</p>
+                            <h4 className="mb-2" style={{textTransform: 'capitalize'}}>{v} Action</h4>
+                            <p className="mb-0">Important <strong>{v}</strong> metric requiring attention.</p>
                         </Card.Body>
                     </Card>
                 </Col>

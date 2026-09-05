@@ -1,9 +1,10 @@
-import { Col, Input, Row } from '@loreschaeffer/lyco-ui';
+import {Col, Input, Row} from '@loreschaeffer/lyco-ui';
 
 const SearchIcon = (
-  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-    <circle cx="11" cy="11" r="8" /><path d="m21 21-4.3-4.3" />
-  </svg>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+        <circle cx="11" cy="11" r="8"/>
+        <path d="m21 21-4.3-4.3"/>
+    </svg>
 );
 
 export const title = 'Loading State';
@@ -19,33 +20,33 @@ export const vanillaHtml = `
 `;
 
 export default function LoadingExample() {
-  return (
-    <Row>
-      <Col span={12} md={6} className="mb-4">
-        <div className="text-sm fw-bold mb-2 text-secondary">Loading (Spinner Start)</div>
-        <Input
-          iconStart={SearchIcon}
-          loading
-          spinnerPlacement="start"
-          placeholder="Please wait..."
-        />
-      </Col>
-      <Col span={12} md={6} className="mb-4">
-        <div className="text-sm fw-bold mb-2 text-secondary">Loading (Spinner End)</div>
-        <Input
-          loading
-          placeholder="Please wait..."
-        />
-      </Col>
-      <Col span={12} md={6} className="mb-4">
-        <div className="text-sm fw-bold mb-2 text-secondary">Loading (Growing Spinner)</div>
-        <Input
-          loading
-          spinnerType="growing"
-          variant="success"
-          placeholder="Please wait..."
-        />
-      </Col>
-    </Row>
-  );
+    return (
+        <Row>
+            <Col span={12} md={6} className="mb-4">
+                <div className="text-sm fw-bold mb-2 text-secondary">Loading (Spinner Start)</div>
+                <Input
+                    iconStart={SearchIcon}
+                    loading
+                    spinnerPlacement="start"
+                    placeholder="Please wait..."
+                />
+            </Col>
+            <Col span={12} md={6} className="mb-4">
+                <div className="text-sm fw-bold mb-2 text-secondary">Loading (Spinner End)</div>
+                <Input
+                    loading
+                    placeholder="Please wait..."
+                />
+            </Col>
+            <Col span={12} md={6} className="mb-4">
+                <div className="text-sm fw-bold mb-2 text-secondary">Loading (Growing Spinner)</div>
+                <Input
+                    loading
+                    spinnerType="growing"
+                    variant="success"
+                    placeholder="Please wait..."
+                />
+            </Col>
+        </Row>
+    );
 }

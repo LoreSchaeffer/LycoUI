@@ -2,6 +2,9 @@ import React, {forwardRef, memo} from 'react';
 import clsx from 'clsx';
 import './Divider.scss';
 
+/**
+ * DividerProps.
+ */
 export interface DividerProps extends React.HTMLAttributes<HTMLHRElement | HTMLDivElement> {
     /**
      * The orientation of the divider.
@@ -29,6 +32,9 @@ export interface DividerProps extends React.HTMLAttributes<HTMLHRElement | HTMLD
     thickness?: string | number;
 }
 
+/**
+ * Divider component.
+ */
 export const Divider = memo(forwardRef<HTMLHRElement | HTMLDivElement, DividerProps>(({
                                                                                           orientation = 'horizontal',
                                                                                           spacing = 'md',

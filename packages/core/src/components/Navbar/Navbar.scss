@@ -359,7 +359,7 @@
     text-decoration: none;
     font-size: var(--font-size-sm);
     font-weight: var(--font-weight-medium);
-    border-radius: var(--radius-md);
+    border-radius: var(--radius-sm);
     transition: background-color var(--duration-fast) var(--ease-default), color var(--duration-fast) var(--ease-default);
     cursor: pointer;
     border: none;
@@ -368,7 +368,7 @@
 
     &:hover, &:focus-visible {
       color: var(--color-text-primary);
-      background-color: var(--color-surface-elevated, var(--color-carbon));
+      background-color: var(--color-surface-active, color-mix(in srgb, var(--color-primary) 10%, transparent));
       text-decoration: none;
       outline: none;
     }
@@ -394,13 +394,13 @@
     border: none;
     font-size: var(--font-size-sm);
     font-weight: var(--font-weight-medium);
-    border-radius: var(--radius-md);
+    border-radius: var(--radius-sm);
     cursor: pointer;
     transition: background-color var(--duration-fast) var(--ease-default), color var(--duration-fast) var(--ease-default);
 
     &:hover, &:focus-visible {
       color: var(--color-text-primary);
-      background-color: var(--color-surface-elevated, var(--color-carbon));
+      background-color: var(--color-surface-active, color-mix(in srgb, var(--color-primary) 10%, transparent));
       outline: none;
     }
 
@@ -423,16 +423,21 @@
     display: block; // Override mobile flex
     position: absolute;
     top: calc(100% + var(--spacing-1));
-    right: 0; // Better for profile dropdowns usually
+    left: 0;
+    right: auto;
     z-index: var(--z-index-dropdown, 1030);
     min-width: max-content;
     width: auto;
-    padding: var(--spacing-2);
-    background-color: color-mix(in srgb, var(--surface-floating, var(--color-bg-surface)) 95%, transparent);
-    backdrop-filter: blur(8px);
+    padding: var(--spacing-1);
+    background-color: var(--surface-floating, var(--color-bg-surface));
     border: var(--border-width, 1px) solid var(--color-border-subtle);
-    border-radius: var(--radius-xl);
+    border-radius: var(--radius-md);
     box-shadow: var(--shadow-xl);
+
+    &--right {
+      left: auto;
+      right: 0;
+    }
 
     // Entry animation starting state
     opacity: 0;
@@ -485,15 +490,31 @@
       &:focus-within > .navbar__dropdown-menu--nested {
         transform: translateX(0);
       }
+    }
+  }
 
-      .navbar__dropdown-submenu-trigger .navbar__dropdown-caret {
-        transform: rotate(90deg); // Point left
-      }
+  // Automatically flip nested menus in right-aligned dropdowns
+  .navbar__dropdown-menu--right {
+    .navbar__dropdown-submenu > .navbar__dropdown-menu--nested {
+      left: auto !important;
+      right: 100% !important;
+      margin-left: 0;
+      margin-right: var(--spacing-1);
+      transform: translateX(0.5rem);
+    }
+
+    .navbar__dropdown-submenu:hover > .navbar__dropdown-menu--nested,
+    .navbar__dropdown-submenu:focus-within > .navbar__dropdown-menu--nested {
+      transform: translateX(0);
     }
   }
 
   .navbar__dropdown-submenu-trigger .navbar__dropdown-caret {
     transform: rotate(-90deg); // Point right by default on desktop
+  }
+
+  .navbar__dropdown-submenu.is-open > .navbar__dropdown-submenu-trigger .navbar__dropdown-caret {
+    transform: rotate(-90deg); // Keep pointing right when open on desktop
   }
 }
 

@@ -1,4 +1,4 @@
-import { Navbar } from '@loreschaeffer/lyco-ui';
+import {Navbar} from '@loreschaeffer/lyco-ui';
 
 export const title = 'Centered Navbar';
 export const description = <p>A navbar with a centered navigation list.</p>;
@@ -36,7 +36,7 @@ export default function CenteredExample() {
     return (
         <Navbar expand="lg">
             <Navbar.Brand href="#">LycoUI</Navbar.Brand>
-            <Navbar.Toggle />
+            <Navbar.Toggle/>
             <Navbar.Collapse>
                 <Navbar.Nav align="center">
                     <Navbar.Item>

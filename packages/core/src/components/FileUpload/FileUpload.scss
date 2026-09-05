@@ -10,13 +10,13 @@
   width: 100%;
   padding: var(--spacing-8) var(--spacing-4);
   border: var(--border-width, 1px) dashed var(--color-border-base);
-  border-radius: var(--radius-md);
+  border-radius: var(--radius-lg);
   background-color: var(--color-void, transparent);
   cursor: pointer;
   transition: border-color var(--duration-fast) var(--ease-default),
-              background-color var(--duration-fast) var(--ease-default),
-              box-shadow var(--duration-fast) var(--ease-default);
-  
+  background-color var(--duration-fast) var(--ease-default),
+  box-shadow var(--duration-fast) var(--ease-default);
+
   --fileupload-color-base: var(--color-primary);
 
   &:hover:not(.is-disabled) {
@@ -51,6 +51,15 @@
   // ==========================================================================
   // CONTENT ELEMENTS (Typically passed as children)
   // ==========================================================================
+  &__input {
+    opacity: 0;
+    width: 0.1px;
+    height: 0.1px;
+    position: absolute;
+    z-index: -1;
+    overflow: hidden;
+  }
+
   &__icon {
     width: var(--spacing-8, 2rem);
     height: var(--spacing-8, 2rem);

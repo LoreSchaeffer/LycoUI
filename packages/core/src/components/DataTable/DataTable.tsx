@@ -549,7 +549,6 @@ function DataTableInner<T>(
                             iconStart={<SearchIcon/>}
                             iconEnd={searchQuery.length > 0 ? <ClearIcon/> : undefined}
                             onIconEndClick={searchQuery.length > 0 ? () => handleSearch('') : undefined}
-                            flat
                         />
                     </div>
                 )}

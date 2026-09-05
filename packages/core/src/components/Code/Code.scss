@@ -144,7 +144,7 @@
     font-family: var(--code-font);
     font-size: var(--font-size-sm);
     line-height: 1.6;
-    tab-size: 2;
+    tab-size: var(--lyco-code-tab-size, 2);
     white-space: pre;
     word-break: normal;
   }

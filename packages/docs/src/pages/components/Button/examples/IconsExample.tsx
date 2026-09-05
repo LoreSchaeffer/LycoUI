@@ -7,23 +7,23 @@ export const order = 4;
 
 export const vanillaHtml = `
 <button class="btn btn-primary"><svg>...</svg> Save</button>
-<button class="btn btn-teal">Continue <svg>...</svg></button>
+<button class="btn btn-info">Continue <svg>...</svg></button>
 
-<button class="btn btn-red btn-icon-only" aria-label="Delete"><svg>...</svg></button>
+<button class="btn btn-danger btn-icon-only" aria-label="Delete"><svg>...</svg></button>
 <button class="btn btn-primary btn-outlined btn-icon-only" aria-label="Search"><svg>...</svg></button>
-<button class="btn btn-orange btn-flat btn-icon-only" aria-label="Settings"><svg>...</svg></button>
+<button class="btn btn-warning btn-flat btn-icon-only" aria-label="Settings"><svg>...</svg></button>
 `;
 
 export default function IconsExample() {
     return (
-        <>
+        <div className="d-flex" style={{gap: '0.75rem', flexWrap: 'wrap', alignItems: 'center'}}>
             <Button iconStart={<PiFloppyDiskBold/>}>Save</Button>
-            <Button variant="teal" iconEnd={<PiCaretRightBold/>}>Continue</Button>
+            <Button variant="info" iconEnd={<PiCaretRightBold/>}>Continue</Button>
 
             {/* Square icon-only buttons */}
-            <Button variant="red" icon={<PiTrashBold/>} aria-label="Delete"/>
+            <Button variant="danger" icon={<PiTrashBold/>} aria-label="Delete"/>
             <Button variant="primary" outlined icon={<PiMagnifyingGlassBold/>} aria-label="Search"/>
-            <Button flat variant="orange" icon={<PiGearBold/>} aria-label="Settings"/>
-        </>
+            <Button flat variant="warning" icon={<PiGearBold/>} aria-label="Settings"/>
+        </div>
     );
 }

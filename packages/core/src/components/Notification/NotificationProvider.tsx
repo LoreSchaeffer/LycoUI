@@ -17,6 +17,9 @@ interface ActiveNotification extends NotificationOptions {
     durationSec: number;
 }
 
+/**
+ * NotificationProviderProps.
+ */
 export interface NotificationProviderProps {
     children: React.ReactNode;
     /** Screen corner for the notification stack. */
@@ -27,6 +30,9 @@ export interface NotificationProviderProps {
 
 let idCounter = 0;
 
+/**
+ * NotificationProvider component.
+ */
 export const NotificationProvider: React.FC<NotificationProviderProps> = ({
                                                                               children,
                                                                               position = 'bottom-right',

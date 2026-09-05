@@ -4,7 +4,7 @@ $bp-md: 768px;
   display: flex;
   flex-direction: column;
   min-height: 100vh;
-  background-color: var(--color-bg-base);
+  background-color: var(--color-bg-root);
   color: var(--color-text-primary);
 
   @media (min-width: $bp-md) {
@@ -13,94 +13,20 @@ $bp-md: 768px;
   }
 }
 
-// Mobile header
-.docs-mobile-header {
-  display: flex;
-  align-items: center;
-  padding: var(--spacing-4);
-  background-color: var(--color-bg-surface);
-  border-bottom: 1px solid var(--color-border-base);
-  position: sticky;
-  top: 0;
-  z-index: 40;
-
-  @media (min-width: $bp-md) {
-    display: none;
-  }
-
-  .docs-menu-btn {
-    background: transparent;
-    border: none;
-    color: var(--color-text-primary);
-    font-size: 1.5rem;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: var(--spacing-2);
-    margin-right: var(--spacing-4);
-  }
-
-  .docs-mobile-title {
-    font-weight: 700;
-    font-size: var(--font-size-lg);
-  }
-}
-
-// Backdrop overlay for mobile sidebar
-.docs-backdrop {
-  position: fixed;
-  inset: 0;
-  background-color: rgba(0, 0, 0, 0.5);
-  backdrop-filter: blur(4px);
-  z-index: 45;
-  opacity: 1;
-  transition: opacity 0.3s ease;
-
+.docs-mobile-navbar {
   @media (min-width: $bp-md) {
     display: none;
   }
 }
 
-// Sidebar structural layout
 .docs-sidebar {
-  position: fixed;
-  top: 0;
-  left: 0;
-  bottom: 0;
-  width: 280px;
-  background-color: var(--color-bg-surface);
-  border-right: 1px solid var(--color-border-base);
-  z-index: 50;
-  transform: translateX(-100%);
-  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  display: flex;
-  flex-direction: column;
-  overflow-y: auto;
-
-  &.is-open {
-    transform: translateX(0);
-  }
-
   @media (min-width: $bp-md) {
-    position: sticky;
-    transform: none;
-    z-index: 10;
+    position: sticky !important;
+    top: 0;
     height: 100vh;
-  }
-
-  &__header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: var(--spacing-6);
-    border-bottom: 1px solid var(--color-border-base);
-  }
-
-  &__logo {
-    font-weight: 700;
-    font-size: var(--font-size-lg, 1.25rem);
-    letter-spacing: -0.025em;
+    transform: none !important;
+    z-index: 10 !important;
+    width: 280px !important;
   }
 
   &__section-title {
@@ -112,34 +38,13 @@ $bp-md: 768px;
     letter-spacing: 0.05em;
     color: var(--color-text-muted);
     margin-bottom: var(--spacing-2);
+    padding: var(--spacing-2) var(--spacing-3);
   }
 
-  &__section-items {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    display: flex;
-    flex-direction: column;
-    gap: var(--spacing-1);
-  }
-
-  &__nav-link {
-    display: flex;
-    align-items: center;
-    gap: var(--spacing-2);
-    padding: var(--spacing-1) var(--spacing-3);
-    color: var(--color-text-secondary);
-    text-decoration: none;
-    font-size: var(--font-size-sm);
-    border-radius: var(--radius-md);
-    font-weight: 400;
-    transition: all 200ms ease-in-out;
-  }
-
-  .active {
-    color: var(--color-primary);
-    background-color: var(--color-primary-dim);
-    font-weight: 500;
+  &__logo {
+    font-weight: 700;
+    font-size: var(--font-size-lg, 1.25rem);
+    letter-spacing: -0.025em;
   }
 
   &__subitems {
@@ -162,7 +67,7 @@ $bp-md: 768px;
     padding: var(--spacing-1) var(--spacing-2);
     border-radius: var(--radius-sm);
     transition: all 200ms ease;
-    
+
     &:hover {
       color: var(--color-text-primary);
     }
@@ -172,27 +77,6 @@ $bp-md: 768px;
       background-color: var(--color-primary-dim);
       font-weight: 500;
     }
-  }
-
-  .docs-close-btn {
-    background: transparent;
-    border: none;
-    color: var(--color-text-secondary);
-    font-size: 1.5rem;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-
-    @media (min-width: $bp-md) {
-      display: none;
-    }
-  }
-
-  &__nav {
-    padding: var(--spacing-4);
-    display: flex;
-    flex-direction: column;
-    gap: var(--spacing-6);
   }
 }
 

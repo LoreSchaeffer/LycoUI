@@ -1,3 +1,6 @@
+/**
+ * Controller for the Vanilla JS Tooltip component.
+ */
 export class TooltipController {
     private element: HTMLElement;
     private content: string;

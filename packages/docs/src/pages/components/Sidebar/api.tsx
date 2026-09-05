@@ -1,4 +1,4 @@
-import type { PropDefinition } from '../../../components/api-reference/ApiReference.tsx';
+import type {PropDefinition} from '../../../components/api-reference/ApiReference.tsx';
 
 export const sidebarProps: PropDefinition[] = [
     {
@@ -71,6 +71,6 @@ export const sidebarLinkProps: PropDefinition[] = [
 ];
 
 export const apiConfig = [
-    { name: 'Sidebar', data: sidebarProps },
-    { name: 'Sidebar.Link', data: sidebarLinkProps }
+    {name: 'Sidebar', data: sidebarProps},
+    {name: 'Sidebar.Link', data: sidebarLinkProps}
 ];

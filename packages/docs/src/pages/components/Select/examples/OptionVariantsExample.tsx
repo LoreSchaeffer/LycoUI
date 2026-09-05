@@ -9,11 +9,11 @@ export const vanillaHtml = `
 <div class="row">
   <div class="col-12 col-md-6">
     <select class="select-custom">
-      <option value="1">Normal Option</option>
-      <option value="2" data-variant="success">Success Option</option>
-      <option value="3" data-variant="danger">Danger Option</option>
-      <option value="4" data-variant="warning">Warning Option</option>
-      <option value="5" data-variant="info">Info Option</option>
+      <option value="draft">Draft (Normal)</option>
+      <option value="published" data-variant="success">Published (Success)</option>
+      <option value="archived" data-variant="danger">Archived (Danger)</option>
+      <option value="review" data-variant="warning">In Review (Warning)</option>
+      <option value="processing" data-variant="info">Processing (Info)</option>
     </select>
   </div>
 </div>
@@ -25,15 +25,17 @@ export default function OptionVariantsExample() {
     return (
         <Row>
             <Col span={6}>
+                <div className="text-sm fw-bold mb-2 text-secondary">Set Document Status</div>
                 <Select
                     value={value}
                     onChange={setValue}
+                    placeholder="Update status..."
                     options={[
-                        {label: 'Normal Option', value: '1'},
-                        {label: 'Success Option', value: '2', variant: 'success'},
-                        {label: 'Danger Option', value: '3', variant: 'danger'},
-                        {label: 'Warning Option', value: '4', variant: 'warning'},
-                        {label: 'Info Option', value: '5', variant: 'info'}
+                        {label: 'Draft', value: 'draft'},
+                        {label: 'Published', value: 'published', variant: 'success'},
+                        {label: 'Archived', value: 'archived', variant: 'danger'},
+                        {label: 'In Review', value: 'review', variant: 'warning'},
+                        {label: 'Processing', value: 'processing', variant: 'info'}
                     ]}
                 />
             </Col>

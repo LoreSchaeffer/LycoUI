@@ -6,18 +6,18 @@ export const order = 1;
 
 export const vanillaHtml = `
 <button class="btn btn--primary btn--outlined">Primary Outlined</button>
-<button class="btn btn--success btn--outlined">Green Outlined</button>
-<button class="btn btn--danger btn--outlined">Red Outlined</button>
-<button class="btn btn--warning btn--outlined">Yellow Outlined</button>
+<button class="btn btn--success btn--outlined">Success Outlined</button>
+<button class="btn btn--danger btn--outlined">Danger Outlined</button>
+<button class="btn btn--warning btn--outlined">Warning Outlined</button>
 `;
 
 export default function OutlinedExample() {
     return (
-        <>
+        <div className="d-flex" style={{gap: '0.75rem', flexWrap: 'wrap'}}>
             <Button outlined variant="primary">Primary Outlined</Button>
-            <Button outlined variant="green">Green Outlined</Button>
-            <Button outlined variant="red">Red Outlined</Button>
-            <Button outlined variant="yellow">Yellow Outlined</Button>
-        </>
+            <Button outlined variant="success">Success Outlined</Button>
+            <Button outlined variant="danger">Danger Outlined</Button>
+            <Button outlined variant="warning">Warning Outlined</Button>
+        </div>
     );
 }

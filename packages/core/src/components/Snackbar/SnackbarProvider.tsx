@@ -14,6 +14,9 @@ const DURATION_MAP: Record<string, number> = {
     long: 8000,
 };
 
+/**
+ * SnackbarProvider component.
+ */
 export const SnackbarProvider: React.FC<{ children: React.ReactNode }> = ({children}) => {
     const [snackbars, setSnackbars] = useState<ActiveSnackbar[]>([]);
 

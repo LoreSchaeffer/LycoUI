@@ -14,6 +14,8 @@ const CheckboxDoc: React.FC = () => {
         <DocTemplate
             title="Checkbox"
             description={<p>A CSS-only customizable checkbox component with accessible label bindings and theme variants.</p>}
+            importCode="import { Checkbox } from '@loreschaeffer/lyco-ui';"
+            a11yNotes={`Uses the native \`<input type="checkbox">\` wrapped securely with a \`<label>\`. Supports keyboard navigation (Space to toggle) and uses \`aria-checked\` and \`aria-disabled\`.`}
             exampleModules={exampleModules}
             rawSources={rawSources}
             apiConfig={apiConfig}

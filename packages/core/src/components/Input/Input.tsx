@@ -5,6 +5,9 @@ import clsx from 'clsx';
 import type {FullVariant, SizeVariant} from '../../types/types';
 import {Spinner, type SpinnerType} from '../Spinner';
 
+/**
+ * InputValidation.
+ */
 export type InputValidation = 'disabled' | 'auto' | 'valid' | 'invalid';
 
 /**
@@ -43,6 +46,9 @@ export interface InputProps extends Omit<InputHTMLAttributes<HTMLInputElement>, 
     flat?: boolean;
 }
 
+/**
+ * Input component.
+ */
 export const Input = forwardRef<HTMLInputElement, InputProps>(
     (
         {

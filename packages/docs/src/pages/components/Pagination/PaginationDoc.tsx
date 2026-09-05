@@ -13,7 +13,8 @@ const PaginationDoc: React.FC = () => {
     return (
         <DocTemplate
             title="Pagination"
-            description={<p>Navigate through multiple pages of content with a standard list style or an interactive compact style.</p>}
+            description={<p>A navigation component that allows users to navigate through multi-page content.</p>}
+            a11yNotes={`Uses a \`<nav>\` element with \`aria-label="Pagination"\`. The current page is marked with \`aria-current="page"\`. Previous and Next buttons are explicitly labeled and correctly use \`aria-disabled\`.`}
             exampleModules={exampleModules}
             rawSources={rawSources}
             apiConfig={apiConfig}

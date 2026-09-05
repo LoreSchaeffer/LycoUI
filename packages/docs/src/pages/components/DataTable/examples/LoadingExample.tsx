@@ -1,4 +1,4 @@
-import { DataTable, type DataTableColumn } from '@loreschaeffer/lyco-ui';
+import {DataTable, type DataTableColumn} from '@loreschaeffer/lyco-ui';
 
 interface Item {
     id: number;
@@ -7,9 +7,9 @@ interface Item {
 }
 
 const columns: DataTableColumn<Item>[] = [
-    { id: 'id', header: '#' },
-    { id: 'name', header: 'Name' },
-    { id: 'value', header: 'Value' },
+    {id: 'id', header: '#'},
+    {id: 'name', header: 'Name'},
+    {id: 'value', header: 'Value'},
 ];
 
 export const title = 'Loading State';

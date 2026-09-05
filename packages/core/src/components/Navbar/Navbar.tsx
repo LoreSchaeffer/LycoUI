@@ -269,10 +269,12 @@ export interface NavbarDropdownProps extends Omit<React.HTMLAttributes<HTMLLIEle
     title: React.ReactNode;
     /** If true, strips default padding/background from the trigger button for custom trigger layouts */
     unstyled?: boolean;
+    /** Align the dropdown menu to the left or right of its trigger. Defaults to left. */
+    align?: 'left' | 'right';
 }
 
 const NavbarDropdown = forwardRef<HTMLLIElement, NavbarDropdownProps>((
-    {className, title, unstyled = false, children, ...props},
+    {className, title, unstyled = false, align = 'left', children, ...props},
     ref
 ) => {
     const [isOpen, setIsOpen] = useState(false);
@@ -313,13 +315,11 @@ const NavbarDropdown = forwardRef<HTMLLIElement, NavbarDropdownProps>((
                     aria-haspopup="true"
                 >
                     {title}
-                    {!unstyled && (
-                        <svg className="navbar__dropdown-caret" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                            <polyline points="6 9 12 15 18 9"></polyline>
-                        </svg>
-                    )}
+                    <svg className="navbar__dropdown-caret" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                        <polyline points="6 9 12 15 18 9"></polyline>
+                    </svg>
                 </button>
-                <div className={clsx('navbar__dropdown-menu', isOpen && 'is-open')}>
+                <div className={clsx('navbar__dropdown-menu', isOpen && 'is-open', align === 'right' && 'navbar__dropdown-menu--right')}>
                     {children}
                 </div>
             </li>

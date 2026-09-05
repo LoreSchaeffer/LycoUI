@@ -10,6 +10,9 @@ interface SidebarContextType {
 const SidebarContext = createContext<SidebarContextType | null>(null);
 
 
+/**
+ * SidebarProps.
+ */
 export interface SidebarProps extends React.HTMLAttributes<HTMLElement> {
     /** Controls if the sidebar is open (for overlay mode) */
     isOpen?: boolean;
@@ -119,6 +122,9 @@ const SidebarComponent = forwardRef<HTMLElement, SidebarProps>((
 SidebarComponent.displayName = 'Sidebar';
 
 
+/**
+ * SidebarRegionProps.
+ */
 export interface SidebarRegionProps extends React.HTMLAttributes<HTMLDivElement> {
 }
 
@@ -153,6 +159,9 @@ const SidebarFooter = forwardRef<HTMLDivElement, SidebarRegionProps>((
 SidebarFooter.displayName = 'Sidebar.Footer';
 
 
+/**
+ * SidebarNavProps.
+ */
 export interface SidebarNavProps extends React.HTMLAttributes<HTMLUListElement> {
 }
 
@@ -166,6 +175,9 @@ const SidebarNav = forwardRef<HTMLUListElement, SidebarNavProps>((
 ));
 SidebarNav.displayName = 'Sidebar.Nav';
 
+/**
+ * SidebarItemProps.
+ */
 export interface SidebarItemProps extends React.LiHTMLAttributes<HTMLLIElement> {
 }
 
@@ -180,6 +192,9 @@ const SidebarItem = forwardRef<HTMLLIElement, SidebarItemProps>((
 SidebarItem.displayName = 'Sidebar.Item';
 
 
+/**
+ * SidebarLinkProps.
+ */
 export interface SidebarLinkProps extends React.AnchorHTMLAttributes<HTMLAnchorElement> {
     /** Custom component to render as */
     as?: React.ElementType;
@@ -229,7 +244,10 @@ const SidebarLink = forwardRef<HTMLAnchorElement, SidebarLinkProps>((
 SidebarLink.displayName = 'Sidebar.Link';
 
 
-interface SidebarDropdownProps extends Omit<React.HTMLAttributes<HTMLLIElement>, 'title'> {
+/**
+ * Props for the SidebarDropdown component.
+ */
+export interface SidebarDropdownProps extends Omit<React.HTMLAttributes<HTMLLIElement>, 'title'> {
     title: React.ReactNode;
     icon?: React.ReactNode;
 }
@@ -308,7 +326,10 @@ const SidebarDropdown = forwardRef<HTMLLIElement, SidebarDropdownProps>((
 SidebarDropdown.displayName = 'Sidebar.Dropdown';
 
 
-interface SidebarDropdownItemProps extends React.AnchorHTMLAttributes<HTMLAnchorElement> {
+/**
+ * Props for the SidebarDropdownItem component.
+ */
+export interface SidebarDropdownItemProps extends React.AnchorHTMLAttributes<HTMLAnchorElement> {
     as?: React.ElementType;
     active?: boolean;
 }
@@ -330,6 +351,9 @@ const SidebarDropdownItem = forwardRef<HTMLAnchorElement, SidebarDropdownItemPro
 });
 SidebarDropdownItem.displayName = 'Sidebar.DropdownItem';
 
+/**
+ * Sidebar component.
+ */
 export const Sidebar = Object.assign(SidebarComponent, {
     Header: SidebarHeader,
     Content: SidebarContent,

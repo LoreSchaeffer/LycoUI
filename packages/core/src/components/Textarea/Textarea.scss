@@ -1,0 +1,255 @@
+// ==========================================================================
+// TEXTAREA WRAPPER — Contains textarea + validation message
+// ==========================================================================
+.textarea-wrapper {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+// ==========================================================================
+// TEXTAREA — Main container
+// ==========================================================================
+.textarea {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  background-color: var(--color-void, transparent);
+  border: var(--border-width, 1px) solid var(--color-border-base);
+
+  border-radius: var(--textarea-radius, var(--radius-md));
+  overflow: hidden;
+
+  transition: border-color var(--duration-fast) var(--ease-default),
+  box-shadow var(--duration-fast) var(--ease-default);
+  cursor: text;
+
+  --textarea-color-base: var(--color-primary);
+  --textarea-min-height: 5rem;
+  --textarea-padding-y: var(--spacing-3);
+  --textarea-padding-x: var(--spacing-3);
+  --textarea-font-size: var(--font-size-sm);
+
+  &:hover:not(.is-disabled):not(.is-invalid):not(.is-valid) {
+    border-color: var(--color-border-strong);
+  }
+
+  // ==========================================================================
+  // NATIVE TEXTAREA
+  // ==========================================================================
+  &__field {
+    flex: 1;
+    width: 100%;
+    min-height: var(--textarea-min-height);
+    padding: calc(var(--textarea-padding-y) + var(--spacing-2)) var(--textarea-padding-x) var(--textarea-padding-y);
+    background: transparent;
+    border: none;
+    outline: none;
+    border-radius: inherit;
+    color: var(--color-text-primary);
+    font-family: var(--font-family-base);
+    font-size: var(--textarea-font-size);
+    font-weight: 400;
+    caret-color: var(--textarea-color-base);
+    line-height: 1.5;
+    margin: 0;
+    resize: none !important;
+
+    &::placeholder {
+      color: var(--color-text-muted);
+      opacity: 1;
+    }
+  }
+
+  // ==========================================================================
+  // FLOATING LABEL
+  // ==========================================================================
+  &__label {
+    position: absolute;
+    left: var(--textarea-padding-x);
+    top: var(--textarea-padding-y);
+    font-size: var(--textarea-font-size);
+    color: var(--color-text-muted);
+    pointer-events: none;
+    transform-origin: left top;
+    transition: transform var(--duration-fast) var(--ease-default),
+    font-size var(--duration-fast) var(--ease-default),
+    color var(--duration-fast) var(--ease-default);
+    line-height: 1.5;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: calc(100% - var(--textarea-padding-x) * 2);
+  }
+
+  &__required {
+    color: var(--color-danger);
+  }
+
+  // When focused or filled, float the label up
+  &.is-focused &__label,
+  &.is-filled &__label {
+    transform: translateY(0%) scale(0.85);
+    color: var(--color-text-secondary);
+  }
+
+  &.is-focused &__label {
+    color: var(--textarea-color-base);
+  }
+
+  // When label is present, add top padding to the field to make room
+  &:has(.textarea__label) .textarea__field {
+    padding-top: calc(var(--textarea-padding-y) + var(--spacing-6));
+  }
+
+  // Placeholder visibility with floating label
+  &:has(.textarea__label) .textarea__field::placeholder {
+    opacity: 0;
+    transition: opacity var(--duration-fast) var(--ease-default);
+  }
+
+  &.is-focused:has(.textarea__label) .textarea__field::placeholder {
+    opacity: 1;
+  }
+
+  // ==========================================================================
+  // RESIZE OPTIONS (Applied to outer container so borders follow)
+  // ==========================================================================
+  &.textarea--resize-none {
+    resize: none !important;
+  }
+
+  &.textarea--resize-vertical {
+    resize: vertical !important;
+    overflow: hidden;
+  }
+
+  &.textarea--resize-horizontal {
+    resize: horizontal !important;
+    overflow: hidden;
+  }
+
+  &.textarea--resize-both {
+    resize: both !important;
+    overflow: hidden;
+  }
+
+  // ==========================================================================
+  // FOCUS STATE
+  // ==========================================================================
+  &.is-focused {
+    border-color: var(--textarea-color-base);
+    box-shadow: 0 0 0 var(--border-width, 1px) var(--color-void), 0 0 0 var(--border-width-3, 3px) var(--textarea-color-base);
+    --textarea-border-internal: var(--textarea-color-base);
+  }
+
+  // ==========================================================================
+  // DISABLED STATE
+  // ==========================================================================
+  &.is-disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    pointer-events: none;
+    background-color: var(--color-carbon);
+
+    .textarea__field {
+      color: var(--color-text-muted);
+      -webkit-text-fill-color: var(--color-text-muted); // Required for Safari
+      resize: none;
+    }
+  }
+
+  // ==========================================================================
+  // READONLY STATE
+  // ==========================================================================
+  &.is-readonly {
+    background-color: var(--color-carbon);
+    border-color: var(--color-border-subtle);
+
+    .textarea__field {
+      cursor: default;
+      color: var(--color-text-muted);
+      -webkit-text-fill-color: var(--color-text-muted);
+    }
+  }
+
+  // ==========================================================================
+  // VALIDATION STATES
+  // ==========================================================================
+  &.is-valid {
+    border-color: var(--color-success);
+    --textarea-color-base: var(--color-success);
+
+    &.is-focused {
+      box-shadow: 0 0 0 var(--border-width, 1px) var(--color-void), 0 0 0 var(--border-width-3, 3px) var(--color-success);
+    }
+  }
+
+  &.is-invalid {
+    border-color: var(--color-danger);
+    --textarea-color-base: var(--color-danger);
+
+    &.is-focused {
+      box-shadow: 0 0 0 var(--border-width, 1px) var(--color-void), 0 0 0 var(--border-width-3, 3px) var(--color-danger);
+    }
+  }
+
+  // ==========================================================================
+  // FLAT MODIFIER
+  // ==========================================================================
+  &--flat {
+    box-shadow: none;
+    background-image: none;
+    background-color: var(--color-carbon);
+    border-color: transparent;
+
+    &:hover:not(.is-disabled):not(.is-invalid):not(.is-valid) {
+      background-color: var(--color-carbon-active);
+    }
+
+    &.is-focused {
+      background-color: var(--color-void);
+      border-color: var(--textarea-color-base);
+      box-shadow: 0 0 0 var(--border-width, 1px) var(--color-void), 0 0 0 var(--border-width-3, 3px) var(--textarea-color-base);
+    }
+  }
+
+  // ==========================================================================
+  // SIZES
+  // ==========================================================================
+  &--sm {
+    --textarea-min-height: 4rem;
+    --textarea-padding-y: var(--spacing-2);
+    --textarea-padding-x: var(--spacing-2);
+    --textarea-font-size: var(--font-size-xs);
+    --textarea-radius: var(--radius-sm);
+  }
+
+  &--lg {
+    --textarea-min-height: 6rem;
+    --textarea-padding-y: var(--spacing-4);
+    --textarea-padding-x: var(--spacing-4);
+    --textarea-font-size: var(--font-size-base);
+    --textarea-radius: var(--radius-lg);
+  }
+}
+
+// ==========================================================================
+// VALIDATION MESSAGE
+// ==========================================================================
+.textarea__message {
+  font-size: var(--font-size-xs);
+  margin-top: var(--spacing-1);
+  padding-left: var(--spacing-1);
+  line-height: 1.4;
+  color: var(--color-text-secondary);
+
+  &--valid {
+    color: var(--color-success);
+  }
+
+  &--invalid {
+    color: var(--color-danger);
+  }
+}

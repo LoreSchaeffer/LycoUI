@@ -122,6 +122,7 @@ class AccordionItemController {
         collapse.id = collapseId;
         collapse.setAttribute('aria-labelledby', headerId);
         collapse.setAttribute('role', 'region');
+        collapse.setAttribute('aria-hidden', String(!initiallyOpen || disabled));
 
         const collapseInner = document.createElement('div');
         collapseInner.className = 'accordion__collapse-inner';
@@ -157,6 +158,9 @@ class AccordionItemController {
         this.open = false;
         this.element.classList.remove('is-open');
         this.button.setAttribute('aria-expanded', 'false');
+
+        const collapse = this.element.querySelector('.accordion__collapse');
+        if (collapse) collapse.setAttribute('aria-hidden', 'true');
     }
 
     public toggle(): void {
@@ -170,6 +174,10 @@ class AccordionItemController {
         }
 
         this.button.setAttribute('aria-expanded', String(this.open));
+
+        const collapse = this.element.querySelector('.accordion__collapse');
+        if (collapse) collapse.setAttribute('aria-hidden', String(!this.open));
+
         this.parent.handleToggle(this);
     }
 

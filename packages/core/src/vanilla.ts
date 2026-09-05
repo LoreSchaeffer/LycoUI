@@ -13,6 +13,7 @@ import {initLycoPagination} from './components/Pagination/Pagination.vanilla';
 import {initTabs} from './components/Tabs/Tabs.vanilla';
 import {initTooltips} from './components/Tooltip/Tooltip.vanilla';
 import {initLycoFileUploads} from './components/FileUpload/FileUpload.vanilla';
+import {initLycoImageViewers, LycoImageViewerController} from './components/ImageViewer/ImageViewer.vanilla';
 
 export const initLycoUI = (): void => {
     initLycoSelects();
@@ -28,6 +29,7 @@ export const initLycoUI = (): void => {
     initTabs();
     initTooltips();
     initLycoFileUploads();
+    initLycoImageViewers();
 };
 
 if (typeof window !== 'undefined' && typeof document !== 'undefined') {
@@ -51,5 +53,7 @@ export {
     initLycoPagination,
     initTabs,
     initTooltips,
-    initLycoFileUploads
+    initLycoFileUploads,
+    initLycoImageViewers,
+    LycoImageViewerController
 };

@@ -1,7 +1,8 @@
-import { Button, useNotification } from '@loreschaeffer/lyco-ui';
+import {Button, useNotification} from '@loreschaeffer/lyco-ui';
 
 export const title = 'Default Usage';
-export const description = <p>Use the <code>useNotification</code> hook inside a <code>NotificationProvider</code> to show notifications imperatively. They auto-dismiss and include a progress bar. Hover over a notification to pause the countdown.</p>;
+export const description = <p>Use the <code>useNotification</code> hook inside a <code>NotificationProvider</code> to show notifications imperatively. They auto-dismiss and include a progress bar. Hover over a notification to pause the
+    countdown.</p>;
 export const order = 1;
 
 export const vanillaHtml = `
@@ -15,20 +16,20 @@ export const vanillaHtml = `
 `;
 
 export default function DefaultExample() {
-    const { showNotification } = useNotification();
+    const {showNotification} = useNotification();
 
     return (
-        <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap' }}>
-            <Button variant="primary" onClick={() => showNotification({ description: 'Profile saved successfully!' })}>
+        <div style={{display: 'flex', gap: '1rem', flexWrap: 'wrap'}}>
+            <Button variant="primary" onClick={() => showNotification({description: 'Profile saved successfully!'})}>
                 Show Short
             </Button>
-            <Button variant="primary" onClick={() => showNotification({ description: 'Processing your request...', duration: 'medium' })}>
+            <Button variant="primary" onClick={() => showNotification({description: 'Processing your request...', duration: 'medium'})}>
                 Show Medium
             </Button>
-            <Button variant="primary" onClick={() => showNotification({ description: 'This stays for a while.', duration: 'long', closable: true })}>
+            <Button variant="primary" onClick={() => showNotification({description: 'This stays for a while.', duration: 'long', closable: true})}>
                 Show Long
             </Button>
-            <Button variant="primary" onClick={() => showNotification({ description: 'Custom 7 second notification.', duration: 7 })}>
+            <Button variant="primary" onClick={() => showNotification({description: 'Custom 7 second notification.', duration: 7})}>
                 Show 7s
             </Button>
         </div>

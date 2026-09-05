@@ -1,4 +1,4 @@
-import type {ApiConfig, PropDefinition} from "../../../types.ts";
+import {type PropDefinition} from '../../../components/api-reference/ApiReference';
 
 const paginationProps: PropDefinition[] = [
     {
@@ -52,7 +52,7 @@ const paginationProps: PropDefinition[] = [
     }
 ];
 
-export const apiConfig: ApiConfig = [
+export const apiConfig = [
     {
         name: 'PaginationProps',
         data: paginationProps

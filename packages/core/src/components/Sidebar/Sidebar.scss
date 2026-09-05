@@ -84,8 +84,21 @@
     .sidebar__header,
     .sidebar__footer {
       justify-content: center;
-      padding-left: var(--spacing-2);
-      padding-right: var(--spacing-2);
+      padding-left: var(--spacing-1);
+      padding-right: var(--spacing-1);
+
+      /* Prevent buttons from squishing their SVGs in mini mode */
+      .btn {
+        padding: 0;
+        width: var(--spacing-9, 2.25rem);
+        height: var(--spacing-9, 2.25rem);
+        min-width: 0;
+        justify-content: center;
+
+        svg {
+          flex-shrink: 0;
+        }
+      }
     }
   }
 
@@ -123,7 +136,7 @@
     width: var(--spacing-2, 8px);
     height: 100%;
     cursor: ew-resize;
-    z-index: 10;
+    z-index: var(--z-base, 10);
     transition: background-color var(--duration-fast) var(--ease-default);
 
     &:hover, &:active {
@@ -349,11 +362,11 @@
       width: max-content;
       min-width: max-content;
 
-      // Floating aesthetics (matching Navbar)
-      background-color: color-mix(in srgb, var(--surface-floating, var(--color-bg-surface)) 95%, transparent);
-      backdrop-filter: blur(8px);
+      // Floating aesthetics (matching DropdownMenu)
+      background-color: var(--surface-floating, var(--color-bg-surface));
+      backdrop-filter: none;
       border: var(--border-width, 1px) solid var(--color-border-subtle);
-      border-radius: var(--radius-xl);
+      border-radius: var(--radius-md);
       box-shadow: var(--shadow-xl);
       z-index: var(--z-index-dropdown, 1030);
 
@@ -365,18 +378,18 @@
 
     .sidebar__dropdown-menu {
       overflow: visible; // Because it's no longer a grid transition
-      padding: var(--spacing-2);
-      padding-left: var(--spacing-2); // Reset the indent
+      padding: var(--spacing-1); // Match DropdownMenu padding
       gap: 0;
     }
 
     .sidebar__dropdown-item {
       margin-top: 0;
-      color: var(--color-text-secondary); // Restore regular color in flyout
+      border-radius: var(--radius-sm);
+      color: var(--color-text-primary);
 
       &:hover, &:focus-visible {
         color: var(--color-text-primary);
-        background-color: var(--color-surface-elevated, var(--color-carbon));
+        background-color: var(--color-surface-active, color-mix(in srgb, var(--color-primary) 10%, transparent));
       }
     }
 

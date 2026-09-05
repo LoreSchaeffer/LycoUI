@@ -21,16 +21,16 @@ export default function CompoundExample() {
                 <Card>
                     <Card.Header>Project Overview</Card.Header>
                     <Card.Body>
-                        <p className="mb-0">This is the main content area of the card. It automatically scales and fills the available space.</p>
+                        <p className="mb-0">The Q3 Marketing Campaign has reached 85% of its engagement targets. Early metrics indicate strong performance in the EMEA region.</p>
                     </Card.Body>
-                    <Card.Footer className="text-secondary">Last updated 2 days ago</Card.Footer>
+                    <Card.Footer className="text-secondary">Last updated by Admin • 2 days ago</Card.Footer>
                 </Card>
             </Col>
             <Col span={6} className="mb-4">
                 <Card>
                     <Card.Body>
-                        <h4 className="mb-2">Simple Card</h4>
-                        <p className="text-secondary mb-0">Sometimes a simple body is all you need.</p>
+                        <h4 className="mb-2">API Documentation</h4>
+                        <p className="text-secondary mb-0">Learn how to authenticate and start making requests to our GraphQL endpoints.</p>
                     </Card.Body>
                 </Card>
             </Col>

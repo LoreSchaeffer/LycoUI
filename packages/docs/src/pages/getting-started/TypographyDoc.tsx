@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
-import { PiCheckBold, PiCopy } from 'react-icons/pi';
-import { Table, TableHead, TableBody, TableRow, TableCell, Card } from '@loreschaeffer/lyco-ui';
+import React, {useState} from 'react';
+import {PiCheckBold, PiCopy} from 'react-icons/pi';
+import {Badge, Card, Table, TableBody, TableCell, TableHead, TableRow} from '@loreschaeffer/lyco-ui';
+
 const fontSizes = ['caption', 'body-sm', 'body-lg', 'subheading', 'heading-sm', 'heading', 'heading-lg', 'display'];
 const fontWeights = ['regular', 'medium', 'semibold', 'bold'];
 const fontFamilies = ['base', 'mono'];
@@ -26,7 +27,7 @@ export const TypographyDoc: React.FC = () => {
                     <TableBody>
                         {fontSizes.map(size => {
                             const cssVar = `--text-${size}`;
-                            return <TypographySizeRow key={size} size={size} cssVar={cssVar} />;
+                            return <TypographySizeRow key={size} size={size} cssVar={cssVar}/>;
                         })}
                     </TableBody>
                 </Table>
@@ -34,20 +35,20 @@ export const TypographyDoc: React.FC = () => {
 
             <section className="mb-10">
                 <h2 className="mt-12 mb-6">Font Weights</h2>
-                <div className="docs-foundation__grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '16px' }}>
+                <div className="docs-foundation__grid" style={{display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '16px'}}>
                     {fontWeights.map(weight => {
                         const cssVar = `--font-weight-${weight}`;
-                        return <TypographyCard key={weight} name={`font-weight-${weight}`} cssVar={cssVar} style={{ fontWeight: `var(${cssVar})` }} />;
+                        return <TypographyCard key={weight} name={`font-weight-${weight}`} cssVar={cssVar} style={{fontWeight: `var(${cssVar})`}}/>;
                     })}
                 </div>
             </section>
 
             <section className="mb-10">
                 <h2 className="mt-12 mb-6">Font Families</h2>
-                <div className="docs-foundation__grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '16px' }}>
+                <div className="docs-foundation__grid" style={{display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '16px'}}>
                     {fontFamilies.map(family => {
                         const cssVar = `--font-family-${family}`;
-                        return <TypographyCard key={family} name={`font-family-${family}`} cssVar={cssVar} style={{ fontFamily: `var(${cssVar})` }} />;
+                        return <TypographyCard key={family} name={`font-family-${family}`} cssVar={cssVar} style={{fontFamily: `var(${cssVar})`}}/>;
                     })}
                 </div>
             </section>
@@ -63,48 +64,48 @@ export const TypographyDoc: React.FC = () => {
                     </TableHead>
                     <TableBody>
                         <TableRow>
-                            <TableCell><code>&lt;h1&gt;</code></TableCell>
+                            <TableCell><Badge variant="secondary">&lt;h1&gt;</Badge></TableCell>
                             <TableCell><h1>Heading 1</h1></TableCell>
                         </TableRow>
                         <TableRow>
-                            <TableCell><code>&lt;h2&gt;</code></TableCell>
+                            <TableCell><Badge variant="secondary">&lt;h2&gt;</Badge></TableCell>
                             <TableCell><h2>Heading 2</h2></TableCell>
                         </TableRow>
                         <TableRow>
-                            <TableCell><code>&lt;h3&gt;</code></TableCell>
+                            <TableCell><Badge variant="secondary">&lt;h3&gt;</Badge></TableCell>
                             <TableCell><h3>Heading 3</h3></TableCell>
                         </TableRow>
                         <TableRow>
-                            <TableCell><code>&lt;h4&gt;</code></TableCell>
+                            <TableCell><Badge variant="secondary">&lt;h4&gt;</Badge></TableCell>
                             <TableCell><h4>Heading 4</h4></TableCell>
                         </TableRow>
                         <TableRow>
-                            <TableCell><code>&lt;h5&gt;</code></TableCell>
+                            <TableCell><Badge variant="secondary">&lt;h5&gt;</Badge></TableCell>
                             <TableCell><h5>Heading 5</h5></TableCell>
                         </TableRow>
                         <TableRow>
-                            <TableCell><code>&lt;h6&gt;</code></TableCell>
+                            <TableCell><Badge variant="secondary">&lt;h6&gt;</Badge></TableCell>
                             <TableCell><h6>Heading 6</h6></TableCell>
                         </TableRow>
                         <TableRow>
-                            <TableCell><code>&lt;p&gt;</code></TableCell>
+                            <TableCell><Badge variant="secondary">&lt;p&gt;</Badge></TableCell>
                             <TableCell><p>This is a standard paragraph. It should be used for body text and descriptive content throughout the application.</p></TableCell>
                         </TableRow>
                         <TableRow>
-                            <TableCell><code>&lt;small&gt;</code></TableCell>
+                            <TableCell><Badge variant="secondary">&lt;small&gt;</Badge></TableCell>
                             <TableCell><small>This is small text, often used for captions or fine print.</small></TableCell>
                         </TableRow>
                         <TableRow>
-                            <TableCell><code>&lt;strong&gt;</code></TableCell>
+                            <TableCell><Badge variant="secondary">&lt;strong&gt;</Badge></TableCell>
                             <TableCell><strong>Strong / Bold Text</strong></TableCell>
                         </TableRow>
                         <TableRow>
-                            <TableCell><code>&lt;a&gt;</code></TableCell>
+                            <TableCell><Badge variant="secondary">&lt;a&gt;</Badge></TableCell>
                             <TableCell><a href="#">Standard Link</a></TableCell>
                         </TableRow>
                         <TableRow>
-                            <TableCell><code>&lt;code&gt;</code></TableCell>
-                            <TableCell><code>console.log('hello world');</code></TableCell>
+                            <TableCell><Badge variant="secondary">&lt;code&gt;</Badge></TableCell>
+                            <TableCell><Badge variant="secondary">console.log('hello world');</Badge></TableCell>
                         </TableRow>
                     </TableBody>
                 </Table>
@@ -125,19 +126,28 @@ export const TypographyDoc: React.FC = () => {
                     </TableHead>
                     <TableBody>
                         <TableRow hover>
-                            <TableCell><code>.text-display</code></TableCell>
+                            <TableCell><Badge variant="secondary">.text-display</Badge></TableCell>
                             <TableCell>Applies the largest display text styling.</TableCell>
                             <TableCell><span className="text-display">Display</span></TableCell>
                         </TableRow>
                         <TableRow hover>
-                            <TableCell><code>.text-heading-lg</code></TableCell>
+                            <TableCell><Badge variant="secondary">.text-heading-lg</Badge></TableCell>
                             <TableCell>Applies the large heading text styling.</TableCell>
                             <TableCell><span className="text-heading-lg">Heading Lg</span></TableCell>
                         </TableRow>
                         <TableRow hover>
-                            <TableCell><code>.text-center</code></TableCell>
+                            <TableCell><Badge variant="secondary">.text-center</Badge></TableCell>
                             <TableCell>Centers the text horizontally.</TableCell>
-                            <TableCell><div className="text-center" style={{ width: '100%' }}>Centered</div></TableCell>
+                            <TableCell>
+                                <div className="text-center" style={{width: '100%'}}>Centered</div>
+                            </TableCell>
+                        </TableRow>
+                        <TableRow hover>
+                            <TableCell><Badge variant="secondary">.text-truncate</Badge></TableCell>
+                            <TableCell>Applies fast, single-line ellipsis clipping.</TableCell>
+                            <TableCell>
+                                <div className="text-truncate" style={{maxWidth: '120px'}}>This is a very long text that will truncate</div>
+                            </TableCell>
                         </TableRow>
                     </TableBody>
                 </Table>
@@ -146,7 +156,7 @@ export const TypographyDoc: React.FC = () => {
     );
 };
 
-const TypographySizeRow = ({ size, cssVar }: { size: string, cssVar: string }) => {
+const TypographySizeRow = ({size, cssVar}: { size: string, cssVar: string }) => {
     const [copied, setCopied] = useState(false);
     const [isHovered, setIsHovered] = useState(false);
     const handleCopy = () => {
@@ -156,31 +166,29 @@ const TypographySizeRow = ({ size, cssVar }: { size: string, cssVar: string }) =
     };
 
     return (
-        <TableRow 
-            onClick={handleCopy} 
-            style={{ cursor: 'pointer' }} 
-            hover 
+        <TableRow
+            onClick={handleCopy}
+            style={{cursor: 'pointer'}}
+            hover
             title={`Copy var(${cssVar})`}
             onMouseEnter={() => setIsHovered(true)}
             onMouseLeave={() => setIsHovered(false)}
         >
             <TableCell>text-{size}</TableCell>
             <TableCell>
-                <code style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                <Badge variant="secondary" style={{display: "inline-flex", alignItems: "center", gap: "8px"}}>
                     var({cssVar})
-                    <span style={{ 
-                        display: 'inline-flex', 
-                        width: '1em', 
-                        opacity: (copied || isHovered) ? 1 : 0, 
-                        transition: 'opacity 0.2s ease',
-                        color: copied ? 'var(--color-success)' : 'var(--color-text-secondary)'
+                    <span style={{
+                        opacity: (copied || isHovered) ? 1 : 0,
+                        transition: "opacity 0.2s ease",
+                        color: copied ? "var(--color-success)" : "inherit"
                     }}>
                         {copied ? <PiCheckBold/> : <PiCopy/>}
                     </span>
-                </code>
+                </Badge>
             </TableCell>
             <TableCell>
-                <span style={{ display: 'inline-block', paddingBottom: '0.2em', fontSize: `var(${cssVar})`, lineHeight: `var(--leading-${size})`, letterSpacing: `var(--tracking-${size})` }}>
+                <span style={{display: 'inline-block', paddingBottom: '0.2em', fontSize: `var(${cssVar})`, lineHeight: `var(--leading-${size})`, letterSpacing: `var(--tracking-${size})`}}>
                     Ag
                 </span>
             </TableCell>
@@ -188,7 +196,7 @@ const TypographySizeRow = ({ size, cssVar }: { size: string, cssVar: string }) =
     );
 }
 
-const TypographyCard = ({ name, cssVar, style }: { name: string, cssVar: string, style: React.CSSProperties }) => {
+const TypographyCard = ({name, cssVar, style}: { name: string, cssVar: string, style: React.CSSProperties }) => {
     const [copied, setCopied] = useState(false);
     const [isHovered, setIsHovered] = useState(false);
     const handleCopy = () => {
@@ -201,28 +209,28 @@ const TypographyCard = ({ name, cssVar, style }: { name: string, cssVar: string,
         <Card
             onClick={handleCopy}
             className="docs-foundation__card--interactive"
-            style={{ cursor: 'pointer' }}
+            style={{cursor: 'pointer'}}
             title={`Copy var(${cssVar})`}
             onMouseEnter={() => setIsHovered(true)}
             onMouseLeave={() => setIsHovered(false)}
         >
-            <div style={{ minHeight: 80, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                <span style={{ fontSize: 'var(--text-heading-sm)', ...style }}>Aa</span>
+            <div style={{minHeight: 80, display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
+                <span style={{fontSize: 'var(--text-heading-sm)', ...style}}>Aa</span>
             </div>
-            <div style={{ padding: '16px', borderTop: '1px solid var(--color-border-subtle)' }}>
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '4px' }}>
+            <div style={{padding: '16px', borderTop: '1px solid var(--color-border-subtle)'}}>
+                <div style={{display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '4px'}}>
                     <strong>{name}</strong>
-                    <span style={{ 
-                        display: 'inline-flex', 
-                        width: '1em', 
-                        opacity: (copied || isHovered) ? 1 : 0, 
+                    <span style={{
+                        display: 'inline-flex',
+                        width: '1em',
+                        opacity: (copied || isHovered) ? 1 : 0,
                         transition: 'opacity 0.2s ease',
                         color: copied ? 'var(--color-success)' : 'var(--color-text-secondary)'
                     }}>
                         {copied ? <PiCheckBold/> : <PiCopy/>}
                     </span>
                 </div>
-                <div style={{ color: 'var(--text-secondary)', fontSize: 'var(--text-body-sm)' }}>
+                <div style={{color: 'var(--text-secondary)', fontSize: 'var(--text-body-sm)'}}>
                     var({cssVar})
                 </div>
             </div>

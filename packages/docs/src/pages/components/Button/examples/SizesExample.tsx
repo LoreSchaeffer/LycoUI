@@ -12,10 +12,10 @@ export const vanillaHtml = `
 
 export default function SizesExample() {
     return (
-        <>
-                <Button size="sm">Small</Button>
-                <Button size="md">Base</Button>
-                <Button size="lg">Large</Button>
-        </>
+        <div className="d-flex" style={{gap: '1rem', flexWrap: 'wrap', alignItems: 'center'}}>
+            <Button size="sm">Small</Button>
+            <Button size="md">Base</Button>
+            <Button size="lg">Large</Button>
+        </div>
     );
 }

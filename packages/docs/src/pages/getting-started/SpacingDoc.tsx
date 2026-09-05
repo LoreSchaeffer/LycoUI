@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
-import { PiCheckBold, PiCopy } from 'react-icons/pi';
-import { Table, TableHead, TableBody, TableRow, TableCell, Code } from '@loreschaeffer/lyco-ui';
+import React, {useState} from 'react';
+import {PiCheckBold, PiCopy} from 'react-icons/pi';
+import {Badge, Code, Table, TableBody, TableCell, TableHead, TableRow} from '@loreschaeffer/lyco-ui';
+
 const spacingSteps = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '12', '14', '16', '20', '24', '32'];
 
 export const SpacingDoc: React.FC = () => {
@@ -23,7 +24,7 @@ export const SpacingDoc: React.FC = () => {
                     <TableBody>
                         {spacingSteps.map(step => {
                             const cssVar = `--spacing-${step}`;
-                            return <SpacingRow key={step} step={step} cssVar={cssVar} />;
+                            return <SpacingRow key={step} step={step} cssVar={cssVar}/>;
                         })}
                     </TableBody>
                 </Table>
@@ -33,13 +34,13 @@ export const SpacingDoc: React.FC = () => {
                 <h2 className="mt-12 mb-6">Spacing Utilities</h2>
                 <p className="text-secondary mb-6">
                     LycoUI provides a set of zero-runtime global utility classes for margins and paddings.
-                    The naming convention follows the pattern <code>.{'{prefix}'}{'{direction}'}-{'{step}'}</code>.
+                    The naming convention follows the pattern <Badge variant="secondary">.{'{prefix}'}{'{direction}'}-{'{step}'}</Badge>.
                 </p>
 
                 <ul className="text-secondary mb-6 ml-6">
-                    <li><strong>Prefix:</strong> <code>m</code> for margin, <code>p</code> for padding.</li>
+                    <li><strong>Prefix:</strong> <Badge variant="secondary">m</Badge> for margin, <Badge variant="secondary">p</Badge> for padding.</li>
                     <li><strong>Direction:</strong> Specifies the sides to apply the spacing to (see table below).</li>
-                    <li><strong>Step:</strong> A number from <code>1</code> to <code>12</code> matching our spacing scale.</li>
+                    <li><strong>Step:</strong> A number from <Badge variant="secondary">1</Badge> to <Badge variant="secondary">12</Badge> matching our spacing scale.</li>
                 </ul>
 
                 <div className="mb-8">
@@ -54,46 +55,46 @@ export const SpacingDoc: React.FC = () => {
                         </TableHead>
                         <TableBody>
                             <TableRow>
-                                <TableCell><code>m-*</code> / <code>p-*</code></TableCell>
+                                <TableCell><Badge variant="secondary">m-*</Badge> / <Badge variant="secondary">p-*</Badge></TableCell>
                                 <TableCell>All sides</TableCell>
-                                <TableCell><code>margin</code> / <code>padding</code></TableCell>
-                                <TableCell><code>m-4</code>, <code>p-4</code></TableCell>
+                                <TableCell><Badge variant="secondary">margin</Badge> / <Badge variant="secondary">padding</Badge></TableCell>
+                                <TableCell><Badge variant="secondary">m-4</Badge>, <Badge variant="secondary">p-4</Badge></TableCell>
                             </TableRow>
                             <TableRow>
-                                <TableCell><code>mt-*</code> / <code>pt-*</code></TableCell>
+                                <TableCell><Badge variant="secondary">mt-*</Badge> / <Badge variant="secondary">pt-*</Badge></TableCell>
                                 <TableCell>Top</TableCell>
-                                <TableCell><code>margin-top</code> / <code>padding-top</code></TableCell>
-                                <TableCell><code>mt-2</code>, <code>pt-2</code></TableCell>
+                                <TableCell><Badge variant="secondary">margin-top</Badge> / <Badge variant="secondary">padding-top</Badge></TableCell>
+                                <TableCell><Badge variant="secondary">mt-2</Badge>, <Badge variant="secondary">pt-2</Badge></TableCell>
                             </TableRow>
                             <TableRow>
-                                <TableCell><code>mb-*</code> / <code>pb-*</code></TableCell>
+                                <TableCell><Badge variant="secondary">mb-*</Badge> / <Badge variant="secondary">pb-*</Badge></TableCell>
                                 <TableCell>Bottom</TableCell>
-                                <TableCell><code>margin-bottom</code> / <code>padding-bottom</code></TableCell>
-                                <TableCell><code>mb-6</code>, <code>pb-6</code></TableCell>
+                                <TableCell><Badge variant="secondary">margin-bottom</Badge> / <Badge variant="secondary">padding-bottom</Badge></TableCell>
+                                <TableCell><Badge variant="secondary">mb-6</Badge>, <Badge variant="secondary">pb-6</Badge></TableCell>
                             </TableRow>
                             <TableRow>
-                                <TableCell><code>ml-*</code> / <code>pl-*</code></TableCell>
+                                <TableCell><Badge variant="secondary">ml-*</Badge> / <Badge variant="secondary">pl-*</Badge></TableCell>
                                 <TableCell>Left</TableCell>
-                                <TableCell><code>margin-left</code> / <code>padding-left</code></TableCell>
-                                <TableCell><code>ml-3</code>, <code>pl-3</code></TableCell>
+                                <TableCell><Badge variant="secondary">margin-left</Badge> / <Badge variant="secondary">padding-left</Badge></TableCell>
+                                <TableCell><Badge variant="secondary">ml-3</Badge>, <Badge variant="secondary">pl-3</Badge></TableCell>
                             </TableRow>
                             <TableRow>
-                                <TableCell><code>mr-*</code> / <code>pr-*</code></TableCell>
+                                <TableCell><Badge variant="secondary">mr-*</Badge> / <Badge variant="secondary">pr-*</Badge></TableCell>
                                 <TableCell>Right</TableCell>
-                                <TableCell><code>margin-right</code> / <code>padding-right</code></TableCell>
-                                <TableCell><code>mr-3</code>, <code>pr-3</code></TableCell>
+                                <TableCell><Badge variant="secondary">margin-right</Badge> / <Badge variant="secondary">padding-right</Badge></TableCell>
+                                <TableCell><Badge variant="secondary">mr-3</Badge>, <Badge variant="secondary">pr-3</Badge></TableCell>
                             </TableRow>
                             <TableRow>
-                                <TableCell><code>mx-*</code> / <code>px-*</code></TableCell>
+                                <TableCell><Badge variant="secondary">mx-*</Badge> / <Badge variant="secondary">px-*</Badge></TableCell>
                                 <TableCell>Horizontal (X-axis)</TableCell>
                                 <TableCell>left & right</TableCell>
-                                <TableCell><code>mx-auto</code>, <code>px-5</code></TableCell>
+                                <TableCell><Badge variant="secondary">mx-auto</Badge>, <Badge variant="secondary">px-5</Badge></TableCell>
                             </TableRow>
                             <TableRow>
-                                <TableCell><code>my-*</code> / <code>py-*</code></TableCell>
+                                <TableCell><Badge variant="secondary">my-*</Badge> / <Badge variant="secondary">py-*</Badge></TableCell>
                                 <TableCell>Vertical (Y-axis)</TableCell>
                                 <TableCell>top & bottom</TableCell>
-                                <TableCell><code>my-8</code>, <code>py-8</code></TableCell>
+                                <TableCell><Badge variant="secondary">my-8</Badge>, <Badge variant="secondary">py-8</Badge></TableCell>
                             </TableRow>
                         </TableBody>
                     </Table>
@@ -108,7 +109,7 @@ export const SpacingDoc: React.FC = () => {
     );
 };
 
-const SpacingRow = ({ step, cssVar }: { step: string; cssVar: string }) => {
+const SpacingRow = ({step, cssVar}: { step: string; cssVar: string }) => {
     const [copied, setCopied] = useState(false);
     const [isHovered, setIsHovered] = useState(false);
 
@@ -121,7 +122,7 @@ const SpacingRow = ({ step, cssVar }: { step: string; cssVar: string }) => {
     return (
         <TableRow
             onClick={handleCopy}
-            style={{ cursor: 'pointer' }}
+            style={{cursor: 'pointer'}}
             hover
             title={`Copy var(${cssVar})`}
             onMouseEnter={() => setIsHovered(true)}
@@ -129,21 +130,19 @@ const SpacingRow = ({ step, cssVar }: { step: string; cssVar: string }) => {
         >
             <TableCell>spacing-{step}</TableCell>
             <TableCell>
-                <code style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                <Badge variant="secondary" style={{display: "inline-flex", alignItems: "center", gap: "8px"}}>
                     var({cssVar})
                     <span style={{
-                        display: 'inline-flex',
-                        width: '1em',
                         opacity: (copied || isHovered) ? 1 : 0,
-                        transition: 'opacity 0.2s ease',
-                        color: copied ? 'var(--color-success)' : 'var(--color-text-secondary)'
+                        transition: "opacity 0.2s ease",
+                        color: copied ? "var(--color-success)" : "inherit"
                     }}>
                         {copied ? <PiCheckBold/> : <PiCopy/>}
                     </span>
-                </code>
+                </Badge>
             </TableCell>
             <TableCell>
-                <div style={{ width: `var(${cssVar})`, height: '24px', backgroundColor: 'var(--color-primary)', borderRadius: 'var(--radius-sm)' }} />
+                <div style={{width: `var(${cssVar})`, height: '24px', backgroundColor: 'var(--color-primary)', borderRadius: 'var(--radius-sm)'}}/>
             </TableCell>
         </TableRow>
     );

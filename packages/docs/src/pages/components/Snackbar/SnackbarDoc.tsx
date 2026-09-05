@@ -15,6 +15,8 @@ export default function SnackbarDoc() {
             <DocTemplate
                 title="Snackbar"
                 description="A floating, auto-dismissible alert for brief messages."
+                importCode="import { Snackbar } from '@loreschaeffer/lyco-ui';"
+                a11yNotes={`Uses \`role="status"\` (ARIA live region) to announce temporary messages without interrupting the user's workflow.`}
                 exampleModules={exampleModules}
                 rawSources={rawSources as Record<string, string>}
                 apiConfig={apiConfig}

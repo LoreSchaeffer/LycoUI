@@ -1,55 +1,52 @@
-$bp-md: 768px;
-
 .docs-code-example {
   margin-bottom: var(--spacing-10);
-  width: 100%;
-  min-width: 0;
 
   &__title {
-    font-size: var(--font-size-xl);
-    font-weight: 600;
-    margin-bottom: var(--spacing-2);
-    color: var(--color-text-primary);
+    margin-bottom: var(--spacing-4);
   }
 
   &__description {
+    margin-bottom: var(--spacing-6);
     color: var(--color-text-secondary);
-    margin-bottom: var(--spacing-4);
-    line-height: 1.6;
-    font-size: var(--font-size-base);
+  }
+
+  &__container {
+    border: 1px solid var(--color-border-subtle);
+    border-radius: var(--radius-xl);
+    overflow: hidden;
+    background-color: var(--surface-base);
   }
 
   &__preview {
-    padding: var(--spacing-4);
-    border: 1px solid var(--color-border-base);
-    border-top-left-radius: var(--radius-lg);
-    border-top-right-radius: var(--radius-lg);
-    background-color: var(--color-bg-base);
-
-    @media (min-width: $bp-md) {
-      padding: var(--spacing-6);
-    }
+    padding: var(--spacing-8);
 
     &.layout-row {
       display: flex;
-      flex-wrap: wrap;
+      flex-direction: row;
       gap: var(--spacing-4);
-      align-items: center;
+      align-items: flex-start;
+      flex-wrap: wrap;
     }
 
     &.layout-column {
       display: flex;
       flex-direction: column;
       gap: var(--spacing-4);
-      align-items: flex-start;
     }
+  }
 
-    // Full-width components should always stretch inside the preview
-    .table,
-    .table-responsive,
-    .data-table {
-      width: 100%;
-      flex: 1 1 100%;
+  &__bottom-section {
+    background-color: var(--color-obsidian, var(--color-bg-root));
+    border-top: 1px solid var(--color-border-subtle);
+
+    // Forcefully override the LycoUI inner code block structural styles
+    .code, .code--block, .code-wrapper, .lyco-code {
+      margin: 0 !important;
+      border: none !important;
+      border-top-left-radius: 0 !important;
+      border-top-right-radius: 0 !important;
+      box-shadow: none !important;
+      background: transparent !important;
     }
   }
 
@@ -57,98 +54,37 @@ $bp-md: 768px;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    border-left: 1px solid var(--color-border-base);
-    border-right: 1px solid var(--color-border-base);
-    border-bottom: 1px solid var(--color-border-base);
-    background-color: var(--color-bg-surface);
-  }
+    padding: 0 var(--spacing-4);
+    background-color: transparent;
 
-  &__tabs {
-    display: flex;
-  }
-
-  &__tab {
-    padding: var(--spacing-2) var(--spacing-4);
-    color: var(--color-text-secondary);
-    border-bottom: 2px solid transparent;
-    font-weight: 400;
-    font-size: var(--font-size-sm);
-    transition: all var(--duration-fast) var(--ease-default);
-
-    &:hover {
-      color: var(--color-text-primary);
-      background-color: rgba(255, 255, 255, 0.02);
-    }
-
-    &.is-active {
-      color: var(--color-primary);
-      border-bottom-color: var(--color-primary);
-      font-weight: 500;
-    }
+    /* Add a subtle bottom border if desired, or let it merge completely */
+    /* The prompt asked to "Remove the border *between* the Toolbar and the Code block." */
   }
 
   &__copy {
-    padding: var(--spacing-2) var(--spacing-4);
+    background: transparent;
+    border: none;
     color: var(--color-text-secondary);
-    font-size: var(--font-size-lg);
+    cursor: pointer;
+    padding: var(--spacing-2);
     display: flex;
     align-items: center;
     justify-content: center;
-    transition: color var(--duration-fast) var(--ease-default);
+    border-radius: var(--radius-md);
+    transition: color var(--duration-fast) ease, background-color var(--duration-fast) ease;
 
     &:hover {
-      color: var(--color-text-primary);
+      color: var(--color-text);
+      background-color: var(--surface-hover);
     }
 
-    .text-green {
-      color: var(--color-green);
+    &:focus-visible {
+      outline: 2px solid var(--color-primary);
+      outline-offset: 2px;
     }
   }
 
   &__code-wrapper {
-    background-color: #0d1117;
-    border: 1px solid var(--color-border-base);
-    border-top: none;
-    border-bottom-left-radius: var(--radius-lg);
-    border-bottom-right-radius: var(--radius-lg);
-    overflow-x: auto;
-    max-width: 100%;
-  }
-
-  &__pre {
-    margin: 0;
-    padding: var(--spacing-4);
-    color: #c9d1d9;
-    font-size: var(--font-size-sm);
-    line-height: 1.5;
-    white-space: pre-wrap;
-    word-break: break-all;
-
-    @media (min-width: $bp-md) {
-      white-space: pre;
-      word-break: normal;
-    }
-  }
-
-  .docs-shiki-wrapper {
-    pre.shiki {
-      margin: 0;
-      padding: var(--spacing-4);
-      background-color: transparent !important;
-      font-size: var(--font-size-sm);
-      line-height: 1.5;
-      white-space: pre-wrap;
-      word-break: break-all;
-
-      @media (min-width: $bp-md) {
-        white-space: pre;
-        word-break: normal;
-      }
-    }
-
-    code {
-      font-family: var(--font-family-mono);
-    }
+    background-color: transparent;
   }
 }
-

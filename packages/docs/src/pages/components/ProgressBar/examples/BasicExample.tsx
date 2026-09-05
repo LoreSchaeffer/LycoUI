@@ -1,4 +1,4 @@
-import { Col, ProgressBar, Row } from '@loreschaeffer/lyco-ui';
+import {Col, ProgressBar, Row} from '@loreschaeffer/lyco-ui';
 
 export const title = 'Basic Progress';
 export const description = <p>A simple progress bar to indicate task completion. Use <code>value</code> and <code>max</code> to determine the percentage.</p>;
@@ -14,16 +14,16 @@ export const vanillaHtml = `
 `;
 
 export default function BasicExample() {
-  return (
-    <Row>
-      <Col span={6} className="mb-8">
-        <div className="text-sm fw-bold mb-2 text-secondary">Downloading... (45%)</div>
-        <ProgressBar value={45} max={100} />
-      </Col>
-      <Col span={6}>
-        <div className="text-sm fw-bold mb-2 text-secondary">Uploading... (80%)</div>
-        <ProgressBar value={80} max={100} />
-      </Col>
-    </Row>
-  );
+    return (
+        <Row>
+            <Col span={6} className="mb-8">
+                <div className="text-sm fw-bold mb-2 text-secondary">Downloading... (45%)</div>
+                <ProgressBar value={45} max={100}/>
+            </Col>
+            <Col span={6}>
+                <div className="text-sm fw-bold mb-2 text-secondary">Uploading... (80%)</div>
+                <ProgressBar value={80} max={100}/>
+            </Col>
+        </Row>
+    );
 }

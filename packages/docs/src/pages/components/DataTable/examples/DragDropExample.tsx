@@ -1,5 +1,5 @@
-import { useState, useCallback } from 'react';
-import { DataTable, type DataTableColumn } from '@loreschaeffer/lyco-ui';
+import {useCallback, useState} from 'react';
+import {DataTable, type DataTableColumn} from '@loreschaeffer/lyco-ui';
 
 interface Step {
     id: number;
@@ -8,20 +8,20 @@ interface Step {
 }
 
 const initialSteps: Step[] = [
-    { id: 1, step: 'Gather requirements', description: 'Collect specs from stakeholders' },
-    { id: 2, step: 'Design mockups', description: 'Create wireframes and visual designs' },
-    { id: 3, step: 'Set up project', description: 'Initialize repository and tooling' },
-    { id: 4, step: 'Implement core', description: 'Build the main functionality' },
-    { id: 5, step: 'Write tests', description: 'Add unit and integration tests' },
-    { id: 6, step: 'Deploy to staging', description: 'Push to staging environment' },
-    { id: 7, step: 'QA review', description: 'Quality assurance testing' },
-    { id: 8, step: 'Deploy to production', description: 'Release to end users' },
+    {id: 1, step: 'Gather requirements', description: 'Collect specs from stakeholders'},
+    {id: 2, step: 'Design mockups', description: 'Create wireframes and visual designs'},
+    {id: 3, step: 'Set up project', description: 'Initialize repository and tooling'},
+    {id: 4, step: 'Implement core', description: 'Build the main functionality'},
+    {id: 5, step: 'Write tests', description: 'Add unit and integration tests'},
+    {id: 6, step: 'Deploy to staging', description: 'Push to staging environment'},
+    {id: 7, step: 'QA review', description: 'Quality assurance testing'},
+    {id: 8, step: 'Deploy to production', description: 'Release to end users'},
 ];
 
 const columns: DataTableColumn<Step>[] = [
-    { id: 'id', header: 'No.', minWidth: '4rem' },
-    { id: 'step', header: 'Step Name', minWidth: '12rem' },
-    { id: 'description', header: 'Description', minWidth: '16rem' },
+    {id: 'id', header: 'No.', minWidth: '4rem'},
+    {id: 'step', header: 'Step Name', minWidth: '12rem'},
+    {id: 'description', header: 'Description', minWidth: '16rem'},
 ];
 
 export const title = 'Drag & Drop Reorder';
@@ -44,7 +44,7 @@ export default function DragDropExample() {
             const [moved] = next.splice(sourceIndex, 1);
             next.splice(destIndex, 0, moved);
             // Renumber steps
-            return next.map((item, i) => ({ ...item, id: i + 1 }));
+            return next.map((item, i) => ({...item, id: i + 1}));
         });
     }, []);
 

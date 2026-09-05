@@ -3,6 +3,9 @@ import {createElement, type CSSProperties, forwardRef, type HTMLAttributes, memo
 import clsx from 'clsx';
 import type {FullVariant} from '../../types/types.ts';
 
+/**
+ * Props for the Table component.
+ */
 export interface TableProps extends HTMLAttributes<HTMLTableElement> {
     /** Contextual variant color for the entire table */
     variant?: FullVariant;
@@ -18,6 +21,10 @@ export interface TableProps extends HTMLAttributes<HTMLTableElement> {
     size?: 'sm' | 'md';
 }
 
+/**
+ * Table component.
+ * A UI component for LycoUI.
+ */
 export const Table = forwardRef<HTMLTableElement, TableProps>((
     {
         variant,
@@ -57,18 +64,33 @@ export const Table = forwardRef<HTMLTableElement, TableProps>((
     );
 });
 Table.displayName = 'Table';
+
+/**
+ * TableHead component.
+ * A UI component for LycoUI.
+ */
 export const TableHead = memo(forwardRef<HTMLTableSectionElement, HTMLAttributes<HTMLTableSectionElement>>((
     {className, ...props}, ref
 ) => (
     <thead ref={ref} className={className} {...props} />
 )));
 TableHead.displayName = 'TableHead';
+
+/**
+ * TableBody component.
+ * A UI component for LycoUI.
+ */
 export const TableBody = memo(forwardRef<HTMLTableSectionElement, HTMLAttributes<HTMLTableSectionElement>>((
     {className, ...props}, ref
 ) => (
     <tbody ref={ref} className={className} {...props} />
 )));
 TableBody.displayName = 'TableBody';
+
+/**
+ * TableFoot component.
+ * A UI component for LycoUI.
+ */
 export const TableFoot = memo(forwardRef<HTMLTableSectionElement, HTMLAttributes<HTMLTableSectionElement>>((
     {className, ...props}, ref
 ) => (
@@ -76,18 +98,25 @@ export const TableFoot = memo(forwardRef<HTMLTableSectionElement, HTMLAttributes
 )));
 TableFoot.displayName = 'TableFoot';
 
+/**
+ * Props for the TableRow component.
+ */
 export interface TableRowProps extends HTMLAttributes<HTMLTableRowElement> {
     /** Contextual variant color for the row */
     variant?: FullVariant;
+    /** Enables hover effect on the row */
     hover?: boolean;
 }
 
+/**
+ * TableRow component.
+ */
 export const TableRow = memo(forwardRef<HTMLTableRowElement, TableRowProps>((
-    {variant, className, style, ...props}, ref
+    {variant, hover, className, style, ...props}, ref
 ) => (
     <tr
         ref={ref}
-        className={clsx(variant && 'table-variant', className)}
+        className={clsx(variant && 'table-variant', hover && 'table-hover', className)}
         style={variant ? {
             '--table-color-base': `var(--${variant}-500, var(--color-${variant}))`,
             ...style
@@ -97,6 +126,9 @@ export const TableRow = memo(forwardRef<HTMLTableRowElement, TableRowProps>((
 )));
 TableRow.displayName = 'TableRow';
 
+/**
+ * Props for the TableCell component.
+ */
 export interface TableCellProps extends TdHTMLAttributes<HTMLTableCellElement> {
     /** Contextual variant color for the cell */
     variant?: FullVariant;
@@ -108,6 +140,10 @@ export interface TableCellProps extends TdHTMLAttributes<HTMLTableCellElement> {
     scope?: string;
 }
 
+/**
+ * TableCell component.
+ * A UI component for LycoUI.
+ */
 export const TableCell = memo(forwardRef<HTMLTableCellElement, TableCellProps>((
     {variant, isHeader, as: tag, scope, className, style, ...props}, ref
 ) => {

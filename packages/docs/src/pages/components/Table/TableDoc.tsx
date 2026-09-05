@@ -1,5 +1,5 @@
-import { DocTemplate } from '../../../components/DocTemplate';
-import { apiConfig } from './api';
+import {DocTemplate} from '../../../components/DocTemplate';
+import {apiConfig} from './api';
 // No specific example imports needed, handled by import.meta.glob
 
 const exampleModules = import.meta.glob('./examples/*.tsx', {eager: true});
@@ -15,6 +15,8 @@ export default function TableDoc() {
             title="Table"
             description="Documentation and examples for the Table component, a responsive and customizable tabular data viewer."
             apiConfig={apiConfig}
+            importCode="import { Table } from '@loreschaeffer/lyco-ui';"
+            a11yNotes={`Built on native semantic HTML \`<table>\`. Uses \`<th scope="col">\` and \`<th scope="row">\` for clear structural announcements in screen readers.`}
             exampleModules={exampleModules}
             rawSources={rawSources as Record<string, string>}
         />

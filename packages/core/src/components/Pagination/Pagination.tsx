@@ -4,16 +4,29 @@ import clsx from 'clsx';
 import type {FullVariant, SizeVariant} from '../../types/types.ts';
 import {getContrastColor} from '../../utils/theme.ts';
 
+/**
+ * Props for the Pagination component.
+ */
 export interface PaginationProps extends Omit<HTMLAttributes<HTMLElement>, 'onChange'> {
+    /** Style variant of the pagination */
     variant?: 'standard' | 'compact';
+    /** The current active page (1-indexed) */
     currentPage: number;
+    /** Total number of pages available */
     totalPages: number;
+    /** Callback fired when a page is selected */
     onChange?: (page: number) => void;
+    /** Size of the pagination controls */
     size?: SizeVariant;
+    /** Semantic color variant */
     colorVariant?: FullVariant;
+    /** Custom previous page icon */
     prevIcon?: ReactNode;
+    /** Custom next page icon */
     nextIcon?: ReactNode;
+    /** Number of sibling pages to show on each side of current page */
     siblingCount?: number;
+    /** If true, disables the pagination completely */
     disabled?: boolean;
 }
 
@@ -29,6 +42,10 @@ const ChevronRight = () => (
     </svg>
 );
 
+/**
+ * Pagination component.
+ * A UI component for LycoUI.
+ */
 export const Pagination = forwardRef<HTMLElement, PaginationProps>((
     {
         variant = 'standard',

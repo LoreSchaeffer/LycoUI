@@ -1,5 +1,5 @@
 import React from 'react';
-import { Table, TableHead, TableBody, TableRow, TableCell, Badge, Row, Col } from '@loreschaeffer/lyco-ui';
+import {Badge, Col, Row, Table, TableBody, TableCell, TableHead, TableRow} from '@loreschaeffer/lyco-ui';
 
 export const title = 'Data Table with Users';
 export const description = <p>A clean, linear-style table optimized for readability. It uses <code>hover</code> by default to help users track rows, and removes vertical borders for a cleaner aesthetic.</p>;
@@ -76,13 +76,23 @@ export default function StandardExample() {
                     <TableBody>
                         <TableRow>
                             <TableCell>
-                                <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
-                                    <div style={{ width: '2rem', height: '2rem', borderRadius: '50%', background: 'var(--color-surface-elevated)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '0.75rem', fontWeight: 'bold' }}>
+                                <div style={{display: 'flex', alignItems: 'center', gap: '0.75rem'}}>
+                                    <div style={{
+                                        width: '2rem',
+                                        height: '2rem',
+                                        borderRadius: '50%',
+                                        background: 'var(--color-surface-elevated)',
+                                        display: 'flex',
+                                        alignItems: 'center',
+                                        justifyContent: 'center',
+                                        fontSize: '0.75rem',
+                                        fontWeight: 'bold'
+                                    }}>
                                         JD
                                     </div>
                                     <div>
-                                        <div style={{ fontWeight: 500 }}>John Doe</div>
-                                        <div style={{ fontSize: '0.75rem', color: 'var(--color-text-muted)' }}>john@example.com</div>
+                                        <div style={{fontWeight: 500}}>John Doe</div>
+                                        <div style={{fontSize: '0.75rem', color: 'var(--color-text-muted)'}}>john@example.com</div>
                                     </div>
                                 </div>
                             </TableCell>
@@ -94,13 +104,23 @@ export default function StandardExample() {
                         </TableRow>
                         <TableRow>
                             <TableCell>
-                                <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
-                                    <div style={{ width: '2rem', height: '2rem', borderRadius: '50%', background: 'var(--color-surface-elevated)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '0.75rem', fontWeight: 'bold' }}>
+                                <div style={{display: 'flex', alignItems: 'center', gap: '0.75rem'}}>
+                                    <div style={{
+                                        width: '2rem',
+                                        height: '2rem',
+                                        borderRadius: '50%',
+                                        background: 'var(--color-surface-elevated)',
+                                        display: 'flex',
+                                        alignItems: 'center',
+                                        justifyContent: 'center',
+                                        fontSize: '0.75rem',
+                                        fontWeight: 'bold'
+                                    }}>
                                         AS
                                     </div>
                                     <div>
-                                        <div style={{ fontWeight: 500 }}>Alice Smith</div>
-                                        <div style={{ fontSize: '0.75rem', color: 'var(--color-text-muted)' }}>alice@example.com</div>
+                                        <div style={{fontWeight: 500}}>Alice Smith</div>
+                                        <div style={{fontSize: '0.75rem', color: 'var(--color-text-muted)'}}>alice@example.com</div>
                                     </div>
                                 </div>
                             </TableCell>
@@ -112,13 +132,23 @@ export default function StandardExample() {
                         </TableRow>
                         <TableRow>
                             <TableCell>
-                                <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
-                                    <div style={{ width: '2rem', height: '2rem', borderRadius: '50%', background: 'var(--color-surface-elevated)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '0.75rem', fontWeight: 'bold' }}>
+                                <div style={{display: 'flex', alignItems: 'center', gap: '0.75rem'}}>
+                                    <div style={{
+                                        width: '2rem',
+                                        height: '2rem',
+                                        borderRadius: '50%',
+                                        background: 'var(--color-surface-elevated)',
+                                        display: 'flex',
+                                        alignItems: 'center',
+                                        justifyContent: 'center',
+                                        fontSize: '0.75rem',
+                                        fontWeight: 'bold'
+                                    }}>
                                         RJ
                                     </div>
                                     <div>
-                                        <div style={{ fontWeight: 500 }}>Robert Jones</div>
-                                        <div style={{ fontSize: '0.75rem', color: 'var(--color-text-muted)' }}>robert@example.com</div>
+                                        <div style={{fontWeight: 500}}>Robert Jones</div>
+                                        <div style={{fontSize: '0.75rem', color: 'var(--color-text-muted)'}}>robert@example.com</div>
                                     </div>
                                 </div>
                             </TableCell>

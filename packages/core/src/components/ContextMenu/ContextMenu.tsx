@@ -4,14 +4,25 @@ import type {ContextMenuItemDef} from './ContextMenuContext';
 import {ContextMenuItem} from './ContextMenuItem';
 import './ContextMenu.scss';
 
+/**
+ * Props for the ContextMenu component.
+ */
 export interface ContextMenuProps extends React.HTMLAttributes<HTMLUListElement> {
+    /** List of items to display in the menu */
     items: ContextMenuItemDef[];
+    /** X coordinate for the menu's position */
     x: number | string;
+    /** Y coordinate for the menu's position */
     y: number | string;
+    /** Callback fired when the menu should close */
     onClose: () => void;
+    /** True if this is the root context menu, determining boundary checks */
     isRoot?: boolean;
 }
 
+/**
+ * ContextMenu component.
+ */
 export const ContextMenu = React.forwardRef<HTMLUListElement, ContextMenuProps>(
     ({items, x, y, onClose, isRoot = false, ...props}, ref) => {
         const internalRef = useRef<HTMLUListElement>(null);

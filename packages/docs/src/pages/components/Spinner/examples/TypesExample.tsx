@@ -11,9 +11,9 @@ export const vanillaHtml = `
 
 export default function TypesExample() {
     return (
-        <>
+        <div className="d-flex flex-wrap gap-4 align-items-center">
             <Spinner type="classic"/>
             <Spinner type="growing"/>
-        </>
+        </div>
     )
 }

@@ -1,4 +1,4 @@
-import { Navbar } from '@loreschaeffer/lyco-ui';
+import {Navbar} from '@loreschaeffer/lyco-ui';
 import React from 'react';
 
 export const title = 'Centered Brand';
@@ -35,18 +35,18 @@ export const vanillaHtml = `
 export default function CenteredBrandExample() {
     return (
         <Navbar expand="lg">
-            <Navbar.Toggle />
-            
+            <Navbar.Toggle/>
+
             <Navbar.Brand href="#" centered>
                 LycoUI
             </Navbar.Brand>
-            
+
             <Navbar.Collapse>
                 <Navbar.Nav align="start">
                     <Navbar.Item><Navbar.Link href="#">Men</Navbar.Link></Navbar.Item>
                     <Navbar.Item><Navbar.Link href="#">Women</Navbar.Link></Navbar.Item>
                 </Navbar.Nav>
-                
+
                 <Navbar.Nav align="end">
                     <Navbar.Item><Navbar.Link href="#">Account</Navbar.Link></Navbar.Item>
                     <Navbar.Item><Navbar.Link href="#">Cart (0)</Navbar.Link></Navbar.Item>

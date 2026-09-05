@@ -1,7 +1,13 @@
 import {getContrastColor} from '../../utils/theme';
 
+/**
+ * SnackbarDurationVanilla.
+ */
 export type SnackbarDurationVanilla = 'short' | 'medium' | 'long' | number;
 
+/**
+ * VanillaSnackbarOptions.
+ */
 export interface VanillaSnackbarOptions {
     message: string | HTMLElement;
     variant?: string;
@@ -33,6 +39,20 @@ function parseSafeSvg(svgString: string): SVGSVGElement | null {
 class LycoSnackbarManager {
     private stackContainer: HTMLDivElement | null = null;
     private snackbarCount = 0;
+    private activeSnackbars: Map<string, { el: HTMLDivElement, closeHandler: () => void, timerId?: number, exitTimerId?: number }> = new Map();
+
+    public destroy(): void {
+        this.activeSnackbars.forEach((data) => {
+            if (data.timerId) window.clearTimeout(data.timerId);
+            if (data.exitTimerId) window.clearTimeout(data.exitTimerId);
+            data.el.remove();
+        });
+        this.activeSnackbars.clear();
+        if (this.stackContainer) {
+            this.stackContainer.remove();
+            this.stackContainer = null;
+        }
+    }
 
     private ensureStackContainer(): HTMLDivElement {
         if (!this.stackContainer) {
@@ -49,7 +69,7 @@ class LycoSnackbarManager {
         const id = `snackbar-${++this.snackbarCount}`;
 
         const snackbar = document.createElement('div');
-        const variant = options.variant || 'neutral';
+        const variant = options.variant || 'secondary';
         snackbar.className = 'snackbar';
         snackbar.style.setProperty('--snackbar-color-base', `var(--${variant}-500, var(--color-${variant}))`);
         snackbar.style.setProperty('--snackbar-color-contrast', getContrastColor(variant));
@@ -86,19 +106,25 @@ class LycoSnackbarManager {
 
         let closeBtn: HTMLButtonElement | null = null;
         let timerId: number | undefined;
+        let exitTimerId: number | undefined;
 
         const closeHandler = () => {
+            const active = this.activeSnackbars.get(id);
+            if (active && active.timerId) window.clearTimeout(active.timerId);
             if (timerId) window.clearTimeout(timerId);
             if (closeBtn) closeBtn.removeEventListener('click', closeHandler);
 
             snackbar.classList.add('is-exiting');
-            window.setTimeout(() => {
+            exitTimerId = window.setTimeout(() => {
                 snackbar.remove();
+                this.activeSnackbars.delete(id);
                 if (stack.children.length === 0) {
                     stack.remove();
                     this.stackContainer = null;
                 }
             }, 300);
+
+            if (active) active.exitTimerId = exitTimerId;
         };
 
         if (options.closable) {
@@ -124,6 +150,8 @@ class LycoSnackbarManager {
         timerId = window.setTimeout(() => {
             closeHandler();
         }, durationMs);
+
+        this.activeSnackbars.set(id, {el: snackbar, closeHandler, timerId});
 
         return id;
     }

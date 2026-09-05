@@ -3,13 +3,23 @@ import React, {type CSSProperties, forwardRef, memo} from 'react';
 import clsx from 'clsx';
 import type {FullVariant, SizeVariant} from '../../types/types';
 
+/**
+ * ProgressBarProps.
+ */
 export interface ProgressBarProps extends React.HTMLAttributes<HTMLDivElement> {
+    /** The current progress value */
     value?: number;
+    /** The maximum progress value */
     max?: number;
+    /** Semantic color variant */
     variant?: FullVariant;
+    /** Height size of the progress bar */
     size?: SizeVariant;
 }
 
+/**
+ * ProgressBar component.
+ */
 export const ProgressBar = memo(forwardRef<HTMLDivElement, ProgressBarProps>(
     (
         {

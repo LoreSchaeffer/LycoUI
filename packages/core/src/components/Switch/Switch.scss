@@ -1,0 +1,112 @@
+.switch {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-2);
+  cursor: pointer;
+  position: relative;
+  font-family: var(--font-family-base);
+  font-size: var(--font-size-base);
+  color: var(--color-text-primary);
+  line-height: 1.4;
+
+  // Default (md) sizes
+  --switch-width: 2.25rem;
+  --switch-height: 1.25rem;
+  --switch-thumb-size: 1rem;
+  --switch-thumb-offset: 1px;
+
+  &.is-disabled {
+    cursor: not-allowed;
+    opacity: 0.5;
+    color: var(--color-text-muted);
+  }
+
+  &__input {
+    position: absolute;
+    opacity: 0;
+    width: 0;
+    height: 0;
+    margin: 0;
+  }
+
+  &__control {
+    width: var(--switch-width);
+    height: var(--switch-height);
+    flex-shrink: 0;
+    margin: 0;
+    background-color: var(--color-void, transparent);
+    border: var(--border-width, 1px) solid var(--color-border-strong);
+    border-radius: var(--radius-full);
+    position: relative;
+    transition: background-color var(--duration-fast) var(--ease-default),
+    border-color var(--duration-fast) var(--ease-default),
+    box-shadow var(--duration-fast) var(--ease-default);
+
+    &::after {
+      content: "";
+      position: absolute;
+      top: var(--switch-thumb-offset);
+      left: var(--switch-thumb-offset);
+      width: var(--switch-thumb-size);
+      height: var(--switch-thumb-size);
+      background-color: var(--color-text-muted);
+      border-radius: 50%;
+      transition: transform var(--duration-fast) var(--ease-default),
+      background-color var(--duration-fast) var(--ease-default);
+    }
+  }
+
+  &__input:not(:checked) + &__control:hover {
+    border-color: var(--color-text-muted);
+
+    &::after {
+      background-color: var(--color-text-secondary);
+    }
+  }
+
+  &__input:focus-visible + &__control {
+    outline: none;
+    box-shadow: 0 0 0 var(--border-width, 1px) var(--color-void), 0 0 0 var(--border-width-3, 3px) var(--switch-color-base, var(--color-primary));
+  }
+
+  &__input:checked + &__control {
+    background-color: var(--switch-color-base, var(--color-primary));
+    border-color: var(--switch-color-base, var(--color-primary));
+
+    &::after {
+      background-color: var(--switch-color-contrast, var(--white));
+      transform: translateX(var(--switch-thumb-size));
+    }
+  }
+
+  &__label {
+    user-select: none;
+  }
+
+  // ==========================================================================
+  // SIZES
+  // ==========================================================================
+  &--sm {
+    font-size: var(--font-size-sm);
+    --switch-width: 1.75rem;
+    --switch-height: 1rem;
+    --switch-thumb-size: 0.75rem;
+    --switch-thumb-offset: 1px;
+  }
+
+  &--md {
+    font-size: var(--font-size-base);
+    --switch-width: 2.25rem;
+    --switch-height: 1.25rem;
+    --switch-thumb-size: 1rem;
+    --switch-thumb-offset: 1px;
+  }
+
+  &--lg {
+    font-size: var(--font-size-lg);
+    --switch-width: 2.75rem;
+    --switch-height: 1.5rem;
+    --switch-thumb-size: 1.25rem;
+    --switch-thumb-offset: 1px;
+  }
+}

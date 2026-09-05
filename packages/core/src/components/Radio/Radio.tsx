@@ -4,12 +4,31 @@ import clsx from 'clsx';
 import type {FullVariant, SizeVariant} from "../../types/types.ts";
 import {getContrastColor} from '../../utils/theme.ts';
 
+/**
+ * RadioProps.
+ */
 export interface RadioProps extends Omit<InputHTMLAttributes<HTMLInputElement>, 'size'> {
+    /**
+     * The label text or ReactNode to display next to the radio button.
+     */
     label?: ReactNode;
+
+    /**
+     * The semantic color variant of the radio button.
+     * @default 'primary'
+     */
     variant?: FullVariant | 'default';
+
+    /**
+     * The size of the radio button.
+     * @default 'md'
+     */
     size?: SizeVariant;
 }
 
+/**
+ * Radio component.
+ */
 export const Radio = memo(forwardRef<HTMLInputElement, RadioProps>((
     {
         label,

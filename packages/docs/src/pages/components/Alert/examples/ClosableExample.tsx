@@ -1,4 +1,4 @@
-import { Alert, Col, Row } from '@loreschaeffer/lyco-ui';
+import {Alert, Col, Row} from '@loreschaeffer/lyco-ui';
 
 export const title = 'Closable Alerts';
 export const description = <p>Add the <code>closable</code> prop to allow users to dismiss the alert.</p>;
@@ -17,20 +17,20 @@ export const vanillaHtml = `
 `;
 
 export default function ClosableExample() {
-  return (
-    <Row>
-      <Col span={6}>
-        <Alert variant="warning" closable>
-          <div className="alert__title">Storage Warning</div>
-          <div className="alert__description">You are running low on disk space. Please clear some files.</div>
-        </Alert>
-      </Col>
-      <Col span={6}>
-        <Alert variant="info" closable>
-          <div className="alert__title">Update Available</div>
-          <div className="alert__description">A new version of the app is ready to install.</div>
-        </Alert>
-      </Col>
-    </Row>
-  );
+    return (
+        <Row>
+            <Col span={6}>
+                <Alert variant="warning" closable>
+                    <div className="alert__title">Storage Warning</div>
+                    <div className="alert__description">You are running low on disk space. Please clear some files.</div>
+                </Alert>
+            </Col>
+            <Col span={6}>
+                <Alert variant="info" closable>
+                    <div className="alert__title">Update Available</div>
+                    <div className="alert__description">A new version of the app is ready to install.</div>
+                </Alert>
+            </Col>
+        </Row>
+    );
 }

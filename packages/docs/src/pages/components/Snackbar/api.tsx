@@ -10,7 +10,7 @@ export const snackbarOptionsProps: PropDefinition[] = [
         name: 'variant',
         type: 'FullVariant',
         typeLink: '/docs/types/full-variant',
-        defaultValue: "'neutral'",
+        defaultValue: "'secondary'",
         description: 'Applies a semantic or color variant style.'
     },
     {

@@ -19,16 +19,16 @@ export default function InteractiveExample() {
             <Col span={6} className="mb-4">
                 <Card interactive>
                     <Card.Body>
-                        <h4 className="mb-2">Hover me</h4>
-                        <p className="text-secondary mb-0">This card is interactive and will elevate slightly.</p>
+                        <h4 className="mb-2">View Analytics</h4>
+                        <p className="text-secondary mb-0">Click to explore detailed traffic and conversion reports.</p>
                     </Card.Body>
                 </Card>
             </Col>
             <Col span={6} className="mb-4">
                 <Card interactive elevation={2}>
                     <Card.Body>
-                        <h4 className="mb-2">Elevated base</h4>
-                        <p className="text-secondary mb-0">Starts at elevation 2 and lifts further.</p>
+                        <h4 className="mb-2">Manage Subscription</h4>
+                        <p className="text-secondary mb-0">Upgrade your plan to unlock premium integrations.</p>
                     </Card.Body>
                 </Card>
             </Col>

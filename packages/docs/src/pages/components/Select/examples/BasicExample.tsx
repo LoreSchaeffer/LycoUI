@@ -7,10 +7,11 @@ export const order = 1;
 
 export const vanillaHtml = `
 <select class="select-custom" data-variant="primary">
-    <option value="" disabled selected>Select an option...</option>
-    <option value="1">Option 1</option>
-    <option value="2">Option 2</option>
-    <option value="3" disabled>Option 3 (Disabled)</option>
+    <option value="" disabled selected>Select user role...</option>
+    <option value="admin">Administrator</option>
+    <option value="editor">Editor</option>
+    <option value="viewer">Viewer</option>
+    <option value="billing" disabled>Billing Contact (Disabled)</option>
 </select>
 `;
 
@@ -20,23 +21,28 @@ export default function BasicExample() {
     return (
         <Row>
             <Col span={6}>
+                <div className="text-sm fw-bold mb-2 text-secondary">Assign Role</div>
                 <Select
                     value={value}
                     onChange={setValue}
+                    placeholder="Select user role..."
                     options={[
-                        {label: 'Option 1', value: '1'},
-                        {label: 'Option 2', value: '2'},
-                        {label: 'Option 3 (Disabled)', value: '3', disabled: true}
+                        {label: 'Administrator', value: 'admin'},
+                        {label: 'Editor', value: 'editor'},
+                        {label: 'Viewer', value: 'viewer'},
+                        {label: 'Billing Contact (Disabled)', value: 'billing', disabled: true}
                     ]}
                 />
             </Col>
             <Col span={6}>
+                <div className="text-sm fw-bold mb-2 text-secondary">Locked Selection</div>
                 <Select
-                    value={value}
-                    onChange={setValue}
+                    value="admin"
+                    onChange={() => {
+                    }}
                     disabled
                     options={[
-                        {label: 'Disabled Select', value: ''}
+                        {label: 'Administrator', value: 'admin'}
                     ]}
                 />
             </Col>

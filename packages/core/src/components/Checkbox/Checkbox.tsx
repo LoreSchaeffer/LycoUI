@@ -4,13 +4,37 @@ import clsx from 'clsx';
 import type {FullVariant, SizeVariant} from "../../types/types.ts";
 import {getContrastColor} from '../../utils/theme.ts';
 
+/**
+ * CheckboxProps.
+ */
 export interface CheckboxProps extends Omit<InputHTMLAttributes<HTMLInputElement>, 'size'> {
+    /**
+     * The label text or ReactNode to display next to the checkbox.
+     */
     label?: ReactNode;
+
+    /**
+     * The semantic color variant of the checkbox.
+     * @default 'primary'
+     */
     variant?: FullVariant | 'default';
+
+    /**
+     * The size of the checkbox.
+     * @default 'md'
+     */
     size?: SizeVariant;
+
+    /**
+     * Whether the checkbox is in an indeterminate state.
+     * Note: This prop currently handles only the type definition. Internal JS is needed for DOM indeterminate.
+     */
     indeterminate?: boolean;
 }
 
+/**
+ * Checkbox component.
+ */
 export const Checkbox = memo(forwardRef<HTMLInputElement, CheckboxProps>((
     {
         label,

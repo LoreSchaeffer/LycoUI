@@ -15,13 +15,13 @@ export const vanillaHtml = `
 
 export default function RoundedExample() {
     return (
-        <>
+        <div className="d-flex" style={{gap: '0.75rem', flexWrap: 'wrap', alignItems: 'center'}}>
             <Button rounded variant="primary">Pill Shape</Button>
-            <Button rounded variant="green" iconEnd={<PiCaretRightBold />}>Continue</Button>
+            <Button rounded variant="success" iconEnd={<PiCaretRightBold/>}>Continue</Button>
 
             {/* Circular icon-only buttons */}
-            <Button rounded variant="red" icon={<PiTrashBold />} aria-label="Delete" />
-            <Button rounded outlined variant="purple" icon={<PiMagnifyingGlassBold />} aria-label="Search" />
-        </>
+            <Button rounded variant="danger" icon={<PiTrashBold/>} aria-label="Delete"/>
+            <Button rounded outlined variant="purple" icon={<PiMagnifyingGlassBold/>} aria-label="Search"/>
+        </div>
     );
 }

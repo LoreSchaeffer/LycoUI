@@ -4,14 +4,41 @@ import clsx from 'clsx';
 import type {FullVariant} from '../../types/types';
 import {getContrastColor} from '../../utils/theme';
 
+/**
+ * AlertProps.
+ */
 export interface AlertProps extends React.HTMLAttributes<HTMLDivElement> {
+    /**
+     * The semantic color variant of the alert.
+     * @default 'primary'
+     */
     variant?: FullVariant | 'white';
+
+    /**
+     * An optional icon to display alongside the alert content.
+     */
     icon?: React.ReactNode;
+
+    /**
+     * If true, displays a close button.
+     * @default false
+     */
     closable?: boolean;
+
+    /**
+     * Duration in seconds before the alert automatically closes.
+     */
     duration?: number;
+
+    /**
+     * Callback fired when the alert is closed.
+     */
     onClose?: () => void;
 }
 
+/**
+ * Alert component.
+ */
 export const Alert = memo(forwardRef<HTMLDivElement, AlertProps>((
     {
         className,

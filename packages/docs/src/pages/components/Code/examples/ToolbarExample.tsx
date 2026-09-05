@@ -1,4 +1,4 @@
-import { Code, Card, Row, Col } from '@loreschaeffer/lyco-ui';
+import {Code, Col, Row} from '@loreschaeffer/lyco-ui';
 
 export const title = 'Toolbar Options';
 export const description = <p>Enable header toolbars with <code>showCopy</code>, <code>showDownload</code>, and <code>showLanguageSelector</code>.</p>;
@@ -29,7 +29,7 @@ export const vanillaHtml = `
 `;
 
 export default function ToolbarExample() {
-  const code = `:root {
+    const code = `:root {
   --primary-color: #007bff;
 }
 
@@ -40,22 +40,20 @@ export default function ToolbarExample() {
   border-radius: 4px;
 }`;
 
-  return (
-    <Row>
-      <Col span={12}>
-        <Card>
-          <Card.Body>
-            <Code 
-              language="css" 
-              code={code} 
-              showCopy 
-              showDownload 
-              showLanguageSelector 
-              fileName="styles"
-            />
-          </Card.Body>
-        </Card>
-      </Col>
-    </Row>
-  );
+    return (
+        <Row>
+            <Col span={12}>
+                <div className="lyco-p-4">
+                    <Code
+                        language="css"
+                        code={code}
+                        showCopy
+                        showDownload
+                        showLanguageSelector
+                        fileName="styles"
+                    />
+                </div>
+            </Col>
+        </Row>
+    );
 }

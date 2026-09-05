@@ -1,4 +1,4 @@
-import { Col, Range, Row } from '@loreschaeffer/lyco-ui';
+import {Col, Range, Row} from '@loreschaeffer/lyco-ui';
 
 export const title = 'Tooltip Sizes';
 export const description = <p>Range supports multiple sizes for the droplet tooltip: <code>sm</code>, <code>md</code> (default), and <code>lg</code>.</p>;
@@ -11,20 +11,20 @@ export const vanillaHtml = `
 `;
 
 export default function TooltipSizesExample() {
-  return (
-    <Row>
-      <Col span={6} className="mb-8">
-        <div className="text-sm fw-bold mb-2 text-secondary">Small Tooltip (sm)</div>
-        <Range tooltipSize="sm" defaultValue={25} />
-      </Col>
-      <Col span={6} className="mb-8">
-        <div className="text-sm fw-bold mb-2 text-secondary">Medium Tooltip (md)</div>
-        <Range tooltipSize="md" defaultValue={50} />
-      </Col>
-      <Col span={6}>
-        <div className="text-sm fw-bold mb-2 text-secondary">Large Tooltip (lg)</div>
-        <Range tooltipSize="lg" defaultValue={75} />
-      </Col>
-    </Row>
-  );
+    return (
+        <Row>
+            <Col span={6} className="mb-8">
+                <div className="text-sm fw-bold mb-2 text-secondary">Small Tooltip (sm)</div>
+                <Range tooltipSize="sm" defaultValue={25}/>
+            </Col>
+            <Col span={6} className="mb-8">
+                <div className="text-sm fw-bold mb-2 text-secondary">Medium Tooltip (md)</div>
+                <Range tooltipSize="md" defaultValue={50}/>
+            </Col>
+            <Col span={6}>
+                <div className="text-sm fw-bold mb-2 text-secondary">Large Tooltip (lg)</div>
+                <Range tooltipSize="lg" defaultValue={75}/>
+            </Col>
+        </Row>
+    );
 }

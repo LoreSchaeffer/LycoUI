@@ -69,7 +69,7 @@ export const tableCellProps: PropDefinition[] = [
 ];
 
 export const apiConfig = [
-    { name: 'Table', data: tableProps },
-    { name: 'TableRow', data: tableRowProps },
-    { name: 'TableCell', data: tableCellProps }
+    {name: 'Table', data: tableProps},
+    {name: 'TableRow', data: tableRowProps},
+    {name: 'TableCell', data: tableCellProps}
 ];

@@ -1,11 +1,11 @@
-import React, { useState } from 'react';
-import { Sidebar, Button, Row, Col, Avatar } from '@loreschaeffer/lyco-ui';
-import { FiMenu, FiUser, FiSettings, FiLogOut } from 'react-icons/fi';
+import React, {useState} from 'react';
+import {Avatar, Button, Col, Row, Sidebar} from '@loreschaeffer/lyco-ui';
+import {FiLogOut, FiMenu, FiSettings, FiUser} from 'react-icons/fi';
 
 export const title = 'User Profile (Collapsible)';
 export const description = (
     <p>
-        Integrate the <code>Avatar</code> component into the Sidebar's footer to create a collapsible user profile menu. 
+        Integrate the <code>Avatar</code> component into the Sidebar's footer to create a collapsible user profile menu.
         In mini mode, only the avatar is visible, while in expanded mode, the user's name and email are displayed alongside a dropdown trigger.
     </p>
 );
@@ -113,33 +113,38 @@ export default function SidebarProfileExample() {
     return (
         <Row>
             <Col span={12}>
-                <div style={{ 
+                <div style={{
                     display: 'flex',
-                    height: '600px', 
+                    height: '600px',
                     position: 'relative',
-                    border: '1px solid var(--color-border-subtle)', 
-                    borderRadius: 'var(--radius-md)', 
+                    border: '1px solid var(--color-border-subtle)',
+                    borderRadius: 'var(--radius-md)',
                     overflow: 'hidden',
                     backgroundColor: 'var(--color-bg-base)'
                 }}>
-                    <Sidebar isMini={isMini} defaultWidth={256} style={{ position: 'relative', height: '100%', zIndex: 1, borderRight: '1px solid var(--color-border-subtle)' }}>
-                        <Sidebar.Header style={{ display: 'flex', alignItems: 'center', padding: 'var(--spacing-3)' }}>
-                            <Button 
-                                ghost 
-                                iconOnly 
+                    <Sidebar isMini={isMini} defaultWidth={256} style={{position: 'relative', height: '100%', zIndex: 1, borderRight: '1px solid var(--color-border-subtle)'}}>
+                        <Sidebar.Header style={{display: 'flex', alignItems: 'center', padding: 'var(--spacing-3)'}}>
+                            <Button
+                                ghost
+
                                 onClick={() => setIsMini(p => !p)}
                                 aria-label="Toggle sidebar"
                             >
-                                <FiMenu size={20} />
+                                <FiMenu size={20}/>
                             </Button>
-                            {!isMini && <span style={{ fontWeight: 600, fontSize: '1.125rem', marginLeft: '0.5rem' }}>LycoApp</span>}
+                            {!isMini && <span style={{fontWeight: 600, fontSize: '1.125rem', marginLeft: '0.5rem'}}>LycoApp</span>}
                         </Sidebar.Header>
 
                         <Sidebar.Content>
                             <Sidebar.Nav>
                                 <Sidebar.Item>
                                     <Sidebar.Link active icon={
-                                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
+                                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                            <rect x="3" y="3" width="7" height="7"></rect>
+                                            <rect x="14" y="3" width="7" height="7"></rect>
+                                            <rect x="14" y="14" width="7" height="7"></rect>
+                                            <rect x="3" y="14" width="7" height="7"></rect>
+                                        </svg>
                                     }>
                                         Dashboard
                                     </Sidebar.Link>
@@ -147,29 +152,29 @@ export default function SidebarProfileExample() {
                             </Sidebar.Nav>
                         </Sidebar.Content>
 
-                        <Sidebar.Footer style={{ borderTop: '1px solid var(--color-border-subtle)', padding: 'var(--spacing-2) 0' }}>
+                        <Sidebar.Footer style={{borderTop: '1px solid var(--color-border-subtle)', padding: 'var(--spacing-2) 0'}}>
                             <Sidebar.Nav>
                                 <Sidebar.Dropdown
-                                    icon={<Avatar size="sm" fallback="LR" aria-hidden="true" />}
+                                    icon={<Avatar size="sm" fallback="LR" aria-hidden="true"/>}
                                     title={
                                         !isMini && (
-                                            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start', lineHeight: 1.2 }}>
-                                                <span style={{ fontSize: 'var(--font-size-sm)', fontWeight: 500, color: 'var(--color-text-primary)' }}>Lorenzo R.</span>
-                                                <span style={{ fontSize: 'var(--font-size-xs)', color: 'var(--color-text-secondary)' }}>lorenzo@example.com</span>
+                                            <div style={{display: 'flex', flexDirection: 'column', alignItems: 'flex-start', lineHeight: 1.2}}>
+                                                <span style={{fontSize: 'var(--font-size-sm)', fontWeight: 500, color: 'var(--color-text-primary)'}}>Lorenzo R.</span>
+                                                <span style={{fontSize: 'var(--font-size-xs)', color: 'var(--color-text-secondary)'}}>lorenzo@example.com</span>
                                             </div>
                                         )
                                     }
                                 >
                                     <Sidebar.DropdownItem href="#">
-                                        <FiUser size={14} style={{ opacity: 0.7 }} />
+                                        <FiUser size={14} style={{opacity: 0.7}}/>
                                         Profile
                                     </Sidebar.DropdownItem>
                                     <Sidebar.DropdownItem href="#">
-                                        <FiSettings size={14} style={{ opacity: 0.7 }} />
+                                        <FiSettings size={14} style={{opacity: 0.7}}/>
                                         Settings
                                     </Sidebar.DropdownItem>
-                                    <Sidebar.DropdownItem href="#" style={{ color: 'var(--color-danger)' }}>
-                                        <FiLogOut size={14} style={{ opacity: 0.7 }} />
+                                    <Sidebar.DropdownItem href="#" style={{color: 'var(--color-danger)'}}>
+                                        <FiLogOut size={14} style={{opacity: 0.7}}/>
                                         Sign Out
                                     </Sidebar.DropdownItem>
                                 </Sidebar.Dropdown>
@@ -177,7 +182,7 @@ export default function SidebarProfileExample() {
                         </Sidebar.Footer>
                     </Sidebar>
 
-                    <div style={{ flex: 1, padding: '2rem' }}>
+                    <div style={{flex: 1, padding: '2rem'}}>
                         <p className="text-secondary">Click the menu icon to toggle mini mode. Click the user profile in the footer to open the dropdown.</p>
                         <p className="text-secondary mt-2">In mini mode, the dropdown automatically switches to a fixed floating popover to ensure it stays fully visible.</p>
                     </div>

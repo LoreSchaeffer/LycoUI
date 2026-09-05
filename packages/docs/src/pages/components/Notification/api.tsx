@@ -1,11 +1,11 @@
-import type { PropDefinition } from '../../../components/api-reference/ApiReference.tsx';
+import type {PropDefinition} from '../../../components/api-reference/ApiReference.tsx';
 
 const notificationProps: PropDefinition[] = [
     {
         name: 'variant',
         type: "FullVariant | 'white'",
         typeLink: '/docs/types/full-variant',
-        defaultValue: "'neutral'",
+        defaultValue: "'secondary'",
         description: 'Color variant. Semantic variants (success, warning, danger, info) auto-assign an appropriate icon.'
     },
     {
@@ -73,7 +73,7 @@ const notificationOptionsProps: PropDefinition[] = [
         name: 'variant',
         type: "FullVariant | 'white'",
         typeLink: '/docs/types/full-variant',
-        defaultValue: "'neutral'",
+        defaultValue: "'secondary'",
         description: 'Color variant. Semantic variants auto-assign an icon.'
     },
     {
@@ -102,7 +102,7 @@ const notificationOptionsProps: PropDefinition[] = [
 ];
 
 export const apiConfig = [
-    { name: 'Notification', data: notificationProps },
-    { name: 'NotificationProvider', data: providerProps },
-    { name: 'useNotification (NotificationOptions)', data: notificationOptionsProps },
+    {name: 'Notification', data: notificationProps},
+    {name: 'NotificationProvider', data: providerProps},
+    {name: 'useNotification (NotificationOptions)', data: notificationOptionsProps},
 ];

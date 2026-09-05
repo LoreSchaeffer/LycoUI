@@ -1,5 +1,5 @@
-import { Sidebar, Button } from '@loreschaeffer/lyco-ui';
-import React, { useState } from 'react';
+import {Button, Sidebar} from '@loreschaeffer/lyco-ui';
+import React, {useState} from 'react';
 
 export const title = 'Overlay Mode';
 export const description = <p>Use the <code>variant="overlay"</code> prop and the <code>isOpen</code> prop to create a drawer-style sidebar. This is ideal for mobile navigation.</p>;
@@ -33,15 +33,15 @@ export default function OverlayExample() {
     const [isOpen, setIsOpen] = useState(false);
 
     return (
-        <div style={{ padding: '1rem', border: '1px solid var(--color-border-base)', borderRadius: 'var(--radius-lg)' }}>
+        <div style={{padding: '1rem', border: '1px solid var(--color-border-base)', borderRadius: 'var(--radius-lg)'}}>
             <Button onClick={() => setIsOpen(true)}>
                 Open Drawer
             </Button>
-            
+
             {/* The overlay sidebar is position: fixed by default and will slide in from the screen edge */}
-            <Sidebar 
-                variant="overlay" 
-                isOpen={isOpen} 
+            <Sidebar
+                variant="overlay"
+                isOpen={isOpen}
                 onClose={() => setIsOpen(false)}
             >
                 <Sidebar.Header>

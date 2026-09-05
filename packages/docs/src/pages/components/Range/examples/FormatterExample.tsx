@@ -1,4 +1,4 @@
-import { Col, Range, Row } from '@loreschaeffer/lyco-ui';
+import {Col, Range, Row} from '@loreschaeffer/lyco-ui';
 
 export const title = 'Custom Formatter (Time)';
 export const description = <p>Supply a custom function to format the tooltip value. In Vanilla JS, register your function in <code>window.lycoFormatters</code>.</p>;
@@ -13,17 +13,17 @@ export const vanillaHtml = `
 `;
 
 export default function FormatterExample() {
-  const formatTime = (value: number) => {
-    const hours = Math.floor(value / 60);
-    const minutes = value % 60;
-    return `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}`;
-  };
+    const formatTime = (value: number) => {
+        const hours = Math.floor(value / 60);
+        const minutes = value % 60;
+        return `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}`;
+    };
 
-  return (
-    <Row>
-      <Col span={6}>
-        <Range variant="warning" min={0} max={300} defaultValue={125} tooltipFormatter={formatTime} />
-      </Col>
-    </Row>
-  );
+    return (
+        <Row>
+            <Col span={6}>
+                <Range variant="warning" min={0} max={300} defaultValue={125} tooltipFormatter={formatTime}/>
+            </Col>
+        </Row>
+    );
 }

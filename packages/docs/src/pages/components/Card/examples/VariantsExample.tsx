@@ -23,8 +23,8 @@ export default function VariantsExample() {
                 <Col key={v} span={6} className="mb-4">
                     <Card variant={v}>
                         <Card.Body>
-                            <h4 className="mb-2" style={{textTransform: 'capitalize'}}>{v}</h4>
-                            <p className="mb-0">Dim variant applied.</p>
+                            <h4 className="mb-2" style={{textTransform: 'capitalize'}}>{v} Alert</h4>
+                            <p className="mb-0">A <strong>{v}</strong> state notification for the user dashboard.</p>
                         </Card.Body>
                     </Card>
                 </Col>

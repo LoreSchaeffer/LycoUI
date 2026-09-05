@@ -2,6 +2,9 @@ import React, {Children, useCallback, useEffect, useMemo, useRef, useState} from
 import clsx from 'clsx';
 import './Carousel.scss';
 
+/**
+ * CarouselProps.
+ */
 export interface CarouselProps extends React.HTMLAttributes<HTMLDivElement> {
     /**
      * Whether to show Prev/Next arrows.
@@ -35,6 +38,9 @@ export interface CarouselProps extends React.HTMLAttributes<HTMLDivElement> {
     infinite?: boolean;
 }
 
+/**
+ * Carousel component.
+ */
 export const Carousel = React.forwardRef<HTMLDivElement, CarouselProps>(({
                                                                              children,
                                                                              showArrows = true,

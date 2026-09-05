@@ -1,4 +1,4 @@
-import { Table, TableHead, TableBody, TableRow, TableCell } from '@loreschaeffer/lyco-ui';
+import {Table, TableBody, TableCell, TableHead, TableRow} from '@loreschaeffer/lyco-ui';
 
 export const title = 'Color Variants';
 export const description = (

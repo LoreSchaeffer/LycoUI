@@ -21,6 +21,7 @@ class LycoPaginationController {
     private isEditing: boolean = false;
     private currentInput: HTMLInputElement | null = null;
     private currentSpan: HTMLSpanElement | null = null;
+    private focusTimeoutId?: number;
 
     private listeners: { el: HTMLElement | Window, type: string, fn: EventListenerOrEventListenerObject }[] = [];
 
@@ -44,6 +45,7 @@ class LycoPaginationController {
     }
 
     public destroy(): void {
+        if (this.focusTimeoutId) window.clearTimeout(this.focusTimeoutId);
         this.listeners.forEach(({el, type, fn}) => {
             el.removeEventListener(type, fn);
         });
@@ -69,6 +71,7 @@ class LycoPaginationController {
     }
 
     private buildUI(): void {
+        if (this.focusTimeoutId) window.clearTimeout(this.focusTimeoutId);
         this.listeners.forEach(({el, type, fn}) => {
             el.removeEventListener(type, fn);
         });
@@ -223,7 +226,7 @@ class LycoPaginationController {
 
             info.appendChild(this.currentInput);
 
-            setTimeout(() => {
+            this.focusTimeoutId = window.setTimeout(() => {
                 if (this.currentInput) {
                     this.currentInput.focus();
                     this.currentInput.select();

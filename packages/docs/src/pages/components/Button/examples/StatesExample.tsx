@@ -17,11 +17,11 @@ export const vanillaHtml = `
 
 export default function StatesExample() {
     return (
-        <>
+        <div className="d-flex" style={{gap: '0.75rem', flexWrap: 'wrap'}}>
             <Button outlined>Outlined</Button>
             <Button ghost>Ghost</Button>
             <Button isLoading>Loading</Button>
             <Button disabled>Disabled</Button>
-        </>
+        </div>
     );
 }

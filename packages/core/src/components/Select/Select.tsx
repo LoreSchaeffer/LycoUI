@@ -1,5 +1,5 @@
 import './Select.scss';
-import {type CSSProperties, forwardRef, type HTMLAttributes, type KeyboardEvent, type ReactNode, useCallback, useEffect, useId, useRef, useState} from 'react';
+import {type ChangeEvent, type CSSProperties, forwardRef, type HTMLAttributes, type KeyboardEvent, type ReactNode, useCallback, useEffect, useId, useRef, useState} from 'react';
 import clsx from 'clsx';
 import type {FullVariant, SizeVariant} from '../../types/types.ts';
 
@@ -41,8 +41,17 @@ export interface SelectProps extends Omit<HTMLAttributes<HTMLDivElement>, 'onCha
     size?: SizeVariant;
     /** If true, the entire Select component is disabled. */
     disabled?: boolean;
+    /** If true, enables searching/filtering of options. */
+    searchable?: boolean;
+    /** If true, allows selecting free-text values not present in the options list (requires searchable). */
+    allowCustomValues?: boolean;
+    /** Optional validation function for custom values. Returns an error message string if invalid, or null if valid. */
+    validate?: (value: string) => string | null;
 }
 
+/**
+ * Select component.
+ */
 export const Select = forwardRef<HTMLDivElement, SelectProps>((
     {
         options,
@@ -53,6 +62,9 @@ export const Select = forwardRef<HTMLDivElement, SelectProps>((
         variant = 'primary',
         size = 'md',
         disabled = false,
+        searchable = false,
+        allowCustomValues = false,
+        validate,
         className,
         id,
         ...props
@@ -64,9 +76,12 @@ export const Select = forwardRef<HTMLDivElement, SelectProps>((
 
     const [isOpen, setIsOpen] = useState(false);
     const [focusedIndex, setFocusedIndex] = useState<number>(-1);
+    const [inputValue, setInputValue] = useState('');
+    const [error, setError] = useState<string | null>(null);
 
     const containerRef = useRef<HTMLDivElement>(null);
     const listboxRef = useRef<HTMLUListElement>(null);
+    const inputRef = useRef<HTMLInputElement>(null);
 
     const mergedRef = (node: HTMLDivElement | null) => {
         containerRef.current = node;
@@ -78,17 +93,82 @@ export const Select = forwardRef<HTMLDivElement, SelectProps>((
     const selectedOption = options.find(opt => opt.value === value && !opt.isSpacer);
 
     useEffect(() => {
+        if (!isOpen) {
+            if (selectedOption) {
+                setInputValue(selectedOption.label || String(selectedOption.value));
+            } else if (value !== undefined && allowCustomValues) {
+                setInputValue(String(value));
+            } else {
+                setInputValue('');
+            }
+            setError(null);
+        }
+    }, [value, selectedOption, isOpen, allowCustomValues]);
+
+    const filteredOptions = searchable && isOpen
+        ? options.filter(opt => opt.isSpacer || (opt.label || String(opt.value)).toLowerCase().includes(inputValue.toLowerCase()))
+        : options;
+
+    const commitCustomValue = useCallback((val: string) => {
+        if (!allowCustomValues) return false;
+        if (!val.trim()) {
+            onChange?.('');
+            return true;
+        }
+
+        if (validate) {
+            const validationError = validate(val);
+            if (validationError) {
+                setError(validationError);
+                return false;
+            }
+        }
+
+        setError(null);
+        onChange?.(val);
+        return true;
+    }, [allowCustomValues, validate, onChange]);
+
+    const handleSelect = useCallback((option: SelectOption) => {
+        if (option.disabled || option.isSpacer || option.value === undefined) return;
+        setError(null);
+        onChange?.(option.value);
+        setIsOpen(false);
+    }, [onChange]);
+
+    const handleBlurCommit = useCallback(() => {
+        if (!searchable || !isOpen) return;
+
+        const matchingOption = filteredOptions.find(opt => !opt.isSpacer && (opt.label === inputValue || String(opt.value) === inputValue));
+
+        if (matchingOption) {
+            handleSelect(matchingOption);
+        } else if (allowCustomValues && inputValue !== (selectedOption?.label || value)) {
+            const success = commitCustomValue(inputValue);
+            if (success) {
+                setIsOpen(false);
+            }
+        } else if (!allowCustomValues) {
+            setInputValue(selectedOption?.label || (value !== undefined ? String(value) : ''));
+            setIsOpen(false);
+        } else {
+            setIsOpen(false);
+        }
+    }, [searchable, isOpen, filteredOptions, inputValue, selectedOption, value, allowCustomValues, commitCustomValue, handleSelect]);
+
+    useEffect(() => {
         if (!isOpen) return;
 
         const handleOutsideClick = (e: MouseEvent) => {
             if (containerRef.current && !containerRef.current.contains(e.target as Node)) {
+                handleBlurCommit();
                 setIsOpen(false);
             }
         };
 
         document.addEventListener('mousedown', handleOutsideClick);
         return () => document.removeEventListener('mousedown', handleOutsideClick);
-    }, [isOpen]);
+    }, [isOpen, handleBlurCommit]);
 
     useEffect(() => {
         if (isOpen && focusedIndex >= 0 && listboxRef.current) {
@@ -97,52 +177,73 @@ export const Select = forwardRef<HTMLDivElement, SelectProps>((
                 focusedEl.scrollIntoView({block: 'nearest'});
             }
         }
-    }, [focusedIndex, isOpen]);
+    }, [focusedIndex, isOpen, filteredOptions.length]);
 
     const findNextValidIndex = useCallback((start: number, direction: 1 | -1, includeStart: boolean = false): number => {
         let idx = includeStart ? start : start + direction;
-        while (idx >= 0 && idx < options.length) {
-            if (!options[idx].disabled && !options[idx].isSpacer) return idx;
+        while (idx >= 0 && idx < filteredOptions.length) {
+            if (!filteredOptions[idx].disabled && !filteredOptions[idx].isSpacer) return idx;
             idx += direction;
         }
         return start;
-    }, [options]);
+    }, [filteredOptions]);
 
     const handleToggle = useCallback(() => {
         if (disabled) return;
         setIsOpen(prev => {
             const opening = !prev;
             if (opening) {
-                const currentIndex = options.findIndex(opt => opt.value === value && !opt.isSpacer);
+                if (searchable && inputRef.current) {
+                    inputRef.current.focus();
+                }
+                const currentIndex = filteredOptions.findIndex(opt => opt.value === value && !opt.isSpacer);
                 setFocusedIndex(findNextValidIndex(currentIndex >= 0 ? currentIndex : 0, 1, true));
+            } else {
+                handleBlurCommit();
             }
             return opening;
         });
-    }, [disabled, options, value, findNextValidIndex]);
+    }, [disabled, filteredOptions, value, findNextValidIndex, searchable, handleBlurCommit]);
 
-    const handleSelect = useCallback((option: SelectOption) => {
-        if (option.disabled || option.isSpacer || option.value === undefined) return;
-        onChange?.(option.value);
-        setIsOpen(false);
-    }, [onChange]);
+    const handleInputClick = useCallback(() => {
+        if (disabled) return;
+        if (!isOpen) {
+            setIsOpen(true);
+            const currentIndex = filteredOptions.findIndex(opt => opt.value === value && !opt.isSpacer);
+            setFocusedIndex(findNextValidIndex(currentIndex >= 0 ? currentIndex : 0, 1, true));
+        }
+    }, [disabled, isOpen, filteredOptions, value, findNextValidIndex]);
 
-    const handleKeyDown = useCallback((e: KeyboardEvent<HTMLButtonElement>) => {
+    const handleKeyDown = useCallback((e: KeyboardEvent<HTMLElement>) => {
         if (disabled) return;
 
         switch (e.key) {
             case 'Enter':
-            case ' ':
                 e.preventDefault();
-                if (isOpen && focusedIndex >= 0 && !options[focusedIndex].disabled && !options[focusedIndex].isSpacer) {
-                    handleSelect(options[focusedIndex]);
-                } else {
+                if (isOpen && focusedIndex >= 0 && !filteredOptions[focusedIndex].disabled && !filteredOptions[focusedIndex].isSpacer) {
+                    handleSelect(filteredOptions[focusedIndex]);
+                } else if (searchable && allowCustomValues) {
+                    const success = commitCustomValue(inputValue);
+                    if (success) setIsOpen(false);
+                } else if (!isOpen) {
                     handleToggle();
+                }
+                break;
+            case ' ':
+                if (!searchable) {
+                    e.preventDefault();
+                    if (isOpen && focusedIndex >= 0 && !filteredOptions[focusedIndex].disabled && !filteredOptions[focusedIndex].isSpacer) {
+                        handleSelect(filteredOptions[focusedIndex]);
+                    } else {
+                        handleToggle();
+                    }
                 }
                 break;
             case 'ArrowDown':
                 e.preventDefault();
                 if (!isOpen) {
-                    handleToggle();
+                    setIsOpen(true);
+                    setFocusedIndex(findNextValidIndex(0, 1, true));
                 } else {
                     setFocusedIndex(prev => findNextValidIndex(prev, 1));
                 }
@@ -156,12 +257,21 @@ export const Select = forwardRef<HTMLDivElement, SelectProps>((
             case 'Escape':
                 e.preventDefault();
                 setIsOpen(false);
+                handleBlurCommit();
                 break;
             case 'Tab':
                 setIsOpen(false);
+                handleBlurCommit();
                 break;
         }
-    }, [disabled, isOpen, focusedIndex, options, handleSelect, handleToggle, findNextValidIndex]);
+    }, [disabled, isOpen, focusedIndex, filteredOptions, handleSelect, searchable, allowCustomValues, commitCustomValue, inputValue, handleToggle, findNextValidIndex, handleBlurCommit]);
+
+    const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
+        setInputValue(e.target.value);
+        if (!isOpen) setIsOpen(true);
+        setFocusedIndex(0);
+        setError(null);
+    };
 
     const activeIcon = selectedOption?.icon || icon;
     const activeDescendant = (isOpen && focusedIndex >= 0) ? `${dropdownId}-opt-${focusedIndex}` : undefined;
@@ -174,6 +284,7 @@ export const Select = forwardRef<HTMLDivElement, SelectProps>((
                 size !== 'md' && `select--${size}`,
                 disabled && 'is-disabled',
                 isOpen && 'is-open',
+                error && 'is-error',
                 className
             )}
             style={isColored ? {
@@ -182,30 +293,55 @@ export const Select = forwardRef<HTMLDivElement, SelectProps>((
             } as CSSProperties : props.style}
             {...props}
         >
-            <button
-                type="button"
+            <div
                 className="select__trigger"
-                onClick={handleToggle}
+                onClick={searchable ? handleInputClick : handleToggle}
                 onKeyDown={handleKeyDown}
-                tabIndex={disabled ? -1 : 0}
+                tabIndex={searchable || disabled ? -1 : 0}
                 role="combobox"
                 aria-haspopup="listbox"
                 aria-expanded={isOpen}
                 aria-controls={dropdownId}
                 aria-activedescendant={activeDescendant}
-                disabled={disabled}
             >
                 <div className="select__content">
                     {activeIcon && <span className="select__icon select__icon--start">{activeIcon}</span>}
-                    <span className={clsx('select__value', !selectedOption && 'select__placeholder')}>
-                        {selectedOption ? selectedOption.label : placeholder}
-                    </span>
+
+                    {searchable ? (
+                        <input
+                            ref={inputRef}
+                            type="text"
+                            className="select__input"
+                            value={inputValue}
+                            onChange={handleInputChange}
+                            placeholder={placeholder}
+                            disabled={disabled}
+                            autoComplete="off"
+                            role="textbox"
+                        />
+                    ) : (
+                        <span className={clsx('select__value', !selectedOption && 'select__placeholder')}>
+                            {selectedOption ? selectedOption.label : placeholder}
+                        </span>
+                    )}
                 </div>
 
-                <svg className="select__chevron" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                    <polyline points="6 9 12 15 18 9"/>
-                </svg>
-            </button>
+                <button
+                    type="button"
+                    className="select__chevron-btn"
+                    onClick={(e) => {
+                        e.stopPropagation();
+                        handleToggle();
+                    }}
+                    disabled={disabled}
+                    tabIndex={-1}
+                    aria-label="Toggle dropdown"
+                >
+                    <svg className="select__chevron" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                        <polyline points="6 9 12 15 18 9"/>
+                    </svg>
+                </button>
+            </div>
 
             <ul
                 ref={listboxRef}
@@ -215,41 +351,52 @@ export const Select = forwardRef<HTMLDivElement, SelectProps>((
                 hidden={!isOpen}
                 aria-hidden={!isOpen}
             >
-                {options.map((option, index) => {
-                    if (option.isSpacer) {
-                        return <li key={`spacer-${index}`} className="select__spacer" role="separator"/>;
-                    }
+                {filteredOptions.length === 0 ? (
+                    <li className="select__option is-disabled" role="option" aria-disabled="true">
+                        <span>No options found</span>
+                    </li>
+                ) : (
+                    filteredOptions.map((option, index) => {
+                        if (option.isSpacer) {
+                            return <li key={`spacer-${index}`} className="select__spacer" role="separator"/>;
+                        }
 
-                    const isSelected = option.value === value;
-                    const isFocused = index === focusedIndex;
-                    const optionId = `${dropdownId}-opt-${index}`;
+                        const isSelected = option.value === value;
+                        const isFocused = index === focusedIndex;
+                        const optionId = `${dropdownId}-opt-${index}`;
 
-                    return (
-                        <li
-                            key={option.value}
-                            id={optionId}
-                            role="option"
-                            aria-selected={isSelected}
-                            aria-disabled={option.disabled}
-                            className={clsx(
-                                'select__option',
-                                option.variant && 'select__option--variant',
-                                isSelected && 'is-selected',
-                                isFocused && 'is-focused',
-                                option.disabled && 'is-disabled'
-                            )}
-                            style={option.variant ? {
-                                '--select-option-color': `var(--${option.variant}-500, var(--color-${option.variant}))`,
-                            } as CSSProperties : undefined}
-                            onClick={() => handleSelect(option)}
-                            onMouseEnter={() => setFocusedIndex(index)}
-                        >
-                            {option.icon && <span className="select__icon select__icon--option">{option.icon}</span>}
-                            <span>{option.label}</span>
-                        </li>
-                    );
-                })}
+                        return (
+                            <li
+                                key={option.value}
+                                id={optionId}
+                                role="option"
+                                aria-selected={isSelected}
+                                aria-disabled={option.disabled}
+                                className={clsx(
+                                    'select__option',
+                                    option.variant && 'select__option--variant',
+                                    isSelected && 'is-selected',
+                                    isFocused && 'is-focused',
+                                    option.disabled && 'is-disabled'
+                                )}
+                                style={option.variant ? {
+                                    '--select-option-color': `var(--${option.variant}-500, var(--color-${option.variant}))`,
+                                } as CSSProperties : undefined}
+                                onClick={(e) => {
+                                    e.stopPropagation();
+                                    handleSelect(option);
+                                }}
+                                onMouseEnter={() => setFocusedIndex(index)}
+                            >
+                                {option.icon && <span className="select__icon select__icon--option">{option.icon}</span>}
+                                <span>{option.label}</span>
+                            </li>
+                        );
+                    })
+                )}
             </ul>
+
+            {error && <div className="select__error-message">{error}</div>}
         </div>
     );
 });

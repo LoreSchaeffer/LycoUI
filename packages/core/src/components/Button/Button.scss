@@ -95,6 +95,13 @@
   // ==========================================================================
   // STYLES (Solid is default, Outlined, Ghost)
   // ==========================================================================
+  &--white {
+    --btn-bg: var(--color-white, #ffffff);
+    --btn-bg-hover: var(--color-ash, #e5e5e5);
+    --btn-bg-active: color-mix(in srgb, var(--color-ash, #e5e5e5) 85%, black);
+    --btn-text: var(--color-carbon, #0f1011);
+  }
+
   &--outlined {
     background-color: transparent;
     border-color: var(--btn-bg);

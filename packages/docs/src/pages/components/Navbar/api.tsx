@@ -1,4 +1,4 @@
-import type { PropDefinition } from "../../../components/api-reference/ApiReference.tsx";
+import type {PropDefinition} from "../../../components/api-reference/ApiReference.tsx";
 
 const navbarProps: PropDefinition[] = [
     {
@@ -74,8 +74,8 @@ const navbarLinkProps: PropDefinition[] = [
 ];
 
 export const apiConfig = [
-    { name: 'Navbar', data: navbarProps },
-    { name: 'Navbar.Brand', data: navbarBrandProps },
-    { name: 'Navbar.Nav', data: navbarNavProps },
-    { name: 'Navbar.Link', data: navbarLinkProps }
+    {name: 'Navbar', data: navbarProps},
+    {name: 'Navbar.Brand', data: navbarBrandProps},
+    {name: 'Navbar.Nav', data: navbarNavProps},
+    {name: 'Navbar.Link', data: navbarLinkProps}
 ];

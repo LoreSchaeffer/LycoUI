@@ -96,9 +96,9 @@ export const modalFooterProps: PropDefinition[] = [
 ];
 
 export const apiConfig = [
-    { name: 'modalProps', data: modalProps },
-    { name: 'modalHeaderProps', data: modalHeaderProps },
-    { name: 'modalTitleProps', data: modalTitleProps },
-    { name: 'modalBodyProps', data: modalBodyProps },
-    { name: 'modalFooterProps', data: modalFooterProps }
+    {name: 'modalProps', data: modalProps},
+    {name: 'modalHeaderProps', data: modalHeaderProps},
+    {name: 'modalTitleProps', data: modalTitleProps},
+    {name: 'modalBodyProps', data: modalBodyProps},
+    {name: 'modalFooterProps', data: modalFooterProps}
 ];

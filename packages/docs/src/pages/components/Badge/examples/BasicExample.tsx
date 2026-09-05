@@ -1,25 +1,29 @@
-import { Badge } from '@loreschaeffer/lyco-ui';
+import {Badge, Col, Row} from '@loreschaeffer/lyco-ui';
 
 export const title = 'Basic Badges';
-export const description = <p>Badges support all standard theme colors. By default, they have a solid background, a subtle shadow, and a top highlight.</p>;
+export const description = <p>Badges support all standard theme colors. By default, they have a solid background, a subtle shadow, and a top highlight. Use them to draw attention to status, categorizations, or counts.</p>;
 export const order = 1;
 
 export const vanillaHtml = `
-<span class="badge badge--primary">Primary</span>
-<span class="badge badge--success">Success</span>
-<span class="badge badge--neutral">Neutral</span>
+<span class="badge badge--primary">New Feature</span>
+<span class="badge badge--success">Completed</span>
+<span class="badge badge--danger">Failed</span>
 `;
 
 export default function BasicExample() {
-  return (
-    <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap' }}>
-      <Badge variant="primary">Primary</Badge>
-      <Badge variant="neutral">Neutral</Badge>
-      <Badge variant="danger">Danger</Badge>
-      <Badge variant="warning">Warning</Badge>
-      <Badge variant="success">Success</Badge>
-      <Badge variant="info">Info</Badge>
-      <Badge variant="white">White</Badge>
-    </div>
-  );
+    return (
+        <Row>
+            <Col span={12}>
+                <div style={{display: 'flex', gap: '0.5rem', flexWrap: 'wrap'}}>
+                    <Badge variant="primary">New Feature</Badge>
+                    <Badge variant="secondary">Draft</Badge>
+                    <Badge variant="danger">Failed</Badge>
+                    <Badge variant="warning">Action Required</Badge>
+                    <Badge variant="success">Completed</Badge>
+                    <Badge variant="info">In Progress</Badge>
+                    <Badge variant="white">Archived</Badge>
+                </div>
+            </Col>
+        </Row>
+    );
 }

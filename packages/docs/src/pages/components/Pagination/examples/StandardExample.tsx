@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Pagination, Row, Col, Card } from '@loreschaeffer/lyco-ui';
+import React, {useState} from 'react';
+import {Col, Pagination, Row} from '@loreschaeffer/lyco-ui';
 
 export const title = 'Standard Pagination';
 export const description = <p>The standard pagination variant provides a list of page numbers for navigation.</p>;
@@ -42,35 +42,31 @@ export default function StandardExample() {
 
     return (
         <Row>
-            <Col xs={12} md={8}>
-                <Card>
-                    <Card.Body>
-                        <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--spacing-4)', alignItems: 'center', padding: 'var(--spacing-4) 0' }}>
-                            <Pagination
-                                variant="standard"
-                                currentPage={page1}
-                                totalPages={10}
-                                onChange={setPage1}
-                            />
-                            
-                            <Pagination
-                                variant="standard"
-                                colorVariant="danger"
-                                currentPage={page2}
-                                totalPages={5}
-                                onChange={setPage2}
-                            />
+            <Col span={12} md={8}>
+                <div style={{display: 'flex', flexDirection: 'column', gap: 'var(--spacing-4)', alignItems: 'center', padding: 'var(--spacing-4) 0'}}>
+                    <Pagination
+                        variant="standard"
+                        currentPage={page1}
+                        totalPages={24}
+                        onChange={setPage1}
+                    />
 
-                            <Pagination
-                                variant="standard"
-                                colorVariant="success"
-                                currentPage={page3}
-                                totalPages={8}
-                                onChange={setPage3}
-                            />
-                        </div>
-                    </Card.Body>
-                </Card>
+                    <Pagination
+                        variant="standard"
+                        colorVariant="danger"
+                        currentPage={page2}
+                        totalPages={5}
+                        onChange={setPage2}
+                    />
+
+                    <Pagination
+                        variant="standard"
+                        colorVariant="success"
+                        currentPage={page3}
+                        totalPages={8}
+                        onChange={setPage3}
+                    />
+                </div>
             </Col>
         </Row>
     );

@@ -4,10 +4,16 @@ import type {ContextMenuItemDef, ContextMenuState} from './ContextMenuContext';
 import {ContextMenuContext} from './ContextMenuContext';
 import {ContextMenu} from './ContextMenu';
 
+/**
+ * ContextMenuProviderProps.
+ */
 export interface ContextMenuProviderProps {
     children: React.ReactNode;
 }
 
+/**
+ * ContextMenuProvider component.
+ */
 export const ContextMenuProvider: React.FC<ContextMenuProviderProps> = ({children}) => {
     const [state, setState] = useState<ContextMenuState>({
         isOpen: false,

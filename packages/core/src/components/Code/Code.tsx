@@ -1,11 +1,14 @@
 import './Code.scss';
 import type {ChangeEvent, HTMLAttributes, UIEvent} from 'react';
-import {forwardRef, memo, useCallback, useEffect, useRef, useState} from 'react';
+import {forwardRef, memo, useCallback, useEffect, useMemo, useRef, useState} from 'react';
 import clsx from 'clsx';
 import {Select} from '../Select/Select';
-import {getShikiHighlighter} from '../../utils/shiki.config';
+import {customTransformers, getShikiHighlighter} from '../../utils/shiki.config';
 
 
+/**
+ * CodeProps.
+ */
 export interface CodeProps extends Omit<HTMLAttributes<HTMLElement>, 'onChange'> {
     /** The code snippet to display */
     code?: string;
@@ -29,6 +32,8 @@ export interface CodeProps extends Omit<HTMLAttributes<HTMLElement>, 'onChange'>
     supportedLanguages?: string[];
     /** Name of the file for the download button */
     fileName?: string;
+    /** The number of spaces per tab */
+    tabSize?: number;
     /** Callback fired when code changes (only works if editable=true) */
     onChange?: (code: string) => void;
 }
@@ -55,6 +60,9 @@ const DownloadIcon = () => (
     </svg>
 );
 
+/**
+ * Code component.
+ */
 export const Code = memo(forwardRef<HTMLElement, CodeProps>((
     {
         className,
@@ -69,6 +77,7 @@ export const Code = memo(forwardRef<HTMLElement, CodeProps>((
         showLanguageSelector = false,
         supportedLanguages = ['javascript', 'typescript', 'html', 'css', 'json', 'bash', 'tsx', 'jsx', 'scss'],
         fileName = 'snippet',
+        tabSize = 2,
         onChange,
         children,
         ...props
@@ -84,7 +93,14 @@ export const Code = memo(forwardRef<HTMLElement, CodeProps>((
     const textareaRef = useRef<HTMLTextAreaElement>(null);
 
     const isControlled = propCode !== undefined;
-    const currentCode = isControlled ? propCode : internalCode;
+    const rawCode = isControlled ? propCode : internalCode;
+
+    const currentCode = useMemo(() => {
+        if (!rawCode) return '';
+        return rawCode.replace(/^( {4})+/gm, (match) => {
+            return ' '.repeat((match.length / 4) * tabSize);
+        });
+    }, [rawCode, tabSize]);
 
     useEffect(() => {
         let isMounted = true;
@@ -99,14 +115,15 @@ export const Code = memo(forwardRef<HTMLElement, CodeProps>((
                 const html = highlighter.codeToHtml(currentCode, {
                     lang: internalLang,
                     theme: 'lyco-dark',
+                    transformers: customTransformers,
                 });
 
                 if (isMounted) {
                     setHighlightedHtml(html);
                     setHighlightStatus('success');
                 }
-            } catch (error) {
-                console.warn('Syntax highlighting failed or shiki is not installed:', error);
+            } catch {
+                // Syntax highlighting failed or shiki is not installed
                 if (isMounted) {
                     setHighlightStatus('error');
                 }
@@ -186,6 +203,7 @@ export const Code = memo(forwardRef<HTMLElement, CodeProps>((
                 className
             )}
             data-language={internalLang}
+            style={{'--lyco-code-tab-size': tabSize, ...props.style} as React.CSSProperties}
             {...props}
         >
             {hasHeader && (
@@ -262,7 +280,3 @@ export const Code = memo(forwardRef<HTMLElement, CodeProps>((
     );
 }));
 Code.displayName = 'Code';
-
-
-
-

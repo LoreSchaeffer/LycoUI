@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
-import { PiCheckBold, PiCopy } from 'react-icons/pi';
-import { Table, TableHead, TableBody, TableRow, TableCell } from '@loreschaeffer/lyco-ui';
+import React, {useState} from 'react';
+import {PiCheckBold, PiCopy} from 'react-icons/pi';
+import {Badge, Table, TableBody, TableCell, TableHead, TableRow} from '@loreschaeffer/lyco-ui';
+
 const radiiSteps = ['sm', 'md', 'xl', '2xl', 'full'];
 
 export const RadiiDoc: React.FC = () => {
@@ -23,7 +24,7 @@ export const RadiiDoc: React.FC = () => {
                     <TableBody>
                         {radiiSteps.map(step => {
                             const cssVar = `--radius-${step}`;
-                            return <RadiiRow key={step} step={step} cssVar={cssVar} />;
+                            return <RadiiRow key={step} step={step} cssVar={cssVar}/>;
                         })}
                     </TableBody>
                 </Table>
@@ -32,7 +33,7 @@ export const RadiiDoc: React.FC = () => {
     );
 };
 
-const RadiiRow = ({ step, cssVar }: { step: string, cssVar: string }) => {
+const RadiiRow = ({step, cssVar}: { step: string, cssVar: string }) => {
     const [copied, setCopied] = useState(false);
     const [isHovered, setIsHovered] = useState(false);
     const handleCopy = () => {
@@ -42,31 +43,29 @@ const RadiiRow = ({ step, cssVar }: { step: string, cssVar: string }) => {
     };
 
     return (
-        <TableRow 
-            onClick={handleCopy} 
-            style={{ cursor: 'pointer' }} 
-            hover 
+        <TableRow
+            onClick={handleCopy}
+            style={{cursor: 'pointer'}}
+            hover
             title={`Copy var(${cssVar})`}
             onMouseEnter={() => setIsHovered(true)}
             onMouseLeave={() => setIsHovered(false)}
         >
             <TableCell>radius-{step}</TableCell>
             <TableCell>
-                <code style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                <Badge variant="secondary" style={{display: "inline-flex", alignItems: "center", gap: "8px"}}>
                     var({cssVar})
-                    <span style={{ 
-                        display: 'inline-flex', 
-                        width: '1em', 
-                        opacity: (copied || isHovered) ? 1 : 0, 
-                        transition: 'opacity 0.2s ease',
-                        color: copied ? 'var(--color-success)' : 'var(--color-text-secondary)'
+                    <span style={{
+                        opacity: (copied || isHovered) ? 1 : 0,
+                        transition: "opacity 0.2s ease",
+                        color: copied ? "var(--color-success)" : "inherit"
                     }}>
                         {copied ? <PiCheckBold/> : <PiCopy/>}
                     </span>
-                </code>
+                </Badge>
             </TableCell>
             <TableCell>
-                <div style={{ width: '60px', height: '60px', backgroundColor: 'var(--color-primary)', borderRadius: `var(${cssVar})` }} />
+                <div style={{width: '60px', height: '60px', backgroundColor: 'var(--color-primary)', borderRadius: `var(${cssVar})`}}/>
             </TableCell>
         </TableRow>
     );

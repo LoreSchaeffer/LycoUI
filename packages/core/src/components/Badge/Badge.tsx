@@ -4,12 +4,15 @@ import clsx from 'clsx';
 import type {FullVariant} from '../../types/types';
 import {getContrastColor} from '../../utils/theme';
 
+/**
+ * BadgeProps.
+ */
 export interface BadgeProps extends React.HTMLAttributes<HTMLSpanElement> {
     /**
      * The visual style of the badge.
      * @default 'primary'
      */
-    variant?: FullVariant | 'white' | 'neutral';
+    variant?: FullVariant | 'white';
 
     /**
      * Use fully rounded borders for a pill-like appearance.
@@ -24,6 +27,10 @@ export interface BadgeProps extends React.HTMLAttributes<HTMLSpanElement> {
     dim?: boolean;
 }
 
+/**
+ * Badge component.
+ * Used to highlight small snippets of information, states, or counts.
+ */
 export const Badge = memo(forwardRef<HTMLSpanElement, BadgeProps>((
     {
         className,

@@ -1,7 +1,7 @@
-import { DocTemplate } from '../../../components/DocTemplate';
-import { apiConfig } from './api';
+import {DocTemplate} from '../../../components/DocTemplate';
+import {apiConfig} from './api';
 
-const exampleModules = import.meta.glob('./examples/*.tsx', { eager: true });
+const exampleModules = import.meta.glob('./examples/*.tsx', {eager: true});
 const rawSources = import.meta.glob('./examples/*.tsx', {
     query: '?raw',
     import: 'default',
@@ -13,6 +13,7 @@ export default function DataTableDoc() {
         <DocTemplate
             title="Data Table"
             description="A premium, feature-rich data grid component supporting sorting, pagination, search filtering, row selection, and drag-and-drop reordering out of the box."
+            a11yNotes={`Uses native HTML \`<table>\`, \`<th>\`, and \`<td>\` for robust semantic structure. Sortable columns use \`aria-sort\`. Selectable rows use \`aria-selected\`.`}
             exampleModules={exampleModules}
             rawSources={rawSources as Record<string, string>}
             apiConfig={apiConfig}

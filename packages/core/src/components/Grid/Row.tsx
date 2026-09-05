@@ -5,12 +5,21 @@ import "./Grid.scss";
 export type RowAlign = 'stretch' | 'start' | 'center' | 'end';
 export type RowJustify = 'start' | 'center' | 'end' | 'between';
 
+/**
+ * Props for the Row component.
+ */
 export interface RowProps extends HTMLAttributes<HTMLDivElement> {
+    /** Grid columns or content */
     children: ReactNode;
+    /** Vertical alignment of items in the row */
     align?: RowAlign;
+    /** Horizontal justification of items in the row */
     justify?: RowJustify;
 }
 
+/**
+ * Row component for flex grid layouts.
+ */
 export const Row = forwardRef<HTMLDivElement, RowProps>((
     {
         children,

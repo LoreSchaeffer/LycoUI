@@ -1,4 +1,4 @@
-import { Col, Input, Row } from '@loreschaeffer/lyco-ui';
+import {Col, Input, Row} from '@loreschaeffer/lyco-ui';
 
 export const title = 'Floating Labels';
 export const description = <p>Floating labels animate above the field when the input is focused or has a value. Without a label, the input acts as a standard text field with a placeholder.</p>;
@@ -17,17 +17,17 @@ export const vanillaHtml = `
 `;
 
 export default function FloatingLabelExample() {
-  return (
-    <Row>
-      <Col span={12} md={6} className="mb-4">
-        <Input label="Full Name" placeholder="John Doe" />
-      </Col>
-      <Col span={12} md={6} className="mb-4">
-        <Input label="Email Address" type="email" placeholder="email@example.com" />
-      </Col>
-      <Col span={12} md={6} className="mb-4">
-        <Input placeholder="No label, just placeholder" />
-      </Col>
-    </Row>
-  );
+    return (
+        <Row>
+            <Col span={12} md={6} className="mb-4">
+                <Input label="Full Name" placeholder="John Doe"/>
+            </Col>
+            <Col span={12} md={6} className="mb-4">
+                <Input label="Email Address" type="email" placeholder="email@example.com"/>
+            </Col>
+            <Col span={12} md={6} className="mb-4">
+                <Input placeholder="No label, just placeholder"/>
+            </Col>
+        </Row>
+    );
 }

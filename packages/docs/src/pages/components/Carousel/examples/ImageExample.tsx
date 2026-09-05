@@ -1,4 +1,4 @@
-import { Carousel } from '@loreschaeffer/lyco-ui';
+import {Carousel} from '@loreschaeffer/lyco-ui';
 
 export const title = 'Image Carousel';
 export const description = <p>A basic implementation holding high-quality images. The carousel automatically creates a sliding track and adds interactive overlay controls.</p>;
@@ -39,23 +39,23 @@ export const vanillaHtml = `
 `;
 
 export default function ImageExample() {
-  return (
-    <Carousel gap="0">
-      <img 
-        src="https://images.unsplash.com/photo-1682687220742-aba13b6e50ba?auto=format&fit=crop&q=80&w=1200" 
-        alt="Desert landscape" 
-        style={{ width: '100%', height: '400px', objectFit: 'cover', borderRadius: 'var(--radius-lg)' }} 
-      />
-      <img 
-        src="https://images.unsplash.com/photo-1682687220063-4742bd7fd538?auto=format&fit=crop&q=80&w=1200" 
-        alt="Mountain view" 
-        style={{ width: '100%', height: '400px', objectFit: 'cover', borderRadius: 'var(--radius-lg)' }} 
-      />
-      <img 
-        src="https://images.unsplash.com/photo-1682687220199-d0124f48f95b?auto=format&fit=crop&q=80&w=1200" 
-        alt="Ocean waves" 
-        style={{ width: '100%', height: '400px', objectFit: 'cover', borderRadius: 'var(--radius-lg)' }} 
-      />
-    </Carousel>
-  );
+    return (
+        <Carousel gap="0">
+            <img
+                src="https://images.unsplash.com/photo-1682687220742-aba13b6e50ba?auto=format&fit=crop&q=80&w=1200"
+                alt="Desert landscape"
+                style={{width: '100%', height: '400px', objectFit: 'cover', borderRadius: 'var(--radius-lg)'}}
+            />
+            <img
+                src="https://images.unsplash.com/photo-1682687220063-4742bd7fd538?auto=format&fit=crop&q=80&w=1200"
+                alt="Mountain view"
+                style={{width: '100%', height: '400px', objectFit: 'cover', borderRadius: 'var(--radius-lg)'}}
+            />
+            <img
+                src="https://images.unsplash.com/photo-1682687220199-d0124f48f95b?auto=format&fit=crop&q=80&w=1200"
+                alt="Ocean waves"
+                style={{width: '100%', height: '400px', objectFit: 'cover', borderRadius: 'var(--radius-lg)'}}
+            />
+        </Carousel>
+    );
 }

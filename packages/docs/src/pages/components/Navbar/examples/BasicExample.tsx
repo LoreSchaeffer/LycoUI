@@ -1,5 +1,5 @@
 import React from 'react';
-import { Navbar, Row, Col } from '@loreschaeffer/lyco-ui';
+import {Col, Navbar, Row} from '@loreschaeffer/lyco-ui';
 
 export const title = 'Basic Navbar';
 export const description = <p>A foundational Navbar example with a brand logo, standard navigation links, and a basic text-based dropdown.</p>;
@@ -44,38 +44,38 @@ export const vanillaHtml = `
 `;
 
 export default function BasicExample() {
-  return (
-    <Row>
-      <Col span={12}>
-        <div style={{ height: '300px', display: 'flex', flexDirection: 'column', border: '1px solid var(--color-border-subtle)', borderRadius: 'var(--radius-md)', overflow: 'hidden' }}>
-          <Navbar expand="always">
-            <Navbar.Brand href="#">LycoUI</Navbar.Brand>
-            <Navbar.Toggle />
-            <Navbar.Collapse>
-              <Navbar.Nav>
-                <Navbar.Item>
-                  <Navbar.Link href="#" active>Home</Navbar.Link>
-                </Navbar.Item>
-                <Navbar.Item>
-                  <Navbar.Link href="#">About</Navbar.Link>
-                </Navbar.Item>
-                <Navbar.Dropdown title="Services">
-                  <Navbar.DropdownItem href="#">Web</Navbar.DropdownItem>
-                  <Navbar.DropdownItem href="#">Design</Navbar.DropdownItem>
-                </Navbar.Dropdown>
-              </Navbar.Nav>
-              <Navbar.Nav align="end">
-                <Navbar.Item>
-                  <a className="btn btn--primary btn--sm" href="#" style={{ textDecoration: 'none' }}>Contact Us</a>
-                </Navbar.Item>
-              </Navbar.Nav>
-            </Navbar.Collapse>
-          </Navbar>
-          <div style={{ padding: '2rem', flex: 1, backgroundColor: 'var(--color-bg-base)' }}>
-            <p className="text-secondary">This is a standard Navbar setup. Resize the window or use the canvas controls to see responsive behaviors.</p>
-          </div>
-        </div>
-      </Col>
-    </Row>
-  );
+    return (
+        <Row>
+            <Col span={12}>
+                <div style={{minHeight: '350px', display: 'flex', flexDirection: 'column', border: '1px solid var(--color-border-subtle)', borderRadius: 'var(--radius-md)'}}>
+                    <Navbar expand="always">
+                        <Navbar.Brand href="#">LycoUI</Navbar.Brand>
+                        <Navbar.Toggle/>
+                        <Navbar.Collapse>
+                            <Navbar.Nav>
+                                <Navbar.Item>
+                                    <Navbar.Link href="#" active>Dashboard</Navbar.Link>
+                                </Navbar.Item>
+                                <Navbar.Item>
+                                    <Navbar.Link href="#">Projects</Navbar.Link>
+                                </Navbar.Item>
+                                <Navbar.Dropdown title="Account" align="right">
+                                    <Navbar.DropdownItem href="#">Profile</Navbar.DropdownItem>
+                                    <Navbar.DropdownItem href="#">Settings</Navbar.DropdownItem>
+                                </Navbar.Dropdown>
+                            </Navbar.Nav>
+                            <Navbar.Nav align="end">
+                                <Navbar.Item>
+                                    <a className="btn btn--primary btn--sm" href="#" style={{textDecoration: 'none'}}>Log Out</a>
+                                </Navbar.Item>
+                            </Navbar.Nav>
+                        </Navbar.Collapse>
+                    </Navbar>
+                    <div style={{padding: '2rem', flex: 1, backgroundColor: 'var(--color-bg-base)'}}>
+                        <p className="text-secondary">This is a standard Navbar setup. Resize the window or use the canvas controls to see responsive behaviors.</p>
+                    </div>
+                </div>
+            </Col>
+        </Row>
+    );
 }

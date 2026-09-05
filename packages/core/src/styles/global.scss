@@ -14,6 +14,7 @@
 // ROOT START
 // ==========================================================================
 :root {
+
   // ==========================================================================
   // NEUTRAL COLORS (Base, Hover, Active)
   // ==========================================================================
@@ -31,8 +32,8 @@
 
   // Typography Colors
   --color-text-primary: var(--color-paper);
-  --color-text-secondary: var(--color-fog);
-  --color-text-muted: var(--color-ash);
+  --color-text-secondary: var(--color-mist);
+  --color-text-muted: var(--color-fog);
   --color-text-success: var(--color-green-500);
   --color-text-warning: var(--color-amber-500);
   --color-text-danger: var(--color-red-500);
@@ -63,12 +64,18 @@
 
   // Fallbacks for lyco-all-colors if missing
   --white: #ffffff;
+  --black: #000000;
 
   // Brand Palette
   --color-primary: var(--blue-500);
   --color-primary-hover: var(--blue-400);
   --color-primary-active: var(--blue-600);
   --color-primary-dim: var(--blue-dim);
+
+  --color-secondary: var(--color-ash);
+  --color-secondary-hover: var(--color-fog);
+  --color-secondary-active: var(--color-smoke);
+  --color-secondary-dim: rgba(138, 143, 152, 0.15); // fog with 15% opacity
 
   --color-success: var(--green-500);
   --color-success-hover: var(--green-400);
@@ -155,20 +162,6 @@
 }
 
 // ==========================================================================
-// THEMES & MODES
-// ==========================================================================
-@each $name, $scale in colors.$semantic-colors {
-  .theme-#{$name} {
-    // Left empty for variant targeting, no neutral re-generation needed
-  }
-}
-
-.theme-oled {
-  --surface-root: var(--black);
-  --color-bg-root: var(--surface-root);
-}
-
-// ==========================================================================
 // CSS RESET & BASE STYLES
 // ==========================================================================
 *,
@@ -198,13 +191,19 @@ body {
   letter-spacing: var(--tracking-body-sm);
 }
 
-img, picture, svg, video {
+img,
+picture,
+svg,
+video {
   display: block;
   max-width: 100%;
   height: auto;
 }
 
-input, button, textarea, select {
+input,
+button,
+textarea,
+select {
   font: inherit;
   color: inherit;
   letter-spacing: inherit;
@@ -219,40 +218,54 @@ button {
 // ==========================================================================
 // TYPOGRAPHY ELEMENTS
 // ==========================================================================
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   color: var(--color-text-primary);
-  font-weight: var(--font-weight-bold);
-  margin-bottom: var(--spacing-4);
+  font-weight: var(--font-weight-semibold); // Reduced from bold (700) to semibold (600)
 }
 
 h1 {
-  font-size: var(--text-heading);
-  line-height: var(--leading-heading);
-  letter-spacing: var(--tracking-heading);
+  font-size: 1.75rem;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+  margin-top: var(--spacing-6);
+  margin-bottom: var(--spacing-6);
 }
 
 h2 {
-  font-size: var(--text-heading-sm);
-  line-height: var(--leading-heading-sm);
-  letter-spacing: var(--tracking-heading-sm);
+  font-size: 1.5rem;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+  margin-top: var(--spacing-6);
+  margin-bottom: var(--spacing-4);
 }
 
 h3 {
-  font-size: var(--text-subheading);
-  line-height: var(--leading-subheading);
-  letter-spacing: var(--tracking-subheading);
+  font-size: 1.25rem;
+  line-height: 1.3;
+  letter-spacing: -0.01em;
+  margin-top: var(--spacing-4);
+  margin-bottom: var(--spacing-3);
 }
 
 h4 {
-  font-size: var(--text-body-lg);
+  font-size: 1rem;
+  font-weight: var(--font-weight-semibold);
   line-height: var(--leading-body-lg);
-  letter-spacing: var(--tracking-body-lg);
+  margin-top: var(--spacing-6);
+  margin-bottom: var(--spacing-2);
 }
 
 h5 {
-  font-size: var(--text-body-sm);
+  font-size: 0.875rem;
+  font-weight: var(--font-weight-medium);
   line-height: var(--leading-body-sm);
-  letter-spacing: var(--tracking-body-sm);
+  margin-top: var(--spacing-4);
+  margin-bottom: var(--spacing-2);
 }
 
 h6 {
@@ -260,6 +273,8 @@ h6 {
   line-height: var(--leading-caption);
   letter-spacing: var(--tracking-caption);
   text-transform: uppercase;
+  margin-top: var(--spacing-4);
+  margin-bottom: var(--spacing-2);
 }
 
 // TYPOGRAPHY UTILITIES
@@ -290,7 +305,8 @@ small {
   color: var(--color-text-muted);
 }
 
-strong, b {
+strong,
+b {
   font-weight: var(--font-weight-semibold);
   color: var(--color-text-primary);
 }
@@ -329,11 +345,29 @@ pre {
 // UTILITIES
 // ==========================================================================
 .hidden {
-  display: none;
+  display: none !important;
+}
+
+.visually-hidden {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  padding: 0 !important;
+  margin: -1px !important;
+  overflow: hidden !important;
+  clip: rect(0, 0, 0, 0) !important;
+  white-space: nowrap !important;
+  border: 0 !important;
 }
 
 .text-center {
   text-align: center;
+}
+
+.text-truncate {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .text-primary {
@@ -372,24 +406,88 @@ pre {
   color: var(--black);
 }
 
+.img-fluid {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+.fluid {
+  width: 100%;
+}
+
+.w-100 {
+  width: 100% !important;
+}
+
+.h-100 {
+  height: 100% !important;
+}
+
+.w-100vw {
+  width: 100vw !important;
+}
+
+.h-100vh {
+  height: 100vh !important;
+}
+
+.h-100svh {
+  height: 100svh !important;
+}
+
+.h-100dvh {
+  height: 100dvh !important;
+}
+
+.d-flex {
+  display: flex !important;
+}
+
+.flex-column {
+  flex-direction: column !important;
+}
+
+.align-items-center {
+  align-items: center !important;
+}
+
+.justify-content-center {
+  justify-content: center !important;
+}
+
+.justify-content-between {
+  justify-content: space-between !important;
+}
+
+.flex-wrap {
+  flex-wrap: wrap !important;
+}
+
 @for $i from 1 through 12 {
+
   // Margins
   .mt-#{$i} {
     margin-top: var(--spacing-#{$i});
   }
+
   .mb-#{$i} {
     margin-bottom: var(--spacing-#{$i});
   }
+
   .ml-#{$i} {
     margin-left: var(--spacing-#{$i});
   }
+
   .mr-#{$i} {
     margin-right: var(--spacing-#{$i});
   }
+
   .mx-#{$i} {
     margin-left: var(--spacing-#{$i});
     margin-right: var(--spacing-#{$i});
   }
+
   .my-#{$i} {
     margin-top: var(--spacing-#{$i});
     margin-bottom: var(--spacing-#{$i});
@@ -399,22 +497,28 @@ pre {
   .p-#{$i} {
     padding: var(--spacing-#{$i});
   }
+
   .pt-#{$i} {
     padding-top: var(--spacing-#{$i});
   }
+
   .pr-#{$i} {
     padding-right: var(--spacing-#{$i});
   }
+
   .pb-#{$i} {
     padding-bottom: var(--spacing-#{$i});
   }
+
   .pl-#{$i} {
     padding-left: var(--spacing-#{$i});
   }
+
   .px-#{$i} {
     padding-left: var(--spacing-#{$i});
     padding-right: var(--spacing-#{$i});
   }
+
   .py-#{$i} {
     padding-top: var(--spacing-#{$i});
     padding-bottom: var(--spacing-#{$i});

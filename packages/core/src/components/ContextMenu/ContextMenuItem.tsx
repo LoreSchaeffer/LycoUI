@@ -3,11 +3,17 @@ import clsx from 'clsx';
 import type {ContextMenuItemDef} from './ContextMenuContext';
 import {ContextMenu} from './ContextMenu';
 
+/**
+ * ContextMenuItemProps.
+ */
 export interface ContextMenuItemProps extends React.HTMLAttributes<HTMLLIElement> {
     item: ContextMenuItemDef;
     onClose: () => void;
 }
 
+/**
+ * ContextMenuItem component.
+ */
 export const ContextMenuItem = React.forwardRef<HTMLLIElement, ContextMenuItemProps>(
     ({item, onClose, ...props}, ref) => {
         const [isHovered, setIsHovered] = useState(false);

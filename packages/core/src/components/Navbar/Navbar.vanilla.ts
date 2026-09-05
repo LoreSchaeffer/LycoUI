@@ -8,6 +8,9 @@ export function initLycoNavbars(): void {
     });
 }
 
+/**
+ * Controller for the Vanilla JS LycoNavbar component.
+ */
 export class LycoNavbarController {
     private readonly navbar: HTMLElement;
     private readonly toggles: NodeListOf<HTMLButtonElement>;

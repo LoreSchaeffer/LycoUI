@@ -39,6 +39,10 @@ export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
     flat?: boolean;
 }
 
+/**
+ * Button component.
+ * A versatile interactive element supporting multiple variants, sizes, and states.
+ */
 export const Button = memo(forwardRef<HTMLButtonElement, ButtonProps>((
     {
         children,
@@ -86,6 +90,7 @@ export const Button = memo(forwardRef<HTMLButtonElement, ButtonProps>((
                 btnStatic && 'btn--static',
                 isLoading && 'btn--loading',
                 isIconOnly && 'btn--icon-only',
+                variant === 'white' && 'btn--white',
                 className
             )}
             style={mergedStyle}

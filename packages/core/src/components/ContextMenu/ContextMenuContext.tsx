@@ -1,5 +1,8 @@
 import React, {createContext, useContext} from 'react';
 
+/**
+ * ContextMenuItemDef.
+ */
 export interface ContextMenuItemDef {
     id: string;
     label?: React.ReactNode;
@@ -11,6 +14,9 @@ export interface ContextMenuItemDef {
     submenu?: ContextMenuItemDef[];
 }
 
+/**
+ * ContextMenuState.
+ */
 export interface ContextMenuState {
     isOpen: boolean;
     x: number;
@@ -18,11 +24,17 @@ export interface ContextMenuState {
     items: ContextMenuItemDef[];
 }
 
+/**
+ * ContextMenuContextValue.
+ */
 export interface ContextMenuContextValue {
     showContextMenu: (e: React.MouseEvent, items: ContextMenuItemDef[]) => void;
     hideContextMenu: () => void;
 }
 
+/**
+ * ContextMenuContext component.
+ */
 export const ContextMenuContext = createContext<ContextMenuContextValue | undefined>(undefined);
 ContextMenuContext.displayName = 'ContextMenuContext';
 

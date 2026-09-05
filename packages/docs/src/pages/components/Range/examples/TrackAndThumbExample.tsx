@@ -1,7 +1,8 @@
-import { Col, Range, Row } from '@loreschaeffer/lyco-ui';
+import {Col, Range, Row} from '@loreschaeffer/lyco-ui';
 
 export const title = 'Track & Thumb Customization';
-export const description = <p>Customize the track to be unfilled using <code>filled={'{'}false{'}'}</code>. By default, the thumb inherits the track's filled color logic, but you can override it explicitly with <code>coloredThumb</code>.</p>;
+export const description = <p>Customize the track to be unfilled using <code>filled={'{'}false{'}'}</code>. By default, the thumb inherits the track's filled color logic, but you can override it explicitly with <code>coloredThumb</code>.
+</p>;
 export const order = 3;
 
 export const vanillaHtml = `
@@ -20,20 +21,20 @@ export const vanillaHtml = `
 `;
 
 export default function TrackAndThumbExample() {
-  return (
-    <Row>
-      <Col span={6} className="mb-8">
-        <div className="text-sm fw-bold mb-2 text-secondary">Unfilled Track (Default Colored Thumb)</div>
-        <Range defaultValue={40} variant="info" filled={false} />
-      </Col>
-      <Col span={6} className="mb-8">
-        <div className="text-sm fw-bold mb-2 text-secondary">Filled Track (Forced Colored Thumb)</div>
-        <Range defaultValue={70} variant="danger" coloredThumb={true} />
-      </Col>
-      <Col span={6}>
-        <div className="text-sm fw-bold mb-2 text-secondary">Unfilled Track (Forced White Thumb)</div>
-        <Range defaultValue={55} variant="purple" filled={false} coloredThumb={false} />
-      </Col>
-    </Row>
-  );
+    return (
+        <Row>
+            <Col span={6} className="mb-8">
+                <div className="text-sm fw-bold mb-2 text-secondary">Unfilled Track (Default Colored Thumb)</div>
+                <Range defaultValue={40} variant="info" filled={false}/>
+            </Col>
+            <Col span={6} className="mb-8">
+                <div className="text-sm fw-bold mb-2 text-secondary">Filled Track (Forced Colored Thumb)</div>
+                <Range defaultValue={70} variant="danger" coloredThumb={true}/>
+            </Col>
+            <Col span={6}>
+                <div className="text-sm fw-bold mb-2 text-secondary">Unfilled Track (Forced White Thumb)</div>
+                <Range defaultValue={55} variant="purple" filled={false} coloredThumb={false}/>
+            </Col>
+        </Row>
+    );
 }

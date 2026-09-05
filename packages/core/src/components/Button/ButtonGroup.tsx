@@ -3,11 +3,17 @@ import {forwardRef, type HTMLAttributes, type ReactNode} from 'react';
 import clsx from 'clsx';
 import type {Orientation} from "../../types/types.ts";
 
+/**
+ * ButtonGroupProps.
+ */
 export interface ButtonGroupProps extends HTMLAttributes<HTMLDivElement> {
     children: ReactNode;
     orientation?: Orientation;
 }
 
+/**
+ * ButtonGroup component.
+ */
 export const ButtonGroup = forwardRef<HTMLDivElement, ButtonGroupProps>((
     {
         children,

@@ -1,4 +1,4 @@
-import { Navbar, Row, Col } from '@loreschaeffer/lyco-ui';
+import {Navbar} from '@loreschaeffer/lyco-ui';
 
 export const title = 'Navbar with Dropdown';
 export const description = <p>Include interactive dropdown menus in your navigation, perfect for Profile settings or complex sub-navigation menus. Supports deeply nested submenus that open smoothly on hover.</p>;
@@ -52,40 +52,38 @@ export const vanillaHtml = `
 
 export default function DropdownExample() {
     return (
-        <Row>
-            <Col span={12}>
-                <Navbar expand="lg">
-                    <Navbar.Brand href="#">LycoUI</Navbar.Brand>
-                    <Navbar.Toggle />
-                    <Navbar.Collapse>
-                        <Navbar.Nav>
-                            <Navbar.Item>
-                                <Navbar.Link href="#" active>Dashboard</Navbar.Link>
-                            </Navbar.Item>
-                            <Navbar.Item>
-                                <Navbar.Link href="#">Projects</Navbar.Link>
-                            </Navbar.Item>
-                        </Navbar.Nav>
-                        <Navbar.Nav align="end">
-                            <Navbar.Dropdown title="Profile">
-                                <Navbar.DropdownItem href="#">Account Details</Navbar.DropdownItem>
-                                
-                                <Navbar.DropdownSubMenu title="Theme Settings">
-                                    <Navbar.DropdownItem href="#">Light Mode</Navbar.DropdownItem>
-                                    <Navbar.DropdownItem href="#">Dark Mode</Navbar.DropdownItem>
-                                    <Navbar.DropdownItem href="#">System Preference</Navbar.DropdownItem>
-                                </Navbar.DropdownSubMenu>
+        <div style={{minHeight: '350px', width: '100%'}}>
+            <Navbar expand="lg">
+                <Navbar.Brand href="#">LycoUI</Navbar.Brand>
+                <Navbar.Toggle/>
+                <Navbar.Collapse>
+                    <Navbar.Nav>
+                        <Navbar.Item>
+                            <Navbar.Link href="#" active>Dashboard</Navbar.Link>
+                        </Navbar.Item>
+                        <Navbar.Item>
+                            <Navbar.Link href="#">Projects</Navbar.Link>
+                        </Navbar.Item>
+                    </Navbar.Nav>
+                    <Navbar.Nav align="end">
+                        <Navbar.Dropdown title="Profile" align="right">
+                            <Navbar.DropdownItem href="#">Account Details</Navbar.DropdownItem>
 
-                                <Navbar.DropdownItem href="#" style={{ color: 'var(--color-danger)' }}>Sign Out</Navbar.DropdownItem>
-                            </Navbar.Dropdown>
-                        </Navbar.Nav>
-                    </Navbar.Collapse>
-                </Navbar>
-                
-                {/* Simulated Content Area to showcase dropdown floating above */}
-                <div style={{ height: '300px', backgroundColor: 'var(--color-bg-base)', border: '1px solid var(--color-border-subtle)', borderTop: 'none', borderBottomLeftRadius: 'var(--radius-lg)', borderBottomRightRadius: 'var(--radius-lg)' }}>
-                </div>
-            </Col>
-        </Row>
+                            <Navbar.DropdownSubMenu title="Theme Settings">
+                                <Navbar.DropdownItem href="#">Light Mode</Navbar.DropdownItem>
+                                <Navbar.DropdownItem href="#">Dark Mode</Navbar.DropdownItem>
+                                <Navbar.DropdownItem href="#">System Preference</Navbar.DropdownItem>
+                            </Navbar.DropdownSubMenu>
+
+                            <Navbar.DropdownItem href="#" style={{color: 'var(--color-danger)'}}>Sign Out</Navbar.DropdownItem>
+                        </Navbar.Dropdown>
+                    </Navbar.Nav>
+                </Navbar.Collapse>
+            </Navbar>
+
+            {/* Simulated Content Area to showcase dropdown floating above */}
+            <div style={{height: '300px', backgroundColor: 'var(--color-bg-base)', border: '1px solid var(--color-border-subtle)', borderTop: 'none', borderBottomLeftRadius: 'var(--radius-lg)', borderBottomRightRadius: 'var(--radius-lg)'}}>
+            </div>
+        </div>
     );
 }

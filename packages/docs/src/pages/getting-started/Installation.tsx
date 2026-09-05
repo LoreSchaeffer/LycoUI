@@ -1,29 +1,22 @@
 import React from 'react';
-import { Code, Table, TableHead, TableBody, TableRow, TableCell } from '@loreschaeffer/lyco-ui';
+import {Alert, Code, TabContent, Table, TableBody, TableCell, TableHead, TableRow, Tabs, TabsList, TabTrigger} from '@loreschaeffer/lyco-ui';
 
 const Installation: React.FC = () => {
     return (
         <article className="mb-10">
-            <h1 className="mb-8">
-                Installation
-            </h1>
-
+            <h1 className="mb-8">Installation</h1>
             <p className="text-secondary mb-6">
                 Step-by-step guide to install and configure Lyco UI in your project.
-                Lyco UI is published on <strong>GitHub Packages</strong> under the
-                {' '}<code>@loreschaeffer</code> scope.
+                Lyco UI is published on <strong>GitHub Packages</strong> under the{' '}
+                <code>@loreschaeffer</code> scope.
             </p>
 
             {/* Prerequisites */}
             <section className="mb-10">
-                <h2 className="mt-12 mb-6">
-                    Prerequisites
-                </h2>
-
-                <p className="text-secondary mb-6">
-                    Before installing Lyco UI, make sure you have the following:
-                </p>
-
+                <h2 className="mt-12 mb-6">Prerequisites</h2>
+                <Alert variant="warning" className="mb-6">
+                    Ensure your environment meets the minimum requirements before proceeding. You must have Node.js 25.0.0+ (for npm workspaces support) and a GitHub Account to access GitHub Packages.
+                </Alert>
                 <Table striped bordered hover>
                     <TableHead>
                         <TableRow>
@@ -35,12 +28,12 @@ const Installation: React.FC = () => {
                     <TableBody>
                         <TableRow>
                             <TableCell>Node.js</TableCell>
-                            <TableCell><code>&gt;=25.0.0</code></TableCell>
+                            <TableCell><Code inline language="text">&gt;=25.0.0</Code></TableCell>
                             <TableCell>Required for npm workspaces support</TableCell>
                         </TableRow>
                         <TableRow>
                             <TableCell>npm</TableCell>
-                            <TableCell><code>&gt;=10.0.0</code></TableCell>
+                            <TableCell><Code inline language="text">&gt;=10.0.0</Code></TableCell>
                             <TableCell>Bundled with Node.js 25+</TableCell>
                         </TableRow>
                         <TableRow>
@@ -54,62 +47,60 @@ const Installation: React.FC = () => {
 
             {/* Step 1: Registry */}
             <section className="mb-10">
-                <h2 className="mt-12 mb-6">
-                    Setup
-                </h2>
+                <h2 className="mt-12 mb-6">Setup</h2>
 
-                <h3 className="mt-8 mb-4">
-                    1. Configure npm Registry
-                </h3>
-
+                <h3 className="mt-8 mb-4">1. Configure npm Registry</h3>
                 <p className="text-secondary mb-6">
-                    Create or edit a <code>.npmrc</code> file in your project root to
-                    point the <code>@loreschaeffer</code> scope to GitHub Packages:
+                    Create or edit a <Code inline language="text">.npmrc</Code> file in your project root to
+                    point the <Code inline language="text">@loreschaeffer</Code> scope to GitHub Packages:
                 </p>
-
-                <Code language="ini" code={'@loreschaeffer:registry=https://npm.pkg.github.com'} />
+                <Code language="ini" code={'@loreschaeffer:registry=https://npm.pkg.github.com'}/>
 
                 {/* Step 2: Authentication */}
-                <h3 className="mt-8 mb-4">
-                    2. Authenticate with GitHub
-                </h3>
-
+                <h3 className="mt-8 mb-4">2. Authenticate with GitHub</h3>
                 <p className="text-secondary mb-6">
                     GitHub Packages requires authentication even for public packages.
                     Run the following command and use a GitHub Personal Access Token
-                    (PAT) with <code>read:packages</code> scope as your password:
+                    (PAT) with <Code inline language="text">read:packages</Code> scope as your password:
                 </p>
+                <Code language="bash" code="npm login --registry=https://npm.pkg.github.com"/>
 
-                <Code language="bash" code="npm login --registry=https://npm.pkg.github.com" />
-
-                <div className="mt-4 mb-8 p-4 bg-surface-elevated rounded border border-subtle">
-                    <strong>Tip:</strong> You only need to authenticate once per machine.
-                    npm stores the token in your user-level <code>~/.npmrc</code>.
+                <Alert variant="info" className="mt-4 mb-8">
+                    You only need to authenticate once per machine.
+                    npm stores the token in your user-level <Code inline language="text">~/.npmrc</Code>.
                     To create a PAT, go to <em>GitHub → Settings → Developer Settings →
-                    Personal Access Tokens → Tokens (classic)</em> and enable the
-                    {' '}<code>read:packages</code> scope.
-                </div>
+                    Personal Access Tokens → Tokens (classic)</em> and enable the{' '}
+                    <Code inline language="text">read:packages</Code> scope.
+                </Alert>
 
                 {/* Step 3: Install */}
-                <h3 className="mt-8 mb-4">
-                    3. Install the Package
-                </h3>
-
-                <Code language="bash" code="npm install @loreschaeffer/lyco-ui" />
+                <h3 className="mt-8 mb-4">3. Install the Package</h3>
+                <Tabs defaultValue="npm" className="mb-8">
+                    <TabsList>
+                        <TabTrigger value="npm">npm</TabTrigger>
+                        <TabTrigger value="yarn">Yarn</TabTrigger>
+                        <TabTrigger value="pnpm">pnpm</TabTrigger>
+                    </TabsList>
+                    <TabContent value="npm">
+                        <Code language="bash" code="npm install @loreschaeffer/lyco-ui"/>
+                    </TabContent>
+                    <TabContent value="yarn">
+                        <Code language="bash" code="yarn add @loreschaeffer/lyco-ui"/>
+                    </TabContent>
+                    <TabContent value="pnpm">
+                        <Code language="bash" code="pnpm add @loreschaeffer/lyco-ui"/>
+                    </TabContent>
+                </Tabs>
             </section>
 
             {/* React Setup */}
             <section className="mb-10">
-                <h2 className="mt-12 mb-6">
-                    React Setup
-                </h2>
-
+                <h2 className="mt-12 mb-6">React Setup</h2>
                 <p className="text-secondary mb-6">
                     Import the global stylesheet once at the root of your application.
                     This loads the design tokens and all component styles.
                     Then import any component by name.
                 </p>
-
                 <Code
                     language="tsx"
                     code={`// main.tsx or App.tsx
@@ -124,16 +115,12 @@ export const App = () => (
 
             {/* Vanilla Setup */}
             <section className="mb-10">
-                <h2 className="mt-12 mb-6">
-                    Vanilla HTML/CSS/JS Setup
-                </h2>
-
+                <h2 className="mt-12 mb-6">Vanilla HTML/CSS/JS Setup</h2>
                 <p className="text-secondary mb-6">
                     For non-React projects, include the CSS stylesheet and the vanilla
                     JS bundle. Interactive components (Select, Modal, etc.) are
-                    auto-initialized on <code>DOMContentLoaded</code>.
+                    auto-initialized on <Code inline language="text">DOMContentLoaded</Code>.
                 </p>
-
                 <Code
                     language="html"
                     code={`<!DOCTYPE html>
@@ -150,20 +137,17 @@ export const App = () => (
 </html>`}
                 />
 
-                <div className="mt-4 mb-4 p-4 bg-surface-elevated rounded border border-subtle">
-                    <strong>Note:</strong> No build tools are required.
-                    Simply write HTML with the correct CSS classes and
-                    {' '}<code>data-*</code> attributes.
+                <Alert variant="info" className="mt-4 mb-4">
+                    No build tools are required.
+                    Simply write HTML with the correct CSS classes and{' '}
+                    <Code inline language="text">data-*</Code> attributes.
                     The vanilla bundle handles all interactive behavior automatically.
-                </div>
+                </Alert>
             </section>
 
             {/* Peer Dependencies */}
             <section className="mb-10">
-                <h2 className="mt-12 mb-6">
-                    Peer Dependencies
-                </h2>
-
+                <h2 className="mt-12 mb-6">Peer Dependencies</h2>
                 <p className="text-secondary mb-6">
                     Lyco UI declares the following peer dependencies. Your project
                     must provide these packages at the correct versions.
@@ -180,20 +164,20 @@ export const App = () => (
                     </TableHead>
                     <TableBody>
                         <TableRow>
-                            <TableCell><code>react</code></TableCell>
-                            <TableCell><code>^19.0.0</code></TableCell>
+                            <TableCell><Code inline language="text">react</Code></TableCell>
+                            <TableCell><Code inline language="text">^19.0.0</Code></TableCell>
                             <TableCell>Yes (React target)</TableCell>
                             <TableCell>Not needed for Vanilla-only usage</TableCell>
                         </TableRow>
                         <TableRow>
-                            <TableCell><code>react-dom</code></TableCell>
-                            <TableCell><code>^19.0.0</code></TableCell>
+                            <TableCell><Code inline language="text">react-dom</Code></TableCell>
+                            <TableCell><Code inline language="text">^19.0.0</Code></TableCell>
                             <TableCell>Yes (React target)</TableCell>
                             <TableCell>Not needed for Vanilla-only usage</TableCell>
                         </TableRow>
                         <TableRow>
-                            <TableCell><code>shiki</code></TableCell>
-                            <TableCell><code>^4.0.0</code></TableCell>
+                            <TableCell><Code inline language="text">shiki</Code></TableCell>
+                            <TableCell><Code inline language="text">^4.0.0</Code></TableCell>
                             <TableCell>Optional</TableCell>
                             <TableCell>Required only for the Code component with syntax highlighting</TableCell>
                         </TableRow>

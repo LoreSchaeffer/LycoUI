@@ -14,6 +14,7 @@ const CardDoc: React.FC = () => {
         <DocTemplate
             title="Card"
             description={<p>A premium layout component with a compound architecture (Header, Body, Footer), interactive states, and semantic variants.</p>}
+            a11yNotes={`Serves as a generic container. Ensure logical heading structures inside the card. If the entire card is actionable, it should be wrapped in an \`<a>\` or \`<button>\` element with appropriate focus rings.`}
             exampleModules={exampleModules}
             rawSources={rawSources}
             apiConfig={apiConfig}

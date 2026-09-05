@@ -1,5 +1,5 @@
 import type {HighlighterCore} from 'shiki/core';
-import type {ThemeRegistrationRaw} from '@shikijs/types';
+import type {LanguageRegistration, ShikiTransformer, ThemeRegistrationRaw} from '@shikijs/types';
 import {createOnigurumaEngine} from 'shiki/engine/oniguruma';
 import {bundledLanguages} from 'shiki';
 
@@ -57,12 +57,18 @@ const lycoDarkTheme: ThemeRegistrationRaw = {
 let highlighterPromise: Promise<HighlighterCore> | null = null;
 const loadingLangs = new Map<string, Promise<void>>();
 
+export const customLanguages: LanguageRegistration[] = [];
+export const customTransformers: ShikiTransformer[] = [];
+
+export const registerShikiLanguage = (lang: LanguageRegistration) => customLanguages.push(lang);
+export const registerShikiTransformer = (transformer: ShikiTransformer) => customTransformers.push(transformer);
+
 export const getShikiHighlighter = async (langs: string[]): Promise<HighlighterCore> => {
     if (!highlighterPromise) {
         highlighterPromise = import('shiki/core').then(async ({createHighlighterCore}) => {
             return await createHighlighterCore({
                 themes: [lycoDarkTheme],
-                langs: [],
+                langs: customLanguages,
                 engine: createOnigurumaEngine(import('shiki/wasm')),
             });
         });
@@ -82,18 +88,13 @@ export const getShikiHighlighter = async (langs: string[]): Promise<HighlighterC
                 }
 
                 const loadPromise = (async () => {
-                    try {
-                        const loadFn = bundledLanguages[lang as keyof typeof bundledLanguages];
-                        if (!loadFn) {
-                            console.warn(`Language not supported by shiki: ${lang}`);
-                            return;
-                        }
-                        const langModule = await loadFn();
-                        await highlighter.loadLanguage(langModule.default);
-                    } catch (e) {
-                        console.warn(`Failed to load shiki language: ${lang}`, e);
-                        throw e;
+                    const loadFn = bundledLanguages[lang as keyof typeof bundledLanguages];
+                    if (!loadFn) {
+                        // Language not supported
+                        return;
                     }
+                    const langModule = await loadFn();
+                    await highlighter.loadLanguage(langModule.default);
                 })();
 
                 loadingLangs.set(lang, loadPromise);

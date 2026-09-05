@@ -1,8 +1,14 @@
 import React, {createContext, useContext} from 'react';
 import type {FullVariant} from '../../types/types';
 
+/**
+ * NotificationDuration.
+ */
 export type NotificationDuration = 'short' | 'medium' | 'long' | number;
 
+/**
+ * NotificationOptions.
+ */
 export interface NotificationOptions {
     /** Bold heading displayed above the message. */
     title?: React.ReactNode;
@@ -22,6 +28,9 @@ export interface NotificationOptions {
     isFlat?: boolean;
 }
 
+/**
+ * NotificationContextValue.
+ */
 export interface NotificationContextValue {
     /** Show a notification and return its unique ID. */
     showNotification: (options: NotificationOptions) => string;
@@ -29,6 +38,9 @@ export interface NotificationContextValue {
     closeNotification: (id: string) => void;
 }
 
+/**
+ * NotificationContext component.
+ */
 export const NotificationContext = createContext<NotificationContextValue | undefined>(undefined);
 NotificationContext.displayName = 'NotificationContext';
 

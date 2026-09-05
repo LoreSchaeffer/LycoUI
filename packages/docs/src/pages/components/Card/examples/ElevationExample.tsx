@@ -23,8 +23,8 @@ export default function ElevationsExample() {
                 <Col key={level} span={6} className="mb-4">
                     <Card elevation={level}>
                         <Card.Body>
-                            <h3 className="mb-2">Elevation {level}</h3>
-                            <p className="text-secondary mb-0">Surface depth and shadow adjustments.</p>
+                            <h4 className="mb-2">Layer {level}</h4>
+                            <p className="text-secondary mb-0">Simulates elevation {level} with adjusted shadows.</p>
                         </Card.Body>
                     </Card>
                 </Col>

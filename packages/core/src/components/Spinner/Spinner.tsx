@@ -3,14 +3,37 @@ import clsx from 'clsx';
 import './Spinner.scss';
 import type {FullVariant, SizeVariant} from "../../types/types.ts";
 
+/**
+ * SpinnerType.
+ */
 export type SpinnerType = 'classic' | 'growing';
 
+/**
+ * SpinnerProps.
+ */
 export interface SpinnerProps extends HTMLAttributes<HTMLSpanElement> {
+    /**
+     * The visual style of the spinner.
+     * @default 'classic'
+     */
     type?: SpinnerType;
+
+    /**
+     * The semantic color variant of the spinner.
+     * @default 'primary'
+     */
     variant?: FullVariant;
+
+    /**
+     * The size of the spinner.
+     * @default 'md'
+     */
     size?: SizeVariant;
 }
 
+/**
+ * Spinner component.
+ */
 export const Spinner = memo(forwardRef<HTMLSpanElement, SpinnerProps>((
     {
         type = 'classic',

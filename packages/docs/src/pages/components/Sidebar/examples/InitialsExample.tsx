@@ -1,4 +1,4 @@
-import { Sidebar } from '@loreschaeffer/lyco-ui';
+import {Sidebar} from '@loreschaeffer/lyco-ui';
 import React from 'react';
 
 export const title = 'Auto-Generated Initials';
@@ -34,8 +34,8 @@ export const vanillaHtml = `
 
 export default function InitialsExample() {
     return (
-        <div style={{ height: '300px', display: 'flex', border: '1px solid var(--color-border-base)', borderRadius: 'var(--radius-lg)', overflow: 'hidden' }}>
-            <Sidebar variant="fixed" style={{ position: 'relative' }}>
+        <div style={{height: '300px', display: 'flex', border: '1px solid var(--color-border-base)', borderRadius: 'var(--radius-lg)', overflow: 'hidden'}}>
+            <Sidebar variant="fixed" style={{position: 'relative'}}>
                 <Sidebar.Content>
                     <Sidebar.Nav>
                         <Sidebar.Item>
@@ -56,7 +56,7 @@ export default function InitialsExample() {
                     </Sidebar.Nav>
                 </Sidebar.Content>
             </Sidebar>
-            <div style={{ padding: '2rem', flex: 1, backgroundColor: 'var(--color-bg-root)' }}>
+            <div style={{padding: '2rem', flex: 1, backgroundColor: 'var(--color-bg-root)'}}>
                 <p>Observe the auto-generated icons in the sidebar.</p>
             </div>
         </div>

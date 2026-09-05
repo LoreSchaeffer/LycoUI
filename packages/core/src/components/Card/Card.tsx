@@ -3,17 +3,34 @@ import {type CSSProperties, forwardRef, type HTMLAttributes, type ReactNode} fro
 import clsx from 'clsx';
 import type {FullVariant} from '../../types/types.ts';
 
+/**
+ * CardElevation.
+ */
 export type CardElevation = 0 | 1 | 2 | 3 | 4;
+/**
+ * CardPadding.
+ */
 export type CardPadding = 'none' | 'sm' | 'md' | 'lg';
 
+/**
+ * CardProps.
+ */
 export interface CardProps extends HTMLAttributes<HTMLDivElement> {
+    /** Content of the card */
     children?: ReactNode;
+    /** Box shadow elevation of the card */
     elevation?: CardElevation;
+    /** Semantic color variant */
     variant?: FullVariant | 'default';
+    /** If true and using a variant, uses a dimmed background instead of solid color */
     isDim?: boolean;
+    /** If true, renders without elevation (deprecated, use flat instead) */
     isFlat?: boolean;
+    /** Padding applied inside the card */
     padding?: CardPadding;
+    /** If true, adds hover and active scale effects */
     interactive?: boolean;
+    /** If true, renders without elevation */
     flat?: boolean;
 }
 
@@ -62,7 +79,11 @@ const CardRoot = forwardRef<HTMLDivElement, CardProps>((
 
 CardRoot.displayName = 'Card';
 
+/**
+ * CardSectionProps.
+ */
 export interface CardSectionProps extends HTMLAttributes<HTMLDivElement> {
+    /** Content of the card section */
     children?: ReactNode;
 }
 
@@ -87,6 +108,9 @@ const CardFooter = forwardRef<HTMLDivElement, CardSectionProps>(({children, clas
 ));
 CardFooter.displayName = 'CardFooter';
 
+/**
+ * Card component.
+ */
 export const Card = Object.assign(CardRoot, {
     Header: CardHeader,
     Body: CardBody,

@@ -1,4 +1,4 @@
-import { Button, useNotification, type FullVariant } from '@loreschaeffer/lyco-ui';
+import {Button, type FullVariant, useNotification} from '@loreschaeffer/lyco-ui';
 
 export const title = 'Color Variants';
 export const description = <p>Notifications support the full LycoUI color palette. Use any <code>ColorVariant</code> to match your application's theme.</p>;
@@ -16,10 +16,10 @@ export const vanillaHtml = `
 const colors = ['primary', 'success', 'warning', 'danger', 'info', 'purple'] as const;
 
 export default function ColorsExample() {
-    const { showNotification } = useNotification();
+    const {showNotification} = useNotification();
 
     return (
-        <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap' }}>
+        <div style={{display: 'flex', gap: '1rem', flexWrap: 'wrap'}}>
             {colors.map(color => (
                 <Button
                     key={color}

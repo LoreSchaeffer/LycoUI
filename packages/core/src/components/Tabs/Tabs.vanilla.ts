@@ -18,8 +18,8 @@ export class TabsController {
      */
     constructor(element: HTMLElement) {
         this.element = element;
-        this.triggers = this.element.querySelectorAll('[data-lyco-tab-trigger]');
-        this.contents = this.element.querySelectorAll('[data-lyco-tab-content]');
+        this.triggers = this.element.querySelectorAll('[data-lyco-tab-value][role="tab"]');
+        this.contents = this.element.querySelectorAll('[data-lyco-tab-value][role="tabpanel"]');
         this.boundHandleClick = this.handleClick.bind(this);
         this.boundHandleKeyDown = this.handleKeyDown.bind(this);
 
@@ -33,29 +33,32 @@ export class TabsController {
      */
     private init() {
         const activeTrigger = Array.from(this.triggers).find(t => t.classList.contains('is-active')) || this.triggers[0];
-        const activeKey = activeTrigger ? activeTrigger.dataset.lycoTabTrigger : null;
+        const activeValue = activeTrigger ? activeTrigger.dataset.lycoTabValue : null;
 
         const idPrefix = `lyco-tabs-${Math.random().toString(36).substr(2, 9)}`;
 
         this.triggers.forEach(trigger => {
-            const key = trigger.dataset.lycoTabTrigger;
-            if (!key) return;
+            const value = trigger.dataset.lycoTabValue;
+            if (!value) return;
 
-            if (!trigger.id) trigger.id = `${idPrefix}-tab-${key}`;
-            if (!trigger.hasAttribute('aria-controls')) trigger.setAttribute('aria-controls', `${idPrefix}-panel-${key}`);
+            if (!trigger.id) trigger.id = `${idPrefix}-tab-${value}`;
+            if (!trigger.hasAttribute('aria-controls')) trigger.setAttribute('aria-controls', `${idPrefix}-panel-${value}`);
 
             trigger.addEventListener('click', this.boundHandleClick);
         });
 
         this.contents.forEach(content => {
-            const key = content.dataset.lycoTabContent;
-            if (!key) return;
+            const value = content.dataset.lycoTabValue;
+            if (!value) return;
 
-            if (!content.id) content.id = `${idPrefix}-panel-${key}`;
-            if (!content.hasAttribute('aria-labelledby')) content.setAttribute('aria-labelledby', `${idPrefix}-tab-${key}`);
+            if (!content.id) content.id = `${idPrefix}-panel-${value}`;
+            if (!content.hasAttribute('aria-labelledby')) content.setAttribute('aria-labelledby', `${idPrefix}-tab-${value}`);
 
-            if (key !== activeKey) {
+            if (value !== activeValue) {
                 content.style.display = 'none';
+                content.setAttribute('aria-hidden', 'true');
+            } else {
+                content.removeAttribute('aria-hidden');
             }
         });
 
@@ -78,29 +81,29 @@ export class TabsController {
     }
 
     private handleClick(e: MouseEvent) {
-        const trigger = (e.target as HTMLElement).closest('[data-lyco-tab-trigger]') as HTMLButtonElement;
+        const trigger = (e.target as HTMLElement).closest('[data-lyco-tab-value][role="tab"]') as HTMLButtonElement;
         if (!trigger) return;
 
         if (trigger.disabled || trigger.classList.contains('is-disabled')) return;
 
-        const eventKey = trigger.dataset.lycoTabTrigger;
-        if (!eventKey) return;
+        const eventValue = trigger.dataset.lycoTabValue;
+        if (!eventValue) return;
 
         this.triggers.forEach(t => {
-            if (t === trigger) {
-                t.classList.add('is-active');
-                setAriaSelected(t, true);
-            } else {
-                t.classList.remove('is-active');
-                setAriaSelected(t, false);
-            }
+            t.classList.remove('is-active');
+            setAriaSelected(t, false);
         });
 
+        trigger.classList.add('is-active');
+        setAriaSelected(trigger, true);
+
         this.contents.forEach(content => {
-            if (content.dataset.lycoTabContent === eventKey) {
+            if (content.dataset.lycoTabValue === eventValue) {
                 content.style.display = '';
+                content.removeAttribute('aria-hidden');
             } else {
                 content.style.display = 'none';
+                content.setAttribute('aria-hidden', 'true');
             }
         });
     }

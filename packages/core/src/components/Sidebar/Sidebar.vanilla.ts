@@ -8,6 +8,9 @@ export function initLycoSidebars(): void {
     });
 }
 
+/**
+ * Controller for the Vanilla JS LycoSidebar component.
+ */
 export class LycoSidebarController {
     private readonly sidebar: HTMLElement;
     private readonly resizer: HTMLElement | null;
@@ -58,7 +61,7 @@ export class LycoSidebarController {
             const trigger = dropdown.querySelector<HTMLElement>('.sidebar__dropdown-trigger');
             const menu = dropdown.querySelector<HTMLElement>('.sidebar__dropdown-menu-wrapper');
 
-            const listeners: {el: HTMLElement; triggerEl?: HTMLElement; click?: (e: MouseEvent) => void; mouseenter?: () => void; mouseleave?: () => void} = {el: dropdown};
+            const listeners: { el: HTMLElement; triggerEl?: HTMLElement; click?: (e: MouseEvent) => void; mouseenter?: () => void; mouseleave?: () => void } = {el: dropdown};
 
             if (trigger) {
                 const onClick = (e: MouseEvent) => {

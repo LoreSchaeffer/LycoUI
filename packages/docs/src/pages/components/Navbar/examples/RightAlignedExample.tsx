@@ -1,4 +1,4 @@
-import { Navbar } from '@loreschaeffer/lyco-ui';
+import {Navbar} from '@loreschaeffer/lyco-ui';
 import React from 'react';
 
 export const title = 'Right Aligned Navigation';
@@ -29,7 +29,7 @@ export default function RightAlignedExample() {
     return (
         <Navbar expand="lg">
             <Navbar.Brand href="#">LycoUI</Navbar.Brand>
-            <Navbar.Toggle />
+            <Navbar.Toggle/>
             <Navbar.Collapse>
                 <Navbar.Nav align="end">
                     <Navbar.Item><Navbar.Link href="#" active>Home</Navbar.Link></Navbar.Item>

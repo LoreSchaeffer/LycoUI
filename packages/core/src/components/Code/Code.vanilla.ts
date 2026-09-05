@@ -18,6 +18,8 @@ class LycoCodeController {
     private readonly _onDownloadClick: (e: MouseEvent) => void;
     private readonly _onTextareaScroll: (e: Event) => void;
 
+    private copyTimeoutId?: number;
+
     constructor(element: HTMLDivElement) {
         this.element = element;
 
@@ -38,8 +40,10 @@ class LycoCodeController {
                     await navigator.clipboard.writeText(codeElement.textContent);
                     if (this.copyBtn) {
                         this.copyBtn.classList.add('is-copied');
-                        setTimeout(() => {
+                        if (this.copyTimeoutId) window.clearTimeout(this.copyTimeoutId);
+                        this.copyTimeoutId = window.setTimeout(() => {
                             if (this.copyBtn) this.copyBtn.classList.remove('is-copied');
+                            this.copyTimeoutId = undefined;
                         }, 2000);
                     }
                 } catch (e) {
@@ -81,6 +85,7 @@ class LycoCodeController {
     }
 
     public destroy(): void {
+        if (this.copyTimeoutId) window.clearTimeout(this.copyTimeoutId);
         if (this.select) this.select.removeEventListener('change', this._onSelectChange);
         if (this.copyBtn) this.copyBtn.removeEventListener('click', this._onCopyClick);
         if (this.downloadBtn) this.downloadBtn.removeEventListener('click', this._onDownloadClick);

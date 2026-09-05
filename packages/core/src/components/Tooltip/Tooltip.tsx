@@ -6,13 +6,24 @@ import clsx from 'clsx';
 
 export type TooltipPosition = 'top' | 'bottom' | 'left' | 'right';
 
+/**
+ * Props for the Tooltip component.
+ */
 export interface TooltipProps extends Omit<React.HTMLAttributes<HTMLDivElement>, 'content'> {
+    /** The content to display inside the tooltip */
     content: React.ReactNode;
+    /** The preferred placement of the tooltip relative to its trigger */
     position?: TooltipPosition;
+    /** The trigger element (must be a single React element) */
     children: ReactElement;
+    /** The distance in pixels between the tooltip and the trigger */
     offset?: number;
 }
 
+/**
+ * Tooltip component.
+ * A UI component for LycoUI.
+ */
 export const Tooltip = memo(forwardRef<HTMLDivElement, TooltipProps>((
     {className, content, position = 'top', children, offset = 8, ...props}, ref
 ) => {

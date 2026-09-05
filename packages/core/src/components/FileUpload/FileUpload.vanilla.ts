@@ -8,6 +8,9 @@ export function initLycoFileUploads(): void {
     });
 }
 
+/**
+ * Controller for the Vanilla JS LycoFileUpload component.
+ */
 export class LycoFileUploadController {
     private readonly container: HTMLLabelElement;
     private readonly input: HTMLInputElement | null;
@@ -51,7 +54,7 @@ export class LycoFileUploadController {
         e.preventDefault();
         e.stopPropagation();
         if (this.isDisabled()) return;
-        
+
         // Prevent flickering when dragging over child elements
         if (this.container.contains(e.relatedTarget as Node)) {
             return;
@@ -79,20 +82,20 @@ export class LycoFileUploadController {
                 const filesArray = Array.from(e.dataTransfer.files);
                 const isMultiple = this.input.multiple;
                 const selectedFiles = isMultiple ? filesArray : [filesArray[0]];
-                
+
                 try {
                     const dt = new DataTransfer();
                     selectedFiles.forEach(file => dt.items.add(file));
                     this.input.files = dt.files;
-                    this.input.dispatchEvent(new Event('change', { bubbles: true }));
-                } catch (err) {
+                    this.input.dispatchEvent(new Event('change', {bubbles: true}));
+                } catch {
                     // Ignore, fallback for browsers that don't support DataTransfer constructor
                 }
             }
-            
+
             // Dispatch a custom event on the container for vanilla users to hook into
             const dropEvent = new CustomEvent('lyco:drop', {
-                detail: { files: e.dataTransfer.files },
+                detail: {files: e.dataTransfer.files},
                 bubbles: true
             });
             this.container.dispatchEvent(dropEvent);

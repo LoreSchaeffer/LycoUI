@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Modal, Button, Row, Col } from '@loreschaeffer/lyco-ui';
+import React, {useState} from 'react';
+import {Button, Col, Modal, Row} from '@loreschaeffer/lyco-ui';
 
 export const title = 'Modal Sizes';
 export const description = <p>Use the <code>size</code> prop to control the modal's maximum width: <code>sm</code>, <code>md</code> (default), <code>lg</code>, or <code>xl</code>.</p>;
@@ -31,7 +31,7 @@ export default function SizesExample() {
                 <div className="text-sm fw-bold mb-2 text-secondary">Large (lg)</div>
                 <Button variant="primary" onClick={() => setSize('lg')}>Open Large Modal</Button>
             </Col>
-            
+
             <Modal isOpen={size !== null} onClose={() => setSize(null)} size={size || 'md'}>
                 <Modal.Header>
                     <Modal.Title>Modal Size: {size}</Modal.Title>
@@ -46,7 +46,7 @@ export default function SizesExample() {
                     <p>This modal is using the <code>{size}</code> size variant.</p>
                 </Modal.Body>
                 <Modal.Footer>
-                    <Button variant="neutral" onClick={() => setSize(null)}>Close</Button>
+                    <Button variant="secondary" onClick={() => setSize(null)}>Close</Button>
                 </Modal.Footer>
             </Modal>
         </Row>

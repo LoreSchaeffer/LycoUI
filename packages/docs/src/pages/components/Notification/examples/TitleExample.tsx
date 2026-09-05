@@ -1,4 +1,4 @@
-import { Button, useNotification } from '@loreschaeffer/lyco-ui';
+import {Button, useNotification} from '@loreschaeffer/lyco-ui';
 
 export const title = 'Title & Description';
 export const description = <p>Pass a <code>title</code> prop for a bold heading above the message body. This is useful for richer, more descriptive notifications.</p>;
@@ -16,10 +16,10 @@ export const vanillaHtml = `
 `;
 
 export default function TitleExample() {
-    const { showNotification } = useNotification();
+    const {showNotification} = useNotification();
 
     return (
-        <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap' }}>
+        <div style={{display: 'flex', gap: '1rem', flexWrap: 'wrap'}}>
             <Button onClick={() => showNotification({
                 title: 'Deployment Complete',
                 description: 'Your application has been deployed to production.',

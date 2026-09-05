@@ -1,4 +1,4 @@
-import { Navbar, Row, Col } from '@loreschaeffer/lyco-ui';
+import {Col, Navbar, Row} from '@loreschaeffer/lyco-ui';
 
 export const title = 'Color Variants';
 export const description = <p>Navbars support all semantic and palette colors. Use the <code>dim</code> prop for a softer look.</p>;
@@ -43,7 +43,7 @@ export default function ColorVariantsExample() {
             <Col span={12} className="mb-4">
                 <Navbar variant="primary" expand="lg">
                     <Navbar.Brand href="#">Primary Solid</Navbar.Brand>
-                    <Navbar.Toggle />
+                    <Navbar.Toggle/>
                     <Navbar.Collapse>
                         <Navbar.Nav>
                             <Navbar.Item><Navbar.Link href="#" active>Home</Navbar.Link></Navbar.Item>
@@ -51,11 +51,11 @@ export default function ColorVariantsExample() {
                     </Navbar.Collapse>
                 </Navbar>
             </Col>
-            
+
             <Col span={12} className="mb-4">
                 <Navbar variant="success" dim expand="lg">
                     <Navbar.Brand href="#">Success Dim</Navbar.Brand>
-                    <Navbar.Toggle />
+                    <Navbar.Toggle/>
                     <Navbar.Collapse>
                         <Navbar.Nav>
                             <Navbar.Item><Navbar.Link href="#" active>Home</Navbar.Link></Navbar.Item>
@@ -63,11 +63,11 @@ export default function ColorVariantsExample() {
                     </Navbar.Collapse>
                 </Navbar>
             </Col>
-            
+
             <Col span={12} className="mb-4">
                 <Navbar variant="warning" expand="lg">
                     <Navbar.Brand href="#">Warning Solid</Navbar.Brand>
-                    <Navbar.Toggle />
+                    <Navbar.Toggle/>
                     <Navbar.Collapse>
                         <Navbar.Nav>
                             <Navbar.Item><Navbar.Link href="#" active>Home</Navbar.Link></Navbar.Item>
@@ -79,7 +79,7 @@ export default function ColorVariantsExample() {
             <Col span={12}>
                 <Navbar variant="purple" dim expand="lg">
                     <Navbar.Brand href="#">Purple Dim</Navbar.Brand>
-                    <Navbar.Toggle />
+                    <Navbar.Toggle/>
                     <Navbar.Collapse>
                         <Navbar.Nav>
                             <Navbar.Item><Navbar.Link href="#" active>Home</Navbar.Link></Navbar.Item>

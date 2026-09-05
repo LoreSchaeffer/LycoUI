@@ -1,4 +1,4 @@
-import { Divider } from '@loreschaeffer/lyco-ui';
+import {Divider} from '@loreschaeffer/lyco-ui';
 
 export const title = 'Color Customization';
 export const description = <p>Use the <code>color</code> prop to override the default subtle border color. You can pass any valid CSS color, including theme variables.</p>;
@@ -15,11 +15,11 @@ export const vanillaHtml = `
 `;
 
 export default function ColorExample() {
-  return (
-    <div style={{ display: 'flex', flexDirection: 'column', width: '100%', textAlign: 'center', gap: 'var(--spacing-4)' }}>
-      <Divider color="var(--color-primary)" spacing="none" />
-      <Divider color="var(--color-danger)" spacing="none" />
-      <Divider color="#10b981" spacing="none" />
-    </div>
-  );
+    return (
+        <div style={{display: 'flex', flexDirection: 'column', width: '100%', textAlign: 'center', gap: 'var(--spacing-4)'}}>
+            <Divider color="var(--color-primary)" spacing="none"/>
+            <Divider color="var(--color-danger)" spacing="none"/>
+            <Divider color="#10b981" spacing="none"/>
+        </div>
+    );
 }

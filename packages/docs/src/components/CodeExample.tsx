@@ -2,10 +2,10 @@ import './CodeExample.scss';
 import React, {type CSSProperties, useCallback, useMemo, useState} from 'react';
 import {FiCheck, FiCopy} from 'react-icons/fi';
 import clsx from 'clsx';
-import {SyntaxHighlighter} from "./syntax/SyntaxHighlighter.tsx";
 import {renderToStaticMarkup} from "react-dom/server";
 import {formatHtml} from "../utils/html-formatter.ts";
 import {formatReact} from "../utils/react-formatter.ts";
+import {Code, Tabs, TabsList, TabTrigger} from '@loreschaeffer/lyco-ui';
 
 export interface CodeExampleProps {
     title: string;
@@ -48,8 +48,8 @@ export const CodeExample: React.FC<CodeExampleProps> = ({
             await navigator.clipboard.writeText(activeCode);
             setIsCopied(true);
             setTimeout(() => setIsCopied(false), 2000);
-        } catch (error) {
-            console.error('Failed to copy code to clipboard', error);
+        } catch {
+            // Silently ignore clipboard errors
         }
     }, [activeCode]);
 
@@ -63,46 +63,38 @@ export const CodeExample: React.FC<CodeExampleProps> = ({
                 </div>
             )}
 
-            <div className={clsx('docs-code-example__preview', `layout-${previewLayout}`)} style={previewStyles}>
-                {children}
-            </div>
-
-            <div className="docs-code-example__toolbar">
-                <div className="docs-code-example__tabs">
-                    <button
-                        type="button"
-                        className={clsx('docs-code-example__tab', activeTab === 'react' && 'is-active')}
-                        onClick={() => setActiveTab('react')}
-                        aria-pressed={activeTab === 'react'}
-                    >
-                        React
-                    </button>
-                    <button
-                        type="button"
-                        className={clsx('docs-code-example__tab', activeTab === 'html' && 'is-active')}
-                        onClick={() => setActiveTab('html')}
-                        aria-pressed={activeTab === 'html'}
-                    >
-                        HTML
-                    </button>
+            <div className="docs-code-example__container">
+                <div className={clsx('docs-code-example__preview', `layout-${previewLayout}`)} style={previewStyles}>
+                    {children}
                 </div>
 
-                <button
-                    type="button"
-                    className="docs-code-example__copy"
-                    onClick={handleCopy}
-                    aria-label="Copy code to clipboard"
-                    title="Copy code"
-                >
-                    {isCopied ? <FiCheck className="text-green"/> : <FiCopy/>}
-                </button>
-            </div>
+                <div className="docs-code-example__bottom-section">
+                    <div className="docs-code-example__toolbar">
+                        <Tabs value={activeTab} onChange={(k) => setActiveTab(k as 'react' | 'html')}>
+                            <TabsList>
+                                <TabTrigger value="react">React</TabTrigger>
+                                <TabTrigger value="html">HTML</TabTrigger>
+                            </TabsList>
+                        </Tabs>
 
-            <div className="docs-code-example__code-wrapper">
-                <SyntaxHighlighter
-                    code={activeCode}
-                    language={activeTab === 'react' ? 'tsx' : 'html'}
-                />
+                        <button
+                            type="button"
+                            className="docs-code-example__copy"
+                            onClick={handleCopy}
+                            aria-label="Copy code to clipboard"
+                            title="Copy code"
+                        >
+                            {isCopied ? <FiCheck className="text-green"/> : <FiCopy/>}
+                        </button>
+                    </div>
+
+                    <div className="docs-code-example__code-wrapper">
+                        <Code
+                            code={activeCode}
+                            language={activeTab === 'react' ? 'tsx' : 'html'}
+                        />
+                    </div>
+                </div>
             </div>
         </section>
     );

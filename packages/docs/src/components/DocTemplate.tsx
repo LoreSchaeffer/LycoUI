@@ -1,6 +1,7 @@
 import React, {useMemo} from 'react';
 import {type CssVarDefinition, CssVarsTable, type PropDefinition, PropsTable} from "./api-reference/ApiReference.tsx";
 import {CodeExample} from "./CodeExample.tsx";
+import {Alert} from '@loreschaeffer/lyco-ui';
 
 export interface ExampleModule {
     title: string;
@@ -24,7 +25,9 @@ export interface ApiSectionConfig {
 export interface DocTemplateProps {
     title: string;
     description: React.ReactNode;
+    /** @deprecated The global import block has been removed. Imports are now documented contextually inside individual CodeExamples. */
     importCode?: string;
+    a11yNotes?: React.ReactNode;
     exampleModules: Record<string, unknown>;
     rawSources: Record<string, string>;
     apiConfig?: ApiSectionConfig[];
@@ -46,6 +49,7 @@ const formatApiTitle = (exportName: string): string => {
 export const DocTemplate: React.FC<DocTemplateProps> = ({
                                                             title,
                                                             description,
+                                                            a11yNotes,
                                                             exampleModules,
                                                             rawSources,
                                                             apiConfig,
@@ -98,35 +102,38 @@ export const DocTemplate: React.FC<DocTemplateProps> = ({
                 {description}
             </div>
 
-            {contentBlocks.map((block) => {
-                if (block.type === 'example') {
-                    return (
-                        <section key={block.id} className="mb-10">
-                            <CodeExample
-                                title={block.title}
-                                description={block.description}
-                                reactCode={block.source}
-                                vanillaHtml={block.vanillaHtml}
-                            >
-                                <block.Component/>
-                            </CodeExample>
-                        </section>
-                    );
-                }
+            <section className="mb-10">
+                <h2 className="mb-4">Examples</h2>
+                {contentBlocks.map((block) => {
+                    if (block.type === 'example') {
+                        return (
+                            <div key={block.id} className="mb-10">
+                                <CodeExample
+                                    title={block.title}
+                                    description={block.description}
+                                    reactCode={block.source}
+                                    vanillaHtml={block.vanillaHtml}
+                                >
+                                    <block.Component/>
+                                </CodeExample>
+                            </div>
+                        );
+                    }
 
-                return (
-                    <section key={block.id} className="mb-10">
-                        <h2 className="mb-4">{block.title}</h2>
-                        <div className="text-secondary mb-6">
-                            {block.description}
+                    return (
+                        <div key={block.id} className="mb-10">
+                            <h3 className="mb-4">{block.title}</h3>
+                            <div className="text-secondary mb-6">
+                                {block.description}
+                            </div>
                         </div>
-                    </section>
-                );
-            })}
+                    );
+                })}
+            </section>
 
             {apiSections.length > 0 && (
-                <section className="mt-10">
-                    <h2 className="mb-2">API Reference</h2>
+                <section className="mt-10 mb-10">
+                    <h2 className="mb-4">API Reference</h2>
                     <p className="text-secondary mb-6">
                         Comprehensive list of props and variables for {title} components.
                     </p>
@@ -152,6 +159,13 @@ export const DocTemplate: React.FC<DocTemplateProps> = ({
                     })}
                 </section>
             )}
+
+            <section className="mt-10 mb-10">
+                <h2 className="mb-4">Accessibility</h2>
+                <Alert variant="info">
+                    {a11yNotes || `Standard keyboard navigation and ARIA roles apply to the ${title} component.`}
+                </Alert>
+            </section>
         </article>
     );
 };

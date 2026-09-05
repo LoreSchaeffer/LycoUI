@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Modal, Button, Row, Col } from '@loreschaeffer/lyco-ui';
+import React, {useState} from 'react';
+import {Button, Col, Modal, Row} from '@loreschaeffer/lyco-ui';
 
 export const title = 'Scrolling Content';
 export const description = <p>When modals become too long for the user's viewport or device, they scroll independent of the page itself. Use <code>scrollable</code> to only scroll the modal body.</p>;
@@ -40,14 +40,14 @@ export default function ScrollingExample() {
                         </button>
                     </Modal.Header>
                     <Modal.Body>
-                        <p style={{ height: '150vh', background: 'repeating-linear-gradient(45deg, transparent, transparent 10px, var(--color-surface-hover) 10px, var(--color-surface-hover) 20px)' }}>
-                            <span style={{ display: 'block', padding: '1rem', background: 'var(--color-bg-surface)' }}>
+                        <p style={{height: '150vh', background: 'repeating-linear-gradient(45deg, transparent, transparent 10px, var(--color-surface-hover) 10px, var(--color-surface-hover) 20px)'}}>
+                            <span style={{display: 'block', padding: '1rem', background: 'var(--color-bg-surface)'}}>
                                 The modal body has a fixed max-height and scrolls internally, while the header and footer remain pinned to the top and bottom.
                             </span>
                         </p>
                     </Modal.Body>
                     <Modal.Footer>
-                        <Button variant="neutral" onClick={() => setIsOpen(false)}>Close</Button>
+                        <Button variant="secondary" onClick={() => setIsOpen(false)}>Close</Button>
                     </Modal.Footer>
                 </Modal>
             </Col>

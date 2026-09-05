@@ -1,31 +1,51 @@
-import { Col, Range, Row } from '@loreschaeffer/lyco-ui';
+import React, {useState} from 'react';
+import {Col, Range, Row} from '@loreschaeffer/lyco-ui';
 
 export const title = 'Basic Usage';
-export const description = <p>A simple range slider. Use the <code>defaultValue</code> for uncontrolled usage, or <code>value</code> and <code>onChange</code> for controlled usage.</p>;
+export const description = <p>A simple range slider with live value binding. Ideal for adjusting volume, brightness, or percentage limits.</p>;
 export const order = 1;
 
 export const vanillaHtml = `
 <div class="mb-4">
-  <div class="text-sm fw-bold mb-2">Default Range</div>
-  <input type="range" class="range-custom" min="0" max="100" value="50" />
+  <div class="d-flex justify-content-between text-sm fw-bold mb-2">
+    <span>Volume</span>
+    <span class="text-secondary">75%</span>
+  </div>
+  <input type="range" class="range-custom" min="0" max="100" value="75" />
 </div>
 <div>
-  <div class="text-sm fw-bold mb-2">Disabled State</div>
-  <input type="range" class="range-custom" disabled min="0" max="100" value="25" />
+  <div class="d-flex justify-content-between text-sm fw-bold mb-2">
+    <span>Max Participants (Disabled)</span>
+    <span class="text-secondary">10</span>
+  </div>
+  <input type="range" class="range-custom" disabled min="1" max="50" value="10" />
 </div>
 `;
 
 export default function BasicExample() {
-  return (
-    <Row>
-      <Col span={6} className="mb-8">
-        <div className="text-sm fw-bold mb-2 text-secondary">Default Range</div>
-        <Range defaultValue={50} />
-      </Col>
-      <Col span={6}>
-        <div className="text-sm fw-bold mb-2 text-secondary">Disabled State</div>
-        <Range defaultValue={25} disabled />
-      </Col>
-    </Row>
-  );
+    const [volume, setVolume] = useState(75);
+
+    return (
+        <Row>
+            <Col span={12} md={6} className="mb-8">
+                <div className="d-flex justify-content-between text-sm fw-bold mb-2">
+                    <span>Master Volume</span>
+                    <span className="text-secondary">{volume}%</span>
+                </div>
+                <Range
+                    min={0}
+                    max={100}
+                    value={volume}
+                    onChange={(val) => setVolume(val as number)}
+                />
+            </Col>
+            <Col span={12} md={6}>
+                <div className="d-flex justify-content-between text-sm fw-bold mb-2">
+                    <span>Max Participants (Disabled)</span>
+                    <span className="text-secondary">10</span>
+                </div>
+                <Range defaultValue={10} min={1} max={50} disabled/>
+            </Col>
+        </Row>
+    );
 }

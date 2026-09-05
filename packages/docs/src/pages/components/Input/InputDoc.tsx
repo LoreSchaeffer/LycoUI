@@ -1,7 +1,7 @@
-import { DocTemplate } from '../../../components/DocTemplate';
-import { apiConfig } from './api';
+import {DocTemplate} from '../../../components/DocTemplate';
+import {apiConfig} from './api';
 
-const exampleModules = import.meta.glob('./examples/*.tsx', { eager: true });
+const exampleModules = import.meta.glob('./examples/*.tsx', {eager: true});
 const rawSources = import.meta.glob('./examples/*.tsx', {
     query: '?raw',
     import: 'default',
@@ -9,13 +9,14 @@ const rawSources = import.meta.glob('./examples/*.tsx', {
 });
 
 export default function InputDoc() {
-  return (
-    <DocTemplate
-      title="Input"
-      description="A premium, Linear-style text and number input component with strict BEM architecture, floating labels, icons, validation, and step buttons."
-      exampleModules={exampleModules}
-      rawSources={rawSources as Record<string, string>}
-      apiConfig={apiConfig}
-    />
-  );
+    return (
+        <DocTemplate
+            title="Input"
+            description={<p>A versatile text input component supporting various sizes, states, icons, and inline validation.</p>}
+            a11yNotes="Uses native inputs underneath. Ensures focus rings are visible and aria-invalid is set on error."
+            exampleModules={exampleModules}
+            rawSources={rawSources as Record<string, string>}
+            apiConfig={apiConfig}
+        />
+    );
 }

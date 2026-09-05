@@ -53,7 +53,7 @@
   }
 
   &.is-active {
-    color: var(--color-text-primary);
+    color: var(--tabs-active-color, var(--color-primary));
 
     &::after {
       content: '';
@@ -62,15 +62,44 @@
       right: 0;
       bottom: calc(var(--border-width, 1px) * -1); // Align perfectly over the list border
       height: var(--border-width-2, 2px);
-      background-color: var(--color-primary);
+      background-color: var(--tabs-active-color, var(--color-primary));
     }
   }
+}
+
+// Color modifiers
+.tabs--primary {
+  --tabs-active-color: var(--color-primary);
+}
+
+.tabs--secondary {
+  --tabs-active-color: var(--color-secondary);
+}
+
+.tabs--success {
+  --tabs-active-color: var(--color-success);
+}
+
+.tabs--danger {
+  --tabs-active-color: var(--color-danger);
+}
+
+.tabs--warning {
+  --tabs-active-color: var(--color-warning);
+}
+
+.tabs--info {
+  --tabs-active-color: var(--color-info);
 }
 
 .tabs__content {
   color: var(--color-text-secondary);
   font-size: var(--font-size-base);
   animation: tabFadeIn var(--duration-normal) var(--ease-default);
+
+  &[hidden] {
+    display: none !important;
+  }
 }
 
 @keyframes tabFadeIn {

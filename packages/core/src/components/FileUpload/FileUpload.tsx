@@ -1,6 +1,6 @@
 import './FileUpload.scss';
+import type {ChangeEvent, DragEvent, InputHTMLAttributes, KeyboardEvent} from 'react';
 import React, {forwardRef, useCallback, useRef, useState} from 'react';
-import type {InputHTMLAttributes, DragEvent, KeyboardEvent, ChangeEvent} from 'react';
 import clsx from 'clsx';
 import type {FullVariant} from '../../types/types';
 
@@ -85,12 +85,12 @@ export const FileUpload = forwardRef<HTMLInputElement, FileUploadProps>(
 
             if (e.dataTransfer.files && e.dataTransfer.files.length > 0) {
                 const filesArray = Array.from(e.dataTransfer.files);
-                
+
                 // If not multiple, only take the first file
                 const selectedFiles = multiple ? filesArray : [filesArray[0]];
 
                 onDropFiles?.(selectedFiles);
-                
+
                 // Sync to native input if needed
                 if (innerRef.current) {
                     // Updating file input programmatically is restricted for security,
@@ -100,7 +100,7 @@ export const FileUpload = forwardRef<HTMLInputElement, FileUploadProps>(
                         selectedFiles.forEach(file => dataTransfer.items.add(file));
                         innerRef.current.files = dataTransfer.files;
                         innerRef.current.dispatchEvent(new Event('change', {bubbles: true}));
-                    } catch (err) {
+                    } catch {
                         // Ignore, fallback for browsers that don't support DataTransfer
                     }
                 }
@@ -144,7 +144,7 @@ export const FileUpload = forwardRef<HTMLInputElement, FileUploadProps>(
                 <input
                     ref={mergedRef}
                     type="file"
-                    className="sr-only"
+                    className="fileupload__input"
                     disabled={disabled}
                     multiple={multiple}
                     accept={accept}

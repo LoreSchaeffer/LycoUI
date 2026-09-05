@@ -1,4 +1,4 @@
-import { Col, Range, Row } from '@loreschaeffer/lyco-ui';
+import {Col, Range, Row} from '@loreschaeffer/lyco-ui';
 
 export const title = 'Color Variants';
 export const description = <p>Range supports all theme color variants via the <code>variant</code> prop.</p>;
@@ -24,24 +24,24 @@ export const vanillaHtml = `
 `;
 
 export default function VariantsExample() {
-  return (
-    <Row>
-      <Col span={6} className="mb-8">
-        <div className="text-sm fw-bold mb-2 text-secondary">Success Variant</div>
-        <Range defaultValue={60} variant="success" />
-      </Col>
-      <Col span={6} className="mb-8">
-        <div className="text-sm fw-bold mb-2 text-secondary">Warning Variant</div>
-        <Range defaultValue={75} variant="warning" />
-      </Col>
-      <Col span={6} className="mb-8">
-        <div className="text-sm fw-bold mb-2 text-secondary">Danger Variant</div>
-        <Range defaultValue={40} variant="danger" />
-      </Col>
-      <Col span={6}>
-        <div className="text-sm fw-bold mb-2 text-secondary">Purple Variant</div>
-        <Range defaultValue={85} variant="purple" />
-      </Col>
-    </Row>
-  );
+    return (
+        <Row>
+            <Col span={6} className="mb-8">
+                <div className="text-sm fw-bold mb-2 text-secondary">Success Variant</div>
+                <Range defaultValue={60} variant="success"/>
+            </Col>
+            <Col span={6} className="mb-8">
+                <div className="text-sm fw-bold mb-2 text-secondary">Warning Variant</div>
+                <Range defaultValue={75} variant="warning"/>
+            </Col>
+            <Col span={6} className="mb-8">
+                <div className="text-sm fw-bold mb-2 text-secondary">Danger Variant</div>
+                <Range defaultValue={40} variant="danger"/>
+            </Col>
+            <Col span={6}>
+                <div className="text-sm fw-bold mb-2 text-secondary">Purple Variant</div>
+                <Range defaultValue={85} variant="purple"/>
+            </Col>
+        </Row>
+    );
 }

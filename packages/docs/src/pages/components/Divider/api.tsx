@@ -1,4 +1,4 @@
-import type { PropDefinition } from "../../../components/api-reference/ApiReference.tsx";
+import type {PropDefinition} from "../../../components/api-reference/ApiReference.tsx";
 
 export const dividerProps: PropDefinition[] = [
     {

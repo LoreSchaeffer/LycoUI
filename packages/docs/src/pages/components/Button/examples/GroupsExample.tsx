@@ -15,14 +15,14 @@ export const vanillaHtml = `
 <div class="btn-group btn-group-vertical" role="group">
     <button class="btn btn-primary"><svg>...</svg> Add User</button>
     <button class="btn btn-primary"><svg>...</svg> Save Record</button>
-    <button class="btn btn-red"><svg>...</svg> Delete</button>
+    <button class="btn btn-danger"><svg>...</svg> Delete</button>
 </div>
 `;
 
 export default function GroupsExample() {
     return (
-        <>
-            <ButtonGroup className="mb-4">
+        <div className="d-flex gap-4 align-items-start">
+            <ButtonGroup>
                 <Button>Left</Button>
                 <Button>Middle</Button>
                 <Button>Right</Button>
@@ -31,8 +31,8 @@ export default function GroupsExample() {
             <ButtonGroup orientation="vertical">
                 <Button iconStart={<PiPlusBold/>}>Add User</Button>
                 <Button iconStart={<PiFloppyDiskBold/>}>Save Record</Button>
-                <Button variant="red" iconStart={<PiTrashBold/>}>Delete</Button>
+                <Button variant="danger" iconStart={<PiTrashBold/>}>Delete</Button>
             </ButtonGroup>
-        </>
+        </div>
     );
 }
