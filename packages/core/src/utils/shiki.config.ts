@@ -1,5 +1,5 @@
 import type {HighlighterCore} from 'shiki/core';
-import type {LanguageRegistration, ShikiTransformer, ThemeRegistrationRaw} from '@shikijs/types';
+import type {LanguageRegistration, ShikiTransformer, ThemeRegistrationRaw} from 'shiki';
 import {createOnigurumaEngine} from 'shiki/engine/oniguruma';
 import {bundledLanguages} from 'shiki';
 
