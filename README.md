@@ -2,7 +2,7 @@
   <h1>Lyco UI</h1>
   <p>A high-density, low-noise, dual-target UI component library for React and Vanilla HTML/CSS/JS.</p>
 
-  [![Version](https://img.shields.io/badge/version-1.1.3-blue.svg?style=for-the-badge&color=007AFF)](https://github.com/LoreSchaeffer/LycoUI)
+  [![Version](https://img.shields.io/badge/version-1.2.0-blue.svg?style=for-the-badge&color=007AFF)](https://github.com/LoreSchaeffer/LycoUI)
   [![License](https://img.shields.io/badge/license-MIT-green.svg?style=for-the-badge)](https://github.com/LoreSchaeffer/LycoUI/blob/main/LICENSE)
   [![React](https://img.shields.io/badge/React-19.0+-61DAFB.svg?style=for-the-badge&logo=react)](https://react.dev/)
   [![TypeScript](https://img.shields.io/badge/TypeScript-Ready-3178C6.svg?style=for-the-badge&logo=typescript)](https://www.typescriptlang.org/)
