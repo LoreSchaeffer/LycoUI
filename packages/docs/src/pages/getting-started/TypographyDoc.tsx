@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import {PiCheckBold, PiCopy} from 'react-icons/pi';
-import {Badge, Card, Table, TableBody, TableCell, TableHead, TableRow} from '@loreschaeffer/lyco-ui';
+import {Badge, Card, Code, Table, TableBody, TableCell, TableHead, TableRow} from '@loreschaeffer/lyco-ui';
 
 const fontSizes = ['caption', 'body-sm', 'body-lg', 'subheading', 'heading-sm', 'heading', 'heading-lg', 'display'];
 const fontWeights = ['regular', 'medium', 'semibold', 'bold'];
@@ -116,6 +116,10 @@ export const TypographyDoc: React.FC = () => {
                 <p className="text-secondary mb-6">
                     Override default typography styles with these utility classes.
                 </p>
+                <h3 className="mt-8 mb-4">Font Size &amp; Line Height</h3>
+                <p className="text-secondary mb-4">
+                    These utilities automatically apply the corresponding <Code inline>font-size</Code>, <Code inline>line-height</Code>, and <Code inline>letter-spacing</Code>.
+                </p>
                 <Table>
                     <TableHead>
                         <TableRow>
@@ -126,24 +130,62 @@ export const TypographyDoc: React.FC = () => {
                     </TableHead>
                     <TableBody>
                         <TableRow hover>
-                            <TableCell><Badge variant="secondary">.text-display</Badge></TableCell>
-                            <TableCell>Applies the largest display text styling.</TableCell>
-                            <TableCell><span className="text-display">Display</span></TableCell>
+                            <TableCell><Code inline language="css">{".text-{size}"}</Code></TableCell>
+                            <TableCell>Applies typography styles for a specific size (e.g., <Code inline>caption</Code>, <Code inline>body-sm</Code>, <Code inline>display</Code>).</TableCell>
+                            <TableCell><Code inline language="html">{`<span class="text-heading">Heading</span>`}</Code></TableCell>
+                        </TableRow>
+                    </TableBody>
+                </Table>
+
+                <h3 className="mt-8 mb-4">Font Weight &amp; Family</h3>
+                <Table>
+                    <TableHead>
+                        <TableRow>
+                            <TableCell isHeader>Class</TableCell>
+                            <TableCell isHeader>Description</TableCell>
+                            <TableCell isHeader>Example</TableCell>
+                        </TableRow>
+                    </TableHead>
+                    <TableBody>
+                        <TableRow hover>
+                            <TableCell><Code inline language="css">{".font-{weight}"}</Code></TableCell>
+                            <TableCell>Applies font-weight (e.g., <Code inline>regular</Code>, <Code inline>medium</Code>, <Code inline>semibold</Code>, <Code inline>bold</Code>).</TableCell>
+                            <TableCell><Code inline language="html">{`<span class="font-bold">Bold</span>`}</Code></TableCell>
                         </TableRow>
                         <TableRow hover>
-                            <TableCell><Badge variant="secondary">.text-heading-lg</Badge></TableCell>
-                            <TableCell>Applies the large heading text styling.</TableCell>
-                            <TableCell><span className="text-heading-lg">Heading Lg</span></TableCell>
+                            <TableCell><Code inline language="css">{".font-{family}"}</Code></TableCell>
+                            <TableCell>Applies font-family (e.g., <Code inline>base</Code>, <Code inline>mono</Code>).</TableCell>
+                            <TableCell><Code inline language="html">{`<span class="font-mono">Code</span>`}</Code></TableCell>
                         </TableRow>
+                    </TableBody>
+                </Table>
+
+                <h3 className="mt-8 mb-4">Alignment &amp; Transformation</h3>
+                <Table>
+                    <TableHead>
+                        <TableRow>
+                            <TableCell isHeader>Class</TableCell>
+                            <TableCell isHeader>Description</TableCell>
+                            <TableCell isHeader>Example</TableCell>
+                        </TableRow>
+                    </TableHead>
+                    <TableBody>
                         <TableRow hover>
-                            <TableCell><Badge variant="secondary">.text-center</Badge></TableCell>
-                            <TableCell>Centers the text horizontally.</TableCell>
                             <TableCell>
-                                <div className="text-center" style={{width: '100%'}}>Centered</div>
+                                <Code inline language="css">.text-left</Code> / <Code inline language="css">.text-right</Code> / <Code inline language="css">.text-center</Code> / <Code inline language="css">.text-justify</Code>
                             </TableCell>
+                            <TableCell>Aligns text accordingly.</TableCell>
+                            <TableCell><Code inline language="html">{`<p class="text-center">`}</Code></TableCell>
                         </TableRow>
                         <TableRow hover>
-                            <TableCell><Badge variant="secondary">.text-truncate</Badge></TableCell>
+                            <TableCell>
+                                <Code inline language="css">.uppercase</Code> / <Code inline language="css">.lowercase</Code> / <Code inline language="css">.capitalize</Code>
+                            </TableCell>
+                            <TableCell>Transforms text casing.</TableCell>
+                            <TableCell><Code inline language="html">{`<span class="uppercase">`}</Code></TableCell>
+                        </TableRow>
+                        <TableRow hover>
+                            <TableCell><Code inline language="css">.text-truncate</Code></TableCell>
                             <TableCell>Applies fast, single-line ellipsis clipping.</TableCell>
                             <TableCell>
                                 <div className="text-truncate" style={{maxWidth: '120px'}}>This is a very long text that will truncate</div>

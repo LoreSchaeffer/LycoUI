@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import {PiCheckBold, PiCopy} from 'react-icons/pi';
-import {Badge, Table, TableBody, TableCell, TableHead, TableRow} from '@loreschaeffer/lyco-ui';
+import {Badge, Code, Table, TableBody, TableCell, TableHead, TableRow} from '@loreschaeffer/lyco-ui';
 
 const radiiSteps = ['sm', 'md', 'xl', '2xl', 'full'];
 
@@ -26,6 +26,29 @@ export const RadiiDoc: React.FC = () => {
                             const cssVar = `--radius-${step}`;
                             return <RadiiRow key={step} step={step} cssVar={cssVar}/>;
                         })}
+                    </TableBody>
+                </Table>
+            </section>
+
+            <section className="mb-10">
+                <h2 className="mt-12 mb-6">Border Radius Utilities</h2>
+                <p className="text-secondary mb-6">
+                    Use these utility classes to quickly apply border radius to elements.
+                </p>
+                <Table>
+                    <TableHead>
+                        <TableRow>
+                            <TableCell isHeader>Class Name</TableCell>
+                            <TableCell isHeader>CSS Property Applied</TableCell>
+                            <TableCell isHeader>Example</TableCell>
+                        </TableRow>
+                    </TableHead>
+                    <TableBody>
+                        <TableRow>
+                            <TableCell><Code inline language="css">{".rounded-{size}"}</Code></TableCell>
+                            <TableCell><Badge variant="secondary">{"border-radius: var(--radius-{size}) !important;"}</Badge></TableCell>
+                            <TableCell><Code inline language="html">{`<div class="rounded-md">`}</Code></TableCell>
+                        </TableRow>
                     </TableBody>
                 </Table>
             </section>

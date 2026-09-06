@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import {PiCheckBold, PiCopy} from 'react-icons/pi';
-import {Badge, Table, TableBody, TableCell, TableHead, TableRow} from '@loreschaeffer/lyco-ui';
+import {Badge, Code, Table, TableBody, TableCell, TableHead, TableRow} from '@loreschaeffer/lyco-ui';
 
 const shadowSteps = ['sm', 'md', 'subtle', 'subtle-2', 'xl'];
 const glowSteps = ['primary', 'success', 'danger', 'warning'];
@@ -48,6 +48,52 @@ export const ShadowsDoc: React.FC = () => {
                         {glowSteps.map(step => (
                             <ShadowRow key={step} step={step} prefix="glow" isGlow={true}/>
                         ))}
+                    </TableBody>
+                </Table>
+            </section>
+
+            <section className="mb-10">
+                <h2 className="mt-12 mb-6">Shadow Utilities</h2>
+                <p className="text-secondary mb-6">
+                    Apply shadow elevation quickly using these utility classes.
+                </p>
+                <Table>
+                    <TableHead>
+                        <TableRow>
+                            <TableCell isHeader>Class Name</TableCell>
+                            <TableCell isHeader>CSS Property Applied</TableCell>
+                            <TableCell isHeader>Example</TableCell>
+                        </TableRow>
+                    </TableHead>
+                    <TableBody>
+                        <TableRow>
+                            <TableCell><Code inline language="css">{".shadow-{level}"}</Code></TableCell>
+                            <TableCell><Badge variant="secondary">{"box-shadow: var(--shadow-{level}) !important;"}</Badge></TableCell>
+                            <TableCell><Code inline language="html">{`<div class="shadow-md">`}</Code></TableCell>
+                        </TableRow>
+                    </TableBody>
+                </Table>
+            </section>
+
+            <section className="mb-10">
+                <h2 className="mt-12 mb-6">Glow Utilities</h2>
+                <p className="text-secondary mb-6">
+                    Apply ambient glow backgrounds quickly using these utility classes.
+                </p>
+                <Table>
+                    <TableHead>
+                        <TableRow>
+                            <TableCell isHeader>Class Name</TableCell>
+                            <TableCell isHeader>CSS Property Applied</TableCell>
+                            <TableCell isHeader>Example</TableCell>
+                        </TableRow>
+                    </TableHead>
+                    <TableBody>
+                        <TableRow>
+                            <TableCell><Code inline language="css">{".glow-{name}"}</Code></TableCell>
+                            <TableCell><Badge variant="secondary">{"background-image: var(--glow-{name}) !important;"}</Badge></TableCell>
+                            <TableCell><Code inline language="html">{`<div class="glow-primary">`}</Code></TableCell>
+                        </TableRow>
                     </TableBody>
                 </Table>
             </section>

@@ -96,6 +96,24 @@ export const SpacingDoc: React.FC = () => {
                                 <TableCell>top & bottom</TableCell>
                                 <TableCell><Badge variant="secondary">my-8</Badge>, <Badge variant="secondary">py-8</Badge></TableCell>
                             </TableRow>
+                            <TableRow>
+                                <TableCell><Badge variant="secondary">gap-*</Badge></TableCell>
+                                <TableCell>Flex / Grid Gap</TableCell>
+                                <TableCell><Badge variant="secondary">gap</Badge></TableCell>
+                                <TableCell><Badge variant="secondary">gap-4</Badge></TableCell>
+                            </TableRow>
+                            <TableRow>
+                                <TableCell><Badge variant="secondary">row-gap-*</Badge></TableCell>
+                                <TableCell>Flex / Grid Row Gap</TableCell>
+                                <TableCell><Badge variant="secondary">row-gap</Badge></TableCell>
+                                <TableCell><Badge variant="secondary">row-gap-3</Badge></TableCell>
+                            </TableRow>
+                            <TableRow>
+                                <TableCell><Badge variant="secondary">col-gap-*</Badge></TableCell>
+                                <TableCell>Flex / Grid Column Gap</TableCell>
+                                <TableCell><Badge variant="secondary">column-gap</Badge></TableCell>
+                                <TableCell><Badge variant="secondary">col-gap-5</Badge></TableCell>
+                            </TableRow>
                         </TableBody>
                     </Table>
                 </div>

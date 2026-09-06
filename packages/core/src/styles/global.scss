@@ -9,6 +9,7 @@
 @use "tokens/spacing" as space;
 @use "tokens/surfaces" as surface;
 @use "tokens/typography" as typo;
+@use "tokens/breakpoints" as bp;
 
 // ==========================================================================
 // ROOT START
@@ -225,7 +226,7 @@ h4,
 h5,
 h6 {
   color: var(--color-text-primary);
-  font-weight: var(--font-weight-semibold); // Reduced from bold (700) to semibold (600)
+  font-weight: var(--font-weight-semibold);
 }
 
 h1 {
@@ -278,16 +279,49 @@ h6 {
 }
 
 // TYPOGRAPHY UTILITIES
-.text-display {
-  font-size: var(--text-display);
-  line-height: var(--leading-display);
-  letter-spacing: var(--tracking-display);
+@each $name, $size in typo.$font-sizes {
+  .text-#{$name} {
+    font-size: var(--text-#{$name}) !important;
+    line-height: var(--leading-#{$name}) !important;
+    letter-spacing: var(--tracking-#{$name}) !important;
+  }
 }
 
-.text-heading-lg {
-  font-size: var(--text-heading-lg);
-  line-height: var(--leading-heading-lg);
-  letter-spacing: var(--tracking-heading-lg);
+@each $name, $weight in typo.$font-weights {
+  .font-#{$name} {
+    font-weight: var(--font-weight-#{$name}) !important;
+  }
+}
+
+@each $name, $family in typo.$font-families {
+  .font-#{$name} {
+    font-family: var(--font-family-#{$name}) !important;
+  }
+}
+
+// Text Alignment & Transformation
+.text-left {
+  text-align: left !important;
+}
+
+.text-right {
+  text-align: right !important;
+}
+
+.text-justify {
+  text-align: justify !important;
+}
+
+.uppercase {
+  text-transform: uppercase !important;
+}
+
+.lowercase {
+  text-transform: lowercase !important;
+}
+
+.capitalize {
+  text-transform: capitalize !important;
 }
 
 p {
@@ -412,116 +446,289 @@ pre {
   display: block;
 }
 
-.fluid {
-  width: 100%;
-}
-
-.w-100 {
-  width: 100% !important;
-}
-
-.h-100 {
-  height: 100% !important;
-}
-
-.w-100vw {
-  width: 100vw !important;
-}
-
-.h-100vh {
-  height: 100vh !important;
-}
-
-.h-100svh {
-  height: 100svh !important;
-}
-
-.h-100dvh {
-  height: 100dvh !important;
-}
-
-.d-flex {
-  display: flex !important;
-}
-
-.flex-column {
-  flex-direction: column !important;
-}
-
-.align-items-center {
-  align-items: center !important;
-}
-
-.justify-content-center {
-  justify-content: center !important;
-}
-
-.justify-content-between {
-  justify-content: space-between !important;
-}
-
-.flex-wrap {
-  flex-wrap: wrap !important;
-}
-
-@for $i from 1 through 12 {
-
-  // Margins
-  .mt-#{$i} {
-    margin-top: var(--spacing-#{$i});
+@mixin generate-utilities($breakpoint: "") {
+  $prefix: "";
+  @if $breakpoint != "" {
+    $prefix: "#{$breakpoint}\\:";
   }
 
-  .mb-#{$i} {
-    margin-bottom: var(--spacing-#{$i});
+  .#{$prefix}fluid {
+    width: 100%;
+  }
+  .#{$prefix}w-100 {
+    width: 100% !important;
+  }
+  .#{$prefix}h-100 {
+    height: 100% !important;
+  }
+  .#{$prefix}w-100vw {
+    width: 100vw !important;
+  }
+  .#{$prefix}h-100vh {
+    height: 100vh !important;
+  }
+  .#{$prefix}h-100svh {
+    height: 100svh !important;
+  }
+  .#{$prefix}h-100dvh {
+    height: 100dvh !important;
   }
 
-  .ml-#{$i} {
-    margin-left: var(--spacing-#{$i});
+  .#{$prefix}d-none {
+    display: none !important;
+  }
+  .#{$prefix}d-flex {
+    display: flex !important;
+  }
+  .#{$prefix}d-block {
+    display: block !important;
+  }
+  .#{$prefix}d-inline-block {
+    display: inline-block !important;
   }
 
-  .mr-#{$i} {
-    margin-right: var(--spacing-#{$i});
+  .#{$prefix}flex-column {
+    flex-direction: column !important;
+  }
+  .#{$prefix}flex-row {
+    flex-direction: row !important;
+  }
+  .#{$prefix}flex-wrap {
+    flex-wrap: wrap !important;
+  }
+  .#{$prefix}flex-nowrap {
+    flex-wrap: nowrap !important;
   }
 
-  .mx-#{$i} {
-    margin-left: var(--spacing-#{$i});
-    margin-right: var(--spacing-#{$i});
+  .#{$prefix}align-items-center {
+    align-items: center !important;
+  }
+  .#{$prefix}align-items-start {
+    align-items: flex-start !important;
+  }
+  .#{$prefix}align-items-end {
+    align-items: flex-end !important;
   }
 
-  .my-#{$i} {
-    margin-top: var(--spacing-#{$i});
-    margin-bottom: var(--spacing-#{$i});
+  .#{$prefix}justify-content-center {
+    justify-content: center !important;
+  }
+  .#{$prefix}justify-content-between {
+    justify-content: space-between !important;
+  }
+  .#{$prefix}justify-content-start {
+    justify-content: flex-start !important;
+  }
+  .#{$prefix}justify-content-end {
+    justify-content: flex-end !important;
   }
 
-  // Paddings
-  .p-#{$i} {
-    padding: var(--spacing-#{$i});
+  @each $name, $value in space.$spacing-steps {
+    .#{$prefix}gap-#{$name} {
+      gap: var(--spacing-#{$name}) !important;
+    }
+    .#{$prefix}row-gap-#{$name} {
+      row-gap: var(--spacing-#{$name}) !important;
+    }
+    .#{$prefix}col-gap-#{$name} {
+      column-gap: var(--spacing-#{$name}) !important;
+    }
+
+    // Margins
+    .#{$prefix}mt-#{$name} {
+      margin-top: var(--spacing-#{$name}) !important;
+    }
+    .#{$prefix}mb-#{$name} {
+      margin-bottom: var(--spacing-#{$name}) !important;
+    }
+    .#{$prefix}ml-#{$name} {
+      margin-left: var(--spacing-#{$name}) !important;
+    }
+    .#{$prefix}mr-#{$name} {
+      margin-right: var(--spacing-#{$name}) !important;
+    }
+    .#{$prefix}mx-#{$name} {
+      margin-left: var(--spacing-#{$name}) !important;
+      margin-right: var(--spacing-#{$name}) !important;
+    }
+    .#{$prefix}my-#{$name} {
+      margin-top: var(--spacing-#{$name}) !important;
+      margin-bottom: var(--spacing-#{$name}) !important;
+    }
+
+    // Paddings
+    .#{$prefix}p-#{$name} {
+      padding: var(--spacing-#{$name}) !important;
+    }
+    .#{$prefix}pt-#{$name} {
+      padding-top: var(--spacing-#{$name}) !important;
+    }
+    .#{$prefix}pr-#{$name} {
+      padding-right: var(--spacing-#{$name}) !important;
+    }
+    .#{$prefix}pb-#{$name} {
+      padding-bottom: var(--spacing-#{$name}) !important;
+    }
+    .#{$prefix}pl-#{$name} {
+      padding-left: var(--spacing-#{$name}) !important;
+    }
+    .#{$prefix}px-#{$name} {
+      padding-left: var(--spacing-#{$name}) !important;
+      padding-right: var(--spacing-#{$name}) !important;
+    }
+    .#{$prefix}py-#{$name} {
+      padding-top: var(--spacing-#{$name}) !important;
+      padding-bottom: var(--spacing-#{$name}) !important;
+    }
+  }
+}
+
+@include generate-utilities();
+
+@each $bp-name in map.keys(bp.$breakpoints) {
+  @include bp.respond-to($bp-name) {
+    @include generate-utilities($bp-name);
+  }
+}
+
+// ==========================================================================
+// BORDER RADIUS, Z-INDEX & SHADOWS UTILITIES
+// ==========================================================================
+
+@each $name, $value in radius.$radius-steps {
+  .rounded-#{$name} {
+    border-radius: var(--radius-#{$name}) !important;
+  }
+}
+
+@each $name, $value in elevations.$z-index-steps {
+  .z-#{$name} {
+    z-index: var(--z-#{$name}) !important;
+  }
+}
+
+@each $name, $value in shadow.$shadow-steps {
+  .shadow-#{$name} {
+    box-shadow: var(--shadow-#{$name}) !important;
+  }
+}
+
+@each $name, $value in shadow.$glow-steps {
+  .glow-#{$name} {
+    background-image: var(--glow-#{$name}) !important;
+  }
+}
+
+// ==========================================================================
+// COLOR UTILITIES (Background, Border, Text & Hover States)
+// ==========================================================================
+
+// Semantic Colors
+@each $name, $scale in colors.$semantic-colors {
+  @each $step, $color in $scale {
+    // Base utilities
+    .text-#{$name}-#{$step} {
+      color: var(--#{$name}-#{$step}) !important;
+    }
+    .bg-#{$name}-#{$step} {
+      background-color: var(--#{$name}-#{$step}) !important;
+    }
+    .border-#{$name}-#{$step} {
+      border-color: var(--#{$name}-#{$step}) !important;
+    }
+
+    // Hover variants
+    .hover\:text-#{$name}-#{$step}:hover {
+      color: var(--#{$name}-#{$step}) !important;
+    }
+    .hover\:bg-#{$name}-#{$step}:hover {
+      background-color: var(--#{$name}-#{$step}) !important;
+    }
+  }
+}
+
+// Neutral Colors
+@each $name, $color in colors.$neutral-colors {
+  .text-#{$name} {
+    color: var(--color-#{$name}) !important;
+  }
+  .bg-#{$name} {
+    background-color: var(--color-#{$name}) !important;
+  }
+  .border-#{$name} {
+    border-color: var(--color-#{$name}) !important;
   }
 
-  .pt-#{$i} {
-    padding-top: var(--spacing-#{$i});
+  .hover\:text-#{$name}:hover {
+    color: var(--color-#{$name}) !important;
+  }
+  .hover\:bg-#{$name}:hover {
+    background-color: var(--color-#{$name}) !important;
+  }
+}
+
+// ==========================================================================
+// SEMANTIC TEXT UTILITIES
+// ==========================================================================
+.text-primary {
+  color: var(--color-text-primary) !important;
+}
+
+.text-secondary {
+  color: var(--color-text-secondary) !important;
+}
+
+.text-muted {
+  color: var(--color-text-muted) !important;
+}
+
+.text-success {
+  color: var(--color-text-success) !important;
+}
+
+.text-warning {
+  color: var(--color-text-warning) !important;
+}
+
+.text-danger {
+  color: var(--color-text-danger) !important;
+}
+
+.text-info {
+  color: var(--color-text-info) !important;
+}
+
+// Hover states for semantic text
+.hover\:text-primary:hover {
+  color: var(--color-text-primary) !important;
+}
+
+.hover\:text-secondary:hover {
+  color: var(--color-text-secondary) !important;
+}
+
+.hover\:text-muted:hover {
+  color: var(--color-text-muted) !important;
+}
+
+// Standard Semantic Variables (Primary, Success, etc.)
+$standard-semantics: ('primary', 'secondary', 'success', 'warning', 'danger', 'info');
+
+@each $name in $standard-semantics {
+  .bg-#{$name} {
+    background-color: var(--color-#{$name}) !important;
+  }
+  .border-#{$name} {
+    border-color: var(--color-#{$name}) !important;
   }
 
-  .pr-#{$i} {
-    padding-right: var(--spacing-#{$i});
+  .hover\:bg-#{$name}:hover {
+    background-color: var(--color-#{$name}-hover) !important;
   }
 
-  .pb-#{$i} {
-    padding-bottom: var(--spacing-#{$i});
-  }
-
-  .pl-#{$i} {
-    padding-left: var(--spacing-#{$i});
-  }
-
-  .px-#{$i} {
-    padding-left: var(--spacing-#{$i});
-    padding-right: var(--spacing-#{$i});
-  }
-
-  .py-#{$i} {
-    padding-top: var(--spacing-#{$i});
-    padding-bottom: var(--spacing-#{$i});
+  // Active states for interactive elements
+  .active\:bg-#{$name}:active {
+    background-color: var(--color-#{$name}-active) !important;
   }
 }
 

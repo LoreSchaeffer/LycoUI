@@ -1,5 +1,5 @@
 import React from 'react';
-import {Badge, Card, getContrastColor, Table, TableBody, TableCell, TableHead, TableRow, useNotification} from '@loreschaeffer/lyco-ui';
+import {Badge, Card, Code, getContrastColor, Table, TableBody, TableCell, TableHead, TableRow, useNotification} from '@loreschaeffer/lyco-ui';
 
 const hues = ['red', 'orange', 'amber', 'yellow', 'lime', 'green', 'teal', 'cyan', 'blue', 'indigo', 'purple', 'fuchsia', 'pink'];
 const lightnessSteps = [50, 100, 200, 300, 400, 500, 600, 700, 800, 900, 950];
@@ -167,63 +167,69 @@ const Colors: React.FC = () => {
             </section>
 
             <section className="mb-12">
-                <h2 className="mt-12 mb-6">Text Colors</h2>
+                <h2 className="mt-12 mb-6">Color Utilities</h2>
                 <p className="text-secondary mb-6">
-                    Quickly apply semantic text colors using these classes.
+                    Lyco UI provides a comprehensive suite of generated color utilities. Every color in the palette (semantic, neutral, and base scale) is available for text, backgrounds, and borders.
                 </p>
                 <Table>
                     <TableHead>
                         <TableRow>
-                            <TableCell isHeader>Class</TableCell>
-                            <TableCell isHeader>Property</TableCell>
-                            <TableCell isHeader>Example</TableCell>
+                            <TableCell isHeader>Class Format</TableCell>
+                            <TableCell isHeader>Category / Property</TableCell>
+                            <TableCell isHeader>Description / Example</TableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>
                         <TableRow hover>
-                            <TableCell><Badge variant="secondary">.text-primary</Badge></TableCell>
-                            <TableCell><Badge variant="secondary">color: var(--color-text-primary)</Badge></TableCell>
-                            <TableCell><span className="text-primary">Primary Text</span></TableCell>
+                            <TableCell><Code inline language="css">{".text-{color}-{step}"}</Code></TableCell>
+                            <TableCell><Badge variant="secondary">Text Color</Badge></TableCell>
+                            <TableCell>Applies <Code inline>{"color: var(--{color}-{step}) !important;"}</Code>. Example: <Code inline>text-blue-500</Code></TableCell>
                         </TableRow>
                         <TableRow hover>
-                            <TableCell><Badge variant="secondary">.text-secondary</Badge></TableCell>
-                            <TableCell><Badge variant="secondary">color: var(--color-text-secondary)</Badge></TableCell>
-                            <TableCell><span className="text-secondary">Secondary Text</span></TableCell>
+                            <TableCell><Code inline language="css">{".bg-{color}-{step}"}</Code></TableCell>
+                            <TableCell><Badge variant="secondary">Background</Badge></TableCell>
+                            <TableCell>Applies <Code inline>{"background-color: var(--{color}-{step}) !important;"}</Code>. Example: <Code inline>bg-red-500</Code></TableCell>
                         </TableRow>
                         <TableRow hover>
-                            <TableCell><Badge variant="secondary">.text-muted</Badge></TableCell>
-                            <TableCell><Badge variant="secondary">color: var(--color-text-muted)</Badge></TableCell>
-                            <TableCell><span className="text-muted">Muted Text</span></TableCell>
+                            <TableCell><Code inline language="css">{".border-{color}-{step}"}</Code></TableCell>
+                            <TableCell><Badge variant="secondary">Border Color</Badge></TableCell>
+                            <TableCell>Applies <Code inline>{"border-color: var(--{color}-{step}) !important;"}</Code>. Example: <Code inline>border-green-400</Code></TableCell>
                         </TableRow>
                         <TableRow hover>
-                            <TableCell><Badge variant="secondary">.text-success</Badge></TableCell>
-                            <TableCell><Badge variant="secondary">color: var(--color-text-success)</Badge></TableCell>
-                            <TableCell><span className="text-success">Success Text</span></TableCell>
+                            <TableCell><Code inline language="css">{".text-{name}"}</Code> / <Code inline language="css">{".bg-{name}"}</Code></TableCell>
+                            <TableCell><Badge variant="secondary">Semantic & Neutral</Badge></TableCell>
+                            <TableCell>Standard properties for semantics and neutrals. Examples: <Code inline>text-primary</Code>, <Code inline>bg-void</Code></TableCell>
+                        </TableRow>
+                    </TableBody>
+                </Table>
+
+                <h3 className="mt-8 mb-4">State Variants (Hover & Active)</h3>
+                <p className="text-secondary mb-6">
+                    Use pseudo-class modifiers to easily style interactive states. Remember to escape colons if used in vanilla CSS selectors, but in HTML simply write them as-is (e.g., <Code inline language="html">class="hover:bg-blue-500"</Code>).
+                </p>
+                <Table>
+                    <TableHead>
+                        <TableRow>
+                            <TableCell isHeader>Class Format</TableCell>
+                            <TableCell isHeader>Category / Property</TableCell>
+                            <TableCell isHeader>Description / Example</TableCell>
+                        </TableRow>
+                    </TableHead>
+                    <TableBody>
+                        <TableRow hover>
+                            <TableCell><Code inline language="css">{".hover\\:text-{color}"}</Code></TableCell>
+                            <TableCell><Badge variant="secondary">Hover Text</Badge></TableCell>
+                            <TableCell>Applies text color on hover. Example: <Code inline language="html">{`<div class="hover:text-primary">`}</Code></TableCell>
                         </TableRow>
                         <TableRow hover>
-                            <TableCell><Badge variant="secondary">.text-warning</Badge></TableCell>
-                            <TableCell><Badge variant="secondary">color: var(--color-text-warning)</Badge></TableCell>
-                            <TableCell><span className="text-warning">Warning Text</span></TableCell>
+                            <TableCell><Code inline language="css">{".hover\\:bg-{color}"}</Code></TableCell>
+                            <TableCell><Badge variant="secondary">Hover Background</Badge></TableCell>
+                            <TableCell>Applies background color on hover. Example: <Code inline language="html">{`<button class="bg-blue-500 hover:bg-blue-600">`}</Code></TableCell>
                         </TableRow>
                         <TableRow hover>
-                            <TableCell><Badge variant="secondary">.text-danger</Badge></TableCell>
-                            <TableCell><Badge variant="secondary">color: var(--color-text-danger)</Badge></TableCell>
-                            <TableCell><span className="text-danger">Danger Text</span></TableCell>
-                        </TableRow>
-                        <TableRow hover>
-                            <TableCell><Badge variant="secondary">.text-info</Badge></TableCell>
-                            <TableCell><Badge variant="secondary">color: var(--color-text-info)</Badge></TableCell>
-                            <TableCell><span className="text-info">Info Text</span></TableCell>
-                        </TableRow>
-                        <TableRow hover>
-                            <TableCell><Badge variant="secondary">.text-white</Badge></TableCell>
-                            <TableCell><Badge variant="secondary">color: var(--color-text-white)</Badge></TableCell>
-                            <TableCell><span className="text-white">White Text</span></TableCell>
-                        </TableRow>
-                        <TableRow hover>
-                            <TableCell><Badge variant="secondary">.text-black</Badge></TableCell>
-                            <TableCell><Badge variant="secondary">color: var(--color-text-black)</Badge></TableCell>
-                            <TableCell><span className="text-black">Black Text</span></TableCell>
+                            <TableCell><Code inline language="css">{".active\\:bg-{name}"}</Code></TableCell>
+                            <TableCell><Badge variant="secondary">Active Background</Badge></TableCell>
+                            <TableCell>Applies active background to semantic colors. Example: <Code inline language="html">{`<button class="active:bg-primary">`}</Code></TableCell>
                         </TableRow>
                     </TableBody>
                 </Table>

@@ -18,14 +18,14 @@ export default defineConfig({
         emptyOutDir: true,
         lib: {
             entry: {
-                index: resolve(__dirname, 'src/index.ts'),
-                vanilla: resolve(__dirname, 'src/vanilla.ts'),
+                index: resolve(import.meta.dirname, 'src/index.ts'),
+                vanilla: resolve(import.meta.dirname, 'src/vanilla.ts'),
             },
             name: 'LycoUI',
             fileName: (format, entryName) => `${entryName}.${format}.js`,
             formats: ['es', 'cjs']
         },
-        rollupOptions: {
+        rolldownOptions: {
             external: ['react', 'react-dom', 'react/jsx-runtime', 'clsx', 'shiki'],
             output: {
                 globals: {

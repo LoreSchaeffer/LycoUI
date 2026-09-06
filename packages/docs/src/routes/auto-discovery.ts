@@ -1,5 +1,5 @@
 import {type ComponentType, lazy, type LazyExoticComponent} from "react";
-import {PiBookOpenBold, PiStackBold} from "react-icons/pi";
+import {PiBookOpenBold, PiStackBold, PiPaletteBold} from "react-icons/pi";
 import type {IconType} from "react-icons";
 
 export interface DocNavigationItem {
@@ -59,10 +59,25 @@ export const docsNavigation: DocNavigationCategory[] = [
                 component: lazy(() => import('../pages/getting-started/Installation'))
             },
             {
-                name: 'CSS Utilities',
-                path: '/docs/css-utilities',
-                component: lazy(() => import('../pages/getting-started/CssUtilities'))
-            },
+                name: 'Custom Types',
+                path: '/docs/types',
+                component: lazy(() => import('../pages/types/TypesDoc.tsx')),
+                subItems: [
+                    {name: 'ColorVariant', hash: '#color-variant'},
+                    {name: 'SemanticVariant', hash: '#semantic-variant'},
+                    {name: 'FullVariant', hash: '#full-variant'},
+                    {name: 'SizeVariant', hash: '#size-variant'},
+                    {name: 'Alignment', hash: '#alignment'},
+                    {name: 'Orientation', hash: '#orientation'},
+                ]
+            }
+        ]
+    },
+    {
+        title: 'Foundations',
+        icon: PiPaletteBold,
+        sorted: false,
+        items: [
             {
                 name: 'Colors',
                 path: '/docs/colors',
@@ -89,22 +104,29 @@ export const docsNavigation: DocNavigationCategory[] = [
                 component: lazy(() => import('../pages/getting-started/RadiiDoc'))
             },
             {
+                name: 'Z-Index',
+                path: '/docs/z-index',
+                component: lazy(() => import('../pages/getting-started/ZIndexDoc'))
+            },
+            {
                 name: 'Grid System',
                 path: '/docs/grid',
                 component: lazy(() => import('../pages/components/Grid/GridDoc.tsx'))
             },
             {
-                name: 'Custom Types',
-                path: '/docs/types',
-                component: lazy(() => import('../pages/types/TypesDoc.tsx')),
-                subItems: [
-                    {name: 'ColorVariant', hash: '#color-variant'},
-                    {name: 'SemanticVariant', hash: '#semantic-variant'},
-                    {name: 'FullVariant', hash: '#full-variant'},
-                    {name: 'SizeVariant', hash: '#size-variant'},
-                    {name: 'Alignment', hash: '#alignment'},
-                    {name: 'Orientation', hash: '#orientation'},
-                ]
+                name: 'Responsive Design',
+                path: '/docs/responsive-design',
+                component: lazy(() => import('../pages/getting-started/ResponsiveDesignDoc'))
+            },
+            {
+                name: 'Layout & Visibility',
+                path: '/docs/layout',
+                component: lazy(() => import('../pages/getting-started/LayoutDoc'))
+            },
+            {
+                name: 'Sizing',
+                path: '/docs/sizing',
+                component: lazy(() => import('../pages/getting-started/SizingDoc'))
             }
         ]
     },
