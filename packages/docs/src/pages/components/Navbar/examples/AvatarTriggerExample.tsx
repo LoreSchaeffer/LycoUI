@@ -65,7 +65,7 @@ const caretStyle: React.CSSProperties = {
     flexShrink: 0,
 };
 
-function AvatarTrigger({isOpen}: { isOpen?: boolean }) {
+function AvatarTrigger() {
     return (
         <span style={triggerStyle}>
       <Avatar fallback="RA" size="md" aria-hidden="true"/>

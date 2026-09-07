@@ -2,6 +2,7 @@ import './Navbar.scss';
 import React, {createContext, type CSSProperties, forwardRef, useCallback, useContext, useEffect, useMemo, useRef, useState} from 'react';
 import clsx from 'clsx';
 import type {Alignment, FullVariant} from '../../types/types';
+import type {PolymorphicProps, PolymorphicRef} from '../../types/polymorphic';
 
 interface NavbarContextType {
     isOpen: boolean;
@@ -103,17 +104,18 @@ const NavbarComponent = forwardRef<HTMLElement, NavbarProps>((
 NavbarComponent.displayName = 'Navbar';
 
 
-export interface NavbarBrandProps extends React.AnchorHTMLAttributes<HTMLAnchorElement> {
-    /** Custom component to render as (e.g., React Router Link) */
-    as?: React.ElementType;
+export type NavbarBrandProps<C extends React.ElementType = 'a'> = PolymorphicProps<C, {
     /** Centers the brand absolutely within the navbar */
     centered?: boolean;
-}
+}>;
 
-const NavbarBrand = forwardRef<HTMLAnchorElement, NavbarBrandProps>((
-    {className, as: Component = 'a', centered, children, ...props},
-    ref
+type NavbarBrandComponent = <C extends React.ElementType = 'a'>(props: NavbarBrandProps<C> & { ref?: PolymorphicRef<C> }) => React.ReactElement;
+
+const NavbarBrand = forwardRef((
+    {className, as, centered, children, ...props}: any,
+    ref: any
 ) => {
+    const Component = as || 'a';
     return (
         <Component
             ref={ref}
@@ -123,7 +125,7 @@ const NavbarBrand = forwardRef<HTMLAnchorElement, NavbarBrandProps>((
             {children}
         </Component>
     );
-});
+}) as any as NavbarBrandComponent & { displayName?: string };
 NavbarBrand.displayName = 'Navbar.Brand';
 
 
@@ -229,23 +231,25 @@ const NavbarItem = forwardRef<HTMLLIElement, NavbarItemProps>((
 NavbarItem.displayName = 'Navbar.Item';
 
 
-export interface NavbarLinkProps extends React.AnchorHTMLAttributes<HTMLAnchorElement> {
-    /** Custom component to render as (e.g., React Router Link) */
-    as?: React.ElementType;
+export type NavbarLinkProps<C extends React.ElementType = 'a'> = PolymorphicProps<C, {
     /** Whether the link is currently active */
     active?: boolean;
-}
+}>;
 
-const NavbarLink = forwardRef<HTMLAnchorElement, NavbarLinkProps>((
-    {className, as: Component = 'a', active = false, children, onClick, ...props},
-    ref
+type NavbarLinkComponent = <C extends React.ElementType = 'a'>(props: NavbarLinkProps<C> & { ref?: PolymorphicRef<C> }) => React.ReactElement;
+
+const NavbarLink = forwardRef((
+    {className, as, active = false, children, onClick, ...props}: any,
+    ref: any
 ) => {
     const {close} = useNavbarContext();
 
-    const handleClick = useCallback((e: React.MouseEvent<HTMLAnchorElement>) => {
+    const handleClick = useCallback((e: any) => {
         close();
-        onClick?.(e);
+        if (onClick) onClick(e);
     }, [close, onClick]);
+
+    const Component = as || 'a';
 
     return (
         <Component
@@ -258,7 +262,7 @@ const NavbarLink = forwardRef<HTMLAnchorElement, NavbarLinkProps>((
             {children}
         </Component>
     );
-});
+}) as any as NavbarLinkComponent & { displayName?: string };
 NavbarLink.displayName = 'Navbar.Link';
 
 
@@ -332,21 +336,22 @@ const NavbarDropdown = forwardRef<HTMLLIElement, NavbarDropdownProps>((
 });
 NavbarDropdown.displayName = 'Navbar.Dropdown';
 
-export interface NavbarDropdownItemProps extends React.AnchorHTMLAttributes<HTMLAnchorElement> {
-    /** Custom component to render as (e.g., React Router Link) */
-    as?: React.ElementType;
-}
+export type NavbarDropdownItemProps<C extends React.ElementType = 'a'> = PolymorphicProps<C, {}>;
 
-const NavbarDropdownItem = forwardRef<HTMLAnchorElement, NavbarDropdownItemProps>((
-    {className, as: Component = 'a', onClick, children, ...props},
-    ref
+type NavbarDropdownItemComponent = <C extends React.ElementType = 'a'>(props: NavbarDropdownItemProps<C> & { ref?: PolymorphicRef<C> }) => React.ReactElement;
+
+const NavbarDropdownItem = forwardRef((
+    {className, as, onClick, children, ...props}: any,
+    ref: any
 ) => {
     const context = useContext(NavbarDropdownContext);
 
-    const handleClick = useCallback((e: React.MouseEvent<HTMLAnchorElement>) => {
+    const handleClick = useCallback((e: any) => {
         context?.close();
-        onClick?.(e);
+        if (onClick) onClick(e);
     }, [context, onClick]);
+
+    const Component = as || 'a';
 
     return (
         <Component
@@ -358,7 +363,7 @@ const NavbarDropdownItem = forwardRef<HTMLAnchorElement, NavbarDropdownItemProps
             {children}
         </Component>
     );
-});
+}) as any as NavbarDropdownItemComponent & { displayName?: string };
 NavbarDropdownItem.displayName = 'Navbar.DropdownItem';
 
 export interface NavbarDropdownSubMenuProps extends Omit<React.HTMLAttributes<HTMLDivElement>, 'title'> {

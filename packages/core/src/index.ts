@@ -47,3 +47,4 @@ export * from './components/ImageViewer';
 export * from './components/Video';
 
 export * from "./types/types";
+export * from "./types/polymorphic";

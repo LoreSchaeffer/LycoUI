@@ -36,7 +36,7 @@ export default function BasicExample() {
                     min={0}
                     max={100}
                     value={volume}
-                    onChange={(val) => setVolume(val as number)}
+                    onChange={(e) => setVolume(Number(e.target.value))}
                 />
             </Col>
             <Col span={12} md={6}>

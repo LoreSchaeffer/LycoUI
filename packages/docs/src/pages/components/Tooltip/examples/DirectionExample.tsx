@@ -60,12 +60,12 @@ export default function DirectionExample() {
                         </div>
                         <div style={{gridColumn: 1, gridRow: 2}}>
                             <Tooltip content="View profile details" position="left">
-                                <Button variant="outline">Profile</Button>
+                                <Button variant="secondary" outlined>Profile</Button>
                             </Tooltip>
                         </div>
                         <div style={{gridColumn: 3, gridRow: 2}}>
                             <Tooltip content="Manage account settings" position="right">
-                                <Button variant="outline">Settings</Button>
+                                <Button variant="secondary" outlined>Settings</Button>
                             </Tooltip>
                         </div>
                         <div style={{gridColumn: 2, gridRow: 3}}>

@@ -49,7 +49,7 @@ export default function NestedExample() {
         <div style={{paddingBottom: '200px'}}>
             <DropdownMenu>
                 <DropdownMenuTrigger asChild>
-                    <Button variant="base">Share</Button>
+                    <Button variant="primary">Share</Button>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent>
                     <DropdownMenuItem>Copy Link</DropdownMenuItem>
