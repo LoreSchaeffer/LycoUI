@@ -2,7 +2,7 @@
   <h1>Lyco UI</h1>
   <p>A high-density, low-noise, dual-target UI component library for React and Vanilla HTML/CSS/JS.</p>
 
-  [![Version](https://img.shields.io/badge/version-1.2.2-blue.svg?style=for-the-badge&color=007AFF)](https://github.com/LoreSchaeffer/LycoUI)
+  [![Version](https://img.shields.io/badge/version-1.2.3-blue.svg?style=for-the-badge&color=007AFF)](https://github.com/LoreSchaeffer/LycoUI)
   [![License](https://img.shields.io/badge/license-MIT-green.svg?style=for-the-badge)](https://github.com/LoreSchaeffer/LycoUI/blob/main/LICENSE)
   [![React](https://img.shields.io/badge/React-19.0+-61DAFB.svg?style=for-the-badge&logo=react)](https://react.dev/)
   [![TypeScript](https://img.shields.io/badge/TypeScript-Ready-3178C6.svg?style=for-the-badge&logo=typescript)](https://www.typescriptlang.org/)
@@ -14,6 +14,7 @@
 
 - **Dual-Target Architecture**: Use as typed React components or drop into Vanilla HTML with a single CSS/JS bundle.
 - **Premium Aesthetics**: Built with the "Linear-style" design language. Deep dark mode, subtle borders, and smooth micro-interactions.
+- **Responsive Positioning Utilities**: Responsive classes for layout positioning (`relative`, `absolute`, `fixed`, etc.) and insets.
 - **Zero Configuration**: Works out of the box with Vite, Next.js, or plain HTML.
 - **Accessibility First**: WCAG 2.1 AA/AAA compliance with full keyboard navigation and WAI-ARIA support.
 - **Perceptually Uniform Colors**: LCH/OKLCH color system ensures perfect contrast and luminous accents on dark backgrounds.

@@ -126,28 +126,35 @@
 
 @mixin generate-utilities($breakpoint: "") {
   $prefix: "";
-  @if $breakpoint != "" {
+
+  @if $breakpoint !="" {
     $prefix: "#{$breakpoint}\\:";
   }
 
   .#{$prefix}fluid {
     width: 100%;
   }
+
   .#{$prefix}w-100 {
     width: 100% !important;
   }
+
   .#{$prefix}h-100 {
     height: 100% !important;
   }
+
   .#{$prefix}w-100vw {
     width: 100vw !important;
   }
+
   .#{$prefix}h-100vh {
     height: 100vh !important;
   }
+
   .#{$prefix}h-100svh {
     height: 100svh !important;
   }
+
   .#{$prefix}h-100dvh {
     height: 100dvh !important;
   }
@@ -155,12 +162,15 @@
   .#{$prefix}d-none {
     display: none !important;
   }
+
   .#{$prefix}d-flex {
     display: flex !important;
   }
+
   .#{$prefix}d-block {
     display: block !important;
   }
+
   .#{$prefix}d-inline-block {
     display: inline-block !important;
   }
@@ -168,12 +178,15 @@
   .#{$prefix}flex-column {
     flex-direction: column !important;
   }
+
   .#{$prefix}flex-row {
     flex-direction: row !important;
   }
+
   .#{$prefix}flex-wrap {
     flex-wrap: wrap !important;
   }
+
   .#{$prefix}flex-nowrap {
     flex-wrap: nowrap !important;
   }
@@ -181,9 +194,11 @@
   .#{$prefix}align-items-center {
     align-items: center !important;
   }
+
   .#{$prefix}align-items-start {
     align-items: flex-start !important;
   }
+
   .#{$prefix}align-items-end {
     align-items: flex-end !important;
   }
@@ -191,25 +206,72 @@
   .#{$prefix}justify-content-center {
     justify-content: center !important;
   }
+
   .#{$prefix}justify-content-between {
     justify-content: space-between !important;
   }
+
   .#{$prefix}justify-content-start {
     justify-content: flex-start !important;
   }
+
   .#{$prefix}justify-content-end {
     justify-content: flex-end !important;
   }
 
+  .#{$prefix}relative {
+    position: relative !important;
+  }
+
+  .#{$prefix}absolute {
+    position: absolute !important;
+  }
+
+  .#{$prefix}fixed {
+    position: fixed !important;
+  }
+
+  .#{$prefix}sticky {
+    position: sticky !important;
+  }
+
+  .#{$prefix}static {
+    position: static !important;
+  }
+
+  .#{$prefix}inset-0 {
+    top: 0 !important;
+    right: 0 !important;
+    bottom: 0 !important;
+    left: 0 !important;
+  }
+
+  .#{$prefix}top-0 {
+    top: 0 !important;
+  }
+
+  .#{$prefix}bottom-0 {
+    bottom: 0 !important;
+  }
+
+  .#{$prefix}left-0 {
+    left: 0 !important;
+  }
+
+  .#{$prefix}right-0 {
+    right: 0 !important;
+  }
 }
 
 @each $name, $value in space.$spacing-steps {
   .gap-#{$name} {
     gap: var(--spacing-#{$name}) !important;
   }
+
   .row-gap-#{$name} {
     row-gap: var(--spacing-#{$name}) !important;
   }
+
   .col-gap-#{$name} {
     column-gap: var(--spacing-#{$name}) !important;
   }
@@ -218,19 +280,24 @@
   .mt-#{$name} {
     margin-top: var(--spacing-#{$name}) !important;
   }
+
   .mb-#{$name} {
     margin-bottom: var(--spacing-#{$name}) !important;
   }
+
   .ml-#{$name} {
     margin-left: var(--spacing-#{$name}) !important;
   }
+
   .mr-#{$name} {
     margin-right: var(--spacing-#{$name}) !important;
   }
+
   .mx-#{$name} {
     margin-left: var(--spacing-#{$name}) !important;
     margin-right: var(--spacing-#{$name}) !important;
   }
+
   .my-#{$name} {
     margin-top: var(--spacing-#{$name}) !important;
     margin-bottom: var(--spacing-#{$name}) !important;
@@ -240,22 +307,28 @@
   .p-#{$name} {
     padding: var(--spacing-#{$name}) !important;
   }
+
   .pt-#{$name} {
     padding-top: var(--spacing-#{$name}) !important;
   }
+
   .pr-#{$name} {
     padding-right: var(--spacing-#{$name}) !important;
   }
+
   .pb-#{$name} {
     padding-bottom: var(--spacing-#{$name}) !important;
   }
+
   .pl-#{$name} {
     padding-left: var(--spacing-#{$name}) !important;
   }
+
   .px-#{$name} {
     padding-left: var(--spacing-#{$name}) !important;
     padding-right: var(--spacing-#{$name}) !important;
   }
+
   .py-#{$name} {
     padding-top: var(--spacing-#{$name}) !important;
     padding-bottom: var(--spacing-#{$name}) !important;
@@ -306,13 +379,16 @@
 // Semantic Colors
 @each $name, $scale in colors.$semantic-colors {
   @each $step, $color in $scale {
+
     // Base utilities
     .text-#{$name}-#{$step} {
       color: var(--#{$name}-#{$step}) !important;
     }
+
     .bg-#{$name}-#{$step} {
       background-color: var(--#{$name}-#{$step}) !important;
     }
+
     .border-#{$name}-#{$step} {
       border-color: var(--#{$name}-#{$step}) !important;
     }
@@ -321,6 +397,7 @@
     .hover\:text-#{$name}-#{$step}:hover {
       color: var(--#{$name}-#{$step}) !important;
     }
+
     .hover\:bg-#{$name}-#{$step}:hover {
       background-color: var(--#{$name}-#{$step}) !important;
     }
@@ -332,9 +409,11 @@
   .text-#{$name} {
     color: var(--color-#{$name}) !important;
   }
+
   .bg-#{$name} {
     background-color: var(--color-#{$name}) !important;
   }
+
   .border-#{$name} {
     border-color: var(--color-#{$name}) !important;
   }
@@ -342,6 +421,7 @@
   .hover\:text-#{$name}:hover {
     color: var(--color-#{$name}) !important;
   }
+
   .hover\:bg-#{$name}:hover {
     background-color: var(--color-#{$name}) !important;
   }
@@ -392,12 +472,20 @@
 }
 
 // Standard Semantic Variables (Primary, Success, etc.)
-$standard-semantics: ('primary', 'secondary', 'success', 'warning', 'danger', 'info');
+$standard-semantics: (
+  'primary',
+  'secondary',
+  'success',
+  'warning',
+  'danger',
+  'info'
+);
 
 @each $name in $standard-semantics {
   .bg-#{$name} {
     background-color: var(--color-#{$name}) !important;
   }
+
   .border-#{$name} {
     border-color: var(--color-#{$name}) !important;
   }
@@ -411,4 +499,3 @@ $standard-semantics: ('primary', 'secondary', 'success', 'warning', 'danger', 'i
     background-color: var(--color-#{$name}-active) !important;
   }
 }
-
