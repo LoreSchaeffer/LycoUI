@@ -1,5 +1,23 @@
 @use "../../styles/tokens/breakpoints" as *;
 
+@mixin navbar-item-base {
+  display: flex;
+  align-items: center;
+  padding: var(--spacing-2) var(--spacing-3);
+  color: var(--color-text-secondary);
+  text-decoration: none;
+  font-weight: var(--font-weight-medium);
+  font-size: var(--text-body-sm);
+  border-radius: var(--radius-md);
+  transition: background-color var(--duration-fast) var(--ease-default), color var(--duration-fast) var(--ease-default);
+
+  &:hover, &:focus-visible {
+    color: var(--color-text-primary);
+    background-color: var(--surface-elevated);
+    text-decoration: none;
+    outline: none;
+  }
+}
 
 .navbar {
   // Variables
@@ -244,20 +262,7 @@
   }
 
   &__link {
-    display: flex;
-    align-items: center;
-    padding: var(--spacing-2) var(--spacing-3);
-    color: var(--color-text-secondary);
-    text-decoration: none;
-    font-weight: var(--font-weight-medium);
-    font-size: var(--text-body-sm);
-    border-radius: var(--radius-md);
-    transition: background-color var(--duration-fast) var(--ease-default), color var(--duration-fast) var(--ease-default);
-
-    &:hover, &:focus-visible {
-      color: var(--color-text-primary);
-      background-color: var(--surface-elevated);
-    }
+    @include navbar-item-base;
 
     &.is-active {
       color: var(--color-text-primary);
@@ -273,24 +278,11 @@
   }
 
   &__dropdown-trigger {
-    display: flex;
-    align-items: center;
+    @include navbar-item-base;
     gap: var(--spacing-1);
-    padding: var(--spacing-2) var(--spacing-3);
-    color: var(--color-text-secondary);
     background: transparent;
     border: none;
-    font-size: var(--text-body-sm);
-    font-weight: var(--font-weight-medium);
-    border-radius: var(--radius-md);
     cursor: pointer;
-    transition: background-color var(--duration-fast) var(--ease-default), color var(--duration-fast) var(--ease-default);
-
-    &:hover, &:focus-visible {
-      color: var(--color-text-primary);
-      background-color: var(--surface-elevated);
-      outline: none;
-    }
 
     &:focus-visible {
       outline: 2px solid var(--color-primary);
@@ -302,35 +294,26 @@
       height: var(--spacing-4, 1rem);
       transition: transform var(--duration-fast) var(--ease-default);
     }
+
+    &[aria-expanded="true"] {
+      color: var(--color-text-primary);
+      background-color: var(--surface-elevated);
+
+      .navbar__dropdown-caret {
+        transform: rotate(180deg);
+      }
+    }
   }
 
   &__dropdown-trigger--unstyled {
-    padding: 0;
     background: transparent;
     font-size: inherit;
     font-weight: inherit;
     color: inherit;
     border-radius: var(--radius-md);
-
-    &:hover {
-      background-color: transparent;
-      color: inherit;
-    }
   }
 
-  // Override open-state background for unstyled triggers
-  &__dropdown.is-open > &__dropdown-trigger--unstyled {
-    background-color: transparent;
-  }
 
-  &__dropdown.is-open > &__dropdown-trigger {
-    color: var(--color-text-primary);
-    background-color: var(--surface-elevated);
-
-    .navbar__dropdown-caret {
-      transform: rotate(180deg);
-    }
-  }
 
   // --- MOBILE FIRST (ACCORDION) DROPDOWN ---
   &__dropdown-menu {

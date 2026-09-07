@@ -62,7 +62,6 @@ const nameStyle: React.CSSProperties = {
 
 const caretStyle: React.CSSProperties = {
     color: 'var(--color-text-secondary)',
-    transition: 'transform var(--duration-fast) var(--ease-default)',
     flexShrink: 0,
 };
 
@@ -73,10 +72,8 @@ function AvatarTrigger({isOpen}: { isOpen?: boolean }) {
       <span style={nameStyle}>Ricky A.</span>
       <FiChevronDown
           size={16}
-          style={{
-              ...caretStyle,
-              transform: isOpen ? 'rotate(180deg)' : 'rotate(0deg)',
-          }}
+          className="navbar__dropdown-caret"
+          style={caretStyle}
       />
     </span>
     );
@@ -102,6 +99,7 @@ export default function AvatarTriggerExample() {
                             <Navbar.Nav align="end">
                                 <Navbar.Dropdown
                                     unstyled
+                                    hideCaret
                                     title={<AvatarTrigger/>}
                                 >
                                     <Navbar.DropdownItem href="#">

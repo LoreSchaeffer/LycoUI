@@ -1,5 +1,6 @@
 import './Select.scss';
 import {type ChangeEvent, type CSSProperties, forwardRef, type HTMLAttributes, type KeyboardEvent, type ReactNode, useCallback, useEffect, useId, useRef, useState} from 'react';
+import { createPortal } from 'react-dom';
 import clsx from 'clsx';
 import type {FullVariant, SizeVariant} from '../../types/types.ts';
 
@@ -82,6 +83,32 @@ export const Select = forwardRef<HTMLDivElement, SelectProps>((
     const containerRef = useRef<HTMLDivElement>(null);
     const listboxRef = useRef<HTMLUListElement>(null);
     const inputRef = useRef<HTMLInputElement>(null);
+
+    const [dropdownStyles, setDropdownStyles] = useState<CSSProperties>({});
+
+    const updatePosition = useCallback(() => {
+        if (!isOpen || !containerRef.current) return;
+        const rect = containerRef.current.getBoundingClientRect();
+        setDropdownStyles({
+            position: 'absolute',
+            top: `${rect.bottom + window.scrollY + 8}px`, // +8px for var(--spacing-2)
+            left: `${rect.left + window.scrollX}px`,
+            width: `${rect.width}px`,
+            zIndex: 'var(--z-dropdown, 1050)'
+        });
+    }, [isOpen]);
+
+    useEffect(() => {
+        if (isOpen) {
+            updatePosition();
+            window.addEventListener('scroll', updatePosition, true);
+            window.addEventListener('resize', updatePosition);
+            return () => {
+                window.removeEventListener('scroll', updatePosition, true);
+                window.removeEventListener('resize', updatePosition);
+            };
+        }
+    }, [isOpen, updatePosition]);
 
     const mergedRef = (node: HTMLDivElement | null) => {
         containerRef.current = node;
@@ -343,58 +370,64 @@ export const Select = forwardRef<HTMLDivElement, SelectProps>((
                 </button>
             </div>
 
-            <ul
-                ref={listboxRef}
-                id={dropdownId}
-                className="select__dropdown"
-                role="listbox"
-                hidden={!isOpen}
-                aria-hidden={!isOpen}
-            >
-                {filteredOptions.length === 0 ? (
-                    <li className="select__option is-disabled" role="option" aria-disabled="true">
-                        <span>No options found</span>
-                    </li>
-                ) : (
-                    filteredOptions.map((option, index) => {
-                        if (option.isSpacer) {
-                            return <li key={`spacer-${index}`} className="select__spacer" role="separator"/>;
-                        }
+            {isOpen && createPortal(
+                <ul
+                    ref={listboxRef}
+                    id={dropdownId}
+                    className="select__dropdown"
+                    role="listbox"
+                    aria-hidden="false"
+                    style={{
+                        ...dropdownStyles,
+                        ...(isColored ? { '--select-color-base': `var(--${variant}-500, var(--color-${variant}))` } as CSSProperties : {})
+                    }}
+                >
+                    {filteredOptions.length === 0 ? (
+                        <li className="select__option is-disabled" role="option" aria-disabled="true">
+                            <span>No options found</span>
+                        </li>
+                    ) : (
+                        filteredOptions.map((option, index) => {
+                            if (option.isSpacer) {
+                                return <li key={`spacer-${index}`} className="select__spacer" role="separator"/>;
+                            }
 
-                        const isSelected = option.value === value;
-                        const isFocused = index === focusedIndex;
-                        const optionId = `${dropdownId}-opt-${index}`;
+                            const isSelected = option.value === value;
+                            const isFocused = index === focusedIndex;
+                            const optionId = `${dropdownId}-opt-${index}`;
 
-                        return (
-                            <li
-                                key={option.value}
-                                id={optionId}
-                                role="option"
-                                aria-selected={isSelected}
-                                aria-disabled={option.disabled}
-                                className={clsx(
-                                    'select__option',
-                                    option.variant && 'select__option--variant',
-                                    isSelected && 'is-selected',
-                                    isFocused && 'is-focused',
-                                    option.disabled && 'is-disabled'
-                                )}
-                                style={option.variant ? {
-                                    '--select-option-color': `var(--${option.variant}-500, var(--color-${option.variant}))`,
-                                } as CSSProperties : undefined}
-                                onClick={(e) => {
-                                    e.stopPropagation();
-                                    handleSelect(option);
-                                }}
-                                onMouseEnter={() => setFocusedIndex(index)}
-                            >
-                                {option.icon && <span className="select__icon select__icon--option">{option.icon}</span>}
-                                <span>{option.label}</span>
-                            </li>
-                        );
-                    })
-                )}
-            </ul>
+                            return (
+                                <li
+                                    key={option.value}
+                                    id={optionId}
+                                    role="option"
+                                    aria-selected={isSelected}
+                                    aria-disabled={option.disabled}
+                                    className={clsx(
+                                        'select__option',
+                                        option.variant && 'select__option--variant',
+                                        isSelected && 'is-selected',
+                                        isFocused && 'is-focused',
+                                        option.disabled && 'is-disabled'
+                                    )}
+                                    style={option.variant ? {
+                                        '--select-option-color': `var(--${option.variant}-500, var(--color-${option.variant}))`,
+                                    } as CSSProperties : undefined}
+                                    onClick={(e) => {
+                                        e.stopPropagation();
+                                        handleSelect(option);
+                                    }}
+                                    onMouseEnter={() => setFocusedIndex(index)}
+                                >
+                                    {option.icon && <span className="select__icon select__icon--option">{option.icon}</span>}
+                                    <span>{option.label}</span>
+                                </li>
+                            );
+                        })
+                    )}
+                </ul>,
+                document.body
+            )}
 
             {error && <div className="select__error-message">{error}</div>}
         </div>

@@ -1,5 +1,6 @@
 import './DropdownMenu.scss';
-import React, {forwardRef, useCallback, useEffect, useRef, useState} from 'react';
+import React, {forwardRef, useCallback, useEffect, useRef, useState, type CSSProperties} from 'react';
+import { createPortal } from 'react-dom';
 import {DropdownMenuContext} from './DropdownMenuContext';
 import {useKeyboardNav} from '../../hooks/useKeyboardNav';
 
@@ -152,6 +153,31 @@ export const DropdownMenuContent = forwardRef<HTMLDivElement, DropdownMenuConten
             }
         };
 
+        const [dropdownStyles, setDropdownStyles] = useState<CSSProperties>({});
+
+        const updatePosition = useCallback(() => {
+            if (!isOpen || !triggerRef.current) return;
+            const rect = triggerRef.current.getBoundingClientRect();
+            setDropdownStyles({
+                position: 'absolute',
+                top: `${rect.bottom + window.scrollY + 4}px`, // +4px spacing
+                left: `${rect.left + window.scrollX}px`,
+                zIndex: 'var(--z-dropdown, 1050)'
+            });
+        }, [isOpen, triggerRef]);
+
+        useEffect(() => {
+            if (isOpen) {
+                updatePosition();
+                window.addEventListener('scroll', updatePosition, true);
+                window.addEventListener('resize', updatePosition);
+                return () => {
+                    window.removeEventListener('scroll', updatePosition, true);
+                    window.removeEventListener('resize', updatePosition);
+                };
+            }
+        }, [isOpen, updatePosition]);
+
         // Click outside to close
         useEffect(() => {
             if (!isOpen) return;
@@ -201,16 +227,18 @@ export const DropdownMenuContent = forwardRef<HTMLDivElement, DropdownMenuConten
 
         if (!isOpen) return null;
 
-        return (
+        return createPortal(
             <div
                 ref={handleRef}
                 className={`dropdown-menu__content ${className}`}
                 role="menu"
                 onKeyDown={handleKeyDown}
+                style={{ ...dropdownStyles, ...props.style }}
                 {...props}
             >
                 {children}
-            </div>
+            </div>,
+            document.body
         );
     }
 );

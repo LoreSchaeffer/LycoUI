@@ -271,10 +271,12 @@ export interface NavbarDropdownProps extends Omit<React.HTMLAttributes<HTMLLIEle
     unstyled?: boolean;
     /** Align the dropdown menu to the left or right of its trigger. Defaults to left. */
     align?: 'left' | 'right';
+    /** Hide the default dropdown caret icon */
+    hideCaret?: boolean;
 }
 
 const NavbarDropdown = forwardRef<HTMLLIElement, NavbarDropdownProps>((
-    {className, title, unstyled = false, align = 'left', children, ...props},
+    {className, title, unstyled = false, align = 'left', hideCaret = false, children, ...props},
     ref
 ) => {
     const [isOpen, setIsOpen] = useState(false);
@@ -309,15 +311,17 @@ const NavbarDropdown = forwardRef<HTMLLIElement, NavbarDropdownProps>((
             >
                 <button
                     type="button"
-                    className={clsx('navbar__dropdown-trigger', unstyled && 'navbar__dropdown-trigger--unstyled')}
+                    className={clsx('navbar__link', 'navbar__dropdown-trigger', unstyled && 'navbar__dropdown-trigger--unstyled')}
                     onClick={toggle}
                     aria-expanded={isOpen}
                     aria-haspopup="true"
                 >
                     {title}
-                    <svg className="navbar__dropdown-caret" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                        <polyline points="6 9 12 15 18 9"></polyline>
-                    </svg>
+                    {!hideCaret && (
+                        <svg className="navbar__dropdown-caret" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                            <polyline points="6 9 12 15 18 9"></polyline>
+                        </svg>
+                    )}
                 </button>
                 <div className={clsx('navbar__dropdown-menu', isOpen && 'is-open', align === 'right' && 'navbar__dropdown-menu--right')}>
                     {children}
