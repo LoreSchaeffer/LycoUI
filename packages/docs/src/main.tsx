@@ -1,6 +1,7 @@
 import React from 'react';
 import {createRoot} from 'react-dom/client';
 import '@loreschaeffer/lyco-ui/style.css';
+import '@loreschaeffer/lyco-ui/utilities.css';
 import {App} from './App';
 
 const container = document.getElementById('root');

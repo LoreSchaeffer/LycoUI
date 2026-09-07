@@ -16,7 +16,7 @@
   flex-direction: column;
   width: 100%;
   background-color: var(--color-void, transparent);
-  border: var(--border-width, 1px) solid var(--color-border-base);
+  border: 1px solid var(--color-border-base);
 
   border-radius: var(--textarea-radius, var(--radius-md));
   overflow: hidden;
@@ -29,7 +29,7 @@
   --textarea-min-height: 5rem;
   --textarea-padding-y: var(--spacing-3);
   --textarea-padding-x: var(--spacing-3);
-  --textarea-font-size: var(--font-size-sm);
+  --textarea-font-size: var(--text-body-sm);
 
   &:hover:not(.is-disabled):not(.is-invalid):not(.is-valid) {
     border-color: var(--color-border-strong);
@@ -140,7 +140,7 @@
   // ==========================================================================
   &.is-focused {
     border-color: var(--textarea-color-base);
-    box-shadow: 0 0 0 var(--border-width, 1px) var(--color-void), 0 0 0 var(--border-width-3, 3px) var(--textarea-color-base);
+    box-shadow: 0 0 0 1px var(--color-void), 0 0 0 3px var(--textarea-color-base);
     --textarea-border-internal: var(--textarea-color-base);
   }
 
@@ -182,7 +182,7 @@
     --textarea-color-base: var(--color-success);
 
     &.is-focused {
-      box-shadow: 0 0 0 var(--border-width, 1px) var(--color-void), 0 0 0 var(--border-width-3, 3px) var(--color-success);
+      box-shadow: 0 0 0 1px var(--color-void), 0 0 0 3px var(--color-success);
     }
   }
 
@@ -191,7 +191,7 @@
     --textarea-color-base: var(--color-danger);
 
     &.is-focused {
-      box-shadow: 0 0 0 var(--border-width, 1px) var(--color-void), 0 0 0 var(--border-width-3, 3px) var(--color-danger);
+      box-shadow: 0 0 0 1px var(--color-void), 0 0 0 3px var(--color-danger);
     }
   }
 
@@ -211,7 +211,7 @@
     &.is-focused {
       background-color: var(--color-void);
       border-color: var(--textarea-color-base);
-      box-shadow: 0 0 0 var(--border-width, 1px) var(--color-void), 0 0 0 var(--border-width-3, 3px) var(--textarea-color-base);
+      box-shadow: 0 0 0 1px var(--color-void), 0 0 0 3px var(--textarea-color-base);
     }
   }
 
@@ -222,7 +222,7 @@
     --textarea-min-height: 4rem;
     --textarea-padding-y: var(--spacing-2);
     --textarea-padding-x: var(--spacing-2);
-    --textarea-font-size: var(--font-size-xs);
+    --textarea-font-size: var(--text-caption);
     --textarea-radius: var(--radius-sm);
   }
 
@@ -239,7 +239,7 @@
 // VALIDATION MESSAGE
 // ==========================================================================
 .textarea__message {
-  font-size: var(--font-size-xs);
+  font-size: var(--text-caption);
   margin-top: var(--spacing-1);
   padding-left: var(--spacing-1);
   line-height: 1.4;

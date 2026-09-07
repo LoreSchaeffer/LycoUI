@@ -35,7 +35,7 @@
     flex-shrink: 0;
     margin: 0;
     background-color: var(--color-void, transparent);
-    border: var(--border-width, 1px) solid var(--color-border-strong);
+    border: 1px solid var(--color-border-strong);
     border-radius: var(--radius-full);
     position: relative;
     transition: background-color var(--duration-fast) var(--ease-default),
@@ -66,7 +66,7 @@
 
   &__input:focus-visible + &__control {
     outline: none;
-    box-shadow: 0 0 0 var(--border-width, 1px) var(--color-void), 0 0 0 var(--border-width-3, 3px) var(--switch-color-base, var(--color-primary));
+    box-shadow: 0 0 0 1px var(--color-void), 0 0 0 3px var(--switch-color-base, var(--color-primary));
   }
 
   &__input:checked + &__control {
@@ -87,7 +87,7 @@
   // SIZES
   // ==========================================================================
   &--sm {
-    font-size: var(--font-size-sm);
+    font-size: var(--text-body-sm);
     --switch-width: 1.75rem;
     --switch-height: 1rem;
     --switch-thumb-size: 0.75rem;

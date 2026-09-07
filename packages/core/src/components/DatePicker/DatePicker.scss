@@ -17,7 +17,7 @@
   // SIZES
   // ==========================================================================
   &--sm {
-    font-size: var(--font-size-sm);
+    font-size: var(--text-body-sm);
 
     .datepicker__trigger {
       padding: var(--spacing-1) var(--spacing-3);
@@ -70,8 +70,8 @@
     &.is-open .datepicker__trigger,
     .datepicker__trigger:focus-within {
       border-color: var(--color-danger);
-      box-shadow: 0 0 0 var(--border-width, 1px) var(--color-void),
-      0 0 0 var(--border-width-3, 3px) var(--color-danger);
+      box-shadow: 0 0 0 1px var(--color-void),
+      0 0 0 3px var(--color-danger);
     }
 
     .datepicker__input {
@@ -90,7 +90,7 @@
     min-height: 2.5rem;
     padding: var(--spacing-2) var(--spacing-3);
     background-color: var(--color-bg-surface);
-    border: var(--border-width, 1px) solid var(--color-border-base);
+    border: 1px solid var(--color-border-base);
     border-radius: var(--radius-md);
     cursor: text;
     transition: border-color var(--duration-fast) var(--ease-default),
@@ -106,8 +106,8 @@
   &:not(.is-invalid).is-open .datepicker__trigger,
   &:not(.is-invalid) .datepicker__trigger:focus-within {
     border-color: var(--datepicker-color-base);
-    box-shadow: 0 0 0 var(--border-width, 1px) var(--color-void),
-    0 0 0 var(--border-width-3, 3px) var(--datepicker-color-base);
+    box-shadow: 0 0 0 1px var(--color-void),
+    0 0 0 3px var(--datepicker-color-base);
   }
 
   // ==========================================================================
@@ -201,7 +201,7 @@
     min-width: 280px;
     padding: var(--spacing-3);
     background-color: var(--surface-floating, var(--color-bg-surface));
-    border: var(--border-width, 1px) solid var(--color-border-subtle);
+    border: 1px solid var(--color-border-subtle);
     border-radius: var(--radius-xl);
     box-shadow: var(--shadow-xl);
     z-index: var(--z-dropdown, 100);
@@ -278,7 +278,7 @@
   }
 
   &__cal-title {
-    font-size: var(--font-size-sm);
+    font-size: var(--text-body-sm);
     font-weight: var(--font-weight-semibold);
     color: var(--color-text-primary);
     letter-spacing: -0.02em;
@@ -339,7 +339,7 @@
     justify-content: center;
     width: 2rem;
     height: 1.5rem;
-    font-size: var(--font-size-xs);
+    font-size: var(--text-caption);
     font-weight: var(--font-weight-medium);
     color: var(--color-text-muted);
     text-transform: uppercase;
@@ -353,7 +353,7 @@
     justify-content: center;
     width: 2rem;
     height: 2rem;
-    font-size: var(--font-size-sm);
+    font-size: var(--text-body-sm);
     border-radius: var(--radius-sm);
     cursor: pointer;
     position: relative;
@@ -419,7 +419,7 @@
 
   &__time-label {
     display: block;
-    font-size: var(--font-size-xs);
+    font-size: var(--text-caption);
     font-weight: var(--font-weight-medium);
     color: var(--color-text-muted);
     text-transform: uppercase;
@@ -470,7 +470,7 @@
     justify-content: center;
     padding: var(--spacing-2) var(--spacing-3);
     border-radius: var(--radius-sm);
-    font-size: var(--font-size-sm);
+    font-size: var(--text-body-sm);
     font-variant-numeric: tabular-nums;
     cursor: pointer;
     transition: background-color var(--duration-fast) var(--ease-default),
@@ -502,7 +502,7 @@
     border: none;
     border-radius: var(--radius-md);
     font-family: var(--font-family-base);
-    font-size: var(--font-size-sm);
+    font-size: var(--text-body-sm);
     font-weight: var(--font-weight-medium);
     cursor: pointer;
     text-align: center;

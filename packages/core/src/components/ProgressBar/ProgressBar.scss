@@ -5,7 +5,7 @@
   overflow: hidden;
   background-color: var(--color-carbon);
   border-radius: var(--progress-radius, var(--radius-full));
-  box-shadow: inset 0 var(--border-width, 1px) var(--border-width-3, 3px) var(--color-border-strong);
+  box-shadow: inset 0 1px 3px var(--color-border-strong);
 
   // Consume the injected variable with fallback
   --progress-color-base: var(--progress-color-base, var(--color-primary));

@@ -16,7 +16,7 @@
   align-items: center;
   width: 100%;
   background-color: var(--color-void, transparent);
-  border: var(--border-width, 1px) solid var(--color-border-base);
+  border: 1px solid var(--color-border-base);
 
   border-radius: var(--input-radius, var(--radius-md));
   overflow: hidden;
@@ -28,7 +28,7 @@
   --input-color-base: var(--color-primary);
   --input-height: 2.75rem;
   --input-padding-x: var(--spacing-3);
-  --input-font-size: var(--font-size-sm);
+  --input-font-size: var(--text-body-sm);
   --input-icon-size: var(--spacing-5, 1.25rem);
 
   &:hover:not(.is-disabled):not(.is-invalid):not(.is-valid) {
@@ -83,7 +83,7 @@
         margin-right: var(--spacing-3);
         background-color: var(--color-carbon);
         border: none;
-        border-right: var(--border-width, 1px) solid var(--input-border-internal, var(--color-border-base));
+        border-right: 1px solid var(--input-border-internal, var(--color-border-base));
         border-start-start-radius: var(--input-radius);
         border-end-start-radius: var(--input-radius);
         color: var(--color-text-primary);
@@ -205,8 +205,8 @@
       }
 
       &:focus-visible {
-        outline: var(--border-width-2, 2px) solid var(--input-color-base);
-        outline-offset: var(--border-width-2, 2px);
+        outline: 2px solid var(--input-color-base);
+        outline-offset: 2px;
       }
     }
   }
@@ -227,7 +227,7 @@
     display: flex;
     flex-direction: column;
     align-self: stretch;
-    border-left: var(--border-width, 1px) solid var(--input-border-internal, var(--color-border-base));
+    border-left: 1px solid var(--input-border-internal, var(--color-border-base));
     flex-shrink: 0;
   }
 
@@ -260,7 +260,7 @@
     }
 
     &--up {
-      border-bottom: var(--border-width, 1px) solid var(--input-border-internal, var(--color-border-base));
+      border-bottom: 1px solid var(--input-border-internal, var(--color-border-base));
       border-start-end-radius: var(--input-radius, var(--radius-md));
     }
 
@@ -274,7 +274,7 @@
   // ==========================================================================
   &.is-focused {
     border-color: var(--input-color-base);
-    box-shadow: 0 0 0 var(--border-width, 1px) var(--color-void), 0 0 0 var(--border-width-3, 3px) var(--input-color-base);
+    box-shadow: 0 0 0 1px var(--color-void), 0 0 0 3px var(--input-color-base);
     --input-border-internal: var(--input-color-base);
   }
 
@@ -328,7 +328,7 @@
     --input-color-base: var(--color-success);
 
     &.is-focused {
-      box-shadow: 0 0 0 var(--border-width, 1px) var(--color-void), 0 0 0 var(--border-width-3, 3px) var(--color-success);
+      box-shadow: 0 0 0 1px var(--color-void), 0 0 0 3px var(--color-success);
     }
   }
 
@@ -337,7 +337,7 @@
     --input-color-base: var(--color-danger);
 
     &.is-focused {
-      box-shadow: 0 0 0 var(--border-width, 1px) var(--color-void), 0 0 0 var(--border-width-3, 3px) var(--color-danger);
+      box-shadow: 0 0 0 1px var(--color-void), 0 0 0 3px var(--color-danger);
     }
   }
 
@@ -357,7 +357,7 @@
     &.is-focused {
       background-color: var(--color-void);
       border-color: var(--input-color-base);
-      box-shadow: 0 0 0 var(--border-width, 1px) var(--color-void), 0 0 0 var(--border-width-3, 3px) var(--input-color-base);
+      box-shadow: 0 0 0 1px var(--color-void), 0 0 0 3px var(--input-color-base);
     }
   }
 
@@ -367,7 +367,7 @@
   &--sm {
     --input-height: var(--spacing-8, 2rem);
     --input-padding-x: var(--spacing-2);
-    --input-font-size: var(--font-size-xs);
+    --input-font-size: var(--text-caption);
     --input-icon-size: var(--spacing-4, 1rem);
     --input-radius: var(--radius-sm);
 
@@ -404,7 +404,7 @@
 // VALIDATION MESSAGE — Outside .input to avoid BEM nesting issues
 // ==========================================================================
 .input__message {
-  font-size: var(--font-size-xs);
+  font-size: var(--text-caption);
   margin-top: var(--spacing-1);
   padding-left: var(--spacing-1);
   line-height: 1.4;

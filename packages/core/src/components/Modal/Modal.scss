@@ -98,7 +98,7 @@
     width: 100%;
     pointer-events: auto;
     background-color: var(--surface-base, var(--color-bg-surface));
-    border: var(--border-width, 1px) solid var(--color-border-subtle);
+    border: 1px solid var(--color-border-subtle);
     border-radius: var(--radius-2xl);
     box-shadow: var(--shadow-xl);
     outline: 0;
@@ -110,7 +110,7 @@
     align-items: center;
     justify-content: space-between;
     padding: var(--spacing-5) var(--spacing-6);
-    border-bottom: var(--border-width, 1px) solid var(--color-border-subtle);
+    border-bottom: 1px solid var(--color-border-subtle);
   }
 
   &__title {
@@ -149,7 +149,7 @@
     align-items: center;
     justify-content: flex-end;
     padding: var(--spacing-4) var(--spacing-6);
-    border-top: var(--border-width, 1px) solid var(--color-border-subtle);
+    border-top: 1px solid var(--color-border-subtle);
     gap: var(--spacing-3);
   }
 }

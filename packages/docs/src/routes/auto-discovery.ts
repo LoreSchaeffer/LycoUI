@@ -53,11 +53,7 @@ export const docsNavigation: DocNavigationCategory[] = [
                 path: '/docs/introduction',
                 component: lazy(() => import('../pages/getting-started/Introduction'))
             },
-            {
-                name: 'Installation',
-                path: '/docs/installation',
-                component: lazy(() => import('../pages/getting-started/Installation'))
-            },
+
             {
                 name: 'Custom Types',
                 path: '/docs/types',

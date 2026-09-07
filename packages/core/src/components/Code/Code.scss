@@ -6,7 +6,7 @@
 
   &--inline {
     font-family: var(--code-font);
-    font-size: var(--font-size-sm);
+    font-size: var(--text-body-sm);
     background-color: var(--color-surface-elevated, var(--color-carbon));
     color: var(--color-text-primary);
     padding: 0.15em 0.3em;
@@ -21,7 +21,7 @@
     --code-radius: var(--radius-xl);
 
     background-color: var(--code-bg);
-    border: var(--border-width, 1px) solid var(--code-border);
+    border: 1px solid var(--code-border);
     border-radius: var(--code-radius);
     display: flex;
     flex-direction: column;
@@ -47,7 +47,7 @@
     align-items: center;
     padding: var(--spacing-2) var(--spacing-4);
     background-color: var(--code-header-bg);
-    border-bottom: var(--border-width, 1px) solid var(--code-border);
+    border-bottom: 1px solid var(--code-border);
   }
 
   &__header-left,
@@ -58,7 +58,7 @@
   }
 
   &__lang-label {
-    font-size: var(--font-size-xs);
+    font-size: var(--text-caption);
     color: var(--color-text-muted);
     font-weight: var(--font-weight-medium);
     text-transform: uppercase;
@@ -71,11 +71,11 @@
     // Slight adjustments to make the custom Select blend perfectly into the Code header
     --select-bg: transparent;
     --select-border: transparent;
-    --select-hover-bg: var(--color-surface-hover);
+    --select-hover-bg: var(--color-surface-elevated);
 
     .select__trigger {
       padding: var(--spacing-1) var(--spacing-2);
-      font-size: var(--font-size-xs);
+      font-size: var(--text-caption);
       border-radius: var(--radius-sm);
     }
   }
@@ -96,13 +96,13 @@
     opacity var(--duration-fast) var(--ease-default);
 
     &:hover {
-      background-color: var(--color-surface-hover);
+      background-color: var(--color-surface-elevated);
       color: var(--color-text-primary);
     }
 
     &:focus-visible {
-      outline: var(--border-width-2, 2px) solid var(--color-primary);
-      outline-offset: var(--border-width-2, 2px);
+      outline: 2px solid var(--color-primary);
+      outline-offset: 2px;
     }
 
     .icon-success {
@@ -142,7 +142,7 @@
     margin: 0;
     padding: 0;
     font-family: var(--code-font);
-    font-size: var(--font-size-sm);
+    font-size: var(--text-body-sm);
     line-height: 1.6;
     tab-size: var(--lyco-code-tab-size, 2);
     white-space: pre;

@@ -1,5 +1,5 @@
 import React from 'react';
-import {Table, TableBody, TableCell, TableHead, TableRow} from '@loreschaeffer/lyco-ui';
+import { Table, TableBody, TableCell, TableHead, TableRow } from '@loreschaeffer/lyco-ui';
 
 export default function TypesDoc() {
     const getColorBg = (val: string) => {
@@ -39,7 +39,17 @@ export default function TypesDoc() {
                             <TableRow key={val}>
                                 <TableCell className="td-prop"><code>'{val}'</code></TableCell>
                                 <TableCell className="td-description">
-                                    Maps to the <code style={{backgroundColor: getColorBg(val), color: getTextColor(val)}}>{`--${val}`}</code> theme palette color.
+                                    Maps to the <code
+                                        style={{
+                                            backgroundColor: getColorBg(val),
+                                            color: getTextColor(val),
+                                            borderRadius: 'var(--radius-sm)',
+                                            padding: '0.25rem 0.5rem',
+                                            marginInline: '0.25rem'
+                                        }}
+                                    >
+                                        {`--${val}`}
+                                    </code> theme palette color.
                                 </TableCell>
                             </TableRow>
                         ))}
@@ -63,20 +73,46 @@ export default function TypesDoc() {
                         <TableRow key="primary">
                             <TableCell className="td-prop"><code>'primary'</code></TableCell>
                             <TableCell className="td-description">
-                                Maps to the <code style={{backgroundColor: 'var(--color-primary)', color: 'white'}}>--color-primary</code> semantic theme color.
+                                Maps to the <code
+                                    style={{
+                                        backgroundColor: 'var(--color-primary)',
+                                        color: 'white',
+                                        borderRadius: 'var(--radius-sm)',
+                                        padding: '0.25rem 0.5rem',
+                                        marginInline: '0.25rem'
+                                    }}
+                                >--color-primary</code> semantic theme color.
                             </TableCell>
                         </TableRow>
                         <TableRow key="secondary">
                             <TableCell className="td-prop"><code>'secondary'</code></TableCell>
                             <TableCell className="td-description">
-                                Maps to the <code style={{backgroundColor: 'var(--color-ash)', color: 'white'}}>--color-ash</code> semantic theme color.
+                                Maps to the <code
+                                    style={{
+                                        backgroundColor: 'var(--color-ash)',
+                                        color: 'white',
+                                        borderRadius: 'var(--radius-sm)',
+                                        padding: '0.25rem 0.5rem',
+                                        marginInline: '0.25rem'
+                                    }}
+                                >--color-ash</code> semantic theme color.
                             </TableCell>
                         </TableRow>
                         {['success', 'warning', 'danger', 'info'].map(val => (
                             <TableRow key={val}>
                                 <TableCell className="td-prop"><code>'{val}'</code></TableCell>
                                 <TableCell className="td-description">
-                                    Maps to the <code style={{backgroundColor: `var(--color-${val})`, color: getTextColor(val)}}>--color-{val}</code> semantic color mapping.
+                                    Maps to the <code
+                                        style={{
+                                            backgroundColor: `var(--color-${val})`,
+                                            color: getTextColor(val),
+                                            borderRadius: 'var(--radius-sm)',
+                                            padding: '0.25rem 0.5rem',
+                                            marginInline: '0.25rem'
+                                        }}
+                                    >
+                                        --color-{val}
+                                    </code> semantic color mapping.
                                 </TableCell>
                             </TableRow>
                         ))}
@@ -100,8 +136,8 @@ export default function TypesDoc() {
                         <TableRow>
                             <TableCell className="td-prop">
                                 <code>
-                                    <a href="#color-variant" style={{color: 'inherit', textDecoration: 'underline'}}>ColorVariant</a> |{' '}
-                                    <a href="#semantic-variant" style={{color: 'inherit', textDecoration: 'underline'}}>SemanticVariant</a>
+                                    <a href="#color-variant" style={{ color: 'inherit', textDecoration: 'underline' }}>ColorVariant</a> |{' '}
+                                    <a href="#semantic-variant" style={{ color: 'inherit', textDecoration: 'underline' }}>SemanticVariant</a>
                                 </code>
                             </TableCell>
                             <TableCell className="td-description">Any valid string literal from the ColorVariant or SemanticVariant types.</TableCell>

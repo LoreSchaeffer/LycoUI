@@ -3,7 +3,7 @@
   --table-color: var(--color-text-primary);
   --table-border-color: var(--color-border-subtle);
   --table-stripe-bg: color-mix(in srgb, var(--color-text-primary) 2%, transparent);
-  --table-hover-bg: var(--color-surface-hover);
+  --table-hover-bg: var(--surface-elevated);
   --table-active-bg: color-mix(in srgb, var(--color-text-primary) 8%, transparent);
   --table-padding-y: var(--spacing-3);
   --table-padding-x: var(--spacing-4);
@@ -18,7 +18,7 @@
     padding: var(--table-padding-y) var(--table-padding-x);
     background-color: var(--table-bg);
     color: var(--table-color);
-    border-bottom: var(--border-width, 1px) solid var(--table-border-color);
+    border-bottom: 1px solid var(--table-border-color);
   }
 
   > tbody {
@@ -30,12 +30,12 @@
 
     > * > * {
       background-color: var(--color-surface-elevated, var(--color-carbon));
-      font-size: var(--font-size-xs);
+      font-size: var(--text-caption);
       font-weight: var(--font-weight-medium);
       text-transform: uppercase;
       letter-spacing: 0.05em;
       color: var(--color-text-secondary);
-      border-bottom: var(--border-width-2, 2px) solid var(--color-border-base) !important;
+      border-bottom: 2px solid var(--color-border-base) !important;
       padding-top: var(--spacing-4);
       padding-bottom: var(--spacing-4);
     }
@@ -60,7 +60,7 @@
   // Bordered (Full grid support)
   &-bordered {
     > :not(caption) > * > * {
-      border-right: var(--border-width, 1px) solid var(--color-border-subtle);
+      border-right: 1px solid var(--color-border-subtle);
 
       &:last-child {
         border-right: none;
@@ -83,7 +83,7 @@
   &-sm {
     --table-padding-y: var(--spacing-2);
     --table-padding-x: var(--spacing-3);
-    font-size: var(--font-size-sm);
+    font-size: var(--text-body-sm);
 
     > thead > * > * {
       padding-top: var(--spacing-2) !important;
@@ -114,7 +114,7 @@
   display: flex;
   flex-direction: column;
 
-  border: var(--border-width, 1px) solid var(--color-border-subtle);
+  border: 1px solid var(--color-border-subtle);
   border-radius: var(--radius-xl);
   background-color: var(--color-surface-base, transparent);
   box-shadow: var(--shadow-sm);

@@ -21,7 +21,7 @@
 
   > .btn {
     &:not(:first-child) {
-      margin-left: calc(var(--border-width, 1px) * -1);
+      margin-left: calc(1px * -1);
       border-top-left-radius: 0;
       border-bottom-left-radius: 0;
     }
@@ -42,7 +42,7 @@
     width: 100%;
 
     &:not(:first-child) {
-      margin-top: calc(var(--border-width, 1px) * -1);
+      margin-top: calc(1px * -1);
       border-top-left-radius: 0;
       border-top-right-radius: 0;
     }
