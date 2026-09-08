@@ -34,10 +34,9 @@ export const vanillaHtml = `
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
               </span>
             </button>
-            <div class="navbar__dropdown-menu">
               <a href="#" class="navbar__dropdown-item">Profile</a>
               <a href="#" class="navbar__dropdown-item">Settings</a>
-              <a href="#" class="navbar__dropdown-item" style="color: var(--color-danger);">Sign Out</a>
+              <a href="#" class="navbar__dropdown-item navbar__dropdown-item--danger">Sign Out</a>
             </div>
           </li>
         </ul>
@@ -110,7 +109,7 @@ export default function AvatarTriggerExample() {
                                         <FiSettings size={14} style={{marginRight: 'var(--spacing-2, 0.5rem)', opacity: 0.7}}/>
                                         Settings
                                     </Navbar.DropdownItem>
-                                    <Navbar.DropdownItem href="#" style={{color: 'var(--color-danger)'}}>
+                                    <Navbar.DropdownItem href="#" variant="danger">
                                         <FiLogOut size={14} style={{marginRight: 'var(--spacing-2, 0.5rem)', opacity: 0.7}}/>
                                         Sign Out
                                     </Navbar.DropdownItem>

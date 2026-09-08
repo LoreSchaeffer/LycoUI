@@ -1,2 +1,3 @@
 Skeleton
 Chat
+Color Picker

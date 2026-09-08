@@ -33,6 +33,8 @@ export interface NavbarProps extends React.HTMLAttributes<HTMLElement> {
     position?: 'static' | 'sticky' | 'fixed';
     /** Breakpoint at which the navbar expands from mobile to desktop */
     expand?: 'sm' | 'md' | 'lg' | 'xl' | 'always' | 'never';
+    /** Defines the fixed height of the navbar. @default "md" */
+    size?: 'sm' | 'md' | 'lg' | number | string;
 }
 
 const NavbarComponent = forwardRef<HTMLElement, NavbarProps>((
@@ -44,6 +46,7 @@ const NavbarComponent = forwardRef<HTMLElement, NavbarProps>((
         elevation = '1',
         position = 'static',
         expand = 'lg',
+        size = 'md',
         id: propId,
         ...props
     },
@@ -73,6 +76,11 @@ const NavbarComponent = forwardRef<HTMLElement, NavbarProps>((
     const contextValue = useMemo(() => ({isOpen, toggle, close, id}), [isOpen, toggle, close, id]);
 
     const isBaseVariant = ['base', 'dark', 'light', 'transparent'].includes(variant);
+    const isPredefinedSize = size === 'sm' || size === 'md' || size === 'lg';
+
+    const customSizeStyle = !isPredefinedSize && size
+        ? { ['--navbar-height' as string]: typeof size === 'number' ? `${size}px` : size }
+        : {};
 
     return (
         <NavbarContext.Provider value={contextValue}>
@@ -84,14 +92,18 @@ const NavbarComponent = forwardRef<HTMLElement, NavbarProps>((
                     `navbar-elevation-${elevation}`,
                     position !== 'static' && `navbar--${position}`,
                     expand !== 'never' && `navbar--expand-${expand}`,
+                    isPredefinedSize && `navbar--${size}`,
                     className
                 )}
                 id={id}
-                style={!isBaseVariant ? {
-                    '--navbar-color-base': `var(--${variant}-500, var(--color-${variant}))`,
-                    '--navbar-color-dim': `color-mix(in srgb, var(--${variant}-500, var(--color-${variant})) 15%, transparent)`,
+                style={{
+                    ...(!isBaseVariant && {
+                        '--navbar-color-base': `var(--${variant}-500, var(--color-${variant}))`,
+                        '--navbar-color-dim': `color-mix(in srgb, var(--${variant}-500, var(--color-${variant})) 15%, transparent)`,
+                    }),
+                    ...customSizeStyle,
                     ...props.style
-                } as CSSProperties : props.style}
+                } as CSSProperties}
                 {...props}
             >
                 <div className="navbar__container">
@@ -336,12 +348,15 @@ const NavbarDropdown = forwardRef<HTMLLIElement, NavbarDropdownProps>((
 });
 NavbarDropdown.displayName = 'Navbar.Dropdown';
 
-export type NavbarDropdownItemProps<C extends React.ElementType = 'a'> = PolymorphicProps<C, {}>;
+export type NavbarDropdownItemProps<C extends React.ElementType = 'a'> = PolymorphicProps<C, {
+    /** Visual intent of the dropdown item. @default "base" */
+    variant?: 'base' | 'danger' | 'success' | 'warning' | 'primary';
+}>;
 
 type NavbarDropdownItemComponent = <C extends React.ElementType = 'a'>(props: NavbarDropdownItemProps<C> & { ref?: PolymorphicRef<C> }) => React.ReactElement;
 
 const NavbarDropdownItem = forwardRef((
-    {className, as, onClick, children, ...props}: any,
+    {className, as, variant = 'base', onClick, children, ...props}: any,
     ref: any
 ) => {
     const context = useContext(NavbarDropdownContext);
@@ -356,7 +371,7 @@ const NavbarDropdownItem = forwardRef((
     return (
         <Component
             ref={ref}
-            className={clsx('navbar__dropdown-item', className)}
+            className={clsx('navbar__dropdown-item', variant !== 'base' && `navbar__dropdown-item--${variant}`, className)}
             onClick={handleClick}
             {...props}
         >

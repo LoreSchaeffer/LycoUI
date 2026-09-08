@@ -31,6 +31,12 @@ const navbarProps: PropDefinition[] = [
         type: "'sm' | 'md' | 'lg' | 'xl' | 'always' | 'never'",
         defaultValue: "'lg'",
         description: 'Breakpoint at which the navbar expands from mobile hamburger menu to full desktop menu.'
+    },
+    {
+        name: 'size',
+        type: "'sm' | 'md' | 'lg' | number | string",
+        defaultValue: "'md'",
+        description: 'Defines the fixed height of the navbar.'
     }
 ];
 
@@ -73,9 +79,25 @@ const navbarLinkProps: PropDefinition[] = [
     }
 ];
 
+const navbarDropdownItemProps: PropDefinition[] = [
+    {
+        name: 'as',
+        type: 'React.ElementType',
+        defaultValue: "'a'",
+        description: 'Custom component to render as.'
+    },
+    {
+        name: 'variant',
+        type: "'base' | 'danger' | 'success' | 'warning' | 'primary'",
+        defaultValue: "'base'",
+        description: 'Visual intent of the dropdown item.'
+    }
+];
+
 export const apiConfig = [
     {name: 'Navbar', data: navbarProps},
     {name: 'Navbar.Brand', data: navbarBrandProps},
     {name: 'Navbar.Nav', data: navbarNavProps},
-    {name: 'Navbar.Link', data: navbarLinkProps}
+    {name: 'Navbar.Link', data: navbarLinkProps},
+    {name: 'Navbar.DropdownItem', data: navbarDropdownItemProps}
 ];
