@@ -8,6 +8,7 @@
   font-family: var(--font-family-base);
   font-size: var(--font-size-base);
   color: var(--color-text-primary);
+  vertical-align: middle;
 
   // CSS variable defaults (overridden by inline style from the variant prop)
   --datepicker-color-base: var(--color-primary);
@@ -20,8 +21,8 @@
     font-size: var(--text-body-sm);
 
     .datepicker__trigger {
+      height: calc(var(--spacing-8, 2rem) + 2px);
       padding: var(--spacing-1) var(--spacing-3);
-      min-height: var(--spacing-8, 2rem);
     }
 
     .datepicker__icon svg,
@@ -35,8 +36,8 @@
     font-size: var(--font-size-lg);
 
     .datepicker__trigger {
+      height: calc(var(--spacing-12, 3rem) + 2px);
       padding: var(--spacing-3) var(--spacing-4);
-      min-height: var(--spacing-12, 3rem);
     }
 
     .datepicker__icon svg,
@@ -85,18 +86,23 @@
   &__trigger {
     display: flex;
     align-items: center;
+    justify-content: space-between;
     gap: var(--spacing-2);
     width: 100%;
-    min-height: 2.5rem;
-    padding: var(--spacing-2) var(--spacing-3);
-    background-color: var(--color-bg-surface);
+    height: calc(var(--input-height, 2.75rem) + 2px);
+    padding: 0 var(--spacing-3);
+    background-color: var(--color-void, transparent);
     border: 1px solid var(--color-border-base);
-    border-radius: var(--radius-md);
+    border-radius: var(--input-radius, var(--radius-md));
+    color: var(--color-text-primary);
+    font-size: var(--input-font-size, var(--text-body-sm));
     cursor: text;
     transition: border-color var(--duration-fast) var(--ease-default),
     box-shadow var(--duration-fast) var(--ease-default);
     box-sizing: border-box;
     text-align: left;
+    vertical-align: middle;
+    margin: 0;
 
     &:hover {
       border-color: var(--color-border-strong);
@@ -118,11 +124,13 @@
     align-items: center;
     justify-content: center;
     flex-shrink: 0;
+    margin: 0;
     color: var(--color-text-secondary);
 
     svg {
       width: 1rem;
       height: 1rem;
+      margin: 0;
     }
   }
 
@@ -141,6 +149,7 @@
 
     &::placeholder {
       color: var(--color-text-muted);
+      opacity: 1;
     }
 
     // Hide native OS picker icons (we use our own SVGs in the trigger)
@@ -185,6 +194,7 @@
     color: var(--color-text-secondary);
     transition: transform var(--duration-fast) var(--ease-default);
     flex-shrink: 0;
+    margin: 0;
   }
 
   &.is-open .datepicker__chevron {

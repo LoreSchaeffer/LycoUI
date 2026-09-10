@@ -61,6 +61,27 @@ export const datePickerPropsData: PropDefinition[] = [
         type: 'string',
         description: "A BCP 47 locale tag (e.g. 'en-US', 'de-DE'). When omitted, the browser's locale is used.",
     },
+    {
+        name: 'name',
+        type: 'string',
+        description: 'Name of the input, required for form integration.',
+    },
+    {
+        name: 'validation',
+        type: '"disabled" | "auto" | "valid" | "invalid"',
+        defaultValue: "'disabled'",
+        description: 'Controls validation behavior.',
+    },
+    {
+        name: 'validationFn',
+        type: '(value: Date | null) => string | null',
+        description: 'Custom validation function. Returns null if valid, or an error message string.',
+    },
+    {
+        name: 'validationMessage',
+        type: 'string',
+        description: 'Custom message displayed below the input. Overrides auto-generated messages.',
+    },
 ];
 
 // =============================================================================
@@ -108,6 +129,27 @@ export const timePickerPropsData: PropDefinition[] = [
         type: 'boolean',
         defaultValue: 'false',
         description: 'When true, the picker is non-interactive.',
+    },
+    {
+        name: 'name',
+        type: 'string',
+        description: 'Name of the input, required for form integration.',
+    },
+    {
+        name: 'validation',
+        type: '"disabled" | "auto" | "valid" | "invalid"',
+        defaultValue: "'disabled'",
+        description: 'Controls validation behavior.',
+    },
+    {
+        name: 'validationFn',
+        type: '(value: TimeValue | null) => string | null',
+        description: 'Custom validation function. Returns null if valid, or an error message string.',
+    },
+    {
+        name: 'validationMessage',
+        type: 'string',
+        description: 'Custom message displayed below the input. Overrides auto-generated messages.',
     },
 ];
 
@@ -176,6 +218,27 @@ export const dateTimePickerPropsData: PropDefinition[] = [
         name: 'locale',
         type: 'string',
         description: "A BCP 47 locale tag. When omitted, the browser's locale is used.",
+    },
+    {
+        name: 'name',
+        type: 'string',
+        description: 'Name of the input, required for form integration.',
+    },
+    {
+        name: 'validation',
+        type: '"disabled" | "auto" | "valid" | "invalid"',
+        defaultValue: "'disabled'",
+        description: 'Controls validation behavior.',
+    },
+    {
+        name: 'validationFn',
+        type: '(value: Date | null) => string | null',
+        description: 'Custom validation function. Returns null if valid, or an error message string.',
+    },
+    {
+        name: 'validationMessage',
+        type: 'string',
+        description: 'Custom message displayed below the input. Overrides auto-generated messages.',
     },
 ];
 

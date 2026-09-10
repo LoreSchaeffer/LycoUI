@@ -30,9 +30,13 @@
   }
 
   &__error-message {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
     color: var(--color-danger);
     font-size: var(--text-body-sm);
-    margin-top: var(--spacing-1);
+    margin-top: 2px;
     padding-left: var(--spacing-1);
   }
 

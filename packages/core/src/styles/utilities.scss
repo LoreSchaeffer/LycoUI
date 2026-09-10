@@ -499,3 +499,15 @@ $standard-semantics: (
     background-color: var(--color-#{$name}-active) !important;
   }
 }
+
+// ==========================================================================
+// FORM GROUPS & LAYOUT WRAPPERS
+// ==========================================================================
+.form-row,
+.input-group,
+.form-group {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-3);
+  width: 100%;
+}

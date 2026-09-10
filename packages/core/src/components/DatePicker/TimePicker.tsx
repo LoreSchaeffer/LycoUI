@@ -37,6 +37,14 @@ export interface TimePickerProps extends Omit<HTMLAttributes<HTMLDivElement>, 'o
     use12Hour?: boolean;
     /** A BCP 47 locale tag (e.g. 'en-US'). When omitted the browser's locale is used. */
     locale?: string;
+    /** Name of the input, required for form integration. */
+    name?: string;
+    /** Controls validation behavior. */
+    validation?: 'disabled' | 'auto' | 'valid' | 'invalid';
+    /** Custom validation function. Returns null if valid, or an error message string. */
+    validationFn?: (value: TimeValue | null) => string | null;
+    /** Custom message displayed below the input. Overrides auto-generated messages. */
+    validationMessage?: string;
 }
 
 const pad2 = (n: number): string => String(n).padStart(2, '0');
@@ -62,6 +70,10 @@ export const TimePicker = forwardRef<HTMLDivElement, TimePickerProps>(
             disabled = false,
             use12Hour,
             locale,
+            name,
+            validation = 'disabled',
+            validationFn,
+            validationMessage,
             className,
             id,
             style,
@@ -91,6 +103,10 @@ export const TimePicker = forwardRef<HTMLDivElement, TimePickerProps>(
 
         const isColored = variant !== 'default';
         const isMobile = useMediaQuery('(max-width: 768px)');
+        
+        const autoMessage = validation === 'auto' && validationFn ? validationFn(value ?? null) : null;
+        const finalMessage = validationMessage || autoMessage;
+        const isComponentInvalid = isInvalid || validation === 'invalid' || (validation === 'auto' && autoMessage !== null);
 
         const resolved12Hour = use12Hour ?? new Intl.DateTimeFormat(locale, {hour: 'numeric'}).resolvedOptions().hour12;
 
@@ -230,7 +246,7 @@ export const TimePicker = forwardRef<HTMLDivElement, TimePickerProps>(
                     'datepicker--time',
                     size !== 'md' && `datepicker--${size}`,
                     disabled && 'is-disabled',
-                    isInvalid && 'is-invalid',
+                    isComponentInvalid && 'is-invalid',
                     isOpen && 'is-open',
                     className
                 )}
@@ -269,7 +285,8 @@ export const TimePicker = forwardRef<HTMLDivElement, TimePickerProps>(
                         aria-haspopup={!isMobile ? "dialog" : undefined}
                         aria-expanded={!isMobile ? isOpen : undefined}
                         aria-controls={!isMobile ? popoverId : undefined}
-                        aria-invalid={isInvalid}
+                        name={name}
+                        aria-invalid={isComponentInvalid}
                     />
 
                     {/* Clear button */}
@@ -311,6 +328,12 @@ export const TimePicker = forwardRef<HTMLDivElement, TimePickerProps>(
                             onChange={handleTimeChange}
                             use12Hour={resolved12Hour}
                         />
+                    </div>
+                )}
+
+                {isComponentInvalid && finalMessage && (
+                    <div className="input__message input__message--invalid" role="alert">
+                        {finalMessage}
                     </div>
                 )}
             </div>

@@ -37,6 +37,14 @@ export interface DatePickerProps extends Omit<HTMLAttributes<HTMLDivElement>, 'o
      * When omitted the browser's locale is used.
      */
     locale?: string;
+    /** Name of the input, required for form integration. */
+    name?: string;
+    /** Controls validation behavior. */
+    validation?: 'disabled' | 'auto' | 'valid' | 'invalid';
+    /** Custom validation function. Returns null if valid, or an error message string. */
+    validationFn?: (value: Date | null) => string | null;
+    /** Custom message displayed below the input. Overrides auto-generated messages. */
+    validationMessage?: string;
 }
 
 const pad2 = (n: number): string => String(n).padStart(2, '0');
@@ -107,6 +115,10 @@ export const DatePicker = forwardRef<HTMLDivElement, DatePickerProps>(
             maxDate,
             dateFormat = 'medium',
             locale,
+            name,
+            validation = 'disabled',
+            validationFn,
+            validationMessage,
             className,
             id,
             style,
@@ -138,6 +150,10 @@ export const DatePicker = forwardRef<HTMLDivElement, DatePickerProps>(
 
         const isColored = variant !== 'default';
         const isMobile = useMediaQuery('(max-width: 768px)');
+        
+        const autoMessage = validation === 'auto' && validationFn ? validationFn(value ?? null) : null;
+        const finalMessage = validationMessage || autoMessage;
+        const isComponentInvalid = isInvalid || validation === 'invalid' || (validation === 'auto' && autoMessage !== null);
 
         // Format the display string
         const displayValue = useMemo(() => {
@@ -270,7 +286,7 @@ export const DatePicker = forwardRef<HTMLDivElement, DatePickerProps>(
                     'datepicker',
                     size !== 'md' && `datepicker--${size}`,
                     disabled && 'is-disabled',
-                    isInvalid && 'is-invalid',
+                    isComponentInvalid && 'is-invalid',
                     isOpen && 'is-open',
                     className
                 )}
@@ -311,7 +327,8 @@ export const DatePicker = forwardRef<HTMLDivElement, DatePickerProps>(
                         aria-haspopup={!isMobile ? "dialog" : undefined}
                         aria-expanded={!isMobile ? isOpen : undefined}
                         aria-controls={!isMobile ? popoverId : undefined}
-                        aria-invalid={isInvalid}
+                        name={name}
+                        aria-invalid={isComponentInvalid}
                     />
 
                     {/* Clear button */}
@@ -356,6 +373,12 @@ export const DatePicker = forwardRef<HTMLDivElement, DatePickerProps>(
                             onPrevMonth={handlePrevMonth}
                             onNextMonth={handleNextMonth}
                         />
+                    </div>
+                )}
+
+                {isComponentInvalid && finalMessage && (
+                    <div className="input__message input__message--invalid" role="alert">
+                        {finalMessage}
                     </div>
                 )}
             </div>

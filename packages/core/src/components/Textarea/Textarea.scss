@@ -2,9 +2,11 @@
 // TEXTAREA WRAPPER — Contains textarea + validation message
 // ==========================================================================
 .textarea-wrapper {
+  position: relative;
   display: flex;
   flex-direction: column;
   width: 100%;
+  padding-bottom: var(--input-message-reserve, 0px);
 }
 
 // ==========================================================================

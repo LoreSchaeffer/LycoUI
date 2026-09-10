@@ -41,6 +41,14 @@ export interface DateTimePickerProps extends Omit<HTMLAttributes<HTMLDivElement>
     locale?: string;
     /** If true, enables 12-hour format with AM/PM selection. */
     use12Hour?: boolean;
+    /** Name of the input, required for form integration. */
+    name?: string;
+    /** Controls validation behavior. */
+    validation?: 'disabled' | 'auto' | 'valid' | 'invalid';
+    /** Custom validation function. Returns null if valid, or an error message string. */
+    validationFn?: (value: Date | null) => string | null;
+    /** Custom message displayed below the input. Overrides auto-generated messages. */
+    validationMessage?: string;
 }
 
 const pad2 = (n: number): string => String(n).padStart(2, '0');
@@ -70,6 +78,10 @@ export const DateTimePicker = forwardRef<HTMLDivElement, DateTimePickerProps>(
             dateFormat = 'medium',
             locale,
             use12Hour = false,
+            name,
+            validation = 'disabled',
+            validationFn,
+            validationMessage,
             className,
             id,
             style,
@@ -109,6 +121,10 @@ export const DateTimePicker = forwardRef<HTMLDivElement, DateTimePickerProps>(
 
         const isColored = variant !== 'default';
         const isMobile = useMediaQuery('(max-width: 768px)');
+        
+        const autoMessage = validation === 'auto' && validationFn ? validationFn(value ?? null) : null;
+        const finalMessage = validationMessage || autoMessage;
+        const isComponentInvalid = isInvalid || validation === 'invalid' || (validation === 'auto' && autoMessage !== null);
 
         const resolved12Hour = use12Hour ?? new Intl.DateTimeFormat(locale, {hour: 'numeric'}).resolvedOptions().hour12;
 
@@ -306,7 +322,7 @@ export const DateTimePicker = forwardRef<HTMLDivElement, DateTimePickerProps>(
                     'datepicker--datetime',
                     size !== 'md' && `datepicker--${size}`,
                     disabled && 'is-disabled',
-                    isInvalid && 'is-invalid',
+                    isComponentInvalid && 'is-invalid',
                     isOpen && 'is-open',
                     className
                 )}
@@ -360,7 +376,8 @@ export const DateTimePicker = forwardRef<HTMLDivElement, DateTimePickerProps>(
                         aria-haspopup={!isMobile ? "dialog" : undefined}
                         aria-expanded={!isMobile ? isOpen : undefined}
                         aria-controls={!isMobile ? popoverId : undefined}
-                        aria-invalid={isInvalid}
+                        name={name}
+                        aria-invalid={isComponentInvalid}
                     />
 
                     {inputValue && (
@@ -424,6 +441,12 @@ export const DateTimePicker = forwardRef<HTMLDivElement, DateTimePickerProps>(
                                 Apply
                             </button>
                         </div>
+                    </div>
+                )}
+
+                {isComponentInvalid && finalMessage && (
+                    <div className="input__message input__message--invalid" role="alert">
+                        {finalMessage}
                     </div>
                 )}
             </div>

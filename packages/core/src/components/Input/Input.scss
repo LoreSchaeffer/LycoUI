@@ -2,9 +2,11 @@
 // INPUT WRAPPER — Contains input + validation message
 // ==========================================================================
 .input-wrapper {
+  position: relative;
   display: flex;
   flex-direction: column;
   width: 100%;
+  padding-bottom: var(--input-message-reserve, 0px);
 }
 
 // ==========================================================================
@@ -404,10 +406,14 @@
 // VALIDATION MESSAGE — Outside .input to avoid BEM nesting issues
 // ==========================================================================
 .input__message {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
   font-size: var(--text-caption);
-  margin-top: var(--spacing-1);
+  margin-top: 2px;
   padding-left: var(--spacing-1);
-  line-height: 1.4;
+  line-height: 1.2;
   color: var(--color-text-secondary);
 
   &--valid {
