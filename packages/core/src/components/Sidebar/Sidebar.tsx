@@ -3,6 +3,7 @@ import React, {createContext, forwardRef, useCallback, useContext, useMemo, useR
 import clsx from 'clsx';
 import {Button} from '../Button/Button';
 import {computeSideFlyoutPosition} from '../../utils/floating';
+import type {PolymorphicProps, PolymorphicRef} from '../../types/polymorphic';
 
 interface SidebarContextType {
     isMini: boolean;
@@ -205,16 +206,22 @@ SidebarItem.displayName = 'Sidebar.Item';
 
 
 /**
- * SidebarLinkProps.
+ * SidebarLinkProps. Polymorphic: pass `as` to render a custom component (e.g. a router Link).
  */
-export interface SidebarLinkProps extends React.AnchorHTMLAttributes<HTMLAnchorElement> {
-    /** Custom component to render as */
-    as?: React.ElementType;
+export type SidebarLinkProps<C extends React.ElementType = 'a'> = PolymorphicProps<C, {
     /** Active state */
     active?: boolean;
     /** Optional icon element */
     icon?: React.ReactNode;
-}
+}>;
+
+type SidebarLinkComponent = <C extends React.ElementType = 'a'>(props: SidebarLinkProps<C> & { ref?: PolymorphicRef<C> }) => React.ReactElement;
+
+type SidebarLinkInnerProps = React.ComponentPropsWithoutRef<'a'> & {
+    as?: React.ElementType;
+    active?: boolean;
+    icon?: React.ReactNode;
+};
 
 function extractInitials(children: React.ReactNode): string {
     let text = '';
@@ -229,7 +236,7 @@ function extractInitials(children: React.ReactNode): string {
     return (words[0][0] + (words[1]?.[0] || '')).toUpperCase();
 }
 
-const SidebarLink = forwardRef<HTMLAnchorElement, SidebarLinkProps>((
+const SidebarLink = forwardRef<HTMLElement, SidebarLinkInnerProps>((
     {className, as: Component = 'a', active = false, icon, children, ...props},
     ref
 ) => {
@@ -252,7 +259,7 @@ const SidebarLink = forwardRef<HTMLAnchorElement, SidebarLinkProps>((
             {!isMini && <span className="sidebar-label sidebar__label">{children}</span>}
         </Component>
     );
-});
+}) as unknown as SidebarLinkComponent & { displayName?: string };
 SidebarLink.displayName = 'Sidebar.Link';
 
 
@@ -364,17 +371,25 @@ SidebarDropdown.displayName = 'Sidebar.Dropdown';
 
 
 /**
- * Props for the SidebarDropdownItem component.
+ * Props for the SidebarDropdownItem component. Polymorphic via `as`.
  */
-export interface SidebarDropdownItemProps extends React.AnchorHTMLAttributes<HTMLAnchorElement> {
-    as?: React.ElementType;
+export type SidebarDropdownItemProps<C extends React.ElementType = 'a'> = PolymorphicProps<C, {
     active?: boolean;
     disabled?: boolean;
     /** Visual intent of the dropdown item. @default "default" */
     variant?: 'default' | 'primary' | 'success' | 'warning' | 'danger';
-}
+}>;
 
-const SidebarDropdownItem = forwardRef<HTMLAnchorElement, SidebarDropdownItemProps>((
+type SidebarDropdownItemComponent = <C extends React.ElementType = 'a'>(props: SidebarDropdownItemProps<C> & { ref?: PolymorphicRef<C> }) => React.ReactElement;
+
+type SidebarDropdownItemInnerProps = React.ComponentPropsWithoutRef<'a'> & {
+    as?: React.ElementType;
+    active?: boolean;
+    disabled?: boolean;
+    variant?: 'default' | 'primary' | 'success' | 'warning' | 'danger';
+};
+
+const SidebarDropdownItem = forwardRef<HTMLElement, SidebarDropdownItemInnerProps>((
     {className, as: Component = 'a', active, disabled, variant = 'default', children, ...props},
     ref
 ) => {
@@ -397,7 +412,7 @@ const SidebarDropdownItem = forwardRef<HTMLAnchorElement, SidebarDropdownItemPro
             {children}
         </Component>
     );
-});
+}) as unknown as SidebarDropdownItemComponent & { displayName?: string };
 SidebarDropdownItem.displayName = 'Sidebar.DropdownItem';
 
 /**

@@ -72,7 +72,7 @@ export const sidebarLinkProps: PropDefinition[] = [
         name: 'as',
         type: 'React.ElementType',
         defaultValue: "'a'",
-        description: 'Custom component to render as (e.g., Link from react-router-dom).'
+        description: 'Polymorphic prop: render as a custom component (e.g. Link from react-router-dom). Props of the target component (such as `to` or `href`) are type-inferred, and the DOM and BEM classes stay identical.'
     }
 ];
 
@@ -97,7 +97,7 @@ export const sidebarDropdownItemProps: PropDefinition[] = [
         name: 'as',
         type: 'React.ElementType',
         defaultValue: "'a'",
-        description: 'Custom component to render as (e.g., Link from react-router-dom).'
+        description: 'Polymorphic prop: render as a custom component (e.g. Link from react-router-dom). Props of the target component (such as `to` or `href`) are type-inferred, and the DOM and BEM classes stay identical.'
     },
     {
         name: 'active',
