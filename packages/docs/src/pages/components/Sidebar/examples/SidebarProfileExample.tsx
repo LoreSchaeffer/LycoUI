@@ -55,7 +55,7 @@ export const vanillaHtml = `
             <div class="sidebar-dropdown-menu">
               <a class="sidebar-dropdown-item" href="#">Profile</a>
               <a class="sidebar-dropdown-item" href="#">Settings</a>
-              <a class="sidebar-dropdown-item" href="#" style="color:var(--color-danger);">Sign Out</a>
+              <a class="sidebar-dropdown-item sidebar__dropdown-item--danger" href="#">Sign Out</a>
             </div>
           </div>
         </li>
@@ -96,7 +96,7 @@ export const vanillaHtml = `
             <div class="sidebar-dropdown-menu">
               <a class="sidebar-dropdown-item" href="#">Profile</a>
               <a class="sidebar-dropdown-item" href="#">Settings</a>
-              <a class="sidebar-dropdown-item" href="#" style="color:var(--color-danger);">Sign Out</a>
+              <a class="sidebar-dropdown-item sidebar__dropdown-item--danger" href="#">Sign Out</a>
             </div>
           </div>
         </li>
@@ -173,7 +173,7 @@ export default function SidebarProfileExample() {
                                         <FiSettings size={14} style={{opacity: 0.7}}/>
                                         Settings
                                     </Sidebar.DropdownItem>
-                                    <Sidebar.DropdownItem href="#" style={{color: 'var(--color-danger)'}}>
+                                    <Sidebar.DropdownItem href="#" variant="danger">
                                         <FiLogOut size={14} style={{opacity: 0.7}}/>
                                         Sign Out
                                     </Sidebar.DropdownItem>

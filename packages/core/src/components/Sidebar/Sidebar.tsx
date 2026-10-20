@@ -369,17 +369,29 @@ SidebarDropdown.displayName = 'Sidebar.Dropdown';
 export interface SidebarDropdownItemProps extends React.AnchorHTMLAttributes<HTMLAnchorElement> {
     as?: React.ElementType;
     active?: boolean;
+    disabled?: boolean;
+    /** Visual intent of the dropdown item. @default "default" */
+    variant?: 'default' | 'primary' | 'success' | 'warning' | 'danger';
 }
 
 const SidebarDropdownItem = forwardRef<HTMLAnchorElement, SidebarDropdownItemProps>((
-    {className, as: Component = 'a', active, children, ...props},
+    {className, as: Component = 'a', active, disabled, variant = 'default', children, ...props},
     ref
 ) => {
     return (
         <Component
             ref={ref}
-            className={clsx('sidebar-dropdown-item', 'sidebar__dropdown-item', active && 'is-active', className)}
+            className={clsx(
+                'sidebar-dropdown-item',
+                'sidebar__dropdown-item',
+                variant !== 'default' && `sidebar__dropdown-item--${variant}`,
+                active && 'is-active',
+                disabled && 'is-disabled',
+                className
+            )}
             aria-current={active ? 'page' : undefined}
+            aria-disabled={disabled ? 'true' : undefined}
+            tabIndex={disabled ? -1 : props.tabIndex}
             {...props}
         >
             {children}

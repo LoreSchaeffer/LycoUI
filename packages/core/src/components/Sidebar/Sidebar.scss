@@ -378,6 +378,48 @@
     svg {
       flex-shrink: 0;
     }
+
+    &--danger {
+      color: var(--color-danger);
+      &:hover, &:focus-visible {
+        color: var(--color-danger);
+        background-color: var(--color-danger-subtle, color-mix(in srgb, var(--color-danger) 10%, transparent));
+      }
+    }
+
+    &--success {
+      color: var(--color-success);
+      &:hover, &:focus-visible {
+        color: var(--color-success);
+        background-color: var(--color-success-subtle, color-mix(in srgb, var(--color-success) 10%, transparent));
+      }
+    }
+
+    &--warning {
+      color: var(--color-warning);
+      &:hover, &:focus-visible {
+        color: var(--color-warning);
+        background-color: var(--color-warning-subtle, color-mix(in srgb, var(--color-warning) 10%, transparent));
+      }
+    }
+
+    &--primary {
+      color: var(--color-primary);
+      &:hover, &:focus-visible {
+        color: var(--color-primary);
+        background-color: var(--color-primary-subtle, color-mix(in srgb, var(--color-primary) 10%, transparent));
+      }
+    }
+
+    &.is-disabled,
+    &:disabled,
+    &[aria-disabled="true"] {
+      opacity: 0.5;
+      cursor: not-allowed;
+      pointer-events: none;
+      color: var(--color-text-muted) !important;
+      background-color: transparent !important;
+    }
   }
 
   // Mini Mode Overrides
@@ -448,6 +490,48 @@
       &:hover, &:focus-visible {
         color: var(--color-text-primary);
         background-color: var(--color-surface-active, color-mix(in srgb, var(--color-primary) 10%, transparent));
+      }
+
+      &--danger {
+        color: var(--color-danger);
+        &:hover, &:focus-visible {
+          color: var(--color-danger);
+          background-color: var(--color-danger-subtle, color-mix(in srgb, var(--color-danger) 10%, transparent));
+        }
+      }
+
+      &--success {
+        color: var(--color-success);
+        &:hover, &:focus-visible {
+          color: var(--color-success);
+          background-color: var(--color-success-subtle, color-mix(in srgb, var(--color-success) 10%, transparent));
+        }
+      }
+
+      &--warning {
+        color: var(--color-warning);
+        &:hover, &:focus-visible {
+          color: var(--color-warning);
+          background-color: var(--color-warning-subtle, color-mix(in srgb, var(--color-warning) 10%, transparent));
+        }
+      }
+
+      &--primary {
+        color: var(--color-primary);
+        &:hover, &:focus-visible {
+          color: var(--color-primary);
+          background-color: var(--color-primary-subtle, color-mix(in srgb, var(--color-primary) 10%, transparent));
+        }
+      }
+
+      &.is-disabled,
+      &:disabled,
+      &[aria-disabled="true"] {
+        opacity: 0.5;
+        cursor: not-allowed;
+        pointer-events: none;
+        color: var(--color-text-muted) !important;
+        background-color: transparent !important;
       }
     }
 

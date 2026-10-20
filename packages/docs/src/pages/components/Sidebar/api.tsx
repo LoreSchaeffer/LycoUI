@@ -92,9 +92,37 @@ export const sidebarLabelProps: PropDefinition[] = [
     }
 ];
 
+export const sidebarDropdownItemProps: PropDefinition[] = [
+    {
+        name: 'as',
+        type: 'React.ElementType',
+        defaultValue: "'a'",
+        description: 'Custom component to render as (e.g., Link from react-router-dom).'
+    },
+    {
+        name: 'active',
+        type: 'boolean',
+        defaultValue: 'false',
+        description: 'Highlights the item to indicate active/current state.'
+    },
+    {
+        name: 'disabled',
+        type: 'boolean',
+        defaultValue: 'false',
+        description: 'Disables the dropdown item, preventing user interaction.'
+    },
+    {
+        name: 'variant',
+        type: "'default' | 'primary' | 'success' | 'warning' | 'danger'",
+        defaultValue: "'default'",
+        description: 'Visual intent and color variant of the dropdown item.'
+    }
+];
+
 export const apiConfig = [
     {name: 'Sidebar', data: sidebarProps},
     {name: 'Sidebar.Link', data: sidebarLinkProps},
     {name: 'Sidebar.Icon', data: sidebarIconProps},
-    {name: 'Sidebar.Label', data: sidebarLabelProps}
+    {name: 'Sidebar.Label', data: sidebarLabelProps},
+    {name: 'Sidebar.DropdownItem', data: sidebarDropdownItemProps}
 ];
