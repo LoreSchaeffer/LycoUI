@@ -2,7 +2,7 @@ import {forwardRef, type HTMLAttributes, type ReactNode} from "react";
 import clsx from "clsx";
 import "./Grid.scss";
 
-export type ColumnSpan = 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12;
+export type ColumnSpan = 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12 | 'auto';
 export type ColumnAlign = 'auto' | 'start' | 'center' | 'end' | 'stretch';
 
 /**
@@ -13,6 +13,8 @@ export interface ColProps extends HTMLAttributes<HTMLDivElement> {
     children: ReactNode;
     /** Span across all viewports if specific breakpoints are not set */
     span?: ColumnSpan;
+    /** Span for xs (base / mobile-first) — semantic alias for span */
+    xs?: ColumnSpan;
     /** Span for sm breakpoint */
     sm?: ColumnSpan;
     /** Span for md breakpoint */
@@ -36,6 +38,7 @@ export const Col = forwardRef<HTMLDivElement, ColProps>((
     {
         children,
         span,
+        xs,
         sm,
         md,
         lg,
@@ -52,6 +55,7 @@ export const Col = forwardRef<HTMLDivElement, ColProps>((
             className={clsx(
                 'col',
                 span && `col--${span}`,
+                xs && `col--${xs}`,
                 sm && `col--sm-${sm}`,
                 md && `col--md-${md}`,
                 lg && `col--lg-${lg}`,

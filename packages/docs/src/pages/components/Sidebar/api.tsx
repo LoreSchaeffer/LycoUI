@@ -14,6 +14,12 @@ export const sidebarProps: PropDefinition[] = [
         description: 'Toggles the mini (icon-only) state of the sidebar.'
     },
     {
+        name: 'miniIconScale',
+        type: 'number',
+        defaultValue: '1',
+        description: 'Scale multiplier applied via CSS transform to sidebar icons when in mini mode (e.g. 1.25 for 125% zoom).'
+    },
+    {
         name: 'resizable',
         type: 'boolean',
         defaultValue: 'false',
@@ -70,7 +76,25 @@ export const sidebarLinkProps: PropDefinition[] = [
     }
 ];
 
+export const sidebarIconProps: PropDefinition[] = [
+    {
+        name: 'children',
+        type: 'React.ReactNode',
+        description: 'Icon element, SVG, or character to render inside the icon container.'
+    }
+];
+
+export const sidebarLabelProps: PropDefinition[] = [
+    {
+        name: 'children',
+        type: 'React.ReactNode',
+        description: 'Text or node to render as the sidebar item label.'
+    }
+];
+
 export const apiConfig = [
     {name: 'Sidebar', data: sidebarProps},
-    {name: 'Sidebar.Link', data: sidebarLinkProps}
+    {name: 'Sidebar.Link', data: sidebarLinkProps},
+    {name: 'Sidebar.Icon', data: sidebarIconProps},
+    {name: 'Sidebar.Label', data: sidebarLabelProps}
 ];

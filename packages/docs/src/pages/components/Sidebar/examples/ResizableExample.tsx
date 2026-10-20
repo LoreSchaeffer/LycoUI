@@ -6,19 +6,19 @@ export const description = <p>Adding the <code>resizable</code> prop allows user
 export const order = 4;
 
 export const vanillaHtml = `
-<!-- In Vanilla JS, dragging the .sidebar__resizer updates --sidebar-width -->
+<!-- In Vanilla JS, dragging the .sidebar-resizer updates --sidebar-width -->
 <aside class="sidebar sidebar--fixed" style="position: relative; height: 300px;">
-  <div class="sidebar__content">
-    <ul class="sidebar__nav">
-      <li class="sidebar__item">
-        <a class="sidebar__link is-active" href="#">
-          <span class="sidebar__icon">R</span>
-          <span class="sidebar__label">Resizable</span>
+  <div class="sidebar-content">
+    <ul class="sidebar-nav">
+      <li class="sidebar-item">
+        <a class="sidebar-link is-active" href="#">
+          <span class="sidebar-icon">R</span>
+          <span class="sidebar-label">Resizable</span>
         </a>
       </li>
     </ul>
   </div>
-  <div class="sidebar__resizer" aria-hidden="true"></div>
+  <div class="sidebar-resizer" aria-hidden="true"></div>
 </aside>
 `;
 

@@ -3,54 +3,54 @@ import React, {useState} from 'react';
 
 export const title = 'Mini Mode & Dropdowns';
 export const description = <p>Toggle the <code>isMini</code> prop to collapse the sidebar into an icon-only mode. In standard mode, dropdowns act as an accordion. In mini mode, they transform into floating fly-out menus to preserve space.
-    Icons and initials are perfectly centered.</p>;
+    Use <code>miniIconScale</code> (or <code>--sidebar-mini-icon-scale</code> in CSS) to scale icons smoothly with high-performance GPU transforms.</p>;
 export const order = 3;
 
 export const vanillaHtml = `
 <div style="display: flex; height: 500px; border: 1px solid var(--color-border-subtle); border-radius: var(--radius-xl); overflow: hidden;">
   <!-- Remove .is-mini to expand -->
-  <aside class="sidebar sidebar--fixed is-mini" style="position: relative;">
-    <div class="sidebar__header">
-      <span class="sidebar__icon">
+  <aside class="sidebar sidebar-fixed is-mini" style="position: relative;">
+    <div class="sidebar-header">
+      <span class="sidebar-icon">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 17 12 22 22 17"></polyline><polyline points="2 12 12 17 22 12"></polyline></svg>
       </span>
-      <span class="sidebar__label">Acme Corp</span>
+      <span class="sidebar-label">Acme Corp</span>
     </div>
     
-    <div class="sidebar__content">
-      <ul class="sidebar__nav">
-        <li class="sidebar__item">
-          <a class="sidebar__link" href="#">
-            <span class="sidebar__icon">
+    <div class="sidebar-content">
+      <ul class="sidebar-nav">
+        <li class="sidebar-item">
+          <a class="sidebar-link" href="#">
+            <span class="sidebar-icon">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
             </span>
-            <span class="sidebar__label">Overview</span>
+            <span class="sidebar-label">Overview</span>
           </a>
         </li>
         
         <!-- Accordion / Flyout Dropdown -->
-        <li class="sidebar__item sidebar__dropdown">
-          <button class="sidebar__dropdown-trigger" aria-expanded="false">
-            <span class="sidebar__icon">
+        <li class="sidebar-item sidebar-dropdown">
+          <button class="sidebar-dropdown-trigger" aria-expanded="false">
+            <span class="sidebar-icon">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
             </span>
-            <span class="sidebar__label">Customers</span>
-            <svg class="sidebar__dropdown-caret" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg>
+            <span class="sidebar-label">Customers</span>
+            <svg class="sidebar-dropdown-caret" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg>
           </button>
-          <div class="sidebar__dropdown-menu-wrapper">
-            <div class="sidebar__dropdown-menu">
-              <a href="#" class="sidebar__dropdown-item">Active Users</a>
-              <a href="#" class="sidebar__dropdown-item">Archived</a>
-              <a href="#" class="sidebar__dropdown-item">Segments</a>
+          <div class="sidebar-dropdown-menu-wrapper">
+            <div class="sidebar-dropdown-menu">
+              <a href="#" class="sidebar-dropdown-item">Active Users</a>
+              <a href="#" class="sidebar-dropdown-item">Archived</a>
+              <a href="#" class="sidebar-dropdown-item">Segments</a>
             </div>
           </div>
         </li>
       </ul>
     </div>
-    <div class="sidebar__footer">
-      <a class="sidebar__link" href="#">
-        <span class="sidebar__icon"><svg viewBox="0 0 24 24" fill="none" stroke="var(--color-danger)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg></span>
-        <span class="sidebar__label" style="color: var(--color-danger);">Logout</span>
+    <div class="sidebar-footer">
+      <a class="sidebar-link" href="#">
+        <span class="sidebar-icon"><svg viewBox="0 0 24 24" fill="none" stroke="var(--color-danger)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg></span>
+        <span class="sidebar-label" style="color: var(--color-danger);">Logout</span>
       </a>
     </div>
   </aside>
@@ -78,11 +78,11 @@ export default function MiniExample() {
                         style={{position: 'relative', height: '100%'}} // override fixed position for inline docs
                     >
                         <Sidebar.Header>
-                            <span className="sidebar__icon">
+                            <span className="sidebar-icon">
                                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline
                                     points="2 17 12 22 22 17"></polyline><polyline points="2 12 12 17 22 12"></polyline></svg>
                             </span>
-                            <span className="sidebar__label font-bold text-lg">Acme Corp</span>
+                            <span className="sidebar-label font-bold text-lg">Acme Corp</span>
                         </Sidebar.Header>
 
                         <Sidebar.Content>

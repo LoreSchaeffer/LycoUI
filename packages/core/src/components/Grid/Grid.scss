@@ -72,19 +72,29 @@
   }
 }
 
-@mixin make-grid-columns($infix: "") {
+@mixin make-grid-columns($prefix: "col--") {
+  // Auto sizing (content-based)
+  .#{$prefix}auto {
+    flex: 0 0 auto;
+    width: auto;
+    max-width: 100%;
+  }
+
+  // Fractional sizing
   @for $i from 1 through 12 {
-    .col#{$infix}--#{$i} {
+    .#{$prefix}#{$i} {
       flex: 0 0 math.percentage(math.div($i, 12));
       max-width: math.percentage(math.div($i, 12));
     }
   }
 }
 
-@include make-grid-columns();
+// Generate base classes (.col--1, .col--12, .col--auto, etc.)
+@include make-grid-columns("col--");
 
+// Generate responsive classes (.col--sm-1, .col--md-auto, etc.)
 @each $bp-name, $bp-value in $breakpoints {
   @include respond-to($bp-name) {
-    @include make-grid-columns("--#{$bp-name}");
+    @include make-grid-columns("col--#{$bp-name}-");
   }
 }

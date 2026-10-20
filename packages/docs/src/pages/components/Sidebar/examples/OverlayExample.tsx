@@ -13,15 +13,15 @@ export const vanillaHtml = `
 <!-- Backdrop must be placed right before the sidebar in vanilla JS -->
 <div class="sidebar-backdrop" onclick="document.getElementById('my-sidebar').classList.remove('is-open')"></div>
 <aside id="my-sidebar" class="sidebar sidebar--overlay">
-  <div class="sidebar__header">
+  <div class="sidebar-header">
     <strong>Mobile Menu</strong>
   </div>
-  <div class="sidebar__content">
-    <ul class="sidebar__nav">
-      <li class="sidebar__item">
-        <a class="sidebar__link is-active" href="#">
-          <span class="sidebar__icon">H</span>
-          <span class="sidebar__label">Home</span>
+  <div class="sidebar-content">
+    <ul class="sidebar-nav">
+      <li class="sidebar-item">
+        <a class="sidebar-link is-active" href="#">
+          <span class="sidebar-icon">H</span>
+          <span class="sidebar-label">Home</span>
         </a>
       </li>
     </ul>

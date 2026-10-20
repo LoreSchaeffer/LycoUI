@@ -1,3 +1,5 @@
+import {computeSideFlyoutPosition} from '../../utils/floating';
+
 export function initLycoSidebars(): void {
     const sidebars = document.querySelectorAll<HTMLElement>('.sidebar:not([data-lyco-initialized])');
     sidebars.forEach(sidebar => {
@@ -6,6 +8,14 @@ export function initLycoSidebars(): void {
             sidebar.dataset.lycoInitialized = 'true';
         }
     });
+}
+
+interface DropdownListeners {
+    el: HTMLElement;
+    triggerEl?: HTMLElement;
+    click?: (e: MouseEvent) => void;
+    /** Repositions the mini-mode flyout; bound to `mouseenter` and `focusin`. */
+    reposition?: () => void;
 }
 
 /**
@@ -19,15 +29,20 @@ export class LycoSidebarController {
     private readonly _onMouseDown: (e: MouseEvent) => void;
     private readonly _onMouseMove: (e: MouseEvent) => void;
     private readonly _onMouseUp: (e: MouseEvent) => void;
-    private readonly _dropdownListeners: { el: HTMLElement, triggerEl?: HTMLElement, click?: (e: MouseEvent) => void, mouseenter?: () => void }[] = [];
+    private readonly _dropdownListeners: DropdownListeners[] = [];
 
     private startX: number = 0;
     private startWidth: number = 0;
 
     constructor(sidebar: HTMLElement) {
         this.sidebar = sidebar;
-        this.resizer = sidebar.querySelector<HTMLElement>('.sidebar__resizer');
-        this.dropdowns = sidebar.querySelectorAll<HTMLElement>('.sidebar__dropdown');
+        this.resizer = sidebar.querySelector<HTMLElement>('.sidebar__resizer, .sidebar-resizer');
+        this.dropdowns = sidebar.querySelectorAll<HTMLElement>('.sidebar__dropdown, .sidebar-dropdown');
+
+        const datasetScale = this.sidebar.dataset.miniIconScale;
+        if (datasetScale) {
+            this.sidebar.style.setProperty('--sidebar-mini-icon-scale', datasetScale);
+        }
 
         this._onMouseMove = (e: MouseEvent) => {
             const newWidth = this.startWidth + (e.clientX - this.startX);
@@ -58,10 +73,10 @@ export class LycoSidebarController {
         }
 
         this.dropdowns.forEach(dropdown => {
-            const trigger = dropdown.querySelector<HTMLElement>('.sidebar__dropdown-trigger');
-            const menu = dropdown.querySelector<HTMLElement>('.sidebar__dropdown-menu-wrapper');
+            const trigger = dropdown.querySelector<HTMLElement>('.sidebar__dropdown-trigger, .sidebar-dropdown-trigger');
+            const menu = dropdown.querySelector<HTMLElement>('.sidebar__dropdown-menu-wrapper, .sidebar-dropdown-menu-wrapper');
 
-            const listeners: { el: HTMLElement; triggerEl?: HTMLElement; click?: (e: MouseEvent) => void; mouseenter?: () => void; mouseleave?: () => void } = {el: dropdown};
+            const listeners: DropdownListeners = {el: dropdown};
 
             if (trigger) {
                 const onClick = (e: MouseEvent) => {
@@ -77,26 +92,27 @@ export class LycoSidebarController {
             }
 
             if (trigger && menu) {
-                const onMouseEnter = () => {
+                const updateFlyoutPosition = () => {
                     if (this.sidebar.classList.contains('is-mini')) {
-                        const rect = trigger.getBoundingClientRect();
+                        const {top, left, maxHeight} = computeSideFlyoutPosition(trigger, menu);
                         menu.style.position = 'fixed';
-                        menu.style.top = `${rect.top}px`;
-                        menu.style.left = `${rect.right}px`;
                         menu.style.width = '12rem';
-                        menu.style.marginTop = '0';
-                        menu.style.marginLeft = 'var(--spacing-2)';
+                        menu.style.margin = '0';
+                        menu.style.top = top;
+                        menu.style.left = left;
+                        menu.style.maxHeight = maxHeight;
                     } else {
                         menu.style.position = '';
+                        menu.style.width = '';
+                        menu.style.margin = '';
                         menu.style.top = '';
                         menu.style.left = '';
-                        menu.style.width = '';
-                        menu.style.marginTop = '';
-                        menu.style.marginLeft = '';
+                        menu.style.maxHeight = '';
                     }
                 };
-                dropdown.addEventListener('mouseenter', onMouseEnter);
-                listeners.mouseenter = onMouseEnter;
+                dropdown.addEventListener('mouseenter', updateFlyoutPosition);
+                dropdown.addEventListener('focusin', updateFlyoutPosition);
+                listeners.reposition = updateFlyoutPosition;
             }
 
             this._dropdownListeners.push(listeners);
@@ -122,9 +138,12 @@ export class LycoSidebarController {
         document.removeEventListener('mousemove', this._onMouseMove);
         document.removeEventListener('mouseup', this._onMouseUp);
 
-        this._dropdownListeners.forEach(({el, triggerEl, click, mouseenter}) => {
+        this._dropdownListeners.forEach(({el, triggerEl, click, reposition}) => {
             if (triggerEl && click) triggerEl.removeEventListener('click', click);
-            if (mouseenter) el.removeEventListener('mouseenter', mouseenter);
+            if (reposition) {
+                el.removeEventListener('mouseenter', reposition);
+                el.removeEventListener('focusin', reposition);
+            }
         });
 
         delete this.sidebar.dataset.lycoInitialized;

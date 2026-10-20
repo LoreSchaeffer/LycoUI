@@ -7,24 +7,24 @@ export const order = 2;
 
 export const vanillaHtml = `
 <aside class="sidebar sidebar--fixed" style="position: relative; height: 300px;">
-  <div class="sidebar__content">
-    <ul class="sidebar__nav">
-      <li class="sidebar__item">
-        <a class="sidebar__link is-active" href="#">
-          <span class="sidebar__icon">DA</span>
-          <span class="sidebar__label">Dashboard</span>
+  <div class="sidebar-content">
+    <ul class="sidebar-nav">
+      <li class="sidebar-item">
+        <a class="sidebar-link is-active" href="#">
+          <span class="sidebar-icon">DA</span>
+          <span class="sidebar-label">Dashboard</span>
         </a>
       </li>
-      <li class="sidebar__item">
-        <a class="sidebar__link" href="#">
-          <span class="sidebar__icon">US</span>
-          <span class="sidebar__label">User Settings</span>
+      <li class="sidebar-item">
+        <a class="sidebar-link" href="#">
+          <span class="sidebar-icon">US</span>
+          <span class="sidebar-label">User Settings</span>
         </a>
       </li>
-      <li class="sidebar__item">
-        <a class="sidebar__link" href="#">
-          <span class="sidebar__icon">B</span>
-          <span class="sidebar__label">Billing</span>
+      <li class="sidebar-item">
+        <a class="sidebar-link" href="#">
+          <span class="sidebar-icon">B</span>
+          <span class="sidebar-label">Billing</span>
         </a>
       </li>
     </ul>

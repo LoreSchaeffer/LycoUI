@@ -16,46 +16,46 @@ export const vanillaHtml = `
   
   <!-- EXPANDED SIDEBAR -->
   <aside class="sidebar" style="--sidebar-width: 256px;">
-    <div class="sidebar__header">
+    <div class="sidebar-header">
       <button class="btn btn--ghost btn--icon" type="button" aria-label="Toggle Menu">
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
       </button>
       <span style="font-weight:600;font-size:1.125rem;margin-left:0.5rem;">LycoApp</span>
     </div>
-    <div class="sidebar__content">
-      <ul class="sidebar__nav">
-        <li class="sidebar__item">
-          <a class="sidebar__link is-active" aria-current="page" href="#">
-            <span class="sidebar__icon">
+    <div class="sidebar-content">
+      <ul class="sidebar-nav">
+        <li class="sidebar-item">
+          <a class="sidebar-link is-active" aria-current="page" href="#">
+            <span class="sidebar-icon">
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
             </span>
-            <span class="sidebar__label">Dashboard</span>
+            <span class="sidebar-label">Dashboard</span>
           </a>
         </li>
       </ul>
     </div>
-    <div class="sidebar__footer">
-      <ul class="sidebar__nav">
-        <li class="sidebar__item sidebar__dropdown">
-          <button type="button" class="btn btn--ghost sidebar__dropdown-trigger" aria-expanded="false" aria-haspopup="true">
-            <span class="sidebar__icon">
+    <div class="sidebar-footer">
+      <ul class="sidebar-nav">
+        <li class="sidebar-item sidebar-dropdown">
+          <button type="button" class="btn btn--ghost sidebar-dropdown-trigger" aria-expanded="false" aria-haspopup="true">
+            <span class="sidebar-icon">
               <div class="avatar avatar--sm avatar--circle" aria-hidden="true">
                 <div class="avatar__fallback">LR</div>
               </div>
             </span>
-            <span class="sidebar__label">
+            <span class="sidebar-label">
               <div style="display:flex;flex-direction:column;align-items:flex-start;line-height:1.2;">
                 <span style="font-size:var(--font-size-sm);font-weight:500;color:var(--color-text-primary);">Lorenzo R.</span>
                 <span style="font-size:var(--font-size-xs);color:var(--color-text-secondary);">lorenzo@example.com</span>
               </div>
             </span>
-            <svg class="sidebar__dropdown-caret" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+            <svg class="sidebar-dropdown-caret" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
           </button>
-          <div class="sidebar__dropdown-menu-wrapper">
-            <div class="sidebar__dropdown-menu">
-              <a class="sidebar__dropdown-item" href="#">Profile</a>
-              <a class="sidebar__dropdown-item" href="#">Settings</a>
-              <a class="sidebar__dropdown-item" href="#" style="color:var(--color-danger);">Sign Out</a>
+          <div class="sidebar-dropdown-menu-wrapper">
+            <div class="sidebar-dropdown-menu">
+              <a class="sidebar-dropdown-item" href="#">Profile</a>
+              <a class="sidebar-dropdown-item" href="#">Settings</a>
+              <a class="sidebar-dropdown-item" href="#" style="color:var(--color-danger);">Sign Out</a>
             </div>
           </div>
         </li>
@@ -65,38 +65,38 @@ export const vanillaHtml = `
 
   <!-- COLLAPSED / MINI SIDEBAR -->
   <aside class="sidebar is-mini" style="border-left: 1px solid var(--color-border-subtle);">
-    <div class="sidebar__header">
+    <div class="sidebar-header">
       <button class="btn btn--ghost btn--icon" type="button" aria-label="Toggle Menu">
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
       </button>
       <span style="font-weight:600;font-size:1.125rem;margin-left:0.5rem;">LycoApp</span>
     </div>
-    <div class="sidebar__content">
-      <ul class="sidebar__nav">
-        <li class="sidebar__item">
-          <a class="sidebar__link is-active" aria-current="page" href="#">
-            <span class="sidebar__icon">
+    <div class="sidebar-content">
+      <ul class="sidebar-nav">
+        <li class="sidebar-item">
+          <a class="sidebar-link is-active" aria-current="page" href="#">
+            <span class="sidebar-icon">
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
             </span>
           </a>
         </li>
       </ul>
     </div>
-    <div class="sidebar__footer">
-      <ul class="sidebar__nav">
-        <li class="sidebar__item sidebar__dropdown">
-          <button type="button" class="btn btn--ghost sidebar__dropdown-trigger" aria-expanded="false" aria-haspopup="true">
-            <span class="sidebar__icon">
+    <div class="sidebar-footer">
+      <ul class="sidebar-nav">
+        <li class="sidebar-item sidebar-dropdown">
+          <button type="button" class="btn btn--ghost sidebar-dropdown-trigger" aria-expanded="false" aria-haspopup="true">
+            <span class="sidebar-icon">
               <div class="avatar avatar--sm avatar--circle" aria-hidden="true">
                 <div class="avatar__fallback">LR</div>
               </div>
             </span>
           </button>
-          <div class="sidebar__dropdown-menu-wrapper">
-            <div class="sidebar__dropdown-menu">
-              <a class="sidebar__dropdown-item" href="#">Profile</a>
-              <a class="sidebar__dropdown-item" href="#">Settings</a>
-              <a class="sidebar__dropdown-item" href="#" style="color:var(--color-danger);">Sign Out</a>
+          <div class="sidebar-dropdown-menu-wrapper">
+            <div class="sidebar-dropdown-menu">
+              <a class="sidebar-dropdown-item" href="#">Profile</a>
+              <a class="sidebar-dropdown-item" href="#">Settings</a>
+              <a class="sidebar-dropdown-item" href="#" style="color:var(--color-danger);">Sign Out</a>
             </div>
           </div>
         </li>

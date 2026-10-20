@@ -4,6 +4,7 @@
   // Variables
   --sidebar-width: var(--size-64, 16rem); /* 256px */
   --sidebar-mini-width: 3.5rem; /* 56px */
+  --sidebar-mini-icon-scale: 1;
   --sidebar-bg: var(--surface-base, var(--color-bg-root));
   --sidebar-text: var(--color-text-primary);
   --sidebar-border: var(--color-border-subtle);
@@ -21,14 +22,16 @@
   flex-shrink: 0;
 
   // Modifiers
-  &--fixed {
+  &--fixed,
+  &-fixed {
     position: fixed;
     top: 0;
     left: 0;
     z-index: var(--z-index-sticky, 1020);
   }
 
-  &--overlay {
+  &--overlay,
+  &-overlay {
     position: fixed;
     top: 0;
     left: 0;
@@ -51,11 +54,13 @@
   &.is-mini {
     width: var(--sidebar-mini-width) !important; // override any inline width set by resizer
 
-    .sidebar__resizer {
+    .sidebar__resizer,
+    .sidebar-resizer {
       display: none;
     }
 
-    .sidebar__label {
+    .sidebar__label,
+    .sidebar-label {
       opacity: 0;
       width: 0;
       flex: 0 0 0px;
@@ -64,16 +69,20 @@
       padding: 0;
     }
 
-    .sidebar__content {
+    .sidebar__content,
+    .sidebar-content {
       padding-left: var(--spacing-2);
       padding-right: var(--spacing-2);
     }
 
-    .sidebar__icon {
+    .sidebar__icon,
+    .sidebar-icon {
       margin: 0;
+      transform: scale(var(--sidebar-mini-icon-scale, 1));
     }
 
-    .sidebar__link {
+    .sidebar__link,
+    .sidebar-link {
       justify-content: center;
       padding: 0;
       width: var(--spacing-9, 2.25rem);
@@ -82,7 +91,9 @@
     }
 
     .sidebar__header,
-    .sidebar__footer {
+    .sidebar-header,
+    .sidebar__footer,
+    .sidebar-footer {
       justify-content: center;
       padding-left: var(--spacing-1);
       padding-right: var(--spacing-1);
@@ -103,7 +114,8 @@
   }
 
   // Children wrappers
-  &__header {
+  &__header,
+  &-header {
     padding: var(--spacing-4) var(--spacing-5);
     border-bottom: 1px solid var(--sidebar-border);
     display: flex;
@@ -114,13 +126,15 @@
     flex-shrink: 0;
   }
 
-  &__content {
+  &__content,
+  &-content {
     flex: 1;
     overflow-y: auto;
     padding: var(--spacing-4);
   }
 
-  &__footer {
+  &__footer,
+  &-footer {
     padding: var(--spacing-4);
     border-top: 1px solid var(--sidebar-border);
     overflow: hidden;
@@ -129,7 +143,8 @@
   }
 
   // Resizer
-  &__resizer {
+  &__resizer,
+  &-resizer {
     position: absolute;
     top: 0;
     right: calc(var(--spacing-1, 4px) * -1);
@@ -145,7 +160,8 @@
   }
 
   // Navigation
-  &__nav {
+  &__nav,
+  &-nav {
     list-style: none;
     margin: 0;
     padding: 0;
@@ -154,11 +170,13 @@
     gap: var(--spacing-1);
   }
 
-  &__item {
+  &__item,
+  &-item {
     margin: 0;
   }
 
-  &__link {
+  &__link,
+  &-link {
     display: flex;
     align-items: center;
     padding: var(--spacing-2) var(--spacing-3);
@@ -176,6 +194,11 @@
       color: var(--color-text-primary);
       text-decoration: none;
       outline: none;
+
+      .sidebar__icon,
+      .sidebar-icon {
+        color: var(--color-text-primary);
+      }
     }
 
     &:focus-visible {
@@ -188,13 +211,15 @@
       color: var(--color-text-primary);
       font-weight: var(--font-weight-semibold);
 
-      .sidebar__icon {
+      .sidebar__icon,
+      .sidebar-icon {
         color: var(--color-text-primary);
       }
     }
   }
 
-  &__icon {
+  &__icon,
+  &-icon {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -203,7 +228,9 @@
     margin-right: var(--spacing-3);
     flex-shrink: 0;
     color: var(--color-text-muted);
-    transition: color var(--duration-fast) var(--ease-default);
+    transform: scale(1);
+    transform-origin: center;
+    transition: color var(--duration-fast) var(--ease-default), transform var(--duration-normal) var(--ease-default);
 
     // For initials
     font-size: var(--text-caption);
@@ -216,23 +243,32 @@
   }
 
   &__link:hover .sidebar__icon,
-  &__link:focus-visible .sidebar__icon {
+  &__link:focus-visible .sidebar__icon,
+  &__link:hover .sidebar-icon,
+  &__link:focus-visible .sidebar-icon,
+  &-link:hover .sidebar__icon,
+  &-link:focus-visible .sidebar__icon,
+  &-link:hover .sidebar-icon,
+  &-link:focus-visible .sidebar-icon {
     color: var(--color-text-primary);
   }
 
-  &__label {
+  &__label,
+  &-label {
     flex: 1;
     white-space: nowrap;
     transition: opacity var(--duration-fast) var(--ease-default);
   }
 
   // Dropdowns
-  &__dropdown {
+  &__dropdown,
+  &-dropdown {
     display: flex;
     flex-direction: column;
   }
 
-  &__dropdown-trigger {
+  &__dropdown-trigger,
+  &-dropdown-trigger {
     display: flex;
     align-items: center;
     justify-content: flex-start !important; // Override Button default center
@@ -250,19 +286,21 @@
       color: var(--color-text-primary);
       background-color: var(--surface-elevated);
       outline: none;
+
+      .sidebar__icon,
+      .sidebar-icon {
+        color: var(--color-text-primary);
+      }
     }
 
-    .sidebar__icon {
+    .sidebar__icon,
+    .sidebar-icon {
       color: var(--color-text-muted);
-      transition: color var(--duration-fast) var(--ease-default);
+      transition: color var(--duration-fast) var(--ease-default), transform var(--duration-normal) var(--ease-default);
     }
 
-    &:hover .sidebar__icon,
-    &:focus-visible .sidebar__icon {
-      color: var(--color-text-primary);
-    }
-
-    .sidebar__dropdown-caret {
+    .sidebar__dropdown-caret,
+    .sidebar-dropdown-caret {
       flex-shrink: 0;
       width: var(--spacing-4, 1rem);
       height: var(--spacing-4, 1rem);
@@ -270,36 +308,46 @@
     }
   }
 
-  &__dropdown.is-open &__dropdown-trigger {
-    color: var(--color-text-primary);
-
-    .sidebar__icon {
+  &__dropdown.is-open,
+  &-dropdown.is-open {
+    .sidebar__dropdown-trigger,
+    .sidebar-dropdown-trigger {
       color: var(--color-text-primary);
+
+      .sidebar__icon,
+      .sidebar-icon {
+        color: var(--color-text-primary);
+      }
+
+      .sidebar__dropdown-caret,
+      .sidebar-dropdown-caret {
+        transform: rotate(180deg);
+      }
     }
 
-    .sidebar__dropdown-caret {
-      transform: rotate(180deg);
+    .sidebar__dropdown-menu-wrapper,
+    .sidebar-dropdown-menu-wrapper {
+      grid-template-rows: 1fr;
     }
   }
 
-  &__dropdown-menu-wrapper {
+  &__dropdown-menu-wrapper,
+  &-dropdown-menu-wrapper {
     display: grid;
     grid-template-rows: 0fr;
     transition: grid-template-rows var(--duration-normal) var(--ease-default);
   }
 
-  &__dropdown.is-open &__dropdown-menu-wrapper {
-    grid-template-rows: 1fr;
-  }
-
-  &__dropdown-menu {
+  &__dropdown-menu,
+  &-dropdown-menu {
     overflow: hidden;
     display: flex;
     flex-direction: column;
     padding-left: calc(var(--spacing-3) + 1.25rem); // Indent past icon (var(--spacing-5, 1.25rem) is icon width)
   }
 
-  &__dropdown-item {
+  &__dropdown-item,
+  &-dropdown-item {
     display: flex;
     align-items: center;
     gap: var(--spacing-2);
@@ -334,7 +382,8 @@
 
   // Mini Mode Overrides
   &.is-mini {
-    .sidebar__dropdown-trigger {
+    .sidebar__dropdown-trigger,
+    .sidebar-dropdown-trigger {
       padding: 0 !important;
       width: var(--spacing-9, 2.25rem) !important;
       min-width: 0 !important;
@@ -342,25 +391,32 @@
       margin: 0 auto;
       justify-content: center !important;
 
-      .sidebar__label, .sidebar__dropdown-caret {
+      .sidebar__label,
+      .sidebar-label,
+      .sidebar__dropdown-caret,
+      .sidebar-dropdown-caret {
         display: none;
       }
 
-      .sidebar__icon {
+      .sidebar__icon,
+      .sidebar-icon {
         margin-right: 0;
       }
     }
 
-    .sidebar__dropdown {
+    .sidebar__dropdown,
+    .sidebar-dropdown {
       position: relative; // Context for flyout
     }
 
-    .sidebar__dropdown-menu-wrapper {
+    .sidebar__dropdown-menu-wrapper,
+    .sidebar-dropdown-menu-wrapper {
       // Switch from grid accordion to fixed flyout
       display: block; // Override grid
       position: fixed;
       width: max-content;
       min-width: max-content;
+      overflow-y: auto; // max-height is set inline by the viewport-aware positioning
 
       // Floating aesthetics (matching DropdownMenu)
       background-color: var(--surface-floating, var(--color-bg-surface));
@@ -376,13 +432,15 @@
       transition: opacity var(--duration-fast) var(--ease-out), transform var(--duration-fast) var(--ease-out), visibility var(--duration-fast) var(--ease-out);
     }
 
-    .sidebar__dropdown-menu {
+    .sidebar__dropdown-menu,
+    .sidebar-dropdown-menu {
       overflow: visible; // Because it's no longer a grid transition
       padding: var(--spacing-1); // Match DropdownMenu padding
       gap: 0;
     }
 
-    .sidebar__dropdown-item {
+    .sidebar__dropdown-item,
+    .sidebar-dropdown-item {
       margin-top: 0;
       border-radius: var(--radius-sm);
       color: var(--color-text-primary);
@@ -395,7 +453,13 @@
 
     // Hover to reveal flyout
     .sidebar__dropdown:hover > .sidebar__dropdown-menu-wrapper,
-    .sidebar__dropdown:focus-within > .sidebar__dropdown-menu-wrapper {
+    .sidebar-dropdown:hover > .sidebar__dropdown-menu-wrapper,
+    .sidebar__dropdown:hover > .sidebar-dropdown-menu-wrapper,
+    .sidebar-dropdown:hover > .sidebar-dropdown-menu-wrapper,
+    .sidebar__dropdown:focus-within > .sidebar__dropdown-menu-wrapper,
+    .sidebar-dropdown:focus-within > .sidebar__dropdown-menu-wrapper,
+    .sidebar__dropdown:focus-within > .sidebar-dropdown-menu-wrapper,
+    .sidebar-dropdown:focus-within > .sidebar-dropdown-menu-wrapper {
       opacity: 1;
       visibility: visible;
       transform: translateX(0);

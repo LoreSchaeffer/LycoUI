@@ -18,12 +18,17 @@ export const rowPropsData: PropDefinition[] = [
 export const colPropsData: PropDefinition[] = [
     {
         name: 'span',
-        type: '1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12',
+        type: '1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12 | \'auto\'',
         description: 'Base column span (mobile-first). Auto-layout if omitted.'
     },
     {
+        name: 'xs',
+        type: '1 | 2 | ... | 12 | \'auto\'',
+        description: <>Semantic alias for <code>span</code>. Sets the base (mobile-first) column width without media queries. Clearer intent when used alongside responsive props (<code>xs={12} md={6}</code>).</>
+    },
+    {
         name: 'sm, md, lg, xl, xxl',
-        type: '1 | 2 | ... | 12',
+        type: '1 | 2 | ... | 12 | \'auto\'',
         description: 'Responsive column spans for specific breakpoint dimensions.'
     },
     {

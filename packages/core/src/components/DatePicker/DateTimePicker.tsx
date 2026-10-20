@@ -1,5 +1,6 @@
 import './DatePicker.scss';
-import {type CSSProperties, forwardRef, type HTMLAttributes, type KeyboardEvent, useCallback, useEffect, useId, useMemo, useRef, useState,} from 'react';
+import {type CSSProperties, forwardRef, type HTMLAttributes, type KeyboardEvent, useCallback, useEffect, useLayoutEffect, useId, useMemo, useRef, useState,} from 'react';
+import { createPortal } from 'react-dom';
 import clsx from 'clsx';
 import type {FullVariant, SizeVariant} from '../../types/types.ts';
 import {getContrastColor} from '../../utils/theme.ts';
@@ -94,6 +95,7 @@ export const DateTimePicker = forwardRef<HTMLDivElement, DateTimePickerProps>(
         const popoverId = `${pickerId}-popover`;
 
         const [isOpen, setIsOpen] = useState(false);
+        const [mobileStep, setMobileStep] = useState<'date' | 'time'>('date');
 
         // Internal draft state — only committed via "Apply"
         const [draftDate, setDraftDate] = useState<Date | null>(value ?? null);
@@ -109,6 +111,58 @@ export const DateTimePicker = forwardRef<HTMLDivElement, DateTimePickerProps>(
 
         const containerRef = useRef<HTMLDivElement>(null);
         const inputRef = useRef<HTMLInputElement>(null);
+        const popoverRef = useRef<HTMLDivElement>(null);
+
+        const [popoverStyles, setPopoverStyles] = useState<CSSProperties>({});
+
+        const updatePosition = useCallback(() => {
+            if (!isOpen || !containerRef.current || !popoverRef.current) return;
+            const triggerRect = containerRef.current.getBoundingClientRect();
+            const popoverRect = popoverRef.current.getBoundingClientRect();
+            
+            const scrollX = window.scrollX;
+            const scrollY = window.scrollY;
+            const viewportWidth = document.documentElement.clientWidth;
+            const viewportHeight = window.innerHeight;
+            
+            let calculatedLeft = triggerRect.left + scrollX;
+            let calculatedTop = triggerRect.bottom + scrollY + 8;
+            
+            // X-Axis bounding (Right edge)
+            if (calculatedLeft + popoverRect.width > viewportWidth + scrollX - 16) {
+                // Align right edges
+                calculatedLeft = (triggerRect.right + scrollX) - popoverRect.width;
+            }
+            
+            // X-Axis bounding (Left edge strict clamp)
+            if (calculatedLeft < scrollX + 16) {
+                calculatedLeft = scrollX + 16;
+            }
+
+            // Y-Axis bounding (Flip to top if bottom overflows)
+            if (triggerRect.bottom + popoverRect.height + 8 > viewportHeight && triggerRect.top - popoverRect.height - 8 > 0) {
+                calculatedTop = triggerRect.top + scrollY - popoverRect.height - 8;
+            }
+
+            setPopoverStyles({
+                position: 'absolute',
+                top: `${calculatedTop}px`,
+                left: `${calculatedLeft}px`,
+                zIndex: 'var(--z-dropdown, 9999)',
+            });
+        }, [isOpen]);
+
+        useLayoutEffect(() => {
+            if (isOpen) {
+                updatePosition();
+                window.addEventListener('scroll', updatePosition, true);
+                window.addEventListener('resize', updatePosition);
+                return () => {
+                    window.removeEventListener('scroll', updatePosition, true);
+                    window.removeEventListener('resize', updatePosition);
+                };
+            }
+        }, [isOpen, updatePosition]);
 
         const mergedRef = useCallback(
             (node: HTMLDivElement | null) => {
@@ -165,13 +219,15 @@ export const DateTimePicker = forwardRef<HTMLDivElement, DateTimePickerProps>(
         useEffect(() => {
             if (!isOpen) return;
             const handleOutside = (e: MouseEvent) => {
-                if (containerRef.current && !containerRef.current.contains(e.target as Node)) {
+                const target = e.target as Node;
+                const popoverEl = document.getElementById(popoverId);
+                if (containerRef.current && !containerRef.current.contains(target) && (!popoverEl || !popoverEl.contains(target))) {
                     setIsOpen(false);
                 }
             };
             document.addEventListener('mousedown', handleOutside);
             return () => document.removeEventListener('mousedown', handleOutside);
-        }, [isOpen]);
+        }, [isOpen, popoverId]);
 
         const handleSelectDate = useCallback((date: Date) => {
             setDraftDate(date);
@@ -288,6 +344,7 @@ export const DateTimePicker = forwardRef<HTMLDivElement, DateTimePickerProps>(
                         setDraftMinutes(value?.getMinutes() ?? 0);
                         if (value) setViewDate(new Date(value.getFullYear(), value.getMonth(), 1));
                         setIsOpen(true);
+                        setMobileStep('date');
                     } else setIsOpen(false);
                 } else if (e.key === 'Escape') {
                     setIsOpen(false);
@@ -331,7 +388,8 @@ export const DateTimePicker = forwardRef<HTMLDivElement, DateTimePickerProps>(
             >
                 <div
                     className="datepicker__trigger"
-                    onClick={() => {
+                    onClick={(e) => {
+                        e.stopPropagation(); // CRITICAL: Prevent bubbling to document
                         if (disabled) return;
                         if (!isOpen) {
                             setDraftDate(value ?? null);
@@ -339,6 +397,7 @@ export const DateTimePicker = forwardRef<HTMLDivElement, DateTimePickerProps>(
                             setDraftMinutes(value?.getMinutes() ?? 0);
                             if (value) setViewDate(new Date(value.getFullYear(), value.getMonth(), 1));
                             setIsOpen(true);
+                            setMobileStep('date');
                         }
                         inputRef.current?.focus();
                     }}
@@ -369,6 +428,7 @@ export const DateTimePicker = forwardRef<HTMLDivElement, DateTimePickerProps>(
                                 setDraftMinutes(value?.getMinutes() ?? 0);
                                 if (value) setViewDate(new Date(value.getFullYear(), value.getMonth(), 1));
                                 setIsOpen(true);
+                                setMobileStep('date');
                             }
                         }}
                         onKeyDown={!isMobile ? handleTriggerKeyDown : undefined}
@@ -403,45 +463,71 @@ export const DateTimePicker = forwardRef<HTMLDivElement, DateTimePickerProps>(
                     </svg>
                 </div>
 
-                {!isMobile && isOpen && (
+                {!isMobile && isOpen && createPortal(
                     <div
+                        ref={popoverRef}
                         id={popoverId}
-                        className="datepicker__popover datepicker__popover--datetime"
+                        className={clsx('datepicker__popover', 'datepicker__popover--datetime')}
                         role="dialog"
                         aria-label="Date and time picker"
+                        style={{
+                            ...popoverStyles,
+                            ...(isColored ? {
+                                '--datepicker-color-base': colorBase,
+                                '--datepicker-color-contrast': colorContrast,
+                            } as CSSProperties : {}),
+                        }}
                     >
-                        <div className="datepicker__calendar-section">
-                            <Calendar
-                                viewDate={viewDate}
-                                selectedDate={draftDate}
-                                minDate={minDate}
-                                maxDate={maxDate}
-                                colorBase={colorBase}
-                                onSelectDate={handleSelectDate}
-                                onPrevMonth={handlePrevMonth}
-                                onNextMonth={handleNextMonth}
-                            />
+                        <div className="datepicker__datetime-body">
+                            {(!isMobile || mobileStep === 'date') && (
+                                <div className="datepicker__calendar-section">
+                                    <Calendar
+                                        viewDate={viewDate}
+                                        selectedDate={draftDate}
+                                        minDate={minDate}
+                                        maxDate={maxDate}
+                                        colorBase={colorBase}
+                                        onSelectDate={handleSelectDate}
+                                        onPrevMonth={handlePrevMonth}
+                                        onNextMonth={handleNextMonth}
+                                    />
+                                </div>
+                            )}
+                            
+                            {!isMobile && <div className="datepicker__vertical-divider" role="separator"/>}
+                            
+                            {(!isMobile || mobileStep === 'time') && (
+                                <div className="datepicker__time-section">
+                                    <TimeInput
+                                        hours={draftHours}
+                                        minutes={draftMinutes}
+                                        colorBase={colorBase}
+                                        onChange={handleTimeChange}
+                                        use12Hour={resolved12Hour}
+                                    />
+                                </div>
+                            )}
                         </div>
-                        <div className="datepicker__vertical-divider" role="separator"/>
-                        <div className="datepicker__time-section">
-                            <TimeInput
-                                hours={draftHours}
-                                minutes={draftMinutes}
-                                colorBase={colorBase}
-                                onChange={handleTimeChange}
-                                use12Hour={resolved12Hour}
-                            />
-                        </div>
-                        <div style={{flex: '1 1 100%'}}>
+                        <div className="datepicker__datetime-footer">
+                            {isMobile && mobileStep === 'time' && (
+                                <button
+                                    type="button"
+                                    className="datepicker__btn datepicker__btn--secondary"
+                                    onClick={() => setMobileStep('date')}
+                                >
+                                    Back
+                                </button>
+                            )}
                             <button
                                 type="button"
-                                className="datepicker__apply-btn"
-                                onClick={handleApply}
+                                className="datepicker__btn datepicker__btn--primary"
+                                onClick={isMobile && mobileStep === 'date' ? () => setMobileStep('time') : handleApply}
                             >
-                                Apply
+                                {isMobile && mobileStep === 'date' ? 'Next' : 'Apply'}
                             </button>
                         </div>
-                    </div>
+                    </div>,
+                    document.body
                 )}
 
                 {isComponentInvalid && finalMessage && (
