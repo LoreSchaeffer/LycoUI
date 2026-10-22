@@ -116,15 +116,15 @@ export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
                 <div
                     className={clsx(
                         'textarea',
-                        size && size !== 'md' && `textarea--${size}`,
-                        flat && 'textarea--flat',
+                        size && size !== 'md' && `textarea-${size}`,
+                        flat && 'textarea-flat',
                         isFocused && 'is-focused',
                         isFilled && 'is-filled',
                         disabled && 'is-disabled',
                         readOnly && 'is-readonly',
                         visualValidation === 'valid' && 'is-valid',
                         visualValidation === 'invalid' && 'is-invalid',
-                        `textarea--resize-${resize}`,
+                        `textarea-resize-${resize}`,
                         className
                     )}
                     style={{
@@ -134,7 +134,7 @@ export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
                     <textarea
                         ref={mergedRef}
                         id={textareaId}
-                        className="textarea__field"
+                        className="textarea-field"
                         disabled={disabled}
                         readOnly={readOnly}
                         value={value}
@@ -148,12 +148,14 @@ export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
                         {...props}
                     />
 
-                    {label && <FieldLabel className="textarea__label" htmlFor={textareaId} label={label} required={required}/>} 
+                    {label && <FieldLabel className="textarea-label" htmlFor={textareaId} label={label} required={required}/>} 
                 </div>
 
-                <FieldMessage id={messageId} className="textarea__message" state={visualValidation}>{displayMessage}</FieldMessage>
+                <FieldMessage id={messageId} className="textarea-message" state={visualValidation}>{displayMessage}</FieldMessage>
             </div>
         );
     }
 );
 Textarea.displayName = 'Textarea';
+
+

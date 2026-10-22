@@ -61,7 +61,9 @@ export class LycoModalController extends BaseController {
     constructor(modalElement: HTMLElement) {
         super();
         this.modal = modalElement;
-        this.dialog = this.modal.querySelector('.modal__dialog');
+        this.dialog = this.modal.querySelector('.modal-dialog');
+        this.modal.setAttribute('role', this.modal.getAttribute('role') || 'dialog');
+        this.modal.setAttribute('aria-modal', 'true');
 
         this._onKeyDown = (e: KeyboardEvent) => this.handleKeyDown(e);
         this._onBackdropClick = (e: MouseEvent) => this.handleBackdropClick(e);
@@ -112,7 +114,7 @@ export class LycoModalController extends BaseController {
             onClose: () => {
                 this.modal.style.display = 'none';
                 this.modal.setAttribute('aria-hidden', 'true');
-                this.modal.removeAttribute('aria-modal');
+                this.modal.setAttribute('aria-modal', 'true');
                 document.body.classList.remove('modal-open');
             }
         });
@@ -145,4 +147,5 @@ export class LycoModalController extends BaseController {
         }
     }
 }
+
 

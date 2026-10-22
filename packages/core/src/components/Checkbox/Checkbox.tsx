@@ -57,7 +57,7 @@ export const Checkbox = memo(forwardRef<HTMLInputElement, CheckboxProps>((
             className={clsx(
                 'checkbox',
                 disabled && 'is-disabled',
-                size !== 'md' && `checkbox--${size}`,
+                size !== 'md' && `checkbox-${size}`,
                 className
             )}
             style={isColored ? {
@@ -71,14 +71,16 @@ export const Checkbox = memo(forwardRef<HTMLInputElement, CheckboxProps>((
                 type="checkbox"
                 id={inputId}
                 disabled={disabled}
-                className="checkbox__input"
+                className="checkbox-input"
                 {...props}
             />
-            <span className="checkbox__control" aria-hidden="true"/>
-            {label && <span className="checkbox__label">{label}</span>}
+            <span className="checkbox-control" aria-hidden="true"/>
+            {label && <span className="checkbox-label">{label}</span>}
         </label>
     );
 }));
 
 Checkbox.displayName = 'Checkbox';
+
+
 

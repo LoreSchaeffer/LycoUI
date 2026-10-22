@@ -20,9 +20,10 @@ export interface DataTableToolbarProps {
 }
 
 export function DataTableToolbar({searchable, dragEnabled, searchPlaceholder, searchQuery, onSearch, topActions, dragInfo}: DataTableToolbarProps): React.ReactElement {
-    return <div className="data-table__toolbar">
-        {searchable && !dragEnabled && <div className="data-table__search"><Input size="sm" placeholder={searchPlaceholder} value={searchQuery} onChange={(event) => onSearch(event.target.value)} iconStart={<SearchIcon/>} iconEnd={searchQuery ? <ClearIcon/> : undefined} onIconEndClick={searchQuery ? () => onSearch('') : undefined}/></div>}
-        {!dragEnabled && topActions && <div className="data-table__toolbar-actions">{topActions}</div>}
-        {dragEnabled && <div className="data-table__drag-info">{dragInfo}</div>}
+    return <div className="data-table-toolbar">
+        {searchable && !dragEnabled && <div className="data-table-search"><Input size="sm" placeholder={searchPlaceholder} value={searchQuery} onChange={(event) => onSearch(event.target.value)} iconStart={<SearchIcon/>} iconEnd={searchQuery ? <ClearIcon/> : undefined} onIconEndClick={searchQuery ? () => onSearch('') : undefined}/></div>}
+        {!dragEnabled && topActions && <div className="data-table-toolbar-actions">{topActions}</div>}
+        {dragEnabled && <div className="data-table-drag-info">{dragInfo}</div>}
     </div>;
 }
+

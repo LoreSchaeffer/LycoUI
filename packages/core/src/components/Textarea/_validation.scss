@@ -1,9 +1,10 @@
-.textarea__message {
+.textarea-message {
   font-size: var(--text-caption);
   margin-top: var(--spacing-1);
   padding-left: var(--spacing-1);
   line-height: 1.4;
   color: var(--color-text-secondary);
-  &--valid { color: var(--color-success); }
-  &--invalid { color: var(--color-danger); }
+  &-valid { color: var(--color-success); }
+  &-invalid { color: var(--color-danger); }
 }
+

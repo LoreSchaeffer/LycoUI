@@ -52,8 +52,8 @@ export const Spinner = memo(forwardRef<HTMLSpanElement, SpinnerProps>((
             aria-label={ariaLabel}
             className={clsx(
                 'spinner',
-                type && `spinner--${type}`,
-                size && size !== 'md' && `spinner--${size}`,
+                type && `spinner-${type}`,
+                size && size !== 'md' && `spinner-${size}`,
                 className
             )}
             style={{
@@ -66,3 +66,4 @@ export const Spinner = memo(forwardRef<HTMLSpanElement, SpinnerProps>((
 }));
 
 Spinner.displayName = 'Spinner';
+

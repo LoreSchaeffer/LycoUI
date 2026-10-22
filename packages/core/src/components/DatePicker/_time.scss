@@ -1,12 +1,12 @@
 .datepicker {
-  &__time {
+  &-time {
     width: 100%;
     height: 100%;
     display: flex;
     flex-direction: column;
   }
 
-  &__time-label {
+  &-time-label {
     display: block;
     font-size: var(--text-caption);
     font-weight: var(--font-weight-medium);
@@ -16,7 +16,7 @@
     margin-bottom: var(--spacing-2);
   }
 
-  &__time-columns {
+  &-time-columns {
     display: flex;
     align-items: stretch;
     gap: var(--spacing-1);
@@ -24,7 +24,7 @@
     height: 100%;
   }
 
-  &__time-separator {
+  &-time-separator {
     font-size: var(--font-size-base);
     font-weight: var(--font-weight-medium);
     color: var(--color-text-secondary);
@@ -32,7 +32,7 @@
     line-height: 1;
   }
 
-  &__time-col {
+  &-time-col {
     height: 240px;
     overflow-y: auto;
     border-radius: var(--radius-sm);
@@ -54,7 +54,7 @@
     }
   }
 
-  &__time-item {
+  &-time-item {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -82,7 +82,7 @@
   // ==========================================================================
   // BUTTONS
   // ==========================================================================
-  &__btn {
+  &-btn {
     flex: 1;
     padding: var(--spacing-2) var(--spacing-4);
     border-radius: var(--radius-md);
@@ -98,15 +98,16 @@
       transform: scale(0.98);
     }
 
-    &--primary {
+    &-primary {
       background-color: var(--datepicker-color-base);
       color: var(--datepicker-color-contrast);
     }
 
-    &--secondary {
+    &-secondary {
       background-color: transparent;
       border: 1px solid var(--color-border-base);
       color: var(--color-text-primary);
     }
   }
 }
+

@@ -61,13 +61,13 @@ class LycoInputController extends BaseController {
         this.wrapper.className = 'input-wrapper';
         const containerClasses = [
             'input',
-            size && size !== 'md' ? `input--${size}` : '',
+            size && size !== 'md' ? `input-${size}` : '',
         ].filter(Boolean);
-        if (flat) containerClasses.push('input--flat');
+        if (flat) containerClasses.push('input-flat');
         if (isDisabled) containerClasses.push('is-disabled');
         if (isReadonly) containerClasses.push('is-readonly');
-        if (hasIconStart) containerClasses.push('input--has-icon-start');
-        if (hasIconEnd || showSteps) containerClasses.push('input--has-icon-end');
+        if (hasIconStart) containerClasses.push('input-has-icon-start');
+        if (hasIconEnd || showSteps) containerClasses.push('input-has-icon-end');
         this.container.className = containerClasses.join(' ');
         if (variant) {
             this.container.style.setProperty('--input-color-base', `var(--${variant}-500, var(--color-${variant}))`);
@@ -75,36 +75,36 @@ class LycoInputController extends BaseController {
         this.nativeInput.parentNode?.insertBefore(this.wrapper, this.nativeInput);
         if (hasIconStart && iconStartSvg) {
             const iconEl = document.createElement('span');
-            iconEl.className = 'input__icon input__icon--start';
+            iconEl.className = 'input-icon input-icon-start';
             const safeSvg = createSafeSvg(iconStartSvg);
             if (safeSvg) iconEl.appendChild(safeSvg);
             this.container.appendChild(iconEl);
         }
         this.nativeInput.classList.remove('input-custom');
-        this.nativeInput.classList.add('input__field');
+        this.nativeInput.classList.add('input-field');
         this.container.appendChild(this.nativeInput);
         if (labelText) {
-            this.container.appendChild(createFieldLabel('input__label', this.nativeInput, labelText));
+            this.container.appendChild(createFieldLabel('input-label', this.nativeInput, labelText));
         }
         if (hasIconEnd && !showSteps && iconEndSvg) {
             const iconEl = document.createElement('span');
-            iconEl.className = 'input__icon input__icon--end';
+            iconEl.className = 'input-icon input-icon-end';
             const safeSvg = createSafeSvg(iconEndSvg);
             if (safeSvg) iconEl.appendChild(safeSvg);
             this.container.appendChild(iconEl);
         }
         if (showSteps) {
             const stepContainer = document.createElement('div');
-            stepContainer.className = 'input__step-buttons';
+            stepContainer.className = 'input-step-buttons';
             this.upBtn = document.createElement('button');
             this.upBtn.type = 'button';
-            this.upBtn.className = 'input__step-btn input__step-btn--up';
+            this.upBtn.className = 'input-step-btn input-step-btn-up';
             this.upBtn.setAttribute('aria-label', 'Increment');
             this.upBtn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"/></svg>';
             this.listen(this.upBtn, 'click', this._onUpStep);
             this.downBtn = document.createElement('button');
             this.downBtn.type = 'button';
-            this.downBtn.className = 'input__step-btn input__step-btn--down';
+            this.downBtn.className = 'input-step-btn input-step-btn-down';
             this.downBtn.setAttribute('aria-label', 'Decrement');
             this.downBtn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>';
             this.listen(this.downBtn, 'click', this._onDownStep);
@@ -178,14 +178,16 @@ class LycoInputController extends BaseController {
         });
         this.container.classList.toggle('is-valid', result.state === 'valid');
         this.container.classList.toggle('is-invalid', result.state === 'invalid');
-        this.messageEl = renderFieldMessage(this.wrapper, this.nativeInput, this.messageEl, 'input__message', result);
+        this.messageEl = renderFieldMessage(this.wrapper, this.nativeInput, this.messageEl, 'input-message', result);
     }
     public override destroy(): void {
         super.destroy();
-        this.nativeInput.classList.remove('input__field');
+        this.nativeInput.classList.remove('input-field');
         this.nativeInput.classList.add('input-custom');
         this.wrapper.parentNode?.insertBefore(this.nativeInput, this.wrapper);
         this.wrapper.remove();
         delete this.nativeInput.dataset.lycoInitialized;
     }
 }
+
+

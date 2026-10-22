@@ -7,7 +7,8 @@ interface InputAdornmentProps {
 }
 
 export function InputAdornment({position, children, onClick}: InputAdornmentProps) {
-    const className = `input__icon input__icon--${position}`;
+    const className = `input-icon input-icon-${position}`;
     if (!onClick) return <span className={className}>{children}</span>;
-    return <button type="button" className={`${className} input__icon--clickable`} onClick={onClick} aria-label="Input action">{children}</button>;
+    return <button type="button" className={`${className} input-icon-clickable`} onClick={onClick} aria-label="Input action">{children}</button>;
 }
+

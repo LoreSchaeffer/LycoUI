@@ -43,12 +43,12 @@ export class LycoImageViewerController extends BaseController {
     constructor(viewerElement: HTMLElement) {
         super();
         this.viewer = viewerElement;
-        this.wrapper = this.viewer.querySelector('.image-viewer__image-wrapper');
-        this.mainImage = this.viewer.querySelector('.image-viewer__image');
+        this.wrapper = this.viewer.querySelector('.image-viewer-image-wrapper');
+        this.mainImage = this.viewer.querySelector('.image-viewer-image');
 
-        this.prevBtn = this.viewer.querySelector('.image-viewer__nav--prev');
-        this.nextBtn = this.viewer.querySelector('.image-viewer__nav--next');
-        this.thumbnails = Array.from(this.viewer.querySelectorAll('.image-viewer__thumbnail'));
+        this.prevBtn = this.viewer.querySelector('.image-viewer-nav-prev');
+        this.nextBtn = this.viewer.querySelector('.image-viewer-nav-next');
+        this.thumbnails = Array.from(this.viewer.querySelectorAll('.image-viewer-thumbnail'));
 
         this._onWheel = (e: WheelEvent) => this.handleWheel(e);
         this._onPointerDown = (e: PointerEvent) => this.handlePointerDown(e);
@@ -217,4 +217,6 @@ export class LycoImageViewerController extends BaseController {
 }
 import {BaseController} from '../../vanilla/BaseController';
 import {controllerRegistry} from '../../vanilla/controller-registry';
+
+
 

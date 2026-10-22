@@ -6,6 +6,8 @@ export class TooltipController extends BaseController {
     private content: string;
     private position: string;
     private tooltipEl: HTMLElement | null = null;
+    private tooltipId?: string;
+    private readonly describedByBefore: string | null;
     private boundShow: (e: Event) => void;
     private boundHide: (e: Event) => void;
     private boundUpdatePosition: () => void;
@@ -15,6 +17,7 @@ export class TooltipController extends BaseController {
         this.element = element;
         this.content = this.element.dataset.lycoTooltip || '';
         this.position = this.element.dataset.lycoTooltipPosition || 'top';
+        this.describedByBefore = this.element.getAttribute('aria-describedby');
 
         if (!this.element.id) {
             this.element.id = `lyco-tooltip-trigger-${Math.random().toString(36).substr(2, 9)}`;
@@ -41,12 +44,12 @@ export class TooltipController extends BaseController {
         if (!this.content) return;
 
         this.tooltipEl = document.createElement('div');
-        this.tooltipEl.className = `tooltip__content tooltip__content--${this.position}`;
+        this.tooltipEl.className = `tooltip-content tooltip-content-${this.position}`;
         this.tooltipEl.setAttribute('role', 'tooltip');
 
-        const tooltipId = `lyco-tooltip-${Math.random().toString(36).substr(2, 9)}`;
-        this.tooltipEl.id = tooltipId;
-        this.element.setAttribute('aria-describedby', tooltipId);
+        this.tooltipId = `lyco-tooltip-${Math.random().toString(36).substr(2, 9)}`;
+        this.tooltipEl.id = this.tooltipId;
+        this.element.setAttribute('aria-describedby', [this.describedByBefore, this.tooltipId].filter(Boolean).join(' '));
 
         setSafeText(this.tooltipEl, this.content);
 
@@ -79,7 +82,7 @@ export class TooltipController extends BaseController {
             targetPosition = 'left';
         }
 
-        this.tooltipEl.className = `tooltip__content tooltip__content--${targetPosition}`;
+        this.tooltipEl.className = `tooltip-content tooltip-content-${targetPosition}`;
 
         const scrollY = window.scrollY || window.pageYOffset;
         const scrollX = window.scrollX || window.pageXOffset;
@@ -119,7 +122,9 @@ export class TooltipController extends BaseController {
         if (this.tooltipEl) {
             this.tooltipEl.remove();
             this.tooltipEl = null;
-            this.element.removeAttribute('aria-describedby');
+            if (this.describedByBefore) this.element.setAttribute('aria-describedby', this.describedByBefore);
+            else this.element.removeAttribute('aria-describedby');
+            this.tooltipId = undefined;
         }
         window.removeEventListener('scroll', this.boundUpdatePosition, true);
         window.removeEventListener('resize', this.boundUpdatePosition);
@@ -143,4 +148,6 @@ export const initTooltips = (root: ParentNode = document): void => {
 import {setSafeText} from '../../utils/safe-content';
 import {BaseController} from '../../vanilla/BaseController';
 import {controllerRegistry} from '../../vanilla/controller-registry';
+
+
 

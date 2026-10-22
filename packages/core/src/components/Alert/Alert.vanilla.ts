@@ -2,7 +2,7 @@ export function initLycoAlerts(): void {
     const alerts = document.querySelectorAll<HTMLDivElement>('.alert:not([data-lyco-initialized])');
     alerts.forEach(alert => {
         const durationAttr = alert.getAttribute('data-duration');
-        const hasCloseBtn = alert.querySelector('.alert__close') !== null;
+        const hasCloseBtn = alert.querySelector('.alert-close') !== null;
 
         if (durationAttr || hasCloseBtn) {
             new LycoAlertController(alert);
@@ -19,7 +19,7 @@ class LycoAlertController {
 
     constructor(element: HTMLDivElement) {
         this.element = element;
-        this.closeBtn = element.querySelector<HTMLButtonElement>('.alert__close');
+        this.closeBtn = element.querySelector<HTMLButtonElement>('.alert-close');
 
         this._onCloseClick = () => this.close();
 
@@ -37,10 +37,10 @@ class LycoAlertController {
     }
 
     private startTimer(durationSeconds: number): void {
-        let progress = this.element.querySelector<HTMLDivElement>('.alert__progress');
+        let progress = this.element.querySelector<HTMLDivElement>('.alert-progress');
         if (!progress) {
             progress = document.createElement('div');
-            progress.className = 'alert__progress';
+            progress.className = 'alert-progress';
             progress.style.animationDuration = `${durationSeconds}s`;
             this.element.appendChild(progress);
         }
@@ -64,4 +64,5 @@ class LycoAlertController {
     }
 }
 import {TimedDismiss} from '../../interaction/timed-dismiss';
+
 

@@ -178,7 +178,7 @@ function DataTableInner<T>(
 
         if (paginationInfo === 'compact') {
             return (
-                <div className="data-table__results-info">
+                <div className="data-table-results-info">
                     {resultsStart}–{resultsEnd} of {totalResults}
                 </div>
             );
@@ -189,7 +189,7 @@ function DataTableInner<T>(
         );
 
         return (
-            <div className="data-table__results-info">
+            <div className="data-table-results-info">
                 {localization?.showingResults
                     ? localization.showingResults(resultsStart, resultsEnd, totalResults)
                     : defaultShowingResults(resultsStart, resultsEnd, totalResults)
@@ -200,10 +200,10 @@ function DataTableInner<T>(
 
     const renderPaginationControls = () => {
         return (
-            <div className="data-table__controls">
+            <div className="data-table-controls">
                 {/* Page size select */}
-                <div className="data-table__page-size">
-                    <span className="data-table__page-size-label">
+                <div className="data-table-page-size">
+                    <span className="data-table-page-size-label">
                         {localization?.rowsPerPage || 'Rows per page:'}
                     </span>
                     <Select
@@ -250,7 +250,7 @@ function DataTableInner<T>(
             />
 
             {/* ========== TABLE ========== */}
-            <div className="data-table__container">
+            <div className="data-table-container">
                 <Table
                     variant={variant}
                     striped={!isDragEnabled && striped}
@@ -297,9 +297,9 @@ function DataTableInner<T>(
 
             {/* ========== FOOTER ========== */}
             {!isDragEnabled && paginationPosition === 'bottom' && (
-                <div className="data-table__footer">
+                <div className="data-table-footer">
                     {renderPaginationInfo()}
-                    <div className="data-table__footer-controls">
+                    <div className="data-table-footer-controls">
                         {renderPaginationControls()}
                     </div>
                 </div>
@@ -317,3 +317,4 @@ export const DataTable = forwardRef(DataTableInner) as <T>(
 
 
 export type {DataTableColumn, DataTableProps, DataTableRef, SortDirection} from './DataTable.types.ts';
+

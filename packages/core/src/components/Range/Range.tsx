@@ -107,11 +107,11 @@ export const Range = forwardRef<HTMLInputElement, RangeProps>(
             <div
                 className={clsx(
                     'range',
-                    `range--${size}`,
-                    `range--tooltip-${tooltipSize}`,
-                    !filled && 'range--unfilled',
-                    !isThumbColored && 'range--thumb-white',
-                    (isHovered && tooltipTrigger === 'hover') && 'range--tooltip-visible',
+                    `range-${size}`,
+                    `range-tooltip-${tooltipSize}`,
+                    !filled && 'range-unfilled',
+                    !isThumbColored && 'range-thumb-white',
+                    (isHovered && tooltipTrigger === 'hover') && 'range-tooltip-visible',
                     disabled && 'is-disabled',
                     className
                 )}
@@ -125,7 +125,7 @@ export const Range = forwardRef<HTMLInputElement, RangeProps>(
             >
                 <input
                     type="range"
-                    className="range__input"
+                    className="range-input"
                     min={min}
                     max={max}
                     step={step}
@@ -142,8 +142,8 @@ export const Range = forwardRef<HTMLInputElement, RangeProps>(
                     {...props}
                 />
                 {showTooltip && (
-                    <div className="range__tooltip" aria-hidden="true">
-                        <span className="range__tooltip-value">{tooltipValue}</span>
+                    <div className="range-tooltip" aria-hidden="true">
+                        <span className="range-tooltip-value">{tooltipValue}</span>
                     </div>
                 )}
             </div>
@@ -152,3 +152,5 @@ export const Range = forwardRef<HTMLInputElement, RangeProps>(
 );
 
 Range.displayName = 'Range';
+
+

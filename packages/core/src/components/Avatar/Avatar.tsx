@@ -50,21 +50,21 @@ export const Avatar = memo(forwardRef<HTMLDivElement, AvatarProps>(
                 ref={ref}
                 className={clsx(
                     'avatar',
-                    `avatar--${size}`,
-                    `avatar--${shape}`,
+                    `avatar-${size}`,
+                    `avatar-${shape}`,
                     className
                 )}
                 {...props}
             >
                 {shouldShowFallback ? (
-                    <div className="avatar__fallback">
+                    <div className="avatar-fallback">
                         {fallback}
                     </div>
                 ) : (
                     <img
                         src={src}
                         alt={alt}
-                        className="avatar__image"
+                        className="avatar-image"
                         onError={handleError}
                     />
                 )}
@@ -73,6 +73,8 @@ export const Avatar = memo(forwardRef<HTMLDivElement, AvatarProps>(
     }
 ));
 Avatar.displayName = 'Avatar';
+
+
 
 
 

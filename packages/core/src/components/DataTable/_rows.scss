@@ -1,5 +1,5 @@
 .data-table {
-  &__th {
+  &-th {
     user-select: none;
     white-space: nowrap;
     font-weight: var(--font-weight-semibold);
@@ -7,7 +7,7 @@
     letter-spacing: 0.04em;
     font-size: var(--text-caption);
 
-    &--sortable {
+    &-sortable {
       cursor: pointer;
       transition: background var(--duration-fast) var(--ease-default), color var(--duration-fast) var(--ease-default);
 
@@ -16,22 +16,22 @@
       }
     }
 
-    &--sorted {
+    &-sorted {
       color: var(--color-primary);
 
-      .data-table__sort-icon {
+      .data-table-sort-icon {
         color: var(--color-primary);
       }
     }
   }
 
-  &__th-content {
+  &-th-content {
     display: inline-flex;
     align-items: center;
     gap: var(--spacing-2);
   }
 
-  &__sort-icon {
+  &-sort-icon {
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -50,11 +50,11 @@
   // ========================================================================
   // ROWS & CELLS
   // ========================================================================
-  &__row--clickable {
+  &-row-clickable {
     cursor: pointer;
   }
 
-  &__select-cell {
+  &-select-cell {
     width: var(--spacing-12, 3rem);
     min-width: var(--spacing-12, 3rem);
     max-width: var(--spacing-12, 3rem);
@@ -65,7 +65,7 @@
   // ========================================================================
   // EMPTY / LOADING STATE
   // ========================================================================
-  &__empty-cell {
+  &-empty-cell {
     text-align: center;
     padding: var(--spacing-12) var(--spacing-4);
     color: var(--color-text-muted);
@@ -75,8 +75,8 @@
   // ========================================================================
   // DRAG-AND-DROP
   // ========================================================================
-  &__drag-header,
-  &__drag-cell {
+  &-drag-header,
+  &-drag-cell {
     width: var(--spacing-12, 3rem);
     min-width: var(--spacing-12, 3rem);
     max-width: var(--spacing-12, 3rem);
@@ -84,7 +84,7 @@
     padding: 0;
   }
 
-  &__drag-cell {
+  &-drag-cell {
     cursor: grab;
     color: var(--color-text-secondary);
     transition: color var(--duration-fast) var(--ease-default);
@@ -98,7 +98,7 @@
     }
   }
 
-  &__drag-info {
+  &-drag-info {
     display: flex;
     align-items: center;
     gap: var(--spacing-2);
@@ -121,3 +121,4 @@
     }
   }
 }
+

@@ -34,7 +34,7 @@
   // ==========================================================================
   // NATIVE INPUT
   // ==========================================================================
-  &__field {
+  &-field {
     flex: 1;
     width: 100%;
     height: var(--input-height);
@@ -99,7 +99,7 @@
   // ==========================================================================
   // FLOATING LABEL
   // ==========================================================================
-  &__label {
+  &-label {
     position: absolute;
     left: var(--input-padding-x);
     top: 50%;
@@ -118,48 +118,48 @@
     max-width: calc(100% - var(--input-padding-x) * 2);
   }
 
-  &__required {
+  &-required {
     color: var(--color-danger);
   }
 
   // When focused or filled, float the label up
-  &.is-focused &__label,
-  &.is-filled &__label {
+  &.is-focused &-label,
+  &.is-filled &-label {
     transform: translateY(-130%) scale(0.8);
     color: var(--color-text-secondary);
   }
 
-  &.is-focused &__label {
+  &.is-focused &-label {
     color: var(--input-color-base);
   }
 
   // When label is present, add top padding to the field to make room
-  &:has(.input__label) .input__field {
+  &:has(.input-label) .input-field {
     padding-top: var(--spacing-3);
   }
 
   // Adjust label position when icon-start is present
-  &--has-icon-start .input__label {
+  &-has-icon-start .input-label {
     left: calc(var(--input-padding-x) + var(--input-icon-size) + var(--spacing-2));
   }
 
   // Placeholder visibility with floating label
-  &:has(.input__label) .input__field::placeholder {
+  &:has(.input-label) .input-field::placeholder {
     opacity: 0;
     transition: opacity var(--duration-fast) var(--ease-default);
   }
 
-  &.is-focused:has(.input__label) .input__field::placeholder {
+  &.is-focused:has(.input-label) .input-field::placeholder {
     opacity: 1;
   }
 
   // Hide placeholder natively for file inputs since it acts weird with floating label
-  &:has(.input__field[type="file"]) .input__field {
+  &:has(.input-field[type="file"]) .input-field {
     color: transparent;
   }
 
-  &.is-focused:has(.input__field[type="file"]) .input__field,
-  &.is-filled:has(.input__field[type="file"]) .input__field {
+  &.is-focused:has(.input-field[type="file"]) .input-field,
+  &.is-filled:has(.input-field[type="file"]) .input-field {
     color: var(--color-text-secondary);
   }
 
@@ -168,8 +168,9 @@
 // ==========================================================================
 // SPINNER INSIDE INPUT
 // ==========================================================================
-.input .input__spinner {
+.input .input-spinner {
   color: var(--input-color-base, currentColor);
   width: var(--input-icon-size, 1.25rem);
   height: var(--input-icon-size, 1.25rem);
 }
+

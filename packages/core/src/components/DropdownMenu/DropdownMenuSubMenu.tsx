@@ -34,25 +34,25 @@ export const DropdownMenuSubMenu = forwardRef<HTMLDivElement, DropdownMenuSubMen
         return (
             <div
                 ref={ref}
-                className={`dropdown-menu__submenu ${isFlipped ? 'dropdown-menu__submenu--flip-left' : ''} ${className}`}
+                className={`dropdown-submenu ${isFlipped ? 'dropdown-submenu-flip-left' : ''} ${className}`}
                 onMouseEnter={handleMouseEnter}
                 onMouseLeave={handleMouseLeave}
                 {...props}
             >
                 <button
                     type="button"
-                    className="dropdown-menu__submenu-trigger"
+                    className="dropdown-submenu-trigger"
                     aria-haspopup="true"
                     aria-expanded={isOpen}
                 >
                     <span>{title}</span>
-                    <svg className="dropdown-menu__caret" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <svg className="dropdown-caret" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                         <polyline points="9 18 15 12 9 6"></polyline>
                     </svg>
                 </button>
                 <div
                     ref={menuRef}
-                    className={`dropdown-menu__submenu-content ${isOpen ? 'is-open' : ''}`}
+                    className={`dropdown-submenu-content ${isOpen ? 'is-open' : ''}`}
                 >
                     {children}
                 </div>

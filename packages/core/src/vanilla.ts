@@ -10,6 +10,12 @@ import {initTabs} from './components/Tabs/Tabs.vanilla';
 import {initTooltips} from './components/Tooltip/Tooltip.vanilla';
 import {initLycoFileUploads} from './components/FileUpload/FileUpload.vanilla';
 import {initLycoImageViewers, LycoImageViewerController} from './components/ImageViewer/ImageViewer.vanilla';
+import {initLycoTextareas, LycoTextareaController} from './components/Textarea/Textarea.vanilla';
+import {initLycoDatePickers, LycoDatePickerController} from './components/DatePicker/DatePicker.vanilla';
+import {initLycoTimePickers, LycoTimePickerController} from './components/DatePicker/TimePicker.vanilla';
+import {initLycoDateTimePickers, LycoDateTimePickerController} from './components/DatePicker/DateTimePicker.vanilla';
+import {initLycoDataTables, LycoDataTableController} from './components/DataTable/DataTable.vanilla';
+import {initLycoCarousels, LycoCarouselController} from './components/Carousel/Carousel.vanilla';
 import {destroyLycoUI, initLycoUI} from './vanilla/init';
 
 if (typeof window !== 'undefined' && typeof document !== 'undefined') {
@@ -36,6 +42,18 @@ export {
     initLycoFileUploads,
     initLycoImageViewers,
     LycoImageViewerController,
+    initLycoTextareas,
+    LycoTextareaController,
+    initLycoDatePickers,
+    LycoDatePickerController,
+    initLycoTimePickers,
+    LycoTimePickerController,
+    initLycoDateTimePickers,
+    LycoDateTimePickerController,
+    initLycoDataTables,
+    LycoDataTableController,
+    initLycoCarousels,
+    LycoCarouselController,
     initLycoUI,
     destroyLycoUI
 };

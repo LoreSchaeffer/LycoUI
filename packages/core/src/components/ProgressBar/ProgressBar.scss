@@ -10,7 +10,7 @@
   // Consume the injected variable with fallback
   --progress-color-base: var(--progress-color-base, var(--color-primary));
 
-  &__bar {
+  &-bar {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -27,18 +27,19 @@
   // ==========================================================================
   // SIZES
   // ==========================================================================
-  &--sm {
+  &-sm {
     --progress-height: var(--spacing-1, 0.25rem);
     --progress-radius: var(--radius-sm);
   }
 
-  &--md {
+  &-md {
     --progress-height: var(--spacing-2, 0.5rem);
     --progress-radius: var(--radius-full);
   }
 
-  &--lg {
+  &-lg {
     --progress-height: 0.875rem;
     --progress-radius: var(--radius-full);
   }
 }
+

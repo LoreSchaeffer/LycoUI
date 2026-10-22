@@ -144,7 +144,7 @@ export const FileUpload = forwardRef<HTMLInputElement, FileUploadProps>(
                 <input
                     ref={mergedRef}
                     type="file"
-                    className="fileupload__input"
+                    className="fileupload-input"
                     disabled={disabled}
                     multiple={multiple}
                     accept={accept}
@@ -158,3 +158,4 @@ export const FileUpload = forwardRef<HTMLInputElement, FileUploadProps>(
     }
 );
 FileUpload.displayName = 'FileUpload';
+

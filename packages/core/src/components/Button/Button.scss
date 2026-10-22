@@ -58,36 +58,36 @@
   // ==========================================================================
   // SIZES
   // ==========================================================================
-  &--sm {
+  &-sm {
     padding: var(--spacing-1) var(--spacing-3);
     font-size: var(--text-body-sm);
     border-radius: var(--radius-sm);
   }
 
-  &--lg {
+  &-lg {
     padding: var(--spacing-3) var(--spacing-6);
     font-size: var(--font-size-lg);
   }
 
-  &--icon-only {
+  &-icon-only {
     padding: 0;
 
-    &.btn--sm {
+    &.btn-sm {
       width: var(--spacing-8, 2rem);
       height: var(--spacing-8, 2rem);
     }
 
-    &:not(.btn--sm):not(.btn--lg) {
+    &:not(.btn-sm):not(.btn-lg) {
       width: 2.5rem;
       height: 2.5rem;
     }
 
-    &.btn--lg {
+    &.btn-lg {
       width: var(--spacing-12, 3rem);
       height: var(--spacing-12, 3rem);
     }
 
-    .btn__icon {
+    .btn-icon {
       font-size: 1.25em;
     }
   }
@@ -95,14 +95,14 @@
   // ==========================================================================
   // STYLES (Solid is default, Outlined, Ghost)
   // ==========================================================================
-  &--white {
+  &-white {
     --btn-bg: var(--color-white, #ffffff);
     --btn-bg-hover: var(--color-ash, #e5e5e5);
     --btn-bg-active: color-mix(in srgb, var(--color-ash, #e5e5e5) 85%, black);
     --btn-text: var(--color-carbon, #0f1011);
   }
 
-  &--outlined {
+  &-outline {
     background-color: transparent;
     border-color: var(--btn-bg);
     color: var(--btn-bg);
@@ -119,7 +119,7 @@
     }
   }
 
-  &--ghost {
+  &-ghost {
     background-color: transparent;
     border-color: transparent;
     color: var(--btn-bg);
@@ -134,11 +134,11 @@
     }
   }
 
-  &--rounded {
+  &-rounded {
     border-radius: var(--radius-full);
   }
 
-  &--static {
+  &-static {
     transform: none;
 
     &:active:not(:disabled) {
@@ -150,11 +150,11 @@
   // ==========================================================================
   // STATES
   // ==========================================================================
-  &--loading {
+  &-loading {
     cursor: wait;
     pointer-events: none;
 
-    .btn__icon:not(:has(.btn__spinner)) {
+    .btn-icon:not(:has(.btn-spinner)) {
       opacity: 0;
     }
   }
@@ -162,7 +162,7 @@
   // ==========================================================================
   // INTERNAL ELEMENTS
   // ==========================================================================
-  &__icon {
+  &-icon {
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -171,7 +171,7 @@
 }
 
 // Spinner inside button — scoped outside .btn to avoid BEM nesting issues.
-.btn .btn__spinner {
+.btn .btn-spinner {
   color: currentColor;
   width: 1.15em;
   height: 1.15em;

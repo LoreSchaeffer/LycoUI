@@ -6,7 +6,7 @@
   width: 100%;
 
   // Group container for nested items
-  &__group {
+  &-group {
     list-style: none;
     margin: 0;
     padding: 0;
@@ -15,17 +15,17 @@
   }
 
   // The item list element
-  &__item {
+  &-item {
     outline: none; // We handle focus on the content wrapper
 
     // When expanded, show the group
-    &.is-expanded > .treeview__group,
-    &[aria-expanded="true"] > .treeview__group {
+    &.is-expanded > .treeview-group,
+    &[aria-expanded="true"] > .treeview-group {
       display: block;
     }
 
     // Keyboard focus ring applied to the content wrapper when the list item receives focus
-    &:focus-visible > .treeview__item-content {
+    &:focus-visible > .treeview-item-content {
       outline: 2px solid var(--color-primary-500, var(--color-primary));
       outline-offset: -2px;
       background-color: var(--surface-hover);
@@ -33,7 +33,7 @@
   }
 
   // The actual clickable row
-  &__item-content {
+  &-item-content {
     display: flex;
     align-items: center;
     gap: var(--spacing-2);
@@ -59,7 +59,7 @@
   }
 
   // Icon container
-  &__icon {
+  &-icon {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -75,12 +75,12 @@
     }
 
     // Default chevron animation
-    &--chevron {
+    &-chevron {
       transition: transform var(--duration-fast) var(--ease-default);
     }
   }
 
-  &__label {
+  &-label {
     flex: 1;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -89,8 +89,10 @@
   }
 
   // Rotate chevron when expanded
-  &__item[aria-expanded="true"] > .treeview__item-content .treeview__icon--chevron,
-  &__item.is-expanded > .treeview__item-content .treeview__icon--chevron {
+  &-item[aria-expanded="true"] > .treeview-item-content .treeview-icon-chevron,
+  &-item.is-expanded > .treeview-item-content .treeview-icon-chevron {
     transform: rotate(90deg);
   }
 }
+
+

@@ -39,7 +39,7 @@ export const ProgressBar = memo(forwardRef<HTMLDivElement, ProgressBarProps>(
             <div
                 className={clsx(
                     'progress',
-                    `progress--${size}`,
+                    `progress-${size}`,
                     className
                 )}
                 role="progressbar"
@@ -54,7 +54,7 @@ export const ProgressBar = memo(forwardRef<HTMLDivElement, ProgressBarProps>(
                 {...props}
             >
                 <div
-                    className="progress__bar"
+                    className="progress-bar"
                     style={{transform: `scaleX(${percent / 100})`}}
                 />
             </div>
@@ -62,6 +62,8 @@ export const ProgressBar = memo(forwardRef<HTMLDivElement, ProgressBarProps>(
     }
 ));
 ProgressBar.displayName = 'ProgressBar';
+
+
 
 
 

@@ -342,7 +342,7 @@ export const DatePicker = forwardRef<HTMLDivElement, DatePickerProps>(
                 )}
 
                 {isComponentInvalid && finalMessage && (
-                    <div className="input__message input__message--invalid" role="alert">
+                    <div className="input-message input-message-invalid" role="alert">
                         {finalMessage}
                     </div>
                 )}
@@ -352,4 +352,6 @@ export const DatePicker = forwardRef<HTMLDivElement, DatePickerProps>(
 );
 
 DatePicker.displayName = 'DatePicker';
+
+
 

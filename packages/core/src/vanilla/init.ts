@@ -12,6 +12,12 @@ import {initLycoSelects} from '../components/Select/Select.vanilla';
 import {initLycoSidebars} from '../components/Sidebar/Sidebar.vanilla';
 import {initTabs} from '../components/Tabs/Tabs.vanilla';
 import {initTooltips} from '../components/Tooltip/Tooltip.vanilla';
+import {initLycoTextareas} from '../components/Textarea/Textarea.vanilla';
+import {initLycoDatePickers} from '../components/DatePicker/DatePicker.vanilla';
+import {initLycoTimePickers} from '../components/DatePicker/TimePicker.vanilla';
+import {initLycoDateTimePickers} from '../components/DatePicker/DateTimePicker.vanilla';
+import {initLycoDataTables} from '../components/DataTable/DataTable.vanilla';
+import {initLycoCarousels} from '../components/Carousel/Carousel.vanilla';
 import {controllerRegistry} from './controller-registry';
 
 export function initLycoUI(root: ParentNode = document): void {
@@ -27,6 +33,12 @@ export function initLycoUI(root: ParentNode = document): void {
   initLycoPagination();
   initTabs();
   initTooltips(root);
+  initLycoTextareas(root);
+  initLycoDatePickers(root);
+  initLycoTimePickers(root);
+  initLycoDateTimePickers(root);
+  initLycoDataTables(root);
+  initLycoCarousels(root);
   initLycoFileUploads();
   initLycoImageViewers(root);
 }

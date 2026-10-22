@@ -841,7 +841,7 @@ This exhaustive unit/color candidate ledger lists lines with raw dimensional/tim
 
   **Verify:** `npm run test:unit -- tests/unit/carousel-model.test.ts`; `npm run test:parity -- tests/parity/carousel-react.spec.ts --project=chromium`; `npm run audit:contracts -- --check loc --components Carousel`. Covers C12, M01/M05; Vanilla is Task 3.13.
 
-- [ ] Task 2.9 — Decompose remaining overlay/gallery/pagination monoliths
+- [x] Task 2.9 — Decompose remaining overlay/gallery/pagination monoliths
 
   **Targets:** modify `packages/core/src/components/AlertDialog/AlertDialog.tsx`, `packages/core/src/components/Modal/Modal.tsx`, `packages/core/src/components/ImageViewer/ImageViewer.tsx`, `packages/core/src/components/ImageViewer/ImageViewer.vanilla.ts`, `packages/core/src/components/Pagination/Pagination.tsx`, `packages/core/src/components/Pagination/Pagination.vanilla.ts`; create `packages/core/src/components/AlertDialog/AlertDialogContext.tsx`, `packages/core/src/components/AlertDialog/AlertDialogActions.tsx`, `packages/core/src/components/Modal/ModalRegions.tsx`, `packages/core/src/components/ImageViewer/gallery-model.ts`, `packages/core/src/components/ImageViewer/useImageTransform.ts`, `packages/core/src/components/ImageViewer/ImageViewerControls.tsx`, `packages/core/src/components/ImageViewer/ImageViewerRenderer.ts`, `packages/core/src/components/Pagination/pagination-model.ts`, `packages/core/src/components/Pagination/usePageEditor.ts`, `packages/core/src/components/Pagination/PaginationStandard.tsx`, `packages/core/src/components/Pagination/PaginationCompact.tsx`, `packages/core/src/components/Pagination/PaginationRenderer.ts`, `tests/unit/gallery-pagination.test.ts`.
 
@@ -853,7 +853,7 @@ This exhaustive unit/color candidate ledger lists lines with raw dimensional/tim
 
 ### Batch 3: React/Vanilla DOM Parity, Bootstrap-like classes, A11y & SCSS tokens
 
-- [ ] Task 3.1 — Make Select a shared combobox model with paired DOM
+- [x] Task 3.1 — Make Select a shared combobox model with paired DOM
 
   **Targets:** modify `packages/core/src/components/Select/Select.tsx`, `packages/core/src/components/Select/Select.vanilla.ts`, `packages/core/src/components/Select/Select.scss`; create `packages/core/src/components/Select/select-model.ts`, `packages/core/src/components/Select/useSelectState.ts`, `packages/core/src/components/Select/SelectTrigger.tsx`, `packages/core/src/components/Select/SelectOptions.tsx`, `packages/core/src/components/Select/SelectRenderer.ts`, `tests/unit/select-model.test.ts`, `tests/parity/select.spec.ts`.
 
@@ -863,7 +863,7 @@ This exhaustive unit/color candidate ledger lists lines with raw dimensional/tim
 
   **Verify:** `npm run test:unit -- tests/unit/select-model.test.ts`; `npm run test:parity -- tests/parity/select.spec.ts --project=chromium`; `npm run audit:contracts -- --check loc --components Select`. Covers C02, H06/H11/H12.
 
-- [ ] Task 3.2 — Finish Modal/AlertDialog/ImageViewer/Drawer DOM and cleanup parity
+- [x] Task 3.2 — Finish Modal/AlertDialog/ImageViewer/Drawer DOM and cleanup parity
 
   **Targets:** modify `packages/core/src/components/Modal/Modal.tsx`, `packages/core/src/components/Modal/Modal.vanilla.ts`, `packages/core/src/components/AlertDialog/AlertDialog.tsx`, `packages/core/src/components/ImageViewer/ImageViewer.tsx`, `packages/core/src/components/ImageViewer/ImageViewer.vanilla.ts`, `packages/core/src/components/Sidebar/Sidebar.vanilla.ts`, `packages/core/src/primitives/Drawer/Drawer.tsx`, `packages/core/src/primitives/Drawer/DrawerController.ts`; create `tests/parity/gallery.spec.ts`, `tests/parity/alert-dialog.spec.ts`; extend `tests/parity/overlay.spec.ts`, `tests/parity/lifecycle.spec.ts`.
 
@@ -873,7 +873,7 @@ This exhaustive unit/color candidate ledger lists lines with raw dimensional/tim
 
   **Verify:** `npm run test:parity -- tests/parity/overlay.spec.ts tests/parity/gallery.spec.ts tests/parity/alert-dialog.spec.ts tests/parity/lifecycle.spec.ts --project=chromium`. Covers C03/C10/C13, H15/H17/H19.
 
-- [ ] Task 3.3 — Finish Tooltip parity and Range virtual-anchor integration
+- [x] Task 3.3 — Finish Tooltip parity and Range virtual-anchor integration
 
   **Targets:** modify `packages/core/src/components/Tooltip/Tooltip.tsx`, `packages/core/src/components/Tooltip/Tooltip.vanilla.ts`, `packages/core/src/components/Tooltip/Tooltip.scss`, `packages/core/src/components/Range/Range.tsx`, `packages/core/src/components/Range/Range.vanilla.ts`, `packages/core/src/components/Range/Range.scss`; create `tests/parity/tooltip-range.spec.ts`.
 
@@ -883,7 +883,7 @@ This exhaustive unit/color candidate ledger lists lines with raw dimensional/tim
 
   **Verify:** `npm run test:parity -- tests/parity/tooltip-range.spec.ts tests/parity/floating.spec.ts --project=chromium`; `npm run test:unit -- tests/unit/safe-content.test.ts`. Covers C04/C06, H09/H19, M05.
 
-- [ ] Task 3.4 — Align Input/Textarea/FileUpload/Range/Pagination contracts
+- [x] Task 3.4 — Align Input/Textarea/FileUpload/Range/Pagination contracts
 
   **Targets:** modify `packages/core/src/components/Input/Input.tsx`, `packages/core/src/components/Input/Input.vanilla.ts`, `packages/core/src/components/Textarea/Textarea.tsx`, `packages/core/src/components/FileUpload/FileUpload.tsx`, `packages/core/src/components/FileUpload/FileUpload.vanilla.ts`, `packages/core/src/components/Range/Range.vanilla.ts`, `packages/core/src/components/Pagination/Pagination.tsx`, `packages/core/src/components/Pagination/Pagination.vanilla.ts`, `packages/core/src/components/Button/Button.tsx`; create `packages/core/src/components/Textarea/Textarea.vanilla.ts`, `tests/parity/fields.spec.ts`, `tests/parity/pagination.spec.ts`, `tests/parity/button.spec.ts`.
 
@@ -893,7 +893,7 @@ This exhaustive unit/color candidate ledger lists lines with raw dimensional/tim
 
   **Verify:** `npm run test:parity -- tests/parity/fields.spec.ts tests/parity/pagination.spec.ts tests/parity/button.spec.ts --project=chromium`; `npm run test:unit -- tests/unit/field-validation.test.ts tests/unit/gallery-pagination.test.ts`. Covers C05/C06/C14/C15, M06.
 
-- [ ] Task 3.5 — Align Accordion/Tabs/TreeView visibility and keyboard state
+- [x] Task 3.5 — Align Accordion/Tabs/TreeView visibility and keyboard state
 
   **Targets:** modify `packages/core/src/components/Accordion/Accordion.tsx`, `packages/core/src/components/Accordion/Accordion.vanilla.ts`, `packages/core/src/components/TreeView/TreeView.tsx`, `packages/core/src/components/TreeView/TreeItem.tsx`, `packages/core/src/components/Tabs/Tabs.tsx`, `packages/core/src/components/Tabs/Tabs.vanilla.ts`; create `packages/core/src/components/TreeView/tree-model.ts`, `packages/core/src/components/TreeView/TreeView.vanilla.ts`, `tests/parity/disclosure-tabs-tree.spec.ts`.
 
@@ -903,7 +903,7 @@ This exhaustive unit/color candidate ledger lists lines with raw dimensional/tim
 
   **Verify:** `npm run test:parity -- tests/parity/disclosure-tabs-tree.spec.ts tests/parity/collapse.spec.ts --project=chromium`; `npm run test:unit -- tests/unit/interaction.test.tsx`. Covers C07/C08/C12, H08/H11/H18, M06.
 
-- [ ] Task 3.6 — Complete Code's Vanilla editing/highlighting adapter
+- [x] Task 3.6 — Complete Code's Vanilla editing/highlighting adapter
 
   **Targets:** modify `packages/core/src/components/Code/Code.vanilla.ts`, `packages/core/src/components/Code/Code.tsx`, `packages/core/src/components/Code/CodeToolbar.tsx`, `packages/core/src/components/Code/highlighter.ts`; create `packages/core/src/components/Code/CodeRenderer.ts`, `tests/parity/code.spec.ts`.
 
@@ -913,7 +913,7 @@ This exhaustive unit/color candidate ledger lists lines with raw dimensional/tim
 
   **Verify:** `npm run test:parity -- tests/parity/code.spec.ts --project=chromium`; `npm run test:unit -- tests/unit/code-highlight.test.ts`; `npm run audit:contracts -- --check loc --components Code`. Covers C09, H21.
 
-- [ ] Task 3.7 — Enforce paired Alert/Snackbar/Notification DOM and timed behavior
+- [x] Task 3.7 — Enforce paired Alert/Snackbar/Notification DOM and timed behavior
 
   **Targets:** modify `packages/core/src/components/Alert/Alert.vanilla.ts`, `packages/core/src/components/Snackbar/Snackbar.tsx`, `packages/core/src/components/Snackbar/Snackbar.vanilla.ts`, `packages/core/src/components/Notification/Notification.tsx`, `packages/core/src/components/Notification/Notification.vanilla.ts`, `packages/core/src/components/Notification/NotificationProvider.tsx`; extend `tests/parity/toast.spec.ts`, `tests/unit/timed-dismiss.test.ts`.
 
@@ -923,7 +923,7 @@ This exhaustive unit/color candidate ledger lists lines with raw dimensional/tim
 
   **Verify:** `npm run test:unit -- tests/unit/timed-dismiss.test.ts`; `npm run test:parity -- tests/parity/toast.spec.ts --project=chromium`. Covers C11, H14/H20.
 
-- [ ] Task 3.8 — Complete Vanilla registration/export cleanup and package isolation
+- [x] Task 3.8 — Complete Vanilla registration/export cleanup and package isolation
 
   **Targets:** modify `packages/core/src/vanilla.ts`, `packages/core/src/vanilla/init.ts`, `packages/core/src/vanilla/controller-registry.ts`, `packages/core/package.json`, `packages/core/vite.config.ts`; migrate `packages/core/src/components/Accordion/Accordion.vanilla.ts`, `packages/core/src/components/Alert/Alert.vanilla.ts`, `packages/core/src/components/Code/Code.vanilla.ts`, `packages/core/src/components/FileUpload/FileUpload.vanilla.ts`, `packages/core/src/components/Input/Input.vanilla.ts`, `packages/core/src/components/Navbar/Navbar.vanilla.ts`, `packages/core/src/components/Pagination/Pagination.vanilla.ts`, `packages/core/src/components/Range/Range.vanilla.ts`, `packages/core/src/components/Sidebar/Sidebar.vanilla.ts`, `packages/core/src/components/Tabs/Tabs.vanilla.ts`, `packages/core/src/components/Tooltip/Tooltip.vanilla.ts` to BaseController; create `tests/parity/package-smoke.spec.ts`, `tests/unit/vanilla-registry.test.ts`.
 
@@ -933,7 +933,7 @@ This exhaustive unit/color candidate ledger lists lines with raw dimensional/tim
 
   **Verify:** `npm run build -w @loreschaeffer/lyco-ui`; `npm run test:unit -- tests/unit/vanilla-registry.test.ts`; `npm run test:parity -- tests/parity/package-smoke.spec.ts tests/parity/lifecycle.spec.ts --project=chromium`; `npm run audit:contracts -- --check dependencies`. Covers C01/C13, H15/H16/H21/H28.
 
-- [ ] Task 3.9 — Repair tokens, split style responsibilities and enforce motion standards
+- [x] Task 3.9 — Repair tokens, split style responsibilities and enforce motion standards
 
   **Targets:** modify `packages/core/src/styles/global.scss`, `packages/core/src/styles/utilities.scss`, `packages/core/src/styles/tokens/_typography.scss`, `packages/core/src/styles/tokens/_radii.scss`, `packages/core/src/styles/tokens/_shadows.scss`, `packages/core/src/styles/tokens/_motion.scss`, `packages/core/src/styles/tokens/_elevations.scss`, `packages/core/src/styles/tokens/_spacing.scss`, `packages/core/src/utils/floating.ts`, `packages/core/src/components/Range/Range.tsx`; exact additional SCSS targets are every path/line in the H24 and M04 ledgers, plus `packages/core/src/components/Stepper/Stepper.scss`. Create `packages/core/src/styles/base/_typography.scss`, `packages/core/src/styles/base/_elements.scss`, `packages/core/src/styles/utilities/_layout.scss`, `packages/core/src/styles/utilities/_spacing.scss`, `packages/core/src/styles/utilities/_typography.scss`, `packages/core/src/components/Stepper/_layout.scss`, `packages/core/src/components/Stepper/_states.scss`, `tests/parity/visual-standards.spec.ts`, `tests/unit/design-tokens.test.ts`.
 
@@ -945,7 +945,7 @@ This exhaustive unit/color candidate ledger lists lines with raw dimensional/tim
 
   **Verify:** `npm run test:unit -- tests/unit/design-tokens.test.ts`; `npm run test:parity -- tests/parity/visual-standards.spec.ts --project=chromium`; `npm run audit:contracts -- --check tokens,motion,loc`. Covers H24, M01–M05/M08.
 
-- [ ] Task 3.10 — Migrate the complete public class contract to single dashes
+- [x] Task 3.10 — Migrate the complete public class contract to single dashes
 
   **Targets:** create `packages/core/src/styles/class-contract.ts`, `docs/migrations/single-dash-classes.md`, `tests/parity/classes.spec.ts`; modify the exact React/Vanilla/SCSS files enumerated in the H25 public-class ledger, plus `packages/core/src/components/Grid/Row.tsx`, `packages/core/src/components/Grid/Col.tsx`, `packages/core/src/components/Grid/Grid.scss`, `packages/core/src/styles/utilities.scss`. The ledger is the explicit existing-file manifest, not a request to invent missing components.
 
@@ -957,7 +957,7 @@ This exhaustive unit/color candidate ledger lists lines with raw dimensional/tim
 
   **Verify:** `npm run audit:contracts -- --check classes`; `npm run test:parity -- tests/parity/classes.spec.ts --project=chromium`; `npm run test:parity -- --project=chromium`. All canonical classes and behavior pass; docs strings finish in Batch 4. Covers H25/H28 and all class aspects of C02–C15.
 
-- [ ] Task 3.11 — Implement Vanilla picker adapters over the shared domains
+- [x] Task 3.11 — Implement Vanilla picker adapters over the shared domains
 
   **Targets:** create `packages/core/src/components/DatePicker/DatePicker.vanilla.ts`, `packages/core/src/components/DatePicker/TimePicker.vanilla.ts`, `packages/core/src/components/DatePicker/DateTimePicker.vanilla.ts`, `packages/core/src/components/DatePicker/PickerRenderer.ts`, `tests/parity/pickers.spec.ts`; modify `packages/core/src/vanilla/init.ts`, `packages/core/src/vanilla.ts`, `packages/core/src/components/DatePicker/date-model.ts`, `packages/core/src/components/DatePicker/time-model.ts`.
 
@@ -967,7 +967,7 @@ This exhaustive unit/color candidate ledger lists lines with raw dimensional/tim
 
   **Verify:** `npm run test:parity -- tests/parity/pickers.spec.ts --project=chromium`; `npm run test:unit -- tests/unit/picker-model.test.ts`; `npm run audit:contracts -- --check loc --components DatePicker`. Covers C12's three pickers.
 
-- [ ] Task 3.12 — Add the missing interactive Vanilla DataTable adapter
+- [x] Task 3.12 — Add the missing interactive Vanilla DataTable adapter
 
   **Targets:** create `packages/core/src/components/DataTable/DataTable.vanilla.ts`, `packages/core/src/components/DataTable/DataTableRenderer.ts`, `tests/parity/data-table.spec.ts`; modify `packages/core/src/vanilla/init.ts`, `packages/core/src/vanilla.ts`, `packages/core/src/components/DataTable/data-model.ts`, `packages/core/src/components/DataTable/DataTable.types.ts`.
 
@@ -977,7 +977,7 @@ This exhaustive unit/color candidate ledger lists lines with raw dimensional/tim
 
   **Verify:** `npm run test:unit -- tests/unit/data-table-model.test.ts`; `npm run test:parity -- tests/parity/data-table.spec.ts --project=chromium`; `npm run audit:contracts -- --check loc --components DataTable`. Covers C12's DataTable gap.
 
-- [ ] Task 3.13 — Add Vanilla Carousel over the shared scroll model
+- [x] Task 3.13 — Add Vanilla Carousel over the shared scroll model
 
   **Targets:** create `packages/core/src/components/Carousel/Carousel.vanilla.ts`, `packages/core/src/components/Carousel/CarouselRenderer.ts`, `tests/parity/carousel.spec.ts`; modify `packages/core/src/vanilla/init.ts`, `packages/core/src/vanilla.ts`, `packages/core/src/components/Carousel/carousel-model.ts`.
 

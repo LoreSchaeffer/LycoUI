@@ -2,7 +2,7 @@
   // ==========================================================================
   // TRIGGER CONTENTS
   // ==========================================================================
-  &__icon {
+  &-icon {
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -17,7 +17,7 @@
     }
   }
 
-  &__input {
+  &-input {
     flex: 1;
     width: 100%;
     background: transparent;
@@ -42,7 +42,7 @@
     }
   }
 
-  &__clear {
+  &-clear {
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -71,7 +71,7 @@
     }
   }
 
-  &__chevron {
+  &-chevron {
     width: 1.25em;
     height: 1.25em;
     color: var(--color-text-secondary);
@@ -84,3 +84,4 @@
     transform: rotate(180deg);
   }
 }
+

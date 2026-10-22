@@ -135,7 +135,7 @@ export const Code = memo(forwardRef<HTMLElement, CodeProps>((
         return (
             <code
                 ref={ref}
-                className={clsx('code', 'code--inline', className)}
+                className={clsx('code', 'code-inline', className)}
                 {...props}
             >
                 {currentCode}
@@ -148,7 +148,7 @@ export const Code = memo(forwardRef<HTMLElement, CodeProps>((
             ref={ref as React.Ref<HTMLDivElement>}
             className={clsx(
                 'code',
-                'code--block',
+                'code-block',
                 editable && 'is-editable',
                 className
             )}
@@ -162,3 +162,4 @@ export const Code = memo(forwardRef<HTMLElement, CodeProps>((
     );
 }));
 Code.displayName = 'Code';
+

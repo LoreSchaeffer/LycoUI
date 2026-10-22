@@ -71,7 +71,7 @@
         background-color: var(--color-surface-active, color-mix(in srgb, var(--color-primary) 10%, transparent));
       }
 
-      &--danger {
+      &-danger {
         color: var(--color-danger);
         &:hover, &:focus-visible {
           color: var(--color-danger);
@@ -79,7 +79,7 @@
         }
       }
 
-      &--success {
+      &-success {
         color: var(--color-success);
         &:hover, &:focus-visible {
           color: var(--color-success);
@@ -87,7 +87,7 @@
         }
       }
 
-      &--warning {
+      &-warning {
         color: var(--color-warning);
         &:hover, &:focus-visible {
           color: var(--color-warning);
@@ -95,7 +95,7 @@
         }
       }
 
-      &--primary {
+      &-primary {
         color: var(--color-primary);
         &:hover, &:focus-visible {
           color: var(--color-primary);
@@ -129,3 +129,4 @@
     }
   }
 }
+

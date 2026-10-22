@@ -2,7 +2,7 @@
   display: flex;
   align-items: center;
 
-  &__list {
+  &-list {
     display: flex;
     align-items: center;
     flex-wrap: wrap;
@@ -12,7 +12,7 @@
     gap: var(--spacing-2);
   }
 
-  &__item {
+  &-item {
     display: inline-flex;
     align-items: center;
     font-family: var(--font-family-base);
@@ -47,7 +47,7 @@
     }
   }
 
-  &__separator {
+  &-separator {
     display: inline-flex;
     align-items: center;
     color: var(--color-text-muted);
@@ -61,3 +61,4 @@
     }
   }
 }
+

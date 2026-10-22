@@ -142,4 +142,7 @@ export interface DataTableRef {
     setPage: (page: number) => void;
 }
 
+export type {VanillaDataTableColumn} from './DataTableRenderer';
+export type {VanillaDataTableOptions} from './DataTable.vanilla';
+
 

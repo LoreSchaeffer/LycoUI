@@ -1,7 +1,7 @@
 @use "../../styles/tokens/breakpoints" as *;
 
 .sidebar {
-  &__icon,
+  &-icon,
   &-icon {
     display: flex;
     align-items: center;
@@ -25,10 +25,10 @@
     }
   }
 
-  &__link:hover .sidebar-icon,
-  &__link:focus-visible .sidebar-icon,
-  &__link:hover .sidebar-icon,
-  &__link:focus-visible .sidebar-icon,
+  &-link:hover .sidebar-icon,
+  &-link:focus-visible .sidebar-icon,
+  &-link:hover .sidebar-icon,
+  &-link:focus-visible .sidebar-icon,
   &-link:hover .sidebar-icon,
   &-link:focus-visible .sidebar-icon,
   &-link:hover .sidebar-icon,
@@ -36,7 +36,7 @@
     color: var(--color-text-primary);
   }
 
-  &__label,
+  &-label,
   &-label {
     flex: 1;
     white-space: nowrap;
@@ -45,3 +45,4 @@
 
   // Dropdowns
 }
+

@@ -23,14 +23,15 @@ export interface DataTableHeadProps<T> {
 
 export function DataTableHead<T>({columns, dragEnabled, selectable, allSelected, someSelected, sortColumn, sortDirection, onSort, onSelectAll}: DataTableHeadProps<T>): ReactElement {
     return <TableHeadRegion><TableRow>
-        {dragEnabled && <TableCell isHeader className="data-table__drag-header" aria-label="Drag handle"/>}
-        {selectable && <TableCell isHeader className="data-table__select-cell"><Checkbox checked={allSelected} indeterminate={someSelected} onChange={(event) => onSelectAll(event.target.checked)} aria-label="Select all rows"/></TableCell>}
+        {dragEnabled && <TableCell isHeader className="data-table-drag-header" aria-label="Drag handle"/>}
+        {selectable && <TableCell isHeader className="data-table-select-cell"><Checkbox checked={allSelected} indeterminate={someSelected} onChange={(event) => onSelectAll(event.target.checked)} aria-label="Select all rows"/></TableCell>}
         {columns.map((column) => {
             const sortable = !dragEnabled && column.sortable !== false;
             const sorted = sortColumn === column.id;
-            return <TableCell key={column.id} isHeader className={clsx('data-table__th', sortable && 'data-table__th--sortable', sorted && 'data-table__th--sorted')} style={column.minWidth ? {minWidth: column.minWidth} : undefined} onClick={sortable ? () => onSort(column.id) : undefined} aria-sort={sorted ? (sortDirection === 'asc' ? 'ascending' : 'descending') : undefined}>
-                <span className="data-table__th-content"><span>{column.header}</span>{sortable && <span className="data-table__sort-icon"><SortIcon sorted={sorted} direction={sortDirection}/></span>}</span>
+            return <TableCell key={column.id} isHeader className={clsx('data-table-th', sortable && 'data-table-th-sortable', sorted && 'data-table-th-sorted')} style={column.minWidth ? {minWidth: column.minWidth} : undefined} onClick={sortable ? () => onSort(column.id) : undefined} aria-sort={sorted ? (sortDirection === 'asc' ? 'ascending' : 'descending') : undefined}>
+                <span className="data-table-th-content"><span>{column.header}</span>{sortable && <span className="data-table-sort-icon"><SortIcon sorted={sorted} direction={sortDirection}/></span>}</span>
             </TableCell>;
         })}
     </TableRow></TableHeadRegion>;
 }
+

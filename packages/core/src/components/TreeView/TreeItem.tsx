@@ -80,7 +80,7 @@ export const TreeItem = forwardRef<HTMLLIElement, TreeItemProps>(
         return (
             <li
                 ref={ref}
-                className={clsx('treeview__item', className)}
+                className={clsx('treeview-item', className)}
                 role="treeitem"
                 aria-expanded={hasChildren ? isExpanded : undefined}
                 aria-selected={isSelected}
@@ -89,16 +89,16 @@ export const TreeItem = forwardRef<HTMLLIElement, TreeItemProps>(
                 {...props}
             >
                 <div
-                    className={clsx('treeview__item-content', {'is-selected': isSelected})}
+                    className={clsx('treeview-item-content', {'is-selected': isSelected})}
                     onClick={handleToggle}
                 >
-                    <span className={clsx('treeview__icon', {'treeview__icon--chevron': !icon && hasChildren})}>
+                    <span className={clsx('treeview-icon', {'treeview-icon-chevron': !icon && hasChildren})}>
                         {icon ? icon : (hasChildren ? <DefaultChevron/> : null)}
                     </span>
-                    <span className="treeview__label">{label}</span>
+                    <span className="treeview-label">{label}</span>
                 </div>
                 {hasChildren && (
-                    <ul className="treeview__group" role="group">
+                    <ul className="treeview-group" role="group">
                         {children}
                     </ul>
                 )}
@@ -108,3 +108,5 @@ export const TreeItem = forwardRef<HTMLLIElement, TreeItemProps>(
 );
 
 TreeItem.displayName = 'TreeItem';
+
+

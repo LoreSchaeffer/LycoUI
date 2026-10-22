@@ -2,6 +2,7 @@ import './DropdownMenu.scss';
 import React, {forwardRef, useCallback, useRef} from 'react';
 import {DropdownMenuContext} from './DropdownMenuContext';
 import {useControllableState} from '../../hooks/useControllableState';
+import {classContract} from '../../styles/class-contract';
 
 /**
  * Props for the DropdownMenu component.
@@ -31,7 +32,7 @@ export const DropdownMenu: React.FC<DropdownMenuProps> = ({children, isOpen: con
 
     return (
         <DropdownMenuContext.Provider value={{isOpen, setIsOpen, closeMenu, triggerRef}}>
-            <div className="dropdown-menu">
+            <div className={classContract.dropdown.root}>
                 {children}
             </div>
         </DropdownMenuContext.Provider>
@@ -105,7 +106,7 @@ export const DropdownMenuTrigger = forwardRef<HTMLButtonElement, DropdownMenuTri
         return (
             <button
                 ref={handleRef}
-                className={`dropdown-menu__trigger ${isOpen ? 'is-open' : ''} ${className}`}
+                className={`${classContract.dropdown.trigger} ${isOpen ? 'is-open' : ''} ${className}`}
                 aria-haspopup="menu"
                 aria-expanded={isOpen}
                 onClick={handleClick}
@@ -165,7 +166,7 @@ export const DropdownMenuItem = forwardRef<HTMLButtonElement, DropdownMenuItemPr
                 tabIndex={disabled ? -1 : 0}
                 aria-disabled={disabled}
                 disabled={disabled}
-                className={`dropdown-menu__item ${disabled ? 'is-disabled' : ''} ${destructive ? 'dropdown-menu__item--destructive' : ''} ${className}`}
+                className={`${classContract.dropdown.item} ${disabled ? 'is-disabled' : ''} ${destructive ? 'dropdown-item-destructive' : ''} ${className}`}
                 onClick={handleClick}
                 onKeyDown={handleKeyDown}
                 {...props}
@@ -193,7 +194,7 @@ export const DropdownMenuSeparator = forwardRef<HTMLDivElement, DropdownMenuSepa
             <div
                 ref={ref}
                 role="separator"
-                className={`dropdown-menu__separator ${className}`}
+                className={`${classContract.dropdown.divider} ${className}`}
                 {...props}
             />
         );
@@ -205,3 +206,5 @@ DropdownMenuSeparator.displayName = 'DropdownMenuSeparator';
  * Props for the DropdownMenuSubMenu component.
  */
 export {DropdownMenuSubMenu, type DropdownMenuSubMenuProps} from './DropdownMenuSubMenu';
+
+

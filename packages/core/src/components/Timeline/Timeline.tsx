@@ -37,8 +37,8 @@ export const Timeline = forwardRef<HTMLOListElement, TimelineProps>(
                 ref={ref}
                 className={clsx(
                     'timeline',
-                    `timeline--${orientation}`,
-                    orientation === 'vertical' && align === 'alternate' && 'timeline--alternate',
+                    `timeline-${orientation}`,
+                    orientation === 'vertical' && align === 'alternate' && 'timeline-alternate',
                     className
                 )}
                 {...props}
@@ -50,3 +50,5 @@ export const Timeline = forwardRef<HTMLOListElement, TimelineProps>(
 );
 
 Timeline.displayName = 'Timeline';
+
+

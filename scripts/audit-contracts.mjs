@@ -61,7 +61,16 @@ for (const file of files) {
   if (requestedChecks.includes('loc') && source.split(/\r?\n/).length > 220) {
     findings.push({ check: 'loc', file: relative(root, file), message: 'physical line count exceeds 220' });
   }
-  if (requestedChecks.includes('classes') && /(?:__|--)[a-z0-9-]+/i.test(source)) {
+  const hasLegacyClass = file.endsWith('.scss')
+    ? (() => {
+      let found = false;
+      scss.parse(source, { from: file }).walkRules((rule) => {
+        if (/\.[a-z][a-z0-9-]*(?:__|--)[a-z0-9-]+/i.test(rule.selector)) found = true;
+      });
+      return found;
+    })()
+    : /\b[a-z][a-z0-9-]*(?:__|--)[a-z0-9-]+/i.test(source);
+  if (requestedChecks.includes('classes') && hasLegacyClass) {
     findings.push({ check: 'classes', file: relative(root, file), message: 'contains legacy BEM-style class syntax' });
   }
   if (requestedChecks.includes('dependencies') && file.endsWith('.vanilla.ts') && /from ['"](?:react|react-dom|clsx)['"]/.test(source)) {

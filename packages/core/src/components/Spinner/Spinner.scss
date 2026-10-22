@@ -13,13 +13,13 @@
   // ==========================================================================
   // SIZES
   // ==========================================================================
-  &--sm {
+  &-sm {
     width: var(--size-4, 1rem);
     height: var(--size-4, 1rem);
     border-width: 1.5px;
   }
 
-  &--lg {
+  &-lg {
     width: var(--size-9, 2.25rem);
     height: var(--size-9, 2.25rem);
     border-width: 3px;
@@ -28,14 +28,14 @@
   // ==========================================================================
   // TYPES
   // ==========================================================================
-  &--classic {
+  &-classic {
     border: 2px solid var(--color-border-subtle);
     border-top-color: currentColor;
     border-radius: var(--radius-full, 50%);
     animation: spinner-rotate var(--duration-slow, 0.8s) linear infinite;
   }
 
-  &--growing {
+  &-growing {
     background-color: currentColor;
     border-radius: var(--radius-full, 50%);
     animation: spinner-grow var(--duration-slower, 1s) var(--ease-default) infinite;

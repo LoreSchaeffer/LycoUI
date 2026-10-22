@@ -23,7 +23,7 @@ export const Breadcrumbs = forwardRef<HTMLElement, BreadcrumbsProps>(
                 className={clsx('breadcrumbs', className)}
                 {...props}
             >
-                <ol className="breadcrumbs__list">{children}</ol>
+                <ol className="breadcrumbs-list">{children}</ol>
             </nav>
         );
     }
@@ -49,7 +49,7 @@ export const BreadcrumbItem = forwardRef<HTMLLIElement, BreadcrumbItemProps>(
             <li
                 ref={ref}
                 className={clsx(
-                    'breadcrumbs__item',
+                    'breadcrumbs-item',
                     isCurrentPage && 'is-current',
                     className
                 )}
@@ -81,7 +81,7 @@ export const BreadcrumbSeparator = forwardRef<HTMLLIElement, BreadcrumbSeparator
             <li
                 ref={ref}
                 aria-hidden="true"
-                className={clsx('breadcrumbs__separator', className)}
+                className={clsx('breadcrumbs-separator', className)}
                 {...props}
             >
                 {children || '/'}
@@ -90,3 +90,4 @@ export const BreadcrumbSeparator = forwardRef<HTMLLIElement, BreadcrumbSeparator
     }
 );
 BreadcrumbSeparator.displayName = 'BreadcrumbSeparator';
+

@@ -56,15 +56,15 @@ class LycoSnackbarManager {
         snackbar.className = 'snackbar';
         snackbar.style.setProperty('--snackbar-color-base', `var(--${variant}-500, var(--color-${variant}))`);
         snackbar.style.setProperty('--snackbar-color-contrast', getContrastColor(variant));
-        if (options.closable) snackbar.classList.add('snackbar--closable');
+        if (options.closable) snackbar.classList.add('snackbar-closable');
         if (options.icon) snackbar.classList.add('has-icon');
-        if (options.isFlat) snackbar.classList.add('snackbar--flat');
+        if (options.isFlat) snackbar.classList.add('snackbar-flat');
         snackbar.setAttribute('role', 'status');
         snackbar.id = id;
 
         if (options.icon) {
             const iconSpan = document.createElement('span');
-            iconSpan.className = 'snackbar__icon';
+            iconSpan.className = 'snackbar-icon';
             if (typeof options.icon === 'string') {
                 const safeSvg = createSafeSvg(options.icon);
                 if (safeSvg) {
@@ -79,7 +79,7 @@ class LycoSnackbarManager {
         }
 
         const contentDiv = document.createElement('div');
-        contentDiv.className = 'snackbar__content';
+        contentDiv.className = 'snackbar-content';
         if (typeof options.message === 'string') {
             contentDiv.textContent = options.message;
         } else {
@@ -113,7 +113,7 @@ class LycoSnackbarManager {
         if (options.closable) {
             closeBtn = document.createElement('button');
             closeBtn.type = 'button';
-            closeBtn.className = 'snackbar__close';
+            closeBtn.className = 'snackbar-close';
             closeBtn.setAttribute('aria-label', 'Close');
             closeBtn.innerHTML = `
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -136,4 +136,5 @@ class LycoSnackbarManager {
 }
 
 export const snackbar = new LycoSnackbarManager();
+
 

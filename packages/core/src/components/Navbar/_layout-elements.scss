@@ -1,7 +1,7 @@
 @use "./layout-core" as base;
 
 .navbar {
-  &__container {
+  &-container {
     display: flex;
     flex-wrap: inherit;
     align-items: center;
@@ -11,7 +11,7 @@
     margin-left: auto;
   }
 
-  &__brand {
+  &-brand {
     font-size: var(--navbar-font-size, var(--text-body-lg));
     font-weight: var(--font-weight-semibold);
     color: inherit;
@@ -27,7 +27,7 @@
       text-decoration: none;
     }
 
-    &--centered {
+    &-centered {
       position: absolute;
       left: 50%;
       transform: translateX(-50%);
@@ -35,7 +35,7 @@
     }
   }
 
-  &__toggle {
+  &-toggle {
     display: flex;
     flex-direction: column;
     justify-content: space-around;
@@ -87,26 +87,26 @@
     }
   }
 
-  &__collapse {
+  &-collapse {
     flex-basis: 100%;
     flex-grow: 1;
     display: grid;
     grid-template-rows: 0fr;
-    transition: grid-template-rows var(--duration-normal) var(--ease-default);
+    transition: opacity var(--duration-normal) var(--ease-default);
 
     &.is-open {
       grid-template-rows: 1fr;
     }
   }
 
-  &__collapse-inner {
+  &-collapse-inner {
     overflow: hidden;
     display: flex;
     flex-direction: column;
     width: 100%;
   }
 
-  &__nav {
+  &-nav {
     display: flex;
     flex-direction: column;
     padding-left: 0;
@@ -117,25 +117,25 @@
     padding-bottom: var(--spacing-2);
     width: 100%;
 
-    &--align-start {
+    &-align-start {
       margin-right: auto;
     }
 
-    &--align-center {
+    &-align-center {
       margin-left: auto;
       margin-right: auto;
     }
 
-    &--align-end {
+    &-align-end {
       margin-left: auto;
     }
   }
 
-  &__item {
+  &-item {
     display: block;
   }
 
-  &__link {
+  &-link {
     @include base.navbar-item-base;
 
     &.is-active {
@@ -147,11 +147,11 @@
     }
   }
 
-  &__dropdown {
+  &-dropdown {
     position: relative;
   }
 
-  &__dropdown-trigger {
+  &-dropdown-trigger {
     @include base.navbar-item-base;
     gap: var(--spacing-1);
     background: transparent;
@@ -179,7 +179,7 @@
     }
   }
 
-  &__dropdown-trigger--unstyled {
+  &-dropdown-trigger-unstyled {
     background: transparent;
     font-size: inherit;
     font-weight: inherit;
@@ -190,3 +190,4 @@
 
 
 }
+

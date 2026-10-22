@@ -21,7 +21,7 @@
   flex-shrink: 0;
 
   // Modifiers
-  &--fixed,
+  &-fixed,
   &-fixed {
     position: fixed;
     top: 0;
@@ -29,7 +29,7 @@
     z-index: var(--z-index-sticky, 1020);
   }
 
-  &--overlay,
+  &-overlay,
   &-overlay {
     position: fixed;
     top: 0;
@@ -113,7 +113,7 @@
   }
 
   // Children wrappers
-  &__header,
+  &-header,
   &-header {
     padding: var(--spacing-4) var(--spacing-5);
     border-bottom: 1px solid var(--sidebar-border);
@@ -125,14 +125,14 @@
     flex-shrink: 0;
   }
 
-  &__content,
+  &-content,
   &-content {
     flex: 1;
     overflow-y: auto;
     padding: var(--spacing-4);
   }
 
-  &__footer,
+  &-footer,
   &-footer {
     padding: var(--spacing-4);
     border-top: 1px solid var(--sidebar-border);
@@ -142,7 +142,7 @@
   }
 
   // Resizer
-  &__resizer,
+  &-resizer,
   &-resizer {
     position: absolute;
     top: 0;
@@ -159,7 +159,7 @@
   }
 
   // Navigation
-  &__nav,
+  &-nav,
   &-nav {
     list-style: none;
     margin: 0;
@@ -169,12 +169,12 @@
     gap: var(--spacing-1);
   }
 
-  &__item,
+  &-item,
   &-item {
     margin: 0;
   }
 
-  &__link,
+  &-link,
   &-link {
     display: flex;
     align-items: center;
@@ -217,3 +217,4 @@
     }
   }
 }
+

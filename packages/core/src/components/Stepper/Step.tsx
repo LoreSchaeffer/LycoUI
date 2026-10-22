@@ -72,18 +72,19 @@ export const Step = forwardRef<HTMLLIElement, StepProps>(
                 {/* Visually hidden text for screen readers when completed */}
                 {isCompleted && <span className="hidden">Completed: </span>}
 
-                <div className="step__header">
-                    <div className="step__icon">
+                <div className="step-header">
+                    <div className="step-icon">
                         {icon ? icon : (!hideNumbers ? index + 1 : null)}
                     </div>
                 </div>
 
-                <div className="step__content">
-                    <div className="step__title">{title}</div>
-                    {description && <div className="step__description">{description}</div>}
+                <div className="step-content">
+                    <div className="step-title">{title}</div>
+                    {description && <div className="step-description">{description}</div>}
                 </div>
             </li>
         );
     }
 );
 Step.displayName = 'Step';
+

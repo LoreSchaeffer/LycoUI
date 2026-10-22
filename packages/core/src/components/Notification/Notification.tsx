@@ -104,8 +104,8 @@ export const Notification = forwardRef<HTMLDivElement, NotificationProps>((
 ) => {
     const resolvedIcon = icon !== undefined ? icon : SEMANTIC_ICONS[variant] ?? null;
     const animClass = isExiting
-        ? `notification-exit--${position}`
-        : `notification-enter--${position}`;
+        ? `notification-exit-${position}`
+        : `notification-enter-${position}`;
 
     const handleClose = useCallback(() => {
         onClose?.();
@@ -130,17 +130,17 @@ export const Notification = forwardRef<HTMLDivElement, NotificationProps>((
             } as CSSProperties}
             {...props}
         >
-            {resolvedIcon && <span className="notification__icon">{resolvedIcon}</span>}
-            <div className="notification__body">
-                {title && <strong className="notification__title">{title}</strong>}
+            {resolvedIcon && <span className="notification-icon">{resolvedIcon}</span>}
+            <div className="notification-body">
+                {title && <strong className="notification-title">{title}</strong>}
                 {(description || children) && (
-                    <p className="notification__message">{description || children}</p>
+                    <p className="notification-message">{description || children}</p>
                 )}
             </div>
             {closable && (
                 <button
                     type="button"
-                    className="notification__close"
+                    className="notification-close"
                     aria-label="Close notification"
                     onClick={handleClose}
                 >
@@ -148,9 +148,9 @@ export const Notification = forwardRef<HTMLDivElement, NotificationProps>((
                 </button>
             )}
             {duration != null && duration > 0 && (
-                <div className="notification__progress">
+                <div className="notification-progress">
                     <div
-                        className="notification__progress-bar"
+                        className="notification-progress-bar"
                         style={{animationDuration: `${duration}s`}}
                     />
                 </div>
@@ -159,3 +159,5 @@ export const Notification = forwardRef<HTMLDivElement, NotificationProps>((
     );
 });
 Notification.displayName = 'Notification';
+
+

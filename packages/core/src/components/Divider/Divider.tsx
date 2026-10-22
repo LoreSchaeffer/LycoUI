@@ -54,9 +54,9 @@ export const Divider = memo(forwardRef<HTMLHRElement | HTMLDivElement, DividerPr
             aria-orientation={orientation}
             className={clsx(
                 'divider',
-                `divider--${orientation}`,
-                `divider--spacing-${spacing}`,
-                `divider--length-${length}`,
+                `divider-${orientation}`,
+                `divider-spacing-${spacing}`,
+                `divider-length-${length}`,
                 className
             )}
             style={{
@@ -70,6 +70,7 @@ export const Divider = memo(forwardRef<HTMLHRElement | HTMLDivElement, DividerPr
 }));
 
 Divider.displayName = 'Divider';
+
 
 
 

@@ -88,7 +88,7 @@ export const Alert = memo(forwardRef<HTMLDivElement, AlertProps>((
             ref={ref}
             className={clsx(
                 'alert',
-                (closable || duration) && 'alert--closable',
+                (closable || duration) && 'alert-closable',
                 icon && 'has-icon',
                 className
             )}
@@ -101,10 +101,10 @@ export const Alert = memo(forwardRef<HTMLDivElement, AlertProps>((
             {...(duration ? {'data-duration': duration} : {})}
             {...props}
         >
-            {icon && <span className="alert__icon">{icon}</span>}
-            <div className="alert__content">{children}</div>
+            {icon && <span className="alert-icon">{icon}</span>}
+            <div className="alert-content">{children}</div>
             {closable && (
-                <button type="button" className="alert__close" aria-label="Close" onClick={handleClose}>
+                <button type="button" className="alert-close" aria-label="Close" onClick={handleClose}>
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                         <line x1="18" y1="6" x2="6" y2="18"/>
                         <line x1="6" y1="6" x2="18" y2="18"/>
@@ -112,12 +112,13 @@ export const Alert = memo(forwardRef<HTMLDivElement, AlertProps>((
                 </button>
             )}
             {duration && duration > 0 && (
-                <div className="alert__progress" style={{animationDuration: `${duration}s`}}/>
+                <div className="alert-progress" style={{animationDuration: `${duration}s`}}/>
             )}
         </div>
     );
 }));
 Alert.displayName = 'Alert';
+
 
 
 

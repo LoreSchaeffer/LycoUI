@@ -13,7 +13,7 @@
   // TOOLBAR
   // ========================================================================
   // ========================================================================
-  &__container {
+  &-container {
     overflow-x: auto;
     -webkit-overflow-scrolling: touch;
 
@@ -41,7 +41,7 @@
   // ========================================================================
   // FOOTER
   // ========================================================================
-  &__footer {
+  &-footer {
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -51,7 +51,7 @@
     background: var(--color-surface-base);
   }
 
-  &__footer-controls {
+  &-footer-controls {
     display: flex;
     align-items: center;
     gap: var(--spacing-6);
@@ -61,7 +61,7 @@
   // STICKY TOOLBAR
   // ========================================================================
   &.is-sticky {
-    .data-table__toolbar {
+    .data-table-toolbar {
       position: sticky;
       top: 0;
       z-index: 10;
@@ -75,30 +75,31 @@
   // RESPONSIVE
   // ========================================================================
   @media (max-width: 768px) {
-    &__toolbar {
+    &-toolbar {
       flex-direction: column;
       align-items: stretch;
       gap: var(--spacing-3);
     }
 
-    &__search {
+    &-search {
       max-width: 100%;
     }
 
-    &__controls {
+    &-controls {
       flex-wrap: wrap;
       gap: var(--spacing-3);
       justify-content: space-between;
     }
 
-    &__results-info {
+    &-results-info {
       order: 3;
       flex-basis: 100%;
       text-align: center;
     }
 
-    &__th {
+    &-th {
       font-size: calc(var(--text-caption) * 0.9);
     }
   }
 }
+

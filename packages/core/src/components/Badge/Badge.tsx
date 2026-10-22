@@ -48,8 +48,8 @@ export const Badge = memo(forwardRef<HTMLSpanElement, BadgeProps>((
             ref={ref}
             className={clsx(
                 'badge',
-                pill && 'badge--pill',
-                dim && 'badge--dim',
+                pill && 'badge-pill',
+                dim && 'badge-dim',
                 className
             )}
             style={{
@@ -65,4 +65,5 @@ export const Badge = memo(forwardRef<HTMLSpanElement, BadgeProps>((
 }));
 
 Badge.displayName = 'Badge';
+
 

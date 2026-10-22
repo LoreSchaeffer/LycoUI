@@ -45,9 +45,9 @@ export const Snackbar = forwardRef<HTMLDivElement, SnackbarProps>((
             ref={ref}
             className={clsx(
                 'snackbar',
-                closable && 'snackbar--closable',
+                closable && 'snackbar-closable',
                 icon && 'has-icon',
-                isFlat && 'snackbar--flat',
+                isFlat && 'snackbar-flat',
                 isExiting && 'is-exiting',
                 className
             )}
@@ -60,12 +60,12 @@ export const Snackbar = forwardRef<HTMLDivElement, SnackbarProps>((
             } as CSSProperties}
             {...props}
         >
-            {icon && <span className="snackbar__icon">{icon}</span>}
-            <div className="snackbar__content">{children}</div>
+            {icon && <span className="snackbar-icon">{icon}</span>}
+            <div className="snackbar-content">{children}</div>
             {closable && (
                 <button
                     type="button"
-                    className="snackbar__close"
+                    className="snackbar-close"
                     aria-label="Close"
                     onClick={onClose}
                 >
@@ -79,3 +79,4 @@ export const Snackbar = forwardRef<HTMLDivElement, SnackbarProps>((
     );
 });
 Snackbar.displayName = 'Snackbar';
+

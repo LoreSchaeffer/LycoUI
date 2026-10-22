@@ -2,7 +2,7 @@
 
 .navbar {
   // --- MOBILE FIRST (ACCORDION) DROPDOWN ---
-  &__dropdown-menu {
+  &-dropdown-menu {
     display: none;
     flex-direction: column;
     padding-left: var(--spacing-3);
@@ -17,7 +17,7 @@
     }
   }
 
-  &__dropdown-item {
+  &-dropdown-item {
     display: flex;
     align-items: center;
     gap: var(--spacing-2);
@@ -46,7 +46,7 @@
       flex-shrink: 0;
     }
 
-    &--danger {
+    &-danger {
       color: var(--color-danger);
       &:hover, &:focus-visible {
         color: var(--color-danger);
@@ -54,7 +54,7 @@
       }
     }
 
-    &--success {
+    &-success {
       color: var(--color-success);
       &:hover, &:focus-visible {
         color: var(--color-success);
@@ -62,7 +62,7 @@
       }
     }
 
-    &--warning {
+    &-warning {
       color: var(--color-warning);
       &:hover, &:focus-visible {
         color: var(--color-warning);
@@ -70,7 +70,7 @@
       }
     }
 
-    &--primary {
+    &-primary {
       color: var(--color-primary);
       &:hover, &:focus-visible {
         color: var(--color-primary);
@@ -79,12 +79,12 @@
     }
   }
 
-  &__dropdown-submenu {
+  &-dropdown-submenu {
     position: relative;
     width: 100%;
   }
 
-  &__dropdown-submenu-trigger {
+  &-dropdown-submenu-trigger {
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -113,8 +113,9 @@
     }
   }
 
-  &__dropdown-submenu.is-open > &__dropdown-submenu-trigger .navbar-dropdown-caret {
+  &-dropdown-submenu.is-open > &-dropdown-submenu-trigger .navbar-dropdown-caret {
     transform: rotate(180deg);
   }
 }
+
 

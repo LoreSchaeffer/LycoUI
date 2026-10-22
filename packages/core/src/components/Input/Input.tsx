@@ -140,8 +140,8 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
                 <div
                     className={clsx(
                         'input',
-                        size && size !== 'md' && `input--${size}`,
-                        flat && 'input--flat',
+                        size && size !== 'md' && `input-${size}`,
+                        flat && 'input-flat',
                         isFocused && 'is-focused',
                         isFilled && 'is-filled',
                         disabled && 'is-disabled',
@@ -149,8 +149,8 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
                         loading && 'is-loading',
                         visualValidation === 'valid' && 'is-valid',
                         visualValidation === 'invalid' && 'is-invalid',
-                        hasIconStart && 'input--has-icon-start',
-                        (hasIconEnd || showSteps) && 'input--has-icon-end',
+                        hasIconStart && 'input-has-icon-start',
+                        (hasIconEnd || showSteps) && 'input-has-icon-end',
                         className
                     )}
                     style={{
@@ -161,7 +161,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
                     {hasIconStart && (
                         <InputAdornment position="start" onClick={onIconStartClick && !loading ? handleIconStartClick : undefined}>
                                 {showSpinnerStart
-                                    ? <Spinner size={size} type={spinnerType} className="input__spinner"/>
+                                    ? <Spinner size={size} type={spinnerType} className="input-spinner"/>
                                     : iconStart}
                         </InputAdornment>
                     )}
@@ -171,7 +171,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
                         ref={mergedRef}
                         id={inputId}
                         type={type}
-                        className="input__field"
+                        className="input-field"
                         disabled={disabled || loading}
                         value={value}
                         defaultValue={defaultValue}
@@ -188,13 +188,13 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
                     />
 
                     {/* Floating Label */}
-                    {label && <FieldLabel className="input__label" htmlFor={inputId} label={label} required={required}/>} 
+                    {label && <FieldLabel className="input-label" htmlFor={inputId} label={label} required={required}/>} 
 
                     {/* Icon End */}
                     {(hasIconEnd && !showSteps) && (
                         <InputAdornment position="end" onClick={onIconEndClick && !loading ? handleIconEndClick : undefined}>
                                 {(showSpinnerEnd || (loading && !iconStart && !iconEnd))
-                                    ? <Spinner size={size} type={spinnerType} className="input__spinner"/>
+                                    ? <Spinner size={size} type={spinnerType} className="input-spinner"/>
                                     : iconEnd}
                         </InputAdornment>
                     )}
@@ -206,7 +206,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
                 </div>
 
                 {/* Validation Message */}
-                <FieldMessage id={messageId} className="input__message" state={visualValidation}>{displayMessage}</FieldMessage>
+                <FieldMessage id={messageId} className="input-message" state={visualValidation}>{displayMessage}</FieldMessage>
             </div>
         );
     }
@@ -214,3 +214,5 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
 Input.displayName = 'Input';
 
 export type {InputProps, InputValidation} from './Input.types';
+
+

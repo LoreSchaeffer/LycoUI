@@ -1,23 +1,23 @@
 .datepicker {
-  &__calendar {
+  &-calendar {
     width: 100%;
   }
 
-  &__cal-header {
+  &-cal-header {
     display: flex;
     align-items: center;
     justify-content: space-between;
     margin-bottom: var(--spacing-3);
   }
 
-  &__cal-title {
+  &-cal-title {
     font-size: var(--text-body-sm);
     font-weight: var(--font-weight-semibold);
     color: var(--color-text-primary);
     letter-spacing: -0.02em;
   }
 
-  &__cal-nav-btn {
+  &-cal-nav-btn {
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -49,7 +49,7 @@
   }
 
   // The grid is CSS Grid layout with 7 equal columns
-  &__cal-grid {
+  &-cal-grid {
     display: grid;
     grid-template-columns: repeat(7, 1fr);
     gap: var(--spacing-1);
@@ -62,11 +62,11 @@
   }
 
   // Rows use display: contents so cells flow directly into the parent grid
-  &__cal-row {
+  &-cal-row {
     display: contents;
   }
 
-  &__cal-day-header {
+  &-cal-day-header {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -80,7 +80,7 @@
     margin-bottom: var(--spacing-1);
   }
 
-  &__cal-cell {
+  &-cal-cell {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -143,3 +143,4 @@
     }
   }
 }
+

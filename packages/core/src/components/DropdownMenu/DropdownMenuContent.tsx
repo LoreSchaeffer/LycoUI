@@ -2,6 +2,7 @@ import React, {forwardRef, useCallback, useEffect, useRef, useState, type CSSPro
 import {createPortal} from 'react-dom';
 import {DropdownMenuContext} from './DropdownMenuContext';
 import {useKeyboardNav} from '../../hooks/useKeyboardNav';
+import {classContract} from '../../styles/class-contract';
 
 export interface DropdownMenuContentProps extends React.HTMLAttributes<HTMLDivElement> {
     children: React.ReactNode;
@@ -105,7 +106,7 @@ export const DropdownMenuContent = forwardRef<HTMLDivElement, DropdownMenuConten
         return createPortal(
             <div
                 ref={handleRef}
-                className={`dropdown-menu__content ${className}`}
+                className={`${classContract.dropdown.menu} ${className}`}
                 role="menu"
                 onKeyDown={handleKeyDown}
                 style={{ ...dropdownStyles, ...props.style }}

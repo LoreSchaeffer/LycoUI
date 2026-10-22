@@ -51,7 +51,7 @@ export const Switch = memo(forwardRef<HTMLInputElement, SwitchProps>((
             className={clsx(
                 'switch',
                 disabled && 'is-disabled',
-                size !== 'md' && `switch--${size}`,
+                size !== 'md' && `switch-${size}`,
                 className
             )}
             style={isColored ? {
@@ -66,13 +66,15 @@ export const Switch = memo(forwardRef<HTMLInputElement, SwitchProps>((
                 role="switch"
                 id={inputId}
                 disabled={disabled}
-                className="switch__input"
+                className="switch-input"
                 {...props}
             />
-            <span className="switch__control" aria-hidden="true"/>
-            {label && <span className="switch__label">{label}</span>}
+            <span className="switch-control" aria-hidden="true"/>
+            {label && <span className="switch-label">{label}</span>}
         </label>
     );
 }));
 
 Switch.displayName = 'Switch';
+
+

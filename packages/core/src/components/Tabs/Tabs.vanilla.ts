@@ -32,7 +32,7 @@ export class TabsController {
      * Binds event listeners and sets initial states.
      */
     private init() {
-        const activeTrigger = Array.from(this.triggers).find(t => t.classList.contains('is-active')) || this.triggers[0];
+        const activeTrigger = Array.from(this.triggers).find(t => t.classList.contains('is-active') && !t.disabled && !t.classList.contains('is-disabled')) || Array.from(this.triggers).find(t => !t.disabled && !t.classList.contains('is-disabled'));
         const activeValue = activeTrigger ? activeTrigger.dataset.lycoTabValue : null;
 
         const idPrefix = `lyco-tabs-${Math.random().toString(36).substr(2, 9)}`;
@@ -43,6 +43,7 @@ export class TabsController {
 
             if (!trigger.id) trigger.id = `${idPrefix}-tab-${value}`;
             if (!trigger.hasAttribute('aria-controls')) trigger.setAttribute('aria-controls', `${idPrefix}-panel-${value}`);
+            trigger.tabIndex = trigger === activeTrigger ? 0 : -1;
 
             trigger.addEventListener('click', this.boundHandleClick);
         });
@@ -56,9 +57,11 @@ export class TabsController {
 
             if (value !== activeValue) {
                 content.style.display = 'none';
+                content.hidden = true;
                 content.setAttribute('aria-hidden', 'true');
             } else {
                 content.removeAttribute('aria-hidden');
+                content.hidden = false;
             }
         });
 
@@ -68,7 +71,7 @@ export class TabsController {
 
     private handleKeyDown(e: KeyboardEvent) {
         const list = e.target as HTMLElement;
-        if (!list.closest('.tabs__list')) return;
+        if (!list.closest('.tabs-list')) return;
 
         handleListKeyboardNav(
             e,
@@ -92,17 +95,21 @@ export class TabsController {
         this.triggers.forEach(t => {
             t.classList.remove('is-active');
             setAriaSelected(t, false);
+            t.tabIndex = -1;
         });
 
         trigger.classList.add('is-active');
         setAriaSelected(trigger, true);
+        trigger.tabIndex = 0;
 
         this.contents.forEach(content => {
             if (content.dataset.lycoTabValue === eventValue) {
                 content.style.display = '';
+                content.hidden = false;
                 content.removeAttribute('aria-hidden');
             } else {
                 content.style.display = 'none';
+                content.hidden = true;
                 content.setAttribute('aria-hidden', 'true');
             }
         });
@@ -126,4 +133,5 @@ export const initTabs = () => {
         new TabsController(element as HTMLElement);
     });
 };
+
 

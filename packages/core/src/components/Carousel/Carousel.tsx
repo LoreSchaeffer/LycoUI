@@ -77,7 +77,7 @@ export const Carousel = React.forwardRef<HTMLDivElement, CarouselProps>(({
         <div
             ref={ref}
             className={clsx('carousel', {
-                'carousel--center-mode': centerMode,
+                'carousel-center-mode': centerMode,
             }, className)}
             role="region"
             aria-roledescription="carousel"
@@ -89,13 +89,13 @@ export const Carousel = React.forwardRef<HTMLDivElement, CarouselProps>(({
             } as React.CSSProperties}
             {...props}
         >
-            <div className="carousel__track" ref={trackRef}>
+            <div className="carousel-track" ref={trackRef}>
                 {domItems.map((child, index) => {
                     const itemLogicIndex = toLogicalIndex(index, count, infinite);
 
                     return (
                         <div
-                            className={clsx('carousel__slide', {
+                            className={clsx('carousel-slide', {
                                 'is-active': activeIndex === itemLogicIndex
                             })}
                             key={React.isValidElement(child) ? child.key : index}
@@ -117,4 +117,5 @@ export const Carousel = React.forwardRef<HTMLDivElement, CarouselProps>(({
 });
 
 Carousel.displayName = 'Carousel';
+
 

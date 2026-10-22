@@ -13,7 +13,7 @@
   // Prevent text selection
   user-select: none;
 
-  &__item {
+  &-item {
     display: flex;
     align-items: center;
     gap: var(--spacing-2);
@@ -30,7 +30,7 @@
       background-color: var(--surface-elevated, var(--color-border-subtle));
     }
 
-    &--danger {
+    &-danger {
       color: var(--color-danger);
 
       &:hover,
@@ -51,7 +51,7 @@
     }
   }
 
-  &__icon {
+  &-icon {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -60,12 +60,12 @@
     opacity: 0.8;
   }
 
-  &__label {
+  &-label {
     flex: 1;
     white-space: nowrap;
   }
 
-  &__arrow {
+  &-arrow {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -73,9 +73,10 @@
     opacity: 0.6;
   }
 
-  &__separator {
+  &-separator {
     height: 1px;
     background-color: var(--color-border-subtle);
     margin: var(--spacing-1) 0;
   }
 }
+

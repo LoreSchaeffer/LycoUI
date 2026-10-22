@@ -2,7 +2,7 @@
   // ==========================================================================
   // ICONS
   // ==========================================================================
-  &__icon {
+  &-icon {
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -16,15 +16,15 @@
       height: 100%;
     }
 
-    &--start {
+    &-start {
       margin-left: var(--input-padding-x);
     }
 
-    &--end {
+    &-end {
       margin-right: var(--input-padding-x);
     }
 
-    &--clickable {
+    &-clickable {
       cursor: pointer;
       border: none;
       background: none;
@@ -44,18 +44,18 @@
   }
 
   // Remove left padding from field when icon-start is present (icon has its own margin)
-  &--has-icon-start .input__field {
+  &-has-icon-start .input-field {
     padding-left: var(--spacing-2);
   }
 
-  &--has-icon-end .input__field {
+  &-has-icon-end .input-field {
     padding-right: var(--spacing-2);
   }
 
   // ==========================================================================
   // STEP BUTTONS (Number inputs)
   // ==========================================================================
-  &__step-buttons {
+  &-step-buttons {
     display: flex;
     flex-direction: column;
     align-self: stretch;
@@ -63,7 +63,7 @@
     flex-shrink: 0;
   }
 
-  &__step-btn {
+  &-step-btn {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -91,14 +91,15 @@
       background-color: color-mix(in srgb, var(--input-color-base) 25%, transparent);
     }
 
-    &--up {
+    &-up {
       border-bottom: 1px solid var(--input-border-internal, var(--color-border-base));
       border-start-end-radius: var(--input-radius, var(--radius-md));
     }
 
-    &--down {
+    &-down {
       border-end-end-radius: var(--input-radius, var(--radius-md));
     }
   }
 
 }
+

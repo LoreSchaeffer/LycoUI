@@ -403,7 +403,7 @@ export const DateTimePicker = forwardRef<HTMLDivElement, DateTimePickerProps>(
                     <div
                         ref={popoverRef}
                         id={popoverId}
-                        className={clsx('datepicker-popover', 'datepicker-popover--datetime')}
+                        className={clsx('datepicker-popover', 'datepicker-popover-datetime')}
                         role="dialog"
                         aria-label="Date and time picker"
                         onKeyDown={(event) => {
@@ -455,7 +455,7 @@ export const DateTimePicker = forwardRef<HTMLDivElement, DateTimePickerProps>(
                             {isMobile && mobileStep === 'time' && (
                                 <button
                                     type="button"
-                                    className="datepicker-btn datepicker-btn--secondary"
+                                    className="datepicker-btn datepicker-btn-secondary"
                                     onClick={() => setMobileStep('date')}
                                 >
                                     Back
@@ -463,7 +463,7 @@ export const DateTimePicker = forwardRef<HTMLDivElement, DateTimePickerProps>(
                             )}
                             <button
                                 type="button"
-                                className="datepicker-btn datepicker-btn--primary"
+                                className="datepicker-btn datepicker-btn-primary"
                                 onClick={isMobile && mobileStep === 'date' ? () => setMobileStep('time') : handleApply}
                             >
                                 {isMobile && mobileStep === 'date' ? 'Next' : 'Apply'}
@@ -474,7 +474,7 @@ export const DateTimePicker = forwardRef<HTMLDivElement, DateTimePickerProps>(
                 )}
 
                 {isComponentInvalid && finalMessage && (
-                    <div className="input__message input__message--invalid" role="alert">
+                    <div className="input-message input-message-invalid" role="alert">
                         {finalMessage}
                     </div>
                 )}
@@ -484,4 +484,6 @@ export const DateTimePicker = forwardRef<HTMLDivElement, DateTimePickerProps>(
 );
 
 DateTimePicker.displayName = 'DateTimePicker';
+
+
 

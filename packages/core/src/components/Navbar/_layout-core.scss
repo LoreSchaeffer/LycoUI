@@ -41,18 +41,18 @@
   border-bottom: 1px solid var(--navbar-border);
 
   // Sizes
-  &--sm {
+  &-sm {
     --navbar-height: 48px;
     --navbar-font-size: var(--font-size-sm, 14px);
     --navbar-gap: var(--spacing-2, 8px);
     --navbar-item-padding: var(--spacing-1, 4px) var(--spacing-2, 8px);
   }
 
-  &--md {
+  &-md {
     --navbar-height: 64px;
   }
 
-  &--lg {
+  &-lg {
     --navbar-height: 80px;
     --navbar-font-size: var(--font-size-lg, 18px);
     --navbar-gap: var(--spacing-6, 24px);
@@ -60,13 +60,13 @@
   }
 
   // Positions
-  &--sticky {
+  &-sticky {
     position: sticky;
     top: 0;
     z-index: var(--navbar-zindex);
   }
 
-  &--fixed {
+  &-fixed {
     position: fixed;
     top: 0;
     left: 0;
@@ -75,22 +75,22 @@
   }
 
   // Variants (Base, Dark, Light)
-  &--base {
+  &-base {
     --navbar-bg: var(--surface-base, var(--color-bg-root));
     --navbar-text: var(--color-text-primary);
   }
 
-  &--dark {
+  &-dark {
     --navbar-bg: var(--slate-900);
     --navbar-text: var(--white);
   }
 
-  &--light {
+  &-light {
     --navbar-bg: var(--white);
     --navbar-text: var(--slate-900);
   }
 
-  &--transparent {
+  &-transparent {
     --navbar-bg: transparent;
     --navbar-text: inherit;
     border-bottom-color: transparent;
@@ -148,3 +148,4 @@
 
   // Elements
 }
+

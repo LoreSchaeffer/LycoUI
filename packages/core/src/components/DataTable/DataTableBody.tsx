@@ -35,14 +35,14 @@ export interface DataTableBodyProps<T> {
 
 export function DataTableBody<T>({columns, rows, loading, emptyMessage, dragEnabled, selectable, selectedKeys, rowOffset, draggedIndex, dragOverIndex, getRowKey, rowClassName, onRowClick, onRowContextMenu, onToggleSelection, onDragStart, onDragOver, onDragLeave, onDrop, onDragEnd}: DataTableBodyProps<T>): ReactElement {
     const columnSpan = columns.length + (dragEnabled ? 1 : 0);
-    if (loading) return <TableBodyRegion><TableRow><TableCell colSpan={columnSpan} className="data-table__empty-cell"><Spinner size="lg"/></TableCell></TableRow></TableBodyRegion>;
-    if (!rows.length) return <TableBodyRegion><TableRow><TableCell colSpan={columnSpan} className="data-table__empty-cell">{emptyMessage}</TableCell></TableRow></TableBodyRegion>;
+    if (loading) return <TableBodyRegion><TableRow><TableCell colSpan={columnSpan} className="data-table-empty-cell"><Spinner size="lg"/></TableCell></TableRow></TableBodyRegion>;
+    if (!rows.length) return <TableBodyRegion><TableRow><TableCell colSpan={columnSpan} className="data-table-empty-cell">{emptyMessage}</TableCell></TableRow></TableBodyRegion>;
     return <TableBodyRegion>{rows.map((row, index) => {
         const absoluteIndex = dragEnabled ? index : rowOffset + index;
         const key = getRowKey(row, absoluteIndex);
-        return <TableRow key={key} className={clsx(rowClassName?.(row), onRowClick && 'data-table__row--clickable', draggedIndex === absoluteIndex && 'is-dragging', dragOverIndex === absoluteIndex && 'is-drag-over')} onClick={onRowClick ? (event) => onRowClick(event, row, absoluteIndex) : undefined} onContextMenu={onRowContextMenu ? (event) => onRowContextMenu(event, row, absoluteIndex) : undefined} draggable={dragEnabled} onDragStart={dragEnabled ? (event) => onDragStart(event as unknown as DragEvent<HTMLTableRowElement>, absoluteIndex) : undefined} onDragOver={dragEnabled ? (event) => onDragOver(event as unknown as DragEvent<HTMLTableRowElement>, absoluteIndex) : undefined} onDragLeave={dragEnabled ? onDragLeave : undefined} onDrop={dragEnabled ? (event) => onDrop(event as unknown as DragEvent<HTMLTableRowElement>, absoluteIndex) : undefined} onDragEnd={dragEnabled ? onDragEnd : undefined}>
-            {dragEnabled && <TableCell className="data-table__drag-cell"><DragHandleIcon/></TableCell>}
-            {selectable && <TableCell className="data-table__select-cell" onClick={(event) => event.stopPropagation()}><Checkbox checked={selectedKeys.includes(key)} onChange={(event) => onToggleSelection(key, event.target.checked)} aria-label={`Select row ${String(key)}`}/></TableCell>}
+        return <TableRow key={key} className={clsx(rowClassName?.(row), onRowClick && 'data-table-row-clickable', draggedIndex === absoluteIndex && 'is-dragging', dragOverIndex === absoluteIndex && 'is-drag-over')} onClick={onRowClick ? (event) => onRowClick(event, row, absoluteIndex) : undefined} onContextMenu={onRowContextMenu ? (event) => onRowContextMenu(event, row, absoluteIndex) : undefined} draggable={dragEnabled} onDragStart={dragEnabled ? (event) => onDragStart(event as unknown as DragEvent<HTMLTableRowElement>, absoluteIndex) : undefined} onDragOver={dragEnabled ? (event) => onDragOver(event as unknown as DragEvent<HTMLTableRowElement>, absoluteIndex) : undefined} onDragLeave={dragEnabled ? onDragLeave : undefined} onDrop={dragEnabled ? (event) => onDrop(event as unknown as DragEvent<HTMLTableRowElement>, absoluteIndex) : undefined} onDragEnd={dragEnabled ? onDragEnd : undefined}>
+            {dragEnabled && <TableCell className="data-table-drag-cell"><DragHandleIcon/></TableCell>}
+            {selectable && <TableCell className="data-table-select-cell" onClick={(event) => event.stopPropagation()}><Checkbox checked={selectedKeys.includes(key)} onChange={(event) => onToggleSelection(key, event.target.checked)} aria-label={`Select row ${String(key)}`}/></TableCell>}
             {columns.map((column) => <TableCell key={`${key}_${column.id}`}>{column.render ? column.render(row, absoluteIndex) : valueFor(row, column.id) as ReactNode}</TableCell>)}
         </TableRow>;
     })}</TableBodyRegion>;
@@ -51,3 +51,4 @@ export function DataTableBody<T>({columns, rows, loading, emptyMessage, dragEnab
 function valueFor<T>(row: T, id: string): unknown {
     return (row as Record<string, unknown>)[id];
 }
+

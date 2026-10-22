@@ -111,7 +111,7 @@ export const SidebarDropdownItem = forwardRef<HTMLElement, SidebarDropdownItemIn
             className={clsx(
                 'sidebar-dropdown-item',
                 'sidebar-dropdown-item',
-                variant !== 'default' && `sidebar-dropdown-item--${variant}`,
+                variant !== 'default' && `sidebar-dropdown-item-${variant}`,
                 active && 'is-active',
                 disabled && 'is-disabled',
                 className
@@ -130,4 +130,5 @@ SidebarDropdownItem.displayName = 'Sidebar.DropdownItem';
 /**
  * Sidebar component.
  */
+
 

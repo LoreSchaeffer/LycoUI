@@ -74,8 +74,8 @@ export const Stepper = forwardRef<HTMLOListElement, StepperProps>(
                 ref={ref}
                 className={clsx(
                     'stepper',
-                    `stepper--${orientation}`,
-                    compact && 'stepper--compact',
+                    `stepper-${orientation}`,
+                    compact && 'stepper-compact',
                     className
                 )}
                 style={customStyle}
@@ -87,3 +87,5 @@ export const Stepper = forwardRef<HTMLOListElement, StepperProps>(
     }
 );
 Stepper.displayName = 'Stepper';
+
+

@@ -40,7 +40,7 @@
   // ==========================================================================
   // STANDARD LIST
   // ==========================================================================
-  &__list {
+  &-list {
     display: flex;
     list-style: none;
     margin: 0;
@@ -49,12 +49,12 @@
     align-items: center;
   }
 
-  &__item {
+  &-item {
     display: flex;
   }
 
-  &__link,
-  &__btn {
+  &-link,
+  &-btn {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -101,7 +101,7 @@
     }
   }
 
-  &__btn {
+  &-btn {
     padding: 0;
     width: var(--pagination-size); // Make sure it's square for icons
     color: var(--color-text-secondary);
@@ -115,7 +115,7 @@
   // ==========================================================================
   // COMPACT VARIANT
   // ==========================================================================
-  &__compact-info {
+  &-compact-info {
     display: flex;
     align-items: center;
     gap: var(--spacing-2);
@@ -125,7 +125,7 @@
     padding: 0 var(--spacing-2);
   }
 
-  &__current-page {
+  &-current-page {
     cursor: pointer;
     min-width: calc(var(--compact-digits, 2) * 1ch + 2rem); // Use dynamic width based on total pages
     height: var(--pagination-size);
@@ -140,7 +140,7 @@
       background: var(--surface-elevated);
     }
 
-    &--input {
+    &-input {
       width: calc(var(--compact-digits, 2) * 1ch + 2rem);
       text-align: center;
       background: var(--color-surface-elevated);
@@ -167,7 +167,8 @@
     }
   }
 
-  &__separator {
+  &-separator {
     color: var(--color-text-muted);
   }
 }
+

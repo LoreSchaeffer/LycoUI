@@ -24,7 +24,7 @@ export const NavbarBrand = forwardRef((
     return (
         <Component
             ref={ref}
-            className={clsx('navbar-brand', centered && 'navbar-brand--centered', className)}
+            className={clsx('navbar-brand', centered && 'navbar-brand-centered', className)}
             {...props}
         >
             {children}
@@ -106,7 +106,7 @@ export const NavbarNav = forwardRef<HTMLUListElement, NavbarNavProps>((
     return (
         <ul
             ref={ref}
-            className={clsx('navbar-nav', `navbar-nav--align-${align}`, className)}
+            className={clsx('navbar-nav', `navbar-nav-align-${align}`, className)}
             {...props}
         >
             {children}
@@ -220,7 +220,7 @@ export const NavbarDropdown = forwardRef<HTMLLIElement, NavbarDropdownProps>((
             >
                 <button
                     type="button"
-                    className={clsx('navbar-link', 'navbar-dropdown-trigger', unstyled && 'navbar-dropdown-trigger--unstyled')}
+                    className={clsx('navbar-link', 'navbar-dropdown-trigger', unstyled && 'navbar-dropdown-trigger-unstyled')}
                     onClick={toggle}
                     aria-expanded={isOpen}
                     aria-haspopup="true"
@@ -230,7 +230,7 @@ export const NavbarDropdown = forwardRef<HTMLLIElement, NavbarDropdownProps>((
                         <NavbarDropdownCaret />
                     )}
                 </button>
-                <div className={clsx('navbar-dropdown-menu', isOpen && 'is-open', align === 'right' && 'navbar-dropdown-menu--right')}>
+                <div className={clsx('navbar-dropdown-menu', isOpen && 'is-open', align === 'right' && 'navbar-dropdown-menu-right')}>
                     {children}
                 </div>
             </li>
@@ -262,7 +262,7 @@ export const NavbarDropdownItem = forwardRef((
     return (
         <Component
             ref={ref}
-            className={clsx('navbar-dropdown-item', variant !== 'base' && `navbar-dropdown-item--${variant}`, className)}
+            className={clsx('navbar-dropdown-item', variant !== 'base' && `navbar-dropdown-item-${variant}`, className)}
             onClick={handleClick}
             {...props}
         >
@@ -307,7 +307,7 @@ export const NavbarDropdownSubMenu = forwardRef<HTMLDivElement, NavbarDropdownSu
     return (
         <div
             ref={ref}
-            className={clsx('navbar-dropdown-submenu', isFlipped && 'navbar-dropdown-submenu--flip-left', isOpen && 'is-open', className)}
+            className={clsx('navbar-dropdown-submenu', isFlipped && 'navbar-dropdown-submenu-flip-left', isOpen && 'is-open', className)}
             onMouseEnter={handleMouseEnter}
             onMouseLeave={handleMouseLeave}
             {...props}
@@ -324,7 +324,7 @@ export const NavbarDropdownSubMenu = forwardRef<HTMLDivElement, NavbarDropdownSu
             </button>
             <div
                 ref={menuRef}
-                className={clsx('navbar-dropdown-menu navbar-dropdown-menu--nested', isOpen && 'is-open')}
+                className={clsx('navbar-dropdown-menu navbar-dropdown-menu-nested', isOpen && 'is-open')}
             >
                 {children}
             </div>
@@ -332,5 +332,6 @@ export const NavbarDropdownSubMenu = forwardRef<HTMLDivElement, NavbarDropdownSu
     );
 });
 NavbarDropdownSubMenu.displayName = 'Navbar.DropdownSubMenu';
+
 
 

@@ -17,7 +17,7 @@
   // ==========================================================================
   // SIZES
   // ==========================================================================
-  &--sm {
+  &-sm {
     font-size: var(--text-body-sm);
 
     .datepicker-trigger {
@@ -32,7 +32,7 @@
     }
   }
 
-  &--lg {
+  &-lg {
     font-size: var(--font-size-lg);
 
     .datepicker-trigger {
@@ -83,7 +83,7 @@
   // ==========================================================================
   // TRIGGER BUTTON
   // ==========================================================================
-  &__trigger {
+  &-trigger {
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -118,7 +118,7 @@
 }
 
 .datepicker {
-  &__popover {
+  &-popover {
     position: absolute;
     min-width: 280px;
     padding: var(--spacing-3);
@@ -133,7 +133,7 @@
     max-width: calc(100vw - 32px);
     overflow-x: auto;
 
-    &--datetime {
+    &-datetime {
       width: max-content;
       display: flex;
       flex-direction: column;
@@ -146,13 +146,13 @@
     }
   }
 
-  &__datetime-body {
+  &-datetime-body {
     display: flex;
     flex-direction: row;
     gap: var(--spacing-3);
   }
 
-  &__datetime-footer {
+  &-datetime-footer {
     display: flex;
     gap: var(--spacing-2);
     width: 100%;
@@ -172,17 +172,17 @@
   // ==========================================================================
   // DATETIME LAYOUT
   // ==========================================================================
-  &__calendar-section {
+  &-calendar-section {
     flex: 1;
     min-width: 240px;
   }
 
-  &__time-section {
+  &-time-section {
     display: flex;
     flex-direction: column;
   }
 
-  &__vertical-divider {
+  &-vertical-divider {
     width: 1px;
     background-color: var(--color-border-subtle);
     margin: 0;
@@ -196,10 +196,11 @@
   // ==========================================================================
   // DIVIDER (Legacy/Horizontal)
   // ==========================================================================
-  &__divider {
+  &-divider {
     height: 1px;
     background-color: var(--color-border-subtle);
     margin: var(--spacing-3) 0;
   }
 }
+
 

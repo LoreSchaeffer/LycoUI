@@ -32,10 +32,10 @@ class LycoRangeController {
         const filled = this.nativeInput.getAttribute('data-filled') !== 'false';
         const showTooltip = this.nativeInput.getAttribute('data-show-tooltip') !== 'false';
 
-        this.customContainer.className = `range ${size !== 'md' ? `range--${size}` : ''} range--tooltip-${tooltipSize}`;
+        this.customContainer.className = `range ${size !== 'md' ? `range-${size}` : ''} range-tooltip-${tooltipSize}`;
         this.customContainer.style.setProperty('--range-color-base', `var(--${variant}-500, var(--color-${variant}))`);
         if (!filled) {
-            this.customContainer.classList.add('range--unfilled');
+            this.customContainer.classList.add('range-unfilled');
         }
         if (this.nativeInput.disabled) {
             this.customContainer.classList.add('is-disabled');
@@ -44,17 +44,17 @@ class LycoRangeController {
         this.nativeInput.parentNode?.insertBefore(this.customContainer, this.nativeInput);
 
         this.nativeInput.classList.remove('lyco-range-custom');
-        this.nativeInput.classList.add('range__input');
+        this.nativeInput.classList.add('range-input');
 
         this.customContainer.appendChild(this.nativeInput);
 
         if (showTooltip) {
             const tooltip = document.createElement('div');
-            tooltip.className = 'range__tooltip';
+            tooltip.className = 'range-tooltip';
             tooltip.setAttribute('aria-hidden', 'true');
 
             this.tooltipValue = document.createElement('span');
-            this.tooltipValue.className = 'range__tooltip-value';
+            this.tooltipValue.className = 'range-tooltip-value';
 
             tooltip.appendChild(this.tooltipValue);
             this.customContainer.appendChild(tooltip);
@@ -94,10 +94,12 @@ class LycoRangeController {
 
     public destroy(): void {
         this.nativeInput.removeEventListener('input', this._onInput);
-        this.nativeInput.classList.remove('range__input');
+        this.nativeInput.classList.remove('range-input');
         this.nativeInput.classList.add('range-custom');
         this.customContainer.parentNode?.insertBefore(this.nativeInput, this.customContainer);
         this.customContainer.remove();
         delete this.nativeInput.dataset.lycoInitialized;
     }
 }
+
+

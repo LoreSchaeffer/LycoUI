@@ -3,6 +3,8 @@ import {createPortal} from 'react-dom';
 import {openModalLayer} from '../../interaction/modal-layer';
 import {useFocusTrap} from '../../hooks/useFocusTrap';
 import './Modal.scss';
+import {ModalBody, ModalFooter, ModalHeader, ModalTitle} from './ModalRegions';
+export type {ModalBodyProps, ModalFooterProps, ModalHeaderProps, ModalTitleProps} from './ModalRegions';
 
 /**
  * Props for the Modal component.
@@ -100,10 +102,10 @@ export const ModalBase = React.forwardRef<HTMLDialogElement, ModalProps>(({
             ref={dialogRef}
         >
             <div
-                className={`modal__dialog modal__dialog--${size} ${centered ? 'modal__dialog--centered' : ''} ${scrollable ? 'modal__dialog--scrollable' : ''}`}
+                className={`modal-dialog modal-dialog-${size} ${centered ? 'modal-dialog-centered' : ''} ${scrollable ? 'modal-dialog-scrollable' : ''}`}
                 tabIndex={-1}
             >
-                <div className="modal__content">
+                <div className="modal-content">
                     {children}
                 </div>
             </div>
@@ -114,87 +116,6 @@ export const ModalBase = React.forwardRef<HTMLDialogElement, ModalProps>(({
 });
 ModalBase.displayName = 'Modal';
 
-/**
- * Props for the ModalHeader component.
- */
-export interface ModalHeaderProps extends React.HTMLAttributes<HTMLDivElement> {
-    children: React.ReactNode;
-}
-
-/**
- * ModalHeader component.
- * Acts as the structural container for the modal's title and contextual actions.
- */
-export const ModalHeader = React.forwardRef<HTMLDivElement, ModalHeaderProps>(
-    ({children, className = '', ...props}, ref) => (
-        <div ref={ref} className={`modal__header ${className}`} {...props}>
-            {children}
-        </div>
-    )
-);
-ModalHeader.displayName = 'ModalHeader';
-
-/**
- * Props for the ModalTitle component.
- */
-export interface ModalTitleProps extends React.HTMLAttributes<HTMLHeadingElement> {
-    children: React.ReactNode;
-    as?: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6';
-}
-
-/**
- * ModalTitle component.
- * Renders the accessible semantic heading for the modal. Defaults to an h3 tag.
- */
-export const ModalTitle = React.forwardRef<HTMLHeadingElement, ModalTitleProps>(
-    ({children, className = '', as: Component = 'h3', ...props}, ref) => (
-        <Component ref={ref} className={`modal__title ${className}`} {...props}>
-            {children}
-        </Component>
-    )
-);
-ModalTitle.displayName = 'ModalTitle';
-
-/**
- * Props for the ModalBody component.
- */
-export interface ModalBodyProps extends React.HTMLAttributes<HTMLDivElement> {
-    children: React.ReactNode;
-}
-
-/**
- * ModalBody component.
- * Container for the primary content of the modal. Scrollable if the modal is configured as scrollable.
- */
-export const ModalBody = React.forwardRef<HTMLDivElement, ModalBodyProps>(
-    ({children, className = '', ...props}, ref) => (
-        <div ref={ref} className={`modal__body ${className}`} {...props}>
-            {children}
-        </div>
-    )
-);
-ModalBody.displayName = 'ModalBody';
-
-/**
- * Props for the ModalFooter component.
- */
-export interface ModalFooterProps extends React.HTMLAttributes<HTMLDivElement> {
-    children: React.ReactNode;
-}
-
-/**
- * ModalFooter component.
- * Typically used to anchor primary and secondary action buttons at the bottom of the modal.
- */
-export const ModalFooter = React.forwardRef<HTMLDivElement, ModalFooterProps>(
-    ({children, className = '', ...props}, ref) => (
-        <div ref={ref} className={`modal__footer ${className}`} {...props}>
-            {children}
-        </div>
-    )
-);
-ModalFooter.displayName = 'ModalFooter';
-
 const ModalCompound = Object.assign(ModalBase, {
     Header: ModalHeader,
     Title: ModalTitle,
@@ -203,3 +124,5 @@ const ModalCompound = Object.assign(ModalBase, {
 });
 
 export {ModalCompound as Modal};
+
+

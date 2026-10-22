@@ -31,13 +31,13 @@
   // ==========================================================================
   // MODIFIERS
   // ==========================================================================
-  &--pill {
+  &-pill {
     border-radius: var(--radius-full, 9999px);
     padding-left: 0.85em;
     padding-right: 0.85em;
   }
 
-  &--dim {
+  &-dim {
     background-color: var(--badge-bg-dim);
     color: var(--badge-text-color-dim);
     border-color: var(--badge-border-dim, transparent);
