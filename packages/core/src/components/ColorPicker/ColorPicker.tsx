@@ -1,5 +1,6 @@
 import './ColorPicker.scss';
 import {type HTMLAttributes, useCallback, useEffect, useId, useRef, useState} from 'react';
+import {createPortal} from 'react-dom';
 import {useControllableState} from '../../hooks/useControllableState';
 import {usePickerPopover} from '../DatePicker/PickerPopover';
 
@@ -32,8 +33,8 @@ export function ColorPicker({value, defaultValue = '#000000', onChange, swatches
     const [open, setOpen] = useState(false);
     const inputRef = useRef<HTMLInputElement>(null);
     const triggerRef = useRef<HTMLDivElement>(null);
-    const popoverId = `${useId()}-popover`;
-    const {popoverRef} = usePickerPopover(open, triggerRef, popoverId, () => setOpen(false));
+    const popoverId = `lyco-color-picker-${useId().replace(/:/g, '')}`;
+    const {popoverRef, popoverStyles} = usePickerPopover(open, triggerRef, popoverId, () => setOpen(false));
 
     useEffect(() => setDraft(color), [color]);
 
@@ -85,12 +86,12 @@ export function ColorPicker({value, defaultValue = '#000000', onChange, swatches
             <button type="button" className="color-picker-trigger" aria-label="Choose color" aria-expanded={open} aria-controls={popoverId} disabled={disabled} onClick={() => setOpen(current => !current)}>
                 <span aria-hidden="true">▾</span>
             </button>
-            {open && <div className="color-picker-popover" id={popoverId} ref={popoverRef} role="dialog" aria-label="Choose color">
+            {open && createPortal(<div className="color-picker-dropdown" id={popoverId} ref={popoverRef} role="dialog" aria-label="Choose color" style={popoverStyles}>
                 <div className="color-picker-swatches">
                     {swatches.map(swatch => <button key={swatch} type="button" className="color-picker-swatch" data-color={swatch} aria-label={`Select ${swatch}`} style={{backgroundColor: swatch}} onClick={() => selectColor(swatch)}/>)}
                 </div>
                 <input type="color" className="color-picker-native" aria-label="Custom color" value={normalizeColor(color) ?? '#000000'} onChange={event => selectColor(event.target.value)}/>
-            </div>}
+            </div>, document.body)}
         </div>
     );
 }

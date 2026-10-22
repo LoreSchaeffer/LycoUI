@@ -50,6 +50,31 @@ describe('ColorPicker interactions', () => {
         expect(onChange).toHaveBeenCalledWith('#ABCDEF');
     });
 
+    it('connects its trigger and portalled dialog through generated ARIA IDs', async () => {
+        await act(async () => root.render(<ColorPicker defaultValue="#112233"/>));
+        const trigger = container.querySelector<HTMLButtonElement>('.color-picker-trigger')!;
+        await act(async () => trigger.click());
+        const dialog = document.querySelector<HTMLElement>('[role="dialog"]')!;
+        expect(container.contains(dialog)).toBe(false);
+        expect(trigger.getAttribute('aria-controls')).toBe(dialog.id);
+        expect(trigger.getAttribute('aria-expanded')).toBe('true');
+    });
+
+    it('positions the portal without invoking scrolling APIs', async () => {
+        const scrollIntoView = vi.fn();
+        const original = Object.getOwnPropertyDescriptor(HTMLElement.prototype, 'scrollIntoView');
+        Object.defineProperty(HTMLElement.prototype, 'scrollIntoView', {configurable: true, value: scrollIntoView});
+        try {
+            await act(async () => root.render(<ColorPicker defaultValue="#112233"/>));
+            await act(async () => container.querySelector<HTMLButtonElement>('.color-picker-trigger')!.click());
+            expect(document.querySelector<HTMLElement>('.color-picker-dropdown')?.style.position).toBe('absolute');
+            expect(scrollIntoView).not.toHaveBeenCalled();
+        } finally {
+            if (original) Object.defineProperty(HTMLElement.prototype, 'scrollIntoView', original);
+            else delete (HTMLElement.prototype as HTMLElement & {scrollIntoView?: () => void}).scrollIntoView;
+        }
+    });
+
     it('normalizes initial controlled and default colors', async () => {
         await act(async () => root.render(<ColorPicker defaultValue="abcdef"/>));
         expect(container.querySelector<HTMLInputElement>('.color-picker-input')!.value).toBe('#ABCDEF');
@@ -84,7 +109,7 @@ describe('ColorPicker interactions', () => {
         const onChange = vi.fn();
         await act(async () => root.render(<ColorPicker value="#112233" onChange={onChange} swatches={['#ABCDEF']}/>));
         await act(async () => container.querySelector<HTMLButtonElement>('.color-picker-trigger')!.click());
-        await act(async () => container.querySelector<HTMLButtonElement>('[data-color="#ABCDEF"]')!.click());
+        await act(async () => document.querySelector<HTMLButtonElement>('[data-color="#ABCDEF"]')!.click());
         expect(onChange).toHaveBeenCalledWith('#ABCDEF');
         expect(container.querySelector<HTMLInputElement>('.color-picker-input')!.value).toBe('#112233');
     });
@@ -93,7 +118,7 @@ describe('ColorPicker interactions', () => {
         const onChange = vi.fn();
         await act(async () => root.render(<ColorPicker value="#112233" onChange={onChange}/>));
         await act(async () => container.querySelector<HTMLButtonElement>('.color-picker-trigger')!.click());
-        const native = container.querySelector<HTMLInputElement>('.color-picker-native')!;
+        const native = document.querySelector<HTMLInputElement>('.color-picker-native')!;
         await act(async () => {
             Object.getOwnPropertyDescriptor(HTMLInputElement.prototype, 'value')!.set!.call(native, '#abcdef');
             native.dispatchEvent(new Event('input', {bubbles: true}));
