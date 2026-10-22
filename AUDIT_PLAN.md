@@ -723,7 +723,7 @@ This exhaustive unit/color candidate ledger lists lines with raw dimensional/tim
 
   **Verify:** `npm run test:unit -- tests/unit/vanilla-lifecycle.test.ts tests/unit/safe-content.test.ts`; `npm run test:parity -- tests/parity/lifecycle.spec.ts --project=chromium`. All pass with zero retained allocations. Covers C01/C13, H13/H15/H16/H20.
 
-- [ ] Task 1.3 — Extract controlled state, dismissal and navigation into Menu/Popover
+- [x] Task 1.3 — Extract controlled state, dismissal and navigation into Menu/Popover
 
   **Targets:** modify `packages/core/src/hooks/useKeyboardNav.ts`, `packages/core/src/utils/keyboard.ts`, `packages/core/src/components/DropdownMenu/DropdownMenu.tsx`, `packages/core/src/components/DropdownMenu/DropdownMenuContext.tsx`; create `packages/core/src/interaction/controllable-state.ts`, `packages/core/src/interaction/dismissable-layer.ts`, `packages/core/src/interaction/navigation.ts`, `packages/core/src/hooks/useControllableState.ts`, `packages/core/src/hooks/useClickOutside.ts`, `packages/core/src/hooks/useEscapeKey.ts`, `packages/core/src/hooks/useRovingTabIndex.ts`, `packages/core/src/primitives/Menu/Menu.tsx`, `packages/core/src/primitives/Menu/MenuController.ts`, `packages/core/src/primitives/Popover/Popover.tsx`, `packages/core/src/primitives/Popover/PopoverController.ts`, `packages/core/src/styles/primitives/_menu.scss`, `tests/unit/interaction.test.tsx`, `tests/parity/menu.spec.ts`.
 
