@@ -108,8 +108,8 @@ export type NavbarBrandProps<C extends React.ElementType = 'a'> = PolymorphicPro
 type NavbarBrandComponent = <C extends React.ElementType = 'a'>(props: NavbarBrandProps<C> & { ref?: PolymorphicRef<C> }) => React.ReactElement;
 
 const NavbarBrand = forwardRef((
-    {className, as, centered, children, ...props}: any,
-    ref: any
+    {className, as, centered, children, ...props}: NavbarBrandProps<'a'>,
+    ref: React.ForwardedRef<HTMLAnchorElement>
 ) => {
     const Component = as || 'a';
     return (
@@ -121,7 +121,7 @@ const NavbarBrand = forwardRef((
             {children}
         </Component>
     );
-}) as any as NavbarBrandComponent & { displayName?: string };
+}) as unknown as NavbarBrandComponent & { displayName?: string };
 NavbarBrand.displayName = 'Navbar.Brand';
 
 
@@ -235,12 +235,12 @@ export type NavbarLinkProps<C extends React.ElementType = 'a'> = PolymorphicProp
 type NavbarLinkComponent = <C extends React.ElementType = 'a'>(props: NavbarLinkProps<C> & { ref?: PolymorphicRef<C> }) => React.ReactElement;
 
 const NavbarLink = forwardRef((
-    {className, as, active = false, children, onClick, ...props}: any,
-    ref: any
+    {className, as, active = false, children, onClick, ...props}: NavbarLinkProps<'a'>,
+    ref: React.ForwardedRef<HTMLAnchorElement>
 ) => {
     const {close} = useNavbarContext();
 
-    const handleClick = useCallback((e: any) => {
+    const handleClick = useCallback((e: React.MouseEvent<HTMLAnchorElement>) => {
         close();
         if (onClick) onClick(e);
     }, [close, onClick]);
@@ -258,7 +258,7 @@ const NavbarLink = forwardRef((
             {children}
         </Component>
     );
-}) as any as NavbarLinkComponent & { displayName?: string };
+}) as unknown as NavbarLinkComponent & { displayName?: string };
 NavbarLink.displayName = 'Navbar.Link';
 
 
@@ -340,12 +340,12 @@ export type NavbarDropdownItemProps<C extends React.ElementType = 'a'> = Polymor
 type NavbarDropdownItemComponent = <C extends React.ElementType = 'a'>(props: NavbarDropdownItemProps<C> & { ref?: PolymorphicRef<C> }) => React.ReactElement;
 
 const NavbarDropdownItem = forwardRef((
-    {className, as, variant = 'base', onClick, children, ...props}: any,
-    ref: any
+    {className, as, variant = 'base', onClick, children, ...props}: NavbarDropdownItemProps<'a'>,
+    ref: React.ForwardedRef<HTMLAnchorElement>
 ) => {
     const context = useContext(NavbarDropdownContext);
 
-    const handleClick = useCallback((e: any) => {
+    const handleClick = useCallback((e: React.MouseEvent<HTMLAnchorElement>) => {
         context?.close();
         if (onClick) onClick(e);
     }, [context, onClick]);
@@ -362,7 +362,7 @@ const NavbarDropdownItem = forwardRef((
             {children}
         </Component>
     );
-}) as any as NavbarDropdownItemComponent & { displayName?: string };
+}) as unknown as NavbarDropdownItemComponent & { displayName?: string };
 NavbarDropdownItem.displayName = 'Navbar.DropdownItem';
 
 export interface NavbarDropdownSubMenuProps extends Omit<React.HTMLAttributes<HTMLDivElement>, 'title'> {
