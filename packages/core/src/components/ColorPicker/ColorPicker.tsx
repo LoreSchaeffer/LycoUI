@@ -22,7 +22,12 @@ const normalizeColor = (value: string): string | null => {
 };
 
 export function ColorPicker({value, defaultValue = '#000000', onChange, swatches = DEFAULT_SWATCHES, disabled = false, className, ...props}: ColorPickerProps) {
-    const [color, setColor] = useControllableState({value, defaultValue, onChange});
+    const isControlled = value !== undefined;
+    const [color, setColor] = useControllableState({
+        value: isControlled ? normalizeColor(value) ?? '#000000' : undefined,
+        defaultValue: normalizeColor(defaultValue) ?? '#000000',
+        onChange,
+    });
     const [draft, setDraft] = useState(color);
     const [open, setOpen] = useState(false);
     const inputRef = useRef<HTMLInputElement>(null);
@@ -35,13 +40,14 @@ export function ColorPicker({value, defaultValue = '#000000', onChange, swatches
     const commit = useCallback(() => {
         const next = normalizeColor(inputRef.current?.value ?? draft);
         if (next) {
-            setDraft(next);
+            setDraft(isControlled ? color : next);
+            if (isControlled && inputRef.current) inputRef.current.value = color;
             if (next !== color) setColor(next);
         } else {
             setDraft(color);
             if (inputRef.current) inputRef.current.value = color;
         }
-    }, [color, draft, setColor]);
+    }, [color, draft, isControlled, setColor]);
 
     // Native blur also handles programmatic changes to the editable input.
     useEffect(() => {
@@ -54,7 +60,7 @@ export function ColorPicker({value, defaultValue = '#000000', onChange, swatches
     const selectColor = (next: string) => {
         const normalized = normalizeColor(next);
         if (!normalized || disabled) return;
-        setDraft(normalized);
+        setDraft(isControlled ? color : normalized);
         setColor(normalized);
         setOpen(false);
     };

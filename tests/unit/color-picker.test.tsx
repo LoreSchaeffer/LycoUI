@@ -49,4 +49,57 @@ describe('ColorPicker interactions', () => {
         await act(async () => document.querySelector<HTMLButtonElement>('[data-color="#ABCDEF"]')!.click());
         expect(onChange).toHaveBeenCalledWith('#ABCDEF');
     });
+
+    it('normalizes initial controlled and default colors', async () => {
+        await act(async () => root.render(<ColorPicker defaultValue="abcdef"/>));
+        expect(container.querySelector<HTMLInputElement>('.color-picker-input')!.value).toBe('#ABCDEF');
+        await act(async () => root.render(<ColorPicker value="rgb(1, 2, 3)"/>));
+        expect(container.querySelector<HTMLInputElement>('.color-picker-input')!.value).toBe('#010203');
+    });
+
+    it('uses a valid fallback when an initial prop is invalid', async () => {
+        await act(async () => root.render(<ColorPicker value="invalid"/>));
+        const input = container.querySelector<HTMLInputElement>('.color-picker-input')!;
+        expect(input.value).toBe('#000000');
+        await act(async () => {
+            input.value = 'still-invalid';
+            input.dispatchEvent(new FocusEvent('blur', {bubbles: true}));
+        });
+        expect(input.value).toBe('#000000');
+    });
+
+    it('waits for the controlled parent after a text commit', async () => {
+        const onChange = vi.fn();
+        await act(async () => root.render(<ColorPicker value="#112233" onChange={onChange}/>));
+        const input = container.querySelector<HTMLInputElement>('.color-picker-input')!;
+        await act(async () => {
+            input.value = 'rgb(1, 2, 3)';
+            input.dispatchEvent(new FocusEvent('blur', {bubbles: true}));
+        });
+        expect(onChange).toHaveBeenCalledWith('#010203');
+        expect(input.value).toBe('#112233');
+    });
+
+    it('waits for the controlled parent after a swatch selection', async () => {
+        const onChange = vi.fn();
+        await act(async () => root.render(<ColorPicker value="#112233" onChange={onChange} swatches={['#ABCDEF']}/>));
+        await act(async () => container.querySelector<HTMLButtonElement>('.color-picker-trigger')!.click());
+        await act(async () => container.querySelector<HTMLButtonElement>('[data-color="#ABCDEF"]')!.click());
+        expect(onChange).toHaveBeenCalledWith('#ABCDEF');
+        expect(container.querySelector<HTMLInputElement>('.color-picker-input')!.value).toBe('#112233');
+    });
+
+    it('waits for the controlled parent after native color selection', async () => {
+        const onChange = vi.fn();
+        await act(async () => root.render(<ColorPicker value="#112233" onChange={onChange}/>));
+        await act(async () => container.querySelector<HTMLButtonElement>('.color-picker-trigger')!.click());
+        const native = container.querySelector<HTMLInputElement>('.color-picker-native')!;
+        await act(async () => {
+            Object.getOwnPropertyDescriptor(HTMLInputElement.prototype, 'value')!.set!.call(native, '#abcdef');
+            native.dispatchEvent(new Event('input', {bubbles: true}));
+            native.dispatchEvent(new Event('change', {bubbles: true}));
+        });
+        expect(onChange).toHaveBeenCalledWith('#ABCDEF');
+        expect(container.querySelector<HTMLInputElement>('.color-picker-input')!.value).toBe('#112233');
+    });
 });
