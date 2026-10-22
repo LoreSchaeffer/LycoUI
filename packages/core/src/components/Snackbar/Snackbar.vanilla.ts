@@ -1,4 +1,5 @@
 import {getContrastColor} from '../../utils/theme';
+import {createSafeSvg} from '../../utils/safe-content';
 
 /**
  * SnackbarDurationVanilla.
@@ -22,19 +23,6 @@ const DURATION_MAP: Record<string, number> = {
     medium: 5000,
     long: 8000,
 };
-
-function parseSafeSvg(svgString: string): SVGSVGElement | null {
-    const template = document.createElement('template');
-    template.innerHTML = svgString;
-    const svg = template.content.querySelector('svg');
-    if (!svg) return null;
-
-    svg.querySelectorAll('script').forEach(s => s.remove());
-    Array.from(svg.attributes).forEach(attr => {
-        if (attr.name.startsWith('on')) svg.removeAttribute(attr.name);
-    });
-    return svg;
-}
 
 class LycoSnackbarManager {
     private stackContainer: HTMLDivElement | null = null;
@@ -83,7 +71,7 @@ class LycoSnackbarManager {
             const iconSpan = document.createElement('span');
             iconSpan.className = 'snackbar__icon';
             if (typeof options.icon === 'string') {
-                const safeSvg = parseSafeSvg(options.icon);
+                const safeSvg = createSafeSvg(options.icon);
                 if (safeSvg) {
                     iconSpan.appendChild(safeSvg);
                 } else {

@@ -1,5 +1,6 @@
 import type {NotificationPosition} from '../../types/types';
-import {NOTIFICATION_CLOSE_SVG, NOTIFICATION_SEMANTIC_SVG} from './Notification';
+import {NOTIFICATION_CLOSE_SVG, NOTIFICATION_SEMANTIC_SVG} from '../../utils/icons';
+import {createSafeSvg} from '../../utils/safe-content';
 
 const DURATION_MAP: Record<string, number> = {
     short: 3000,
@@ -23,18 +24,6 @@ export interface VanillaNotificationOptions {
     closable?: boolean;
     duration?: VanillaNotificationDuration;
     isFlat?: boolean;
-}
-
-function parseSafeSvg(svgString: string): SVGSVGElement | null {
-    const template = document.createElement('template');
-    template.innerHTML = svgString.trim();
-    const svg = template.content.querySelector('svg');
-    if (!svg) return null;
-    svg.querySelectorAll('script').forEach(s => s.remove());
-    Array.from(svg.attributes).forEach(attr => {
-        if (attr.name.startsWith('on')) svg.removeAttribute(attr.name);
-    });
-    return svg;
 }
 
 class LycoNotificationManager {
@@ -111,7 +100,7 @@ class LycoNotificationManager {
             iconSpan.className = 'notification__icon';
 
             if (typeof resolvedIcon === 'string') {
-                const safeSvg = parseSafeSvg(resolvedIcon);
+                const safeSvg = createSafeSvg(resolvedIcon);
                 if (safeSvg) {
                     iconSpan.appendChild(safeSvg);
                 } else {

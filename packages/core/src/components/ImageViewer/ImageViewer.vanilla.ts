@@ -2,12 +2,13 @@ interface LycoImageViewerElement extends HTMLElement {
     lycoImageViewer?: LycoImageViewerController;
 }
 
-export function initLycoImageViewers() {
-    const viewers = document.querySelectorAll<HTMLElement>('.image-viewer:not([data-lyco-initialized])');
+export function initLycoImageViewers(root: ParentNode = document): void {
+    const viewers = root.querySelectorAll<HTMLElement>('.image-viewer');
     viewers.forEach(viewer => {
-        if (!viewer.dataset.lycoInitialized) {
-            new LycoImageViewerController(viewer);
-            (viewer as LycoImageViewerElement).lycoImageViewer = new LycoImageViewerController(viewer);
+        if (!controllerRegistry.get(viewer, 'gallery')) {
+            const controller = new LycoImageViewerController(viewer);
+            (viewer as LycoImageViewerElement).lycoImageViewer = controller;
+            controllerRegistry.register(viewer, 'gallery', controller);
             viewer.dataset.lycoInitialized = 'true';
         }
     });
@@ -16,7 +17,7 @@ export function initLycoImageViewers() {
 /**
  * Controller for the Vanilla JS LycoImageViewer component.
  */
-export class LycoImageViewerController {
+export class LycoImageViewerController extends BaseController {
     private readonly viewer: HTMLElement;
     private readonly wrapper: HTMLElement | null;
     private readonly mainImage: HTMLImageElement | null;
@@ -37,8 +38,10 @@ export class LycoImageViewerController {
     private readonly _onPrevClick: (e: MouseEvent) => void;
     private readonly _onNextClick: (e: MouseEvent) => void;
     private readonly _thumbnailListeners: ((e: MouseEvent) => void)[] = [];
+    private readonly observer: MutationObserver;
 
     constructor(viewerElement: HTMLElement) {
+        super();
         this.viewer = viewerElement;
         this.wrapper = this.viewer.querySelector('.image-viewer__image-wrapper');
         this.mainImage = this.viewer.querySelector('.image-viewer__image');
@@ -68,7 +71,7 @@ export class LycoImageViewerController {
 
         this.bindEvents();
 
-        const observer = new MutationObserver((mutations) => {
+        this.observer = new MutationObserver((mutations) => {
             mutations.forEach((mutation) => {
                 if (mutation.attributeName === 'style' || mutation.attributeName === 'class') {
                     if (this.viewer.style.display === 'none' || this.viewer.classList.contains('hidden')) {
@@ -77,14 +80,15 @@ export class LycoImageViewerController {
                 }
             });
         });
-        observer.observe(this.viewer, {attributes: true});
+        this.observer.observe(this.viewer, {attributes: true});
+        this.addCleanup(() => this.observer.disconnect());
 
         this.updateGalleryState();
     }
 
     private bindEvents(): void {
-        if (this.prevBtn) this.prevBtn.addEventListener('click', this._onPrevClick);
-        if (this.nextBtn) this.nextBtn.addEventListener('click', this._onNextClick);
+        if (this.prevBtn) this.listen(this.prevBtn, 'click', this._onPrevClick as EventListener);
+        if (this.nextBtn) this.listen(this.nextBtn, 'click', this._onNextClick as EventListener);
 
         this.thumbnails.forEach((thumb, index) => {
             const listener = (e: MouseEvent) => {
@@ -92,15 +96,15 @@ export class LycoImageViewerController {
                 this.goToIndex(index);
             };
             this._thumbnailListeners.push(listener);
-            thumb.addEventListener('click', listener);
+            this.listen(thumb, 'click', listener as EventListener);
         });
 
         if (this.wrapper) {
-            this.wrapper.addEventListener('wheel', this._onWheel);
-            this.wrapper.addEventListener('pointerdown', this._onPointerDown);
-            this.wrapper.addEventListener('pointermove', this._onPointerMove);
-            this.wrapper.addEventListener('pointerup', this._onPointerUp);
-            this.wrapper.addEventListener('pointercancel', this._onPointerUp);
+            this.listen(this.wrapper, 'wheel', this._onWheel as EventListener);
+            this.listen(this.wrapper, 'pointerdown', this._onPointerDown as EventListener);
+            this.listen(this.wrapper, 'pointermove', this._onPointerMove as EventListener);
+            this.listen(this.wrapper, 'pointerup', this._onPointerUp as EventListener);
+            this.listen(this.wrapper, 'pointercancel', this._onPointerUp as EventListener);
         }
     }
 
@@ -203,26 +207,14 @@ export class LycoImageViewerController {
         }
     }
 
-    public destroy(): void {
-        if (this.prevBtn) this.prevBtn.removeEventListener('click', this._onPrevClick);
-        if (this.nextBtn) this.nextBtn.removeEventListener('click', this._onNextClick);
-
-        if (this.wrapper) {
-            this.wrapper.removeEventListener('wheel', this._onWheel);
-            this.wrapper.removeEventListener('pointerdown', this._onPointerDown);
-            this.wrapper.removeEventListener('pointermove', this._onPointerMove);
-            this.wrapper.removeEventListener('pointerup', this._onPointerUp);
-            this.wrapper.removeEventListener('pointercancel', this._onPointerUp);
-        }
-
-        this.thumbnails.forEach((thumb, index) => {
-            if (this._thumbnailListeners[index]) {
-                thumb.removeEventListener('click', this._thumbnailListeners[index]);
-            }
-        });
+    public override destroy(): void {
+        super.destroy();
         this._thumbnailListeners.length = 0;
 
         delete this.viewer.dataset.lycoInitialized;
         delete (this.viewer as LycoImageViewerElement).lycoImageViewer;
     }
 }
+import {BaseController} from '../../vanilla/BaseController';
+import {controllerRegistry} from '../../vanilla/controller-registry';
+

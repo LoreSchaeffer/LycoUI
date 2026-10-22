@@ -1,25 +1,28 @@
 import {FOCUSABLE_ELEMENTS_SELECTOR, trapFocus} from '../../utils/keyboard';
+import {BaseController} from '../../vanilla/BaseController';
+import {controllerRegistry} from '../../vanilla/controller-registry';
 
 /** Extends HTMLElement to include the attached controller reference. */
 interface LycoModalElement extends HTMLElement {
     lycoModal?: LycoModalController;
 }
 
-export function initLycoModals() {
-    const modals = document.querySelectorAll<HTMLElement>('.modal:not([data-lyco-initialized])');
+export function initLycoModals(root: ParentNode = document): void {
+    const modals = root.querySelectorAll<HTMLElement>('.modal');
     modals.forEach(modal => {
-        if (!modal.dataset.lycoInitialized) {
-            new LycoModalController(modal);
-            (modal as LycoModalElement).lycoModal = new LycoModalController(modal);
+        if (!controllerRegistry.get(modal, 'modal')) {
+            const controller = new LycoModalController(modal);
+            (modal as LycoModalElement).lycoModal = controller;
+            controllerRegistry.register(modal, 'modal', controller);
             modal.dataset.lycoInitialized = 'true';
         }
     });
 
-    const toggles = document.querySelectorAll<HTMLElement>('[data-lyco-toggle="modal"]');
+    const toggles = root.querySelectorAll<HTMLElement>('[data-lyco-toggle="modal"]');
     toggles.forEach(toggle => {
-        if (toggle.dataset.lycoToggleInitialized) return;
-
-        toggle.addEventListener('click', (e) => {
+        if (controllerRegistry.get(toggle, 'modal-trigger')) return;
+        const trigger = new BaseController();
+        trigger.listen(toggle, 'click', ((e: Event) => {
             e.preventDefault();
             const targetSelector = toggle.getAttribute('data-lyco-target');
             if (!targetSelector) return;
@@ -30,11 +33,13 @@ export function initLycoModals() {
                 if (!controller) {
                     controller = new LycoModalController(targetModal);
                     (targetModal as LycoModalElement).lycoModal = controller;
+                    controllerRegistry.register(targetModal, 'modal', controller);
                     targetModal.dataset.lycoInitialized = 'true';
                 }
                 controller.show();
             }
-        });
+        }) as EventListener);
+        controllerRegistry.register(toggle, 'modal-trigger', trigger);
         toggle.dataset.lycoToggleInitialized = 'true';
     });
 }
@@ -42,7 +47,7 @@ export function initLycoModals() {
 /**
  * Controller for the Vanilla JS LycoModal component.
  */
-export class LycoModalController {
+export class LycoModalController extends BaseController {
     private readonly modal: HTMLElement;
     private readonly dialog: HTMLElement | null;
     private isOpen: boolean = false;
@@ -54,6 +59,7 @@ export class LycoModalController {
     private readonly _onCloseClick: (e: MouseEvent) => void;
 
     constructor(modalElement: HTMLElement) {
+        super();
         this.modal = modalElement;
         this.dialog = this.modal.querySelector('.modal__dialog');
 
@@ -72,21 +78,18 @@ export class LycoModalController {
     }
 
     private bindEvents(): void {
-        this.modal.addEventListener('click', this._onBackdropClick);
+        this.listen(this.modal, 'click', this._onBackdropClick as EventListener);
 
         const closeButtons = this.modal.querySelectorAll('[data-lyco-dismiss="modal"]');
-        closeButtons.forEach(btn => btn.addEventListener('click', this._onCloseClick as EventListener));
+        closeButtons.forEach(btn => this.listen(btn, 'click', this._onCloseClick as EventListener));
     }
 
-    public destroy(): void {
+    public override destroy(): void {
         if (this.focusTimeoutId) window.clearTimeout(this.focusTimeoutId);
-        this.modal.removeEventListener('click', this._onBackdropClick);
-        const closeButtons = this.modal.querySelectorAll('[data-lyco-dismiss="modal"]');
-        closeButtons.forEach(btn => btn.removeEventListener('click', this._onCloseClick as EventListener));
-
         if (this.isOpen) {
             this.hide();
         }
+        super.destroy();
         delete this.modal.dataset.lycoInitialized;
         delete (this.modal as LycoModalElement).lycoModal;
     }

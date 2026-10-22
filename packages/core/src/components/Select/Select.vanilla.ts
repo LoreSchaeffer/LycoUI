@@ -1,27 +1,19 @@
-export function initLycoSelects() {
-    const nativeSelects = document.querySelectorAll<HTMLSelectElement>('select.select-custom:not([data-lyco-initialized])');
+import {BaseController} from '../../vanilla/BaseController';
+import {controllerRegistry} from '../../vanilla/controller-registry';
+import {createSafeSvg} from '../../utils/safe-content';
+
+export function initLycoSelects(root: ParentNode = document): void {
+    const nativeSelects = root.querySelectorAll<HTMLSelectElement>('select.select-custom');
     nativeSelects.forEach(select => {
-        if (!select.dataset.lycoInitialized) {
-            new LycoSelectController(select);
+        if (!controllerRegistry.get(select, 'select')) {
+            const controller = new LycoSelectController(select);
+            controllerRegistry.register(select, 'select', controller);
             select.dataset.lycoInitialized = 'true';
         }
     });
 }
 
-function parseSafeSvg(svgString: string): SVGSVGElement | null {
-    const template = document.createElement('template');
-    template.innerHTML = svgString;
-    const svg = template.content.querySelector('svg');
-    if (!svg) return null;
-
-    svg.querySelectorAll('script').forEach(s => s.remove());
-    Array.from(svg.attributes).forEach(attr => {
-        if (attr.name.startsWith('on')) svg.removeAttribute(attr.name);
-    });
-    return svg;
-}
-
-class LycoSelectController {
+class LycoSelectController extends BaseController {
     private readonly nativeSelect: HTMLSelectElement;
     private readonly customContainer: HTMLDivElement;
     private trigger!: HTMLDivElement;
@@ -48,6 +40,7 @@ class LycoSelectController {
     private readonly _onInput: (e: Event) => void;
 
     constructor(nativeSelect: HTMLSelectElement) {
+        super();
         this.nativeSelect = nativeSelect;
         this.customContainer = document.createElement('div');
         this.searchable = this.nativeSelect.getAttribute('data-searchable') === 'true';
@@ -192,7 +185,7 @@ class LycoSelectController {
             if (iconContent) {
                 const iconSpan = document.createElement('span');
                 iconSpan.className = 'select__icon select__icon--option';
-                const safeSvg = parseSafeSvg(iconContent);
+                const safeSvg = createSafeSvg(iconContent);
                 if (safeSvg) iconSpan.appendChild(safeSvg);
                 li.appendChild(iconSpan);
             }
@@ -223,12 +216,12 @@ class LycoSelectController {
     }
 
     private bindEvents(): void {
-        this.trigger.addEventListener('click', this._onTriggerClick);
-        this.chevronBtn.addEventListener('click', this._onChevronClick);
-        document.addEventListener('mousedown', this._onOutsideClick);
+        this.listen(this.trigger, 'click', this._onTriggerClick as EventListener);
+        this.listen(this.chevronBtn, 'click', this._onChevronClick as EventListener);
+        this.listen(document, 'mousedown', this._onOutsideClick as EventListener);
 
         if (this.searchable) {
-            this.valueElement.addEventListener('input', this._onInput);
+            this.listen(this.valueElement, 'input', this._onInput);
         }
 
         this.options.forEach((optEl, listIndex) => {
@@ -238,28 +231,17 @@ class LycoSelectController {
                 this.selectOption(listIndex);
             };
             const mouseFn = () => this.updateFocus(listIndex);
-            optEl.addEventListener('click', clickFn);
-            optEl.addEventListener('mouseenter', mouseFn);
+            this.listen(optEl, 'click', clickFn as EventListener);
+            this.listen(optEl, 'mouseenter', mouseFn);
             this.optionListeners.push({el: optEl, click: clickFn, mouseenter: mouseFn});
         });
 
-        this.customContainer.addEventListener('keydown', this._onKeyDown);
-        this.nativeSelect.addEventListener('change', this._onChange);
+        this.listen(this.customContainer, 'keydown', this._onKeyDown as EventListener);
+        this.listen(this.nativeSelect, 'change', this._onChange);
     }
 
-    public destroy(): void {
-        document.removeEventListener('mousedown', this._onOutsideClick);
-        this.trigger.removeEventListener('click', this._onTriggerClick);
-        this.chevronBtn.removeEventListener('click', this._onChevronClick);
-        if (this.searchable) {
-            this.valueElement.removeEventListener('input', this._onInput);
-        }
-        this.customContainer.removeEventListener('keydown', this._onKeyDown);
-        this.nativeSelect.removeEventListener('change', this._onChange);
-        this.optionListeners.forEach(({el, click, mouseenter}) => {
-            el.removeEventListener('click', click);
-            el.removeEventListener('mouseenter', mouseenter);
-        });
+    public override destroy(): void {
+        super.destroy();
         this.customContainer.remove();
         this.nativeSelect.style.display = '';
         delete this.nativeSelect.dataset.lycoInitialized;
@@ -475,7 +457,7 @@ class LycoSelectController {
         if (iconContent) {
             const iconSpan = document.createElement('span');
             iconSpan.className = 'select__icon select__icon--start';
-            const safeSvg = parseSafeSvg(iconContent);
+            const safeSvg = createSafeSvg(iconContent);
             if (safeSvg) iconSpan.appendChild(safeSvg);
             this.contentContainer.insertBefore(iconSpan, this.valueElement);
         }

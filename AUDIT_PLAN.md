@@ -711,7 +711,7 @@ This exhaustive unit/color candidate ledger lists lines with raw dimensional/tim
 
   **Verify:** `npm run test:unit -- tests/unit/harness.test.ts`; `npm run test:parity -- tests/parity/harness.spec.ts --project=chromium` both exit 0. `npm run audit:contracts -- --check exports,props,examples,classes,tokens,motion,loc,dependencies --report-only` reproduces baseline findings.
 
-- [ ] Task 1.2 — Give Vanilla instances one owner and isolate framework-free assets
+- [x] Task 1.2 — Give Vanilla instances one owner and isolate framework-free assets
 
   **Targets:** create `packages/core/src/vanilla/BaseController.ts`, `packages/core/src/vanilla/controller-registry.ts`, `packages/core/src/vanilla/init.ts`, `packages/core/src/utils/icons.ts`, `packages/core/src/utils/safe-content.ts`, `tests/unit/vanilla-lifecycle.test.ts`, `tests/unit/safe-content.test.ts`, `tests/parity/lifecycle.spec.ts`; modify `packages/core/src/vanilla.ts`, `packages/core/src/components/Modal/Modal.vanilla.ts`, `packages/core/src/components/ImageViewer/ImageViewer.vanilla.ts`, `packages/core/src/components/Notification/Notification.tsx`, `packages/core/src/components/Notification/Notification.vanilla.ts`, `packages/core/src/components/Input/Input.vanilla.ts`, `packages/core/src/components/Select/Select.vanilla.ts`, `packages/core/src/components/Snackbar/Snackbar.vanilla.ts`.
 
