@@ -4,6 +4,7 @@ import clsx from 'clsx';
 import {Button} from '../Button/Button';
 import {computeSideFlyoutPosition} from '../../utils/floating';
 import type {PolymorphicProps, PolymorphicRef} from '../../types/polymorphic';
+import {useSidebarResize} from './useSidebarResize';
 
 interface SidebarContextType {
     isMini: boolean;
@@ -54,41 +55,14 @@ const SidebarComponent = forwardRef<HTMLElement, SidebarProps>((
     },
     ref
 ) => {
-    const [width, setWidth] = useState(defaultWidth);
-    const [isResizing, setIsResizing] = useState(false);
-    const startX = useRef(0);
-    const startWidth = useRef(0);
-
-    const handleMouseDown = useCallback((e: React.MouseEvent) => {
-        if (isMini) return;
-
-        setIsResizing(true);
-        startX.current = e.clientX;
-        startWidth.current = width;
-
-        const handleMouseMove = (e: MouseEvent) => {
-            let newWidth = startWidth.current + (e.clientX - startX.current);
-            if (newWidth < minWidth) newWidth = minWidth;
-            if (newWidth > maxWidth) newWidth = maxWidth;
-            setWidth(newWidth);
-        };
-
-        const handleMouseUp = () => {
-            setIsResizing(false);
-            document.removeEventListener('mousemove', handleMouseMove);
-            document.removeEventListener('mouseup', handleMouseUp);
-        };
-
-        document.addEventListener('mousemove', handleMouseMove);
-        document.addEventListener('mouseup', handleMouseUp);
-    }, [isMini, width, minWidth, maxWidth]);
+    const resize = useSidebarResize({initialWidth: defaultWidth, minWidth, maxWidth});
 
     const contextValue = useMemo(() => ({isMini}), [isMini]);
 
     const sidebarStyle = useMemo(() => {
         const customStyle: React.CSSProperties & Record<string, string | number | undefined> = {
             ...style,
-            '--sidebar-width': `${width}px`
+            '--sidebar-width': `${resize.width}px`
         };
 
         if (miniIconScale !== undefined) {
@@ -96,7 +70,7 @@ const SidebarComponent = forwardRef<HTMLElement, SidebarProps>((
         }
 
         return customStyle as React.CSSProperties;
-    }, [width, miniIconScale, style]);
+    }, [resize.width, miniIconScale, style]);
 
     return (
         <SidebarContext.Provider value={contextValue}>
@@ -114,7 +88,7 @@ const SidebarComponent = forwardRef<HTMLElement, SidebarProps>((
                     `sidebar--${variant}`,
                     isOpen && 'is-open',
                     isMini && 'is-mini',
-                    isResizing && 'sidebar-resizing',
+                    resize.isResizing && 'sidebar-resizing',
                     className
                 )}
                 style={sidebarStyle}
@@ -124,8 +98,17 @@ const SidebarComponent = forwardRef<HTMLElement, SidebarProps>((
                 {resizable && !isMini && (
                     <div
                         className="sidebar-resizer sidebar__resizer"
-                        onMouseDown={handleMouseDown}
-                        aria-hidden="true"
+                        onPointerDown={isMini ? undefined : resize.begin}
+                        onPointerMove={resize.move}
+                        onPointerUp={resize.end}
+                        onPointerCancel={resize.end}
+                        onKeyDown={resize.keyboard}
+                        role="separator"
+                        tabIndex={0}
+                        aria-orientation="vertical"
+                        aria-valuemin={minWidth}
+                        aria-valuemax={maxWidth}
+                        aria-valuenow={resize.width}
                     />
                 )}
             </aside>
