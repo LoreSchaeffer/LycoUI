@@ -1,5 +1,4 @@
 @use "sass:map";
-@use "sass:color";
 // @use "fonts";
 @use "tokens/colors" as colors;
 @use "tokens/elevations" as elevations;
@@ -11,19 +10,19 @@
 @use "tokens/typography" as typo;
 @use "tokens/breakpoints" as bp;
 
-// ==========================================================================
-// ROOT START
-// ==========================================================================
-:root {
+@mixin emit-neutral-scale($theme) {
+  $scale: map.get(colors.$neutral-scales, $theme);
 
-  // ==========================================================================
-  // NEUTRAL COLORS (Base, Hover, Active)
-  // ==========================================================================
-  @each $name, $color in colors.$neutral-colors {
-    --color-#{$name}: #{$color};
-    --color-#{$name}-hover: #{color.mix(white, $color, 4%)};
-    --color-#{$name}-active: #{color.mix(black, $color, 4%)};
+  @each $step, $neutral in $scale {
+    --neutral-#{$step}: #{$neutral};
   }
+}
+
+// ========================================================================== 
+// ROOT START
+// ========================================================================== 
+:root {
+  @include emit-neutral-scale('slate');
 
   // Core Backgrounds
   --color-bg-root: var(--surface-root);
@@ -32,9 +31,9 @@
   --color-surface-floating: var(--surface-floating);
 
   // Typography Colors
-  --color-text-primary: var(--color-paper);
-  --color-text-secondary: var(--color-mist);
-  --color-text-muted: var(--color-fog);
+  --color-text-primary: var(--neutral-50);
+  --color-text-secondary: var(--neutral-200);
+  --color-text-muted: var(--neutral-400);
   --color-text-success: var(--color-green-500);
   --color-text-warning: var(--color-amber-500);
   --color-text-danger: var(--color-red-500);
@@ -73,10 +72,10 @@
   --color-primary-active: var(--blue-600);
   --color-primary-dim: var(--blue-dim);
 
-  --color-secondary: var(--color-ash);
-  --color-secondary-hover: var(--color-fog);
-  --color-secondary-active: var(--color-smoke);
-  --color-secondary-dim: rgba(138, 143, 152, 0.15); // fog with 15% opacity
+  --color-secondary: var(--neutral-500);
+  --color-secondary-hover: var(--neutral-400);
+  --color-secondary-active: var(--neutral-700);
+  --color-secondary-dim: color-mix(in srgb, var(--neutral-400) 15%, transparent);
 
   --color-success: var(--green-500);
   --color-success-hover: var(--green-400);
@@ -160,6 +159,14 @@
   @each $name, $value in shadow.$glow-steps {
     --glow-#{$name}: #{$value};
   }
+}
+
+html[data-theme='gray'] {
+  @include emit-neutral-scale('gray');
+}
+
+html[data-theme='zinc'] {
+  @include emit-neutral-scale('zinc');
 }
 
 // ==========================================================================
@@ -334,7 +341,7 @@ pre {
 // ==========================================================================
 * {
   scrollbar-width: thin;
-  scrollbar-color: var(--color-ash) transparent;
+  scrollbar-color: var(--neutral-500) transparent;
 }
 
 *::-webkit-scrollbar {
@@ -348,13 +355,13 @@ pre {
 }
 
 *::-webkit-scrollbar-thumb {
-  background-color: var(--color-ash);
+  background-color: var(--neutral-500);
   border-radius: var(--radius-md);
   border: 2px solid transparent;
   background-clip: padding-box;
 
   &:hover {
-    background-color: var(--color-fog);
+    background-color: var(--neutral-400);
   }
 }
 

@@ -13,5 +13,5 @@ export const getContrastColor = (variant: string | undefined): string => {
     if (!variant) return 'var(--white, #ffffff)';
 
     const isLight = LIGHT_COLORS.includes(variant);
-    return isLight ? 'var(--color-carbon, #0f1011)' : 'var(--white, #ffffff)';
+    return isLight ? 'var(--neutral-950, #0f1011)' : 'var(--white, #ffffff)';
 };

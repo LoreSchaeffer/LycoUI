@@ -11,7 +11,7 @@
   display: flex;
   align-items: center;
   width: 100%;
-  background-color: var(--color-void, transparent);
+  background-color: var(--neutral-950, transparent);
   border: 1px solid var(--color-border-base);
 
   border-radius: var(--input-radius, var(--radius-md));
@@ -77,7 +77,7 @@
         height: var(--input-height);
         padding: 0 var(--input-padding-x);
         margin-right: var(--spacing-3);
-        background-color: var(--color-carbon);
+        background-color: var(--neutral-950);
         border: none;
         border-right: 1px solid var(--input-border-internal, var(--color-border-base));
         border-start-start-radius: var(--input-radius);
@@ -90,7 +90,7 @@
         transition: background-color var(--duration-fast) var(--ease-default);
 
         &:hover {
-          background-color: var(--color-carbon-active);
+          background-color: var(--surface-active);
         }
       }
     }

@@ -81,13 +81,13 @@
   }
 
   &-dark {
-    --navbar-bg: var(--slate-900);
+    --navbar-bg: var(--neutral-900);
     --navbar-text: var(--white);
   }
 
   &-light {
     --navbar-bg: var(--white);
-    --navbar-text: var(--slate-900);
+    --navbar-text: var(--neutral-900);
   }
 
   &-transparent {

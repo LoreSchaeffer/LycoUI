@@ -13,7 +13,7 @@
 
 .snackbar {
   // Consume the injected variable with fallback
-  --snackbar-border: var(--snackbar-color-base, var(--slate-900));
+  --snackbar-border: var(--snackbar-color-base, var(--neutral-900));
   --snackbar-bg: var(--surface-floating, var(--color-bg-surface));
   --snackbar-text: var(--color-text-primary);
   --snackbar-radius: var(--radius-md);
