@@ -3,12 +3,7 @@ import {createPortal} from 'react-dom';
 import {NotificationContext, type NotificationOptions} from './NotificationContext';
 import {Notification} from './Notification';
 import type {NotificationPosition} from '../../types/types';
-
-const DURATION_MAP: Record<string, number> = {
-    short: 3000,
-    medium: 5000,
-    long: 8000,
-};
+import {durationToMilliseconds, TimedDismiss} from '../../interaction/timed-dismiss';
 
 interface ActiveNotification extends NotificationOptions {
     id: string;
@@ -39,13 +34,11 @@ export const NotificationProvider: React.FC<NotificationProviderProps> = ({
                                                                               maxNotifications = 5,
                                                                           }) => {
     const [notifications, setNotifications] = useState<ActiveNotification[]>([]);
-    const timersRef = useRef<Map<string, number>>(new Map());
+    const timersRef = useRef<Map<string, TimedDismiss>>(new Map());
 
     const closeNotification = useCallback((id: string) => {
-        if (timersRef.current.has(id)) {
-            window.clearTimeout(timersRef.current.get(id));
-            timersRef.current.delete(id);
-        }
+        timersRef.current.get(id)?.destroy();
+        timersRef.current.delete(id);
 
         setNotifications(prev => prev.map(n => (n.id === id ? {...n, isExiting: true} : n)));
 
@@ -57,13 +50,7 @@ export const NotificationProvider: React.FC<NotificationProviderProps> = ({
     const showNotification = useCallback((options: NotificationOptions): string => {
         const id = `notification-${++idCounter}`;
 
-        const durationType = options.duration ?? 'short';
-        let durationMs: number;
-        if (typeof durationType === 'number') {
-            durationMs = durationType * 1000;
-        } else {
-            durationMs = DURATION_MAP[durationType] ?? DURATION_MAP.short;
-        }
+        const durationMs = durationToMilliseconds(options.duration);
         const durationSec = durationMs / 1000;
 
         const newNotification: ActiveNotification = {
@@ -80,7 +67,7 @@ export const NotificationProvider: React.FC<NotificationProviderProps> = ({
                 const evicted = next.slice(0, next.length - maxNotifications);
                 evicted.forEach(n => {
                     if (timersRef.current.has(n.id)) {
-                        window.clearTimeout(timersRef.current.get(n.id));
+                        timersRef.current.get(n.id)?.destroy();
                         timersRef.current.delete(n.id);
                     }
                 });
@@ -89,10 +76,9 @@ export const NotificationProvider: React.FC<NotificationProviderProps> = ({
             return next;
         });
 
-        const timerId = window.setTimeout(() => {
-            closeNotification(id);
-        }, durationMs);
-        timersRef.current.set(id, timerId);
+        const dismiss = new TimedDismiss(durationMs, () => closeNotification(id));
+        timersRef.current.set(id, dismiss);
+        dismiss.start();
 
         return id;
     }, [closeNotification, maxNotifications]);
@@ -100,7 +86,7 @@ export const NotificationProvider: React.FC<NotificationProviderProps> = ({
     useEffect(() => {
         const timers = timersRef.current;
         return () => {
-            timers.forEach(timerId => window.clearTimeout(timerId));
+            timers.forEach(timer => timer.destroy());
             timers.clear();
         };
     }, []);

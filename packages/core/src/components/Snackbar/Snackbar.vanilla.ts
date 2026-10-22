@@ -1,5 +1,6 @@
 import {getContrastColor} from '../../utils/theme';
 import {createSafeSvg} from '../../utils/safe-content';
+import {durationToMilliseconds, TimedDismiss} from '../../interaction/timed-dismiss';
 
 /**
  * SnackbarDurationVanilla.
@@ -18,20 +19,14 @@ export interface VanillaSnackbarOptions {
     isFlat?: boolean;
 }
 
-const DURATION_MAP: Record<string, number> = {
-    short: 3000,
-    medium: 5000,
-    long: 8000,
-};
-
 class LycoSnackbarManager {
     private stackContainer: HTMLDivElement | null = null;
     private snackbarCount = 0;
-    private activeSnackbars: Map<string, { el: HTMLDivElement, closeHandler: () => void, timerId?: number, exitTimerId?: number }> = new Map();
+    private activeSnackbars: Map<string, { el: HTMLDivElement, closeHandler: () => void, dismiss?: TimedDismiss, exitTimerId?: number }> = new Map();
 
     public destroy(): void {
         this.activeSnackbars.forEach((data) => {
-            if (data.timerId) window.clearTimeout(data.timerId);
+            data.dismiss?.destroy();
             if (data.exitTimerId) window.clearTimeout(data.exitTimerId);
             data.el.remove();
         });
@@ -93,13 +88,13 @@ class LycoSnackbarManager {
         snackbar.appendChild(contentDiv);
 
         let closeBtn: HTMLButtonElement | null = null;
-        let timerId: number | undefined;
+        let dismiss: TimedDismiss | undefined;
         let exitTimerId: number | undefined;
 
         const closeHandler = () => {
             const active = this.activeSnackbars.get(id);
-            if (active && active.timerId) window.clearTimeout(active.timerId);
-            if (timerId) window.clearTimeout(timerId);
+            active?.dismiss?.destroy();
+            dismiss?.destroy();
             if (closeBtn) closeBtn.removeEventListener('click', closeHandler);
 
             snackbar.classList.add('is-exiting');
@@ -132,14 +127,9 @@ class LycoSnackbarManager {
 
         stack.appendChild(snackbar);
 
-        const durationType = options.duration || 'short';
-        const durationMs = typeof durationType === 'number' ? durationType * 1000 : (DURATION_MAP[durationType] || DURATION_MAP.short);
-
-        timerId = window.setTimeout(() => {
-            closeHandler();
-        }, durationMs);
-
-        this.activeSnackbars.set(id, {el: snackbar, closeHandler, timerId});
+        dismiss = new TimedDismiss(durationToMilliseconds(options.duration), closeHandler);
+        this.activeSnackbars.set(id, {el: snackbar, closeHandler, dismiss});
+        dismiss.start();
 
         return id;
     }
