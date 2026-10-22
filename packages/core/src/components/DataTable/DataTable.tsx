@@ -8,6 +8,7 @@ import {Select, type SelectOption} from '../Select';
 import {Pagination} from '../Pagination';
 import {Spinner} from '../Spinner';
 import {Checkbox} from '../Checkbox';
+import {deriveRows} from './data-model.ts';
 
 
 export type SortDirection = 'asc' | 'desc';
@@ -207,14 +208,6 @@ function getRowValue<T>(row: T, colId: string): unknown {
     return (row as Record<string, unknown>)[colId];
 }
 
-function normalizeText(text: unknown): string {
-    return String(text ?? '')
-        .normalize('NFD')
-        .replace(/[\u0300-\u036f]/g, '')
-        .toLowerCase()
-        .trim();
-}
-
 const DEFAULT_PAGE_SIZES = [10, 25, 50, 100];
 
 
@@ -329,62 +322,11 @@ function DataTableInner<T>(
         onPageChange?.(page, pageSize);
     }, [pageSize, onPageChange]);
 
-    const filteredData = useMemo(() => {
-        if (isDragEnabled) return data;
-
-        const normalized = normalizeText(searchQuery);
-        if (!normalized) return data;
-
-        return data.filter(row =>
-            columns.some(col => {
-                if (col.searchable === false) return false;
-
-                const rawValue = col.searchValue
-                    ? col.searchValue(row)
-                    : getRowValue(row, col.id);
-
-                if (rawValue == null) return false;
-                return normalizeText(rawValue).includes(normalized);
-            })
-        );
-    }, [data, searchQuery, columns, isDragEnabled]);
-
-    const sortedData = useMemo(() => {
-        if (isDragEnabled) return filteredData;
-        if (!sortColumn) return filteredData;
-
-        const col = columns.find(c => c.id === sortColumn);
-        if (!col || col.sortable === false) return filteredData;
-
-        return [...filteredData].sort((a, b) => {
-            if (col.compare) {
-                return col.compare(a, b) * (sortDirection === 'asc' ? 1 : -1);
-            }
-
-            const aVal = getRowValue(a, col.id);
-            const bVal = getRowValue(b, col.id);
-
-            const aNull = aVal === null || aVal === undefined;
-            const bNull = bVal === null || bVal === undefined;
-            if (aNull && bNull) return 0;
-            if (aNull) return 1;
-            if (bNull) return -1;
-
-            if (typeof aVal === 'number' && typeof bVal === 'number') {
-                return (aVal - bVal) * (sortDirection === 'asc' ? 1 : -1);
-            }
-
-            const cmp = String(aVal).localeCompare(String(bVal));
-            return sortDirection === 'asc' ? cmp : -cmp;
-        });
-    }, [filteredData, sortColumn, sortDirection, columns, isDragEnabled]);
-
-    const totalPages = isDragEnabled
-        ? 1
-        : Math.max(1, Math.ceil(sortedData.length / pageSize));
-    const paginatedData = isDragEnabled
-        ? sortedData
-        : sortedData.slice((currentPage - 1) * pageSize, currentPage * pageSize);
+    const derivedRows = useMemo(() => deriveRows(data, columns, {query: searchQuery, sortColumn, sortDirection, page: currentPage, pageSize}), [data, columns, currentPage, pageSize, searchQuery, sortColumn, sortDirection]);
+    const sortedData = isDragEnabled ? data : deriveRows(data, columns, {query: searchQuery, sortColumn, sortDirection}).rows;
+    const totalPages = isDragEnabled ? 1 : derivedRows.totalPages;
+    const activePage = isDragEnabled ? 1 : derivedRows.page;
+    const paginatedData = isDragEnabled ? data : derivedRows.rows;
 
     const getRowKey = useCallback((row: T, idx: number): string | number => {
         if (rowKey) return rowKey(row, idx);
@@ -465,10 +407,8 @@ function DataTableInner<T>(
             sortedData.length > 0 && sortedData.some((row, idx) => activeSelectedKeys.includes(getRowKey(row, idx))) && !isAllSelected,
         [sortedData, activeSelectedKeys, getRowKey, isAllSelected]);
 
-    const resultsStart = isDragEnabled ? 1 : (currentPage - 1) * pageSize + 1;
-    const resultsEnd = isDragEnabled
-        ? sortedData.length
-        : Math.min(currentPage * pageSize, sortedData.length);
+    const resultsStart = isDragEnabled ? (sortedData.length ? 1 : 0) : derivedRows.from;
+    const resultsEnd = isDragEnabled ? sortedData.length : derivedRows.to;
     const totalResults = sortedData.length;
 
     const renderPaginationInfo = () => {
@@ -517,7 +457,7 @@ function DataTableInner<T>(
                 {totalPages > 1 && (
                     <Pagination
                         variant="compact"
-                        currentPage={currentPage}
+                        currentPage={activePage}
                         totalPages={totalPages}
                         onChange={handlePageChange}
                         size="sm"
@@ -650,7 +590,7 @@ function DataTableInner<T>(
                             paginatedData.map((row, idx) => {
                                 const absoluteIndex = isDragEnabled
                                     ? idx
-                                    : (currentPage - 1) * pageSize + idx;
+                                    : (activePage - 1) * pageSize + idx;
                                 const key = getRowKey(row, absoluteIndex);
                                 const extraClass = rowClassName ? rowClassName(row) : undefined;
                                 const isDragged = dragIndex === absoluteIndex;
