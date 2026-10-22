@@ -4,6 +4,8 @@ import clsx from 'clsx';
 import type {Alignment, FullVariant} from '../../types/types';
 import type {PolymorphicProps, PolymorphicRef} from '../../types/polymorphic';
 import {NavbarContext, useNavbarContext} from './NavbarContext';
+import {NavbarContainer} from './NavbarRegions';
+import {NavbarDropdownCaret} from './NavbarDropdown';
 
 
 export interface NavbarProps extends React.HTMLAttributes<HTMLElement> {
@@ -90,9 +92,7 @@ const NavbarComponent = forwardRef<HTMLElement, NavbarProps>((
                 } as CSSProperties}
                 {...props}
             >
-                <div className="navbar-container">
-                    {children}
-                </div>
+                <NavbarContainer>{children}</NavbarContainer>
             </nav>
         </NavbarContext.Provider>
     );
@@ -318,9 +318,7 @@ const NavbarDropdown = forwardRef<HTMLLIElement, NavbarDropdownProps>((
                 >
                     {title}
                     {!hideCaret && (
-                        <svg className="navbar-dropdown-caret" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                            <polyline points="6 9 12 15 18 9"></polyline>
-                        </svg>
+                        <NavbarDropdownCaret />
                     )}
                 </button>
                 <div className={clsx('navbar-dropdown-menu', isOpen && 'is-open', align === 'right' && 'navbar-dropdown-menu--right')}>
@@ -413,9 +411,7 @@ const NavbarDropdownSubMenu = forwardRef<HTMLDivElement, NavbarDropdownSubMenuPr
                 onClick={toggle}
             >
                 <span>{title}</span>
-                <svg className="navbar-dropdown-caret" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                    <polyline points="6 9 12 15 18 9"></polyline>
-                </svg>
+                <NavbarDropdownCaret />
             </button>
             <div
                 ref={menuRef}
