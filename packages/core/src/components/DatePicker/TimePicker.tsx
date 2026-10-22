@@ -6,6 +6,7 @@ import type {FullVariant, SizeVariant} from '../../types/types.ts';
 import {getContrastColor} from '../../utils/theme.ts';
 import {useMediaQuery} from '../../hooks/useMediaQuery.ts';
 import TimeInput from './TimeInput.tsx';
+import {parseTime} from './time-model';
 
 /** Represents a selected time value. */
 /**
@@ -224,10 +225,8 @@ export const TimePicker = forwardRef<HTMLDivElement, TimePickerProps>(
                 onChange?.(null);
                 return;
             }
-            const [h, m] = val.split(':').map(Number);
-            if (!isNaN(h) && !isNaN(m)) {
-                onChange?.({hours: h, minutes: m});
-            }
+            const time = parseTime(val);
+            if (time) onChange?.(time);
         }, [onChange]);
 
         const handleInputChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
