@@ -9,6 +9,7 @@ import {Pagination} from '../Pagination';
 import {Spinner} from '../Spinner';
 import {Checkbox} from '../Checkbox';
 import {deriveRows} from './data-model.ts';
+import {useRowSelection} from './useRowSelection.ts';
 
 
 export type SortDirection = 'asc' | 'desc';
@@ -270,8 +271,7 @@ function DataTableInner<T>(
     const [pageSize, setPageSize] = useState(defaultPageSize);
     const [currentPage, setCurrentPage] = useState(1);
 
-    const [internalSelectedKeys, setInternalSelectedKeys] = useState<(string | number)[]>(defaultSelectedRowKeys);
-    const activeSelectedKeys = selectedRowKeys ?? internalSelectedKeys;
+    const {keys: activeSelectedKeys, toggle: toggleSelection, toggleAll: toggleAllSelection} = useRowSelection(selectedRowKeys, defaultSelectedRowKeys, onSelectionChange);
 
     const [dragIndex, setDragIndex] = useState<number | null>(null);
     const [dragOverIndex, setDragOverIndex] = useState<number | null>(null);
@@ -376,28 +376,10 @@ function DataTableInner<T>(
         setDragOverIndex(null);
     }, []);
 
-    const handleSelectRow = useCallback((key: string | number, checked: boolean) => {
-        const newSelection = checked
-            ? [...activeSelectedKeys, key]
-            : activeSelectedKeys.filter(k => k !== key);
-
-        setInternalSelectedKeys(newSelection);
-        onSelectionChange?.(newSelection);
-    }, [activeSelectedKeys, onSelectionChange]);
-
     const handleSelectAll = useCallback((checked: boolean) => {
-        if (!checked) {
-            setInternalSelectedKeys([]);
-            onSelectionChange?.([]);
-            return;
-        }
-
         const allKeys = sortedData.map((row, idx) => getRowKey(row, idx));
-        const newSelection = Array.from(new Set([...activeSelectedKeys, ...allKeys]));
-
-        setInternalSelectedKeys(newSelection);
-        onSelectionChange?.(newSelection);
-    }, [sortedData, getRowKey, activeSelectedKeys, onSelectionChange]);
+        toggleAllSelection(allKeys, checked);
+    }, [sortedData, getRowKey, toggleAllSelection]);
 
     const isAllSelected = useMemo(() =>
             sortedData.length > 0 && sortedData.every((row, idx) => activeSelectedKeys.includes(getRowKey(row, idx))),
@@ -623,7 +605,7 @@ function DataTableInner<T>(
                                             <TableCell className="data-table__select-cell" onClick={(e) => e.stopPropagation()}>
                                                 <Checkbox
                                                     checked={activeSelectedKeys.includes(key)}
-                                                    onChange={(e) => handleSelectRow(key, e.target.checked)}
+                                                    onChange={(e) => toggleSelection(key, e.target.checked)}
                                                     aria-label={`Select row ${String(key)}`}
                                                 />
                                             </TableCell>
