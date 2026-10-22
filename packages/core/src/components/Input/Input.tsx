@@ -2,7 +2,7 @@ import './Input.scss';
 import React, {type CSSProperties, forwardRef, useCallback, useEffect, useId, useRef, useState} from 'react';
 import clsx from 'clsx';
 import {Spinner} from '../Spinner';
-import {resolveFieldValidation} from '../../interaction/field-validation';
+import {useFieldValidation} from '../../hooks/useFieldValidation';
 
 /**
  * InputValidation.
@@ -54,9 +54,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
         const [isFilled, setIsFilled] = useState(
             () => Boolean(value !== undefined ? value : defaultValue)
         );
-        const [autoValidationState, setAutoValidationState] = useState<'valid' | 'invalid' | null>(null);
-        const [autoValidationMessage, setAutoValidationMessage] = useState<string>('');
-        const [hasBlurred, setHasBlurred] = useState(false);
+        const {hasBlurred, markBlurred, validate, validation: fieldValidation} = useFieldValidation(validation, validationFn, validationMessage);
 
         const mergedRef = useCallback((node: HTMLInputElement | null) => {
             (innerRef as React.MutableRefObject<HTMLInputElement | null>).current = node;
@@ -80,27 +78,6 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
             if (onIconEndClick) onIconEndClick();
         }, [disabled, loading, readOnly, onIconEndClick]);
 
-        const runAutoValidation = useCallback((inputEl: HTMLInputElement) => {
-            const nativeValid = inputEl.checkValidity();
-            if (!nativeValid) {
-                setAutoValidationState('invalid');
-                setAutoValidationMessage(inputEl.validationMessage);
-                return;
-            }
-
-            if (validationFn) {
-                const customError = validationFn(inputEl.value);
-                if (customError) {
-                    setAutoValidationState('invalid');
-                    setAutoValidationMessage(customError);
-                    return;
-                }
-            }
-
-            setAutoValidationState('valid');
-            setAutoValidationMessage('');
-        }, [validationFn]);
-
         const handleFocus = useCallback((e: React.FocusEvent<HTMLInputElement>) => {
             setIsFocused(true);
             onFocus?.(e);
@@ -108,24 +85,24 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
 
         const handleBlur = useCallback((e: React.FocusEvent<HTMLInputElement>) => {
             setIsFocused(false);
-            setHasBlurred(true);
+            markBlurred();
 
             if (validation === 'auto') {
-                runAutoValidation(e.target);
+                validate(e.target);
             }
 
             onBlur?.(e);
-        }, [onBlur, validation, runAutoValidation]);
+        }, [onBlur, validation, validate]);
 
         const handleChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
             setIsFilled(e.target.value.length > 0);
 
             if (validation === 'auto' && hasBlurred) {
-                runAutoValidation(e.target);
+                validate(e.target);
             }
 
             onChange?.(e);
-        }, [onChange, validation, hasBlurred, runAutoValidation]);
+        }, [onChange, validation, hasBlurred, validate]);
 
         const handleStep = useCallback((e: React.MouseEvent, direction: 1 | -1) => {
             e.preventDefault();
@@ -147,17 +124,11 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
             setIsFilled(input.value.length > 0);
 
             if (validation === 'auto' && hasBlurred) {
-                runAutoValidation(input);
+                validate(input);
             }
-        }, [disabled, loading, readOnly, validation, hasBlurred, runAutoValidation]);
+        }, [disabled, loading, readOnly, validation, hasBlurred, validate]);
 
-        const {state: visualValidation, message: displayMessage} = resolveFieldValidation({
-            mode: validation,
-            hasBlurred,
-            nativeValid: autoValidationState !== 'invalid',
-            nativeMessage: autoValidationMessage,
-            explicitMessage: validationMessage,
-        });
+        const {state: visualValidation, message: displayMessage} = fieldValidation;
 
         const showSpinnerStart = loading && spinnerPlacement === 'start';
         const showSpinnerEnd = loading && spinnerPlacement === 'end';
