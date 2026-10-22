@@ -831,7 +831,7 @@ This exhaustive unit/color candidate ledger lists lines with raw dimensional/tim
 
   **Verify:** `npm run test:unit -- tests/unit/code-highlight.test.ts`; `npm run test:parity -- tests/parity/code-react.spec.ts --project=chromium`; `npm run audit:contracts -- --check loc,dependencies --components Code`. Covers C09, H21, M01/M06; Vanilla completion is Task 3.6.
 
-- [ ] Task 2.8 — Split Carousel model, observers and controls
+- [x] Task 2.8 — Split Carousel model, observers and controls
 
   **Targets:** modify `packages/core/src/components/Carousel/Carousel.tsx`; create `packages/core/src/components/Carousel/carousel-model.ts`, `packages/core/src/components/Carousel/useCarouselScroll.ts`, `packages/core/src/components/Carousel/CarouselControls.tsx`, `tests/unit/carousel-model.test.ts`, `tests/parity/carousel-react.spec.ts`.
 
