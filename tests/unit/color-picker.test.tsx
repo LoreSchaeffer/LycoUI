@@ -3,6 +3,24 @@ import {createRoot, type Root} from 'react-dom/client';
 import {afterEach, beforeEach, describe, expect, it, vi} from 'vitest';
 import {ColorPicker} from '../../packages/core/src/components/ColorPicker/ColorPicker';
 
+describe('ColorPicker public integration', () => {
+    it('exports ColorPicker from the core package entry point', async () => {
+        const core = await import('../../packages/core/src/index.ts');
+        expect(core.ColorPicker).toBeTypeOf('function');
+    });
+
+    it('loads the documentation page and examples', async () => {
+        const [page, basic, predefined] = await Promise.all([
+            import('../../packages/docs/src/pages/components/ColorPicker/ColorPickerDoc.tsx'),
+            import('../../packages/docs/src/pages/components/ColorPicker/examples/BasicExample.tsx'),
+            import('../../packages/docs/src/pages/components/ColorPicker/examples/PredefinedSwatchesExample.tsx'),
+        ]);
+        expect(page.default).toBeTypeOf('function');
+        expect(basic.default).toBeTypeOf('function');
+        expect(predefined.default).toBeTypeOf('function');
+    });
+});
+
 describe('ColorPicker interactions', () => {
     let container: HTMLDivElement;
     let root: Root;
