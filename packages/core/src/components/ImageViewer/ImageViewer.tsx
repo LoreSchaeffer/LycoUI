@@ -1,6 +1,7 @@
-import React, {useCallback, useEffect, useRef, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {Modal} from '../Modal';
 import {clampGalleryIndex, nextGalleryIndex} from './gallery-model';
+import {useImageTransform} from './useImageTransform';
 import './ImageViewer.scss';
 
 /**
@@ -44,26 +45,21 @@ export const ImageViewer = React.forwardRef<HTMLDialogElement, ImageViewerProps>
                                                                                       id
                                                                                   }, ref) => {
     const [currentIndex, setCurrentIndex] = useState(initialIndex);
-    const [scale, setScale] = useState(1);
-    const [isDragging, setIsDragging] = useState(false);
-    const [position, setPosition] = useState({x: 0, y: 0});
-    const dragStart = useRef({x: 0, y: 0});
+    const {scale, position, isDragging, reset, wheel, start, move, end} = useImageTransform();
 
     // Reset state when opening/closing or when images change
     useEffect(() => {
         if (isOpen) {
             setCurrentIndex(clampGalleryIndex(initialIndex, images.length));
         }
-        setScale(1);
-        setPosition({x: 0, y: 0});
+        reset();
     }, [isOpen, initialIndex, images.length]);
 
     const handlePrev = (e: React.MouseEvent) => {
         e.stopPropagation();
         if (currentIndex > 0) {
             setCurrentIndex(prev => nextGalleryIndex(prev, images.length, -1, false));
-            setScale(1);
-            setPosition({x: 0, y: 0});
+            reset();
         }
     };
 
@@ -71,50 +67,29 @@ export const ImageViewer = React.forwardRef<HTMLDialogElement, ImageViewerProps>
         e.stopPropagation();
         if (currentIndex < images.length - 1) {
             setCurrentIndex(prev => nextGalleryIndex(prev, images.length, 1, false));
-            setScale(1);
-            setPosition({x: 0, y: 0});
+            reset();
         }
     };
 
     const handleThumbnailClick = (e: React.MouseEvent, index: number) => {
         e.stopPropagation();
         setCurrentIndex(index);
-        setScale(1);
-        setPosition({x: 0, y: 0});
+        reset();
     };
-
-    const handleWheel = useCallback((e: React.WheelEvent) => {
-        if (e.deltaY < 0) {
-            setScale(prev => Math.min(prev + 0.1, 4));
-        } else {
-            setScale(prev => Math.max(prev - 0.1, 0.5));
-            if (scale - 0.1 <= 1) {
-                setPosition({x: 0, y: 0});
-            }
-        }
-    }, [scale]);
 
     const handlePointerDown = (e: React.PointerEvent) => {
         if (scale > 1) {
-            setIsDragging(true);
-            dragStart.current = {
-                x: e.clientX - position.x,
-                y: e.clientY - position.y
-            };
+            start(e);
             (e.target as HTMLElement).setPointerCapture(e.pointerId);
         }
     };
 
     const handlePointerMove = (e: React.PointerEvent) => {
-        if (!isDragging) return;
-        setPosition({
-            x: e.clientX - dragStart.current.x,
-            y: e.clientY - dragStart.current.y
-        });
+        move(e);
     };
 
     const handlePointerUp = (e: React.PointerEvent) => {
-        setIsDragging(false);
+        end();
         (e.target as HTMLElement).releasePointerCapture(e.pointerId);
     };
 
@@ -165,7 +140,7 @@ export const ImageViewer = React.forwardRef<HTMLDialogElement, ImageViewerProps>
                 <div
                     className="image-viewer__image-wrapper"
                     onClick={(e) => e.stopPropagation()}
-                    onWheel={handleWheel}
+                    onWheel={wheel}
                     onPointerDown={handlePointerDown}
                     onPointerMove={handlePointerMove}
                     onPointerUp={handlePointerUp}
