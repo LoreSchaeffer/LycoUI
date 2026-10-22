@@ -13,7 +13,7 @@ export function initLycoAlerts(): void {
 
 class LycoAlertController {
     private readonly element: HTMLDivElement;
-    private timerId?: number;
+    private dismiss?: TimedDismiss;
     private readonly closeBtn: HTMLButtonElement | null;
     private readonly _onCloseClick: () => void;
 
@@ -45,15 +45,13 @@ class LycoAlertController {
             this.element.appendChild(progress);
         }
 
-        this.timerId = window.setTimeout(() => {
-            this.close();
-        }, durationSeconds * 1000);
+        this.dismiss = new TimedDismiss(durationSeconds * 1000, () => this.close());
+        this.dismiss.start();
     }
 
     public destroy(): void {
-        if (this.timerId) {
-            window.clearTimeout(this.timerId);
-        }
+        this.dismiss?.destroy();
+        this.dismiss = undefined;
         if (this.closeBtn) {
             this.closeBtn.removeEventListener('click', this._onCloseClick);
         }
@@ -65,3 +63,5 @@ class LycoAlertController {
         this.element.remove();
     }
 }
+import {TimedDismiss} from '../../interaction/timed-dismiss';
+

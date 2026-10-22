@@ -3,6 +3,7 @@ import React, {type CSSProperties, forwardRef, memo, useCallback, useEffect, use
 import clsx from 'clsx';
 import type {FullVariant} from '../../types/types';
 import {getContrastColor} from '../../utils/theme';
+import {TimedDismiss} from '../../interaction/timed-dismiss';
 
 /**
  * AlertProps.
@@ -54,26 +55,30 @@ export const Alert = memo(forwardRef<HTMLDivElement, AlertProps>((
     ref
 ) => {
     const [isVisible, setIsVisible] = useState(true);
-    const timerRef = useRef<number | undefined>(undefined);
+    const dismissRef = useRef<TimedDismiss | undefined>(undefined);
 
     useEffect(() => {
-        if (duration && duration > 0) {
-            timerRef.current = window.setTimeout(() => {
+        dismissRef.current?.destroy();
+        if (duration !== undefined) {
+            const dismiss = new TimedDismiss(duration * 1000, () => {
                 setIsVisible(false);
                 onClose?.();
-            }, duration * 1000);
+            });
+            dismissRef.current = dismiss;
+            dismiss.start();
         }
         return () => {
-            if (timerRef.current) {
-                clearTimeout(timerRef.current);
-            }
+            dismissRef.current?.destroy();
+            dismissRef.current = undefined;
         };
     }, [duration, onClose]);
 
     const handleClose = useCallback(() => {
-        if (timerRef.current) clearTimeout(timerRef.current);
-        setIsVisible(false);
-        onClose?.();
+        if (dismissRef.current) dismissRef.current.close();
+        else {
+            setIsVisible(false);
+            onClose?.();
+        }
     }, [onClose]);
 
     if (!isVisible) return null;
