@@ -1,5 +1,5 @@
 import './DatePicker.scss';
-import {type CSSProperties, forwardRef, type HTMLAttributes, type KeyboardEvent, useCallback, useEffect, useLayoutEffect, useId, useMemo, useRef, useState,} from 'react';
+import {type CSSProperties, forwardRef, type HTMLAttributes, type KeyboardEvent, useCallback, useEffect, useId, useMemo, useRef, useState,} from 'react';
 import { createPortal } from 'react-dom';
 import clsx from 'clsx';
 import type {FullVariant, SizeVariant} from '../../types/types.ts';
@@ -8,6 +8,7 @@ import {useMediaQuery} from '../../hooks/useMediaQuery.ts';
 import Calendar from './Calendar.tsx';
 import TimeInput from './TimeInput.tsx';
 import {formatDateString, parseDateString} from './DatePicker.tsx';
+import {usePickerPopover} from './PickerPopover.tsx';
 
 /**
  * Props for the DateTimePicker component.
@@ -111,58 +112,7 @@ export const DateTimePicker = forwardRef<HTMLDivElement, DateTimePickerProps>(
 
         const containerRef = useRef<HTMLDivElement>(null);
         const inputRef = useRef<HTMLInputElement>(null);
-        const popoverRef = useRef<HTMLDivElement>(null);
-
-        const [popoverStyles, setPopoverStyles] = useState<CSSProperties>({});
-
-        const updatePosition = useCallback(() => {
-            if (!isOpen || !containerRef.current || !popoverRef.current) return;
-            const triggerRect = containerRef.current.getBoundingClientRect();
-            const popoverRect = popoverRef.current.getBoundingClientRect();
-            
-            const scrollX = window.scrollX;
-            const scrollY = window.scrollY;
-            const viewportWidth = document.documentElement.clientWidth;
-            const viewportHeight = window.innerHeight;
-            
-            let calculatedLeft = triggerRect.left + scrollX;
-            let calculatedTop = triggerRect.bottom + scrollY + 8;
-            
-            // X-Axis bounding (Right edge)
-            if (calculatedLeft + popoverRect.width > viewportWidth + scrollX - 16) {
-                // Align right edges
-                calculatedLeft = (triggerRect.right + scrollX) - popoverRect.width;
-            }
-            
-            // X-Axis bounding (Left edge strict clamp)
-            if (calculatedLeft < scrollX + 16) {
-                calculatedLeft = scrollX + 16;
-            }
-
-            // Y-Axis bounding (Flip to top if bottom overflows)
-            if (triggerRect.bottom + popoverRect.height + 8 > viewportHeight && triggerRect.top - popoverRect.height - 8 > 0) {
-                calculatedTop = triggerRect.top + scrollY - popoverRect.height - 8;
-            }
-
-            setPopoverStyles({
-                position: 'absolute',
-                top: `${calculatedTop}px`,
-                left: `${calculatedLeft}px`,
-                zIndex: 'var(--z-dropdown, 9999)',
-            });
-        }, [isOpen]);
-
-        useLayoutEffect(() => {
-            if (isOpen) {
-                updatePosition();
-                window.addEventListener('scroll', updatePosition, true);
-                window.addEventListener('resize', updatePosition);
-                return () => {
-                    window.removeEventListener('scroll', updatePosition, true);
-                    window.removeEventListener('resize', updatePosition);
-                };
-            }
-        }, [isOpen, updatePosition]);
+        const {popoverRef, popoverStyles} = usePickerPopover(isOpen, containerRef, popoverId, () => setIsOpen(false));
 
         const mergedRef = useCallback(
             (node: HTMLDivElement | null) => {
@@ -214,20 +164,6 @@ export const DateTimePicker = forwardRef<HTMLDivElement, DateTimePickerProps>(
                 setIsInvalid(false);
             }
         }, [value, displayValue]);
-
-        // Close on outside click
-        useEffect(() => {
-            if (!isOpen) return;
-            const handleOutside = (e: MouseEvent) => {
-                const target = e.target as Node;
-                const popoverEl = document.getElementById(popoverId);
-                if (containerRef.current && !containerRef.current.contains(target) && (!popoverEl || !popoverEl.contains(target))) {
-                    setIsOpen(false);
-                }
-            };
-            document.addEventListener('mousedown', handleOutside);
-            return () => document.removeEventListener('mousedown', handleOutside);
-        }, [isOpen, popoverId]);
 
         const handleSelectDate = useCallback((date: Date) => {
             setDraftDate(date);
@@ -470,6 +406,13 @@ export const DateTimePicker = forwardRef<HTMLDivElement, DateTimePickerProps>(
                         className={clsx('datepicker-popover', 'datepicker-popover--datetime')}
                         role="dialog"
                         aria-label="Date and time picker"
+                        onKeyDown={(event) => {
+                            if (event.key === 'Escape') {
+                                event.preventDefault();
+                                setIsOpen(false);
+                                inputRef.current?.focus();
+                            }
+                        }}
                         style={{
                             ...popoverStyles,
                             ...(isColored ? {

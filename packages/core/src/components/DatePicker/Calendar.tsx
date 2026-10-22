@@ -1,5 +1,5 @@
-import {forwardRef, type KeyboardEvent, memo, useCallback, useEffect, useMemo, useRef, useState} from 'react';
-import clsx from 'clsx';
+import {forwardRef, type KeyboardEvent, memo, useCallback, useEffect, useMemo, useState} from 'react';
+import {CalendarGrid} from './CalendarGrid.tsx';
 
 /** Internal props for the Calendar sub-component. Not exported publicly. */
 /**
@@ -83,7 +83,6 @@ const Calendar = memo(forwardRef<HTMLDivElement, CalendarProps>(function Calenda
     const maxNorm = useMemo(() => maxDate ? stripTime(maxDate) : null, [maxDate]);
 
     const days = useMemo(() => buildDayGrid(viewDate), [viewDate]);
-    const gridRef = useRef<HTMLDivElement>(null);
 
     const [focusedDay, setFocusedDay] = useState<Date>(() => {
         if (selectedDate) return stripTime(selectedDate);
@@ -202,65 +201,18 @@ const Calendar = memo(forwardRef<HTMLDivElement, CalendarProps>(function Calenda
                 </button>
             </div>
 
-            {/* Calendar grid */}
-            <div
-                ref={gridRef}
-                className="datepicker-cal-grid"
-                role="grid"
-                aria-label={monthYearLabel}
-                tabIndex={0}
+            <CalendarGrid
+                rows={rows}
+                dayNames={DAY_NAMES}
+                label={monthYearLabel}
+                focusedDayTime={focusedDayTime}
+                selectedDayTime={selectedNorm?.getTime()}
+                todayTime={today.getTime()}
+                viewMonth={viewDate.getMonth()}
+                isDateDisabled={isDateDisabled}
+                onSelectDay={handleSelectDay}
                 onKeyDown={handleGridKeyDown}
-            >
-                {/* Day-of-week header row */}
-                <div className="datepicker-cal-row" role="row">
-                    {DAY_NAMES.map(name => (
-                        <div
-                            key={name}
-                            className="datepicker-cal-day-header"
-                            role="columnheader"
-                            aria-label={name}
-                        >
-                            {name}
-                        </div>
-                    ))}
-                </div>
-
-                {/* Day rows */}
-                {rows.map((week, rowIdx) => (
-                    <div key={rowIdx} className="datepicker-cal-row" role="row">
-                        {week.map(day => {
-                            const dayNorm = stripTime(day);
-                            const dayTime = dayNorm.getTime();
-                            const isCurrentMonth = day.getMonth() === viewDate.getMonth();
-                            const isSelected = selectedNorm !== null && dayTime === selectedNorm.getTime();
-                            const isToday = dayTime === today.getTime();
-                            const isDisabled = isDateDisabled(day);
-                            const isFocused = dayTime === focusedDayTime;
-
-                            return (
-                                <div
-                                    key={dayTime}
-                                    className={clsx(
-                                        'datepicker-cal-cell',
-                                        !isCurrentMonth && 'is-outside',
-                                        isSelected && 'is-selected',
-                                        isToday && 'is-today',
-                                        isDisabled && 'is-disabled',
-                                        isFocused && 'is-focused'
-                                    )}
-                                    role="gridcell"
-                                    aria-selected={isSelected}
-                                    aria-disabled={isDisabled}
-                                    tabIndex={isFocused ? 0 : -1}
-                                    onClick={() => handleSelectDay(day)}
-                                >
-                                    {day.getDate()}
-                                </div>
-                            );
-                        })}
-                    </div>
-                ))}
-            </div>
+            />
         </div>
     );
 }));
