@@ -4,6 +4,8 @@ import React, {type CSSProperties, forwardRef, useCallback, useEffect, useId, us
 import clsx from 'clsx';
 import type {FullVariant, SizeVariant} from '../../types/types';
 import {useFieldValidation} from '../../hooks/useFieldValidation';
+import {FieldLabel} from '../Input/FieldLabel';
+import {FieldMessage} from '../Input/FieldMessage';
 
 /**
  * TextareaValidation state options.
@@ -154,27 +156,10 @@ export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
                         {...props}
                     />
 
-                    {label && (
-                        <label className="textarea__label" htmlFor={textareaId}>
-                            {label}
-                            {required && <span className="textarea__required" aria-hidden="true"> *</span>}
-                        </label>
-                    )}
+                    {label && <FieldLabel className="textarea__label" htmlFor={textareaId} label={label} required={required}/>} 
                 </div>
 
-                {displayMessage && (
-                    <div
-                        id={messageId}
-                        className={clsx(
-                            'textarea__message',
-                            visualValidation === 'valid' && 'textarea__message--valid',
-                            visualValidation === 'invalid' && 'textarea__message--invalid'
-                        )}
-                        role={visualValidation === 'invalid' ? 'alert' : 'status'}
-                    >
-                        {displayMessage}
-                    </div>
-                )}
+                <FieldMessage id={messageId} className="textarea__message" state={visualValidation}>{displayMessage}</FieldMessage>
             </div>
         );
     }

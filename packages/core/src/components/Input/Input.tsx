@@ -8,6 +8,8 @@ import {useFieldValidation} from '../../hooks/useFieldValidation';
  * InputValidation.
  */
 import type {InputProps} from './Input.types';
+import {FieldLabel} from './FieldLabel';
+import {FieldMessage} from './FieldMessage';
 export const Input = forwardRef<HTMLInputElement, InputProps>(
     (
         {
@@ -206,12 +208,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
                     />
 
                     {/* Floating Label */}
-                    {label && (
-                        <label className="input__label" htmlFor={inputId}>
-                            {label}
-                            {required && <span className="input__required" aria-hidden="true"> *</span>}
-                        </label>
-                    )}
+                    {label && <FieldLabel className="input__label" htmlFor={inputId} label={label} required={required}/>} 
 
                     {/* Icon End */}
                     {(hasIconEnd && !showSteps) && (
@@ -266,19 +263,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
                 </div>
 
                 {/* Validation Message */}
-                {displayMessage && (
-                    <div
-                        id={messageId}
-                        className={clsx(
-                            'input__message',
-                            visualValidation === 'valid' && 'input__message--valid',
-                            visualValidation === 'invalid' && 'input__message--invalid'
-                        )}
-                        role={visualValidation === 'invalid' ? 'alert' : 'status'}
-                    >
-                        {displayMessage}
-                    </div>
-                )}
+                <FieldMessage id={messageId} className="input__message" state={visualValidation}>{displayMessage}</FieldMessage>
             </div>
         );
     }
