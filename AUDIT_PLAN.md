@@ -801,7 +801,7 @@ This exhaustive unit/color candidate ledger lists lines with raw dimensional/tim
 
   **Verify:** `npm run test:unit -- tests/unit/data-table-model.test.ts`; `npm run test:parity -- tests/parity/data-table-react.spec.ts --project=chromium`; `npm run audit:contracts -- --check loc --components DataTable`. Covers C12's model gap, M01; Vanilla follows in Task 3.12.
 
-- [ ] Task 2.5 — Unify timed lifecycle while preserving distinct alert/toast surfaces
+- [x] Task 2.5 — Unify timed lifecycle while preserving distinct alert/toast surfaces
 
   **Targets:** modify `packages/core/src/components/Alert/Alert.tsx`, `packages/core/src/components/Alert/Alert.vanilla.ts`, `packages/core/src/components/Snackbar/SnackbarProvider.tsx`, `packages/core/src/components/Snackbar/Snackbar.vanilla.ts`, `packages/core/src/components/Notification/NotificationProvider.tsx`, `packages/core/src/components/Notification/Notification.vanilla.ts`, `packages/core/src/components/Notification/Notification.scss`; create `packages/core/src/interaction/timed-dismiss.ts`, `packages/core/src/components/Notification/notification-store.ts`, `packages/core/src/components/Notification/NotificationRenderer.ts`, `packages/core/src/components/Notification/_stack.scss`, `packages/core/src/components/Notification/_toast.scss`, `tests/unit/timed-dismiss.test.ts`, `tests/parity/toast.spec.ts`.
 

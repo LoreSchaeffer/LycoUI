@@ -1,16 +1,12 @@
 import React, {useCallback, useEffect, useMemo, useRef, useState} from 'react';
 import {createPortal} from 'react-dom';
 import {NotificationContext, type NotificationOptions} from './NotificationContext';
-import {Notification} from './Notification';
 import type {NotificationPosition} from '../../types/types';
 import {durationToMilliseconds, TimedDismiss} from '../../interaction/timed-dismiss';
+import {appendWithMaximum} from './notification-store';
+import {NotificationRenderer, type RenderableNotification} from './NotificationRenderer';
 
-interface ActiveNotification extends NotificationOptions {
-    id: string;
-    isExiting: boolean;
-    durationMs: number;
-    durationSec: number;
-}
+type ActiveNotification = RenderableNotification & {durationMs: number};
 
 /**
  * NotificationProviderProps.
@@ -62,18 +58,12 @@ export const NotificationProvider: React.FC<NotificationProviderProps> = ({
         };
 
         setNotifications(prev => {
-            const next = [...prev, newNotification];
-            if (next.length > maxNotifications) {
-                const evicted = next.slice(0, next.length - maxNotifications);
-                evicted.forEach(n => {
-                    if (timersRef.current.has(n.id)) {
-                        timersRef.current.get(n.id)?.destroy();
-                        timersRef.current.delete(n.id);
-                    }
-                });
-                return next.slice(next.length - maxNotifications);
-            }
-            return next;
+            const result = appendWithMaximum(prev, newNotification, maxNotifications);
+            result.evicted.forEach((notification) => {
+                timersRef.current.get(notification.id)?.destroy();
+                timersRef.current.delete(notification.id);
+            });
+            return result.items;
         });
 
         const dismiss = new TimedDismiss(durationMs, () => closeNotification(id));
@@ -96,36 +86,11 @@ export const NotificationProvider: React.FC<NotificationProviderProps> = ({
         [showNotification, closeNotification]
     );
 
-    const isBottom = position.startsWith('bottom');
-    const orderedNotifications = isBottom ? notifications : [...notifications].reverse();
-
     return (
         <NotificationContext.Provider value={contextValue}>
             {children}
             {typeof document !== 'undefined' && createPortal(
-                <div
-                    className={`notification-stack notification-stack--${position}`}
-                    aria-live="polite"
-                    role="region"
-                    aria-label="Notifications"
-                >
-                    {orderedNotifications.map(n => (
-                        <Notification
-                            key={n.id}
-                            variant={n.variant}
-                            icon={n.icon}
-                            title={n.title}
-                            closable={n.closable ?? true}
-                            isFlat={n.isFlat}
-                            isExiting={n.isExiting}
-                            duration={n.durationSec}
-                            position={position}
-                            onClose={() => closeNotification(n.id)}
-                        >
-                            {n.description || n.message}
-                        </Notification>
-                    ))}
-                </div>,
+                <NotificationRenderer items={notifications} position={position} onClose={closeNotification}/>,
                 document.body
             )}
         </NotificationContext.Provider>

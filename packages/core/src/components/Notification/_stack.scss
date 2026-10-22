@@ -1,0 +1,39 @@
+// ==========================================================================
+// NOTIFICATION STACK (Container)
+// ==========================================================================
+.notification-stack {
+  position: fixed;
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-3);
+  z-index: var(--z-toast, 9999);
+  pointer-events: none;
+  max-height: 100vh;
+  overflow: hidden;
+  padding: var(--spacing-4);
+
+  // Position variants
+  &--bottom-right {
+    bottom: 0;
+    right: 0;
+    align-items: flex-end;
+  }
+
+  &--bottom-left {
+    bottom: 0;
+    left: 0;
+    align-items: flex-start;
+  }
+
+  &--top-right {
+    top: 0;
+    right: 0;
+    align-items: flex-end;
+  }
+
+  &--top-left {
+    top: 0;
+    left: 0;
+    align-items: flex-start;
+  }
+}
