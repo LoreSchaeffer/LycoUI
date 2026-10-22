@@ -1,25 +1,9 @@
 import './Navbar.scss';
-import React, {createContext, type CSSProperties, forwardRef, useCallback, useContext, useEffect, useMemo, useRef, useState} from 'react';
+import React, {createContext, type CSSProperties, forwardRef, useCallback, useContext, useEffect, useId, useMemo, useRef, useState} from 'react';
 import clsx from 'clsx';
 import type {Alignment, FullVariant} from '../../types/types';
 import type {PolymorphicProps, PolymorphicRef} from '../../types/polymorphic';
-
-interface NavbarContextType {
-    isOpen: boolean;
-    toggle: () => void;
-    close: () => void;
-    id: string;
-}
-
-const NavbarContext = createContext<NavbarContextType | null>(null);
-
-function useNavbarContext() {
-    const context = useContext(NavbarContext);
-    if (!context) {
-        throw new Error('Navbar compound components must be rendered within a Navbar');
-    }
-    return context;
-}
+import {NavbarContext, useNavbarContext} from './NavbarContext';
 
 
 export interface NavbarProps extends React.HTMLAttributes<HTMLElement> {
@@ -53,7 +37,7 @@ const NavbarComponent = forwardRef<HTMLElement, NavbarProps>((
     ref
 ) => {
     const [isOpen, setIsOpen] = useState(false);
-    const generatedId = useMemo(() => `lyco-navbar-${Math.random().toString(36).substr(2, 9)}`, []);
+    const generatedId = `lyco-navbar-${useId().replace(/:/g, '')}`;
     const id = propId || generatedId;
 
     const toggle = useCallback(() => setIsOpen(prev => !prev), []);
