@@ -6,6 +6,7 @@ import type {FullVariant, SizeVariant} from '../../types/types.ts';
 import {getContrastColor} from '../../utils/theme.ts';
 import {useMediaQuery} from '../../hooks/useMediaQuery.ts';
 import Calendar from './Calendar.tsx';
+import {parseLocalDate} from './date-model';
 
 /**
  * Props for the DatePicker component.
@@ -270,10 +271,8 @@ export const DatePicker = forwardRef<HTMLDivElement, DatePickerProps>(
                 onChange?.(null);
                 return;
             }
-            const [y, m, d] = val.split('-').map(Number);
-            if (!isNaN(y) && !isNaN(m) && !isNaN(d)) {
-                onChange?.(new Date(y, m - 1, d));
-            }
+            const date = parseLocalDate(val);
+            if (date) onChange?.(date);
         }, [onChange]);
 
         const handleInputChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
