@@ -761,7 +761,7 @@ This exhaustive unit/color candidate ledger lists lines with raw dimensional/tim
 
 ### Batch 2: Refactoring Composite Components + Monolith decomposition
 
-- [ ] Task 2.1 — Move Navbar and menu consumers onto shared engines
+- [x] Task 2.1 — Move Navbar and menu consumers onto shared engines
 
   **Targets:** modify `packages/core/src/components/Navbar/Navbar.tsx`, `packages/core/src/components/Navbar/Navbar.vanilla.ts`, `packages/core/src/components/Navbar/Navbar.scss`, `packages/core/src/components/ContextMenu/ContextMenu.tsx`, `packages/core/src/components/ContextMenu/ContextMenuItem.tsx`, `packages/core/src/components/ContextMenu/ContextMenuProvider.tsx`, `packages/core/src/components/DropdownMenu/DropdownMenu.tsx`; create `packages/core/src/components/Navbar/NavbarContext.tsx`, `packages/core/src/components/Navbar/NavbarRegions.tsx`, `packages/core/src/components/Navbar/NavbarDropdown.tsx`, `packages/core/src/components/Navbar/Navbar.types.ts`, `packages/core/src/components/Navbar/_layout.scss`, `packages/core/src/components/Navbar/_menu.scss`, `packages/core/src/components/DropdownMenu/DropdownMenu.vanilla.ts`, `packages/core/src/components/ContextMenu/ContextMenu.vanilla.ts`, `tests/parity/navigation.spec.ts`, `tests/unit/navbar-types.test.tsx`.
 
