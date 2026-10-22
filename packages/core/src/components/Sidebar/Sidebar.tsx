@@ -1,16 +1,11 @@
 import './Sidebar.scss';
-import React, {createContext, forwardRef, useCallback, useContext, useMemo, useRef, useState} from 'react';
+import React, {forwardRef, useCallback, useContext, useMemo, useRef, useState} from 'react';
 import clsx from 'clsx';
 import {Button} from '../Button/Button';
 import {computeSideFlyoutPosition} from '../../utils/floating';
 import type {PolymorphicProps, PolymorphicRef} from '../../types/polymorphic';
 import {useSidebarResize} from './useSidebarResize';
-
-interface SidebarContextType {
-    isMini: boolean;
-}
-
-const SidebarContext = createContext<SidebarContextType | null>(null);
+import {SidebarContext} from './SidebarContext';
 
 
 /**
