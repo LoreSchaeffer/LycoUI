@@ -85,7 +85,7 @@ const SidebarComponent = forwardRef<HTMLElement, SidebarProps>((
                 ref={ref}
                 className={clsx(
                     'sidebar',
-                    `sidebar--${variant}`,
+                    `sidebar-${variant}`,
                     isOpen && 'is-open',
                     isMini && 'is-mini',
                     resize.isResizing && 'sidebar-resizing',
@@ -97,7 +97,7 @@ const SidebarComponent = forwardRef<HTMLElement, SidebarProps>((
                 {children}
                 {resizable && !isMini && (
                     <div
-                        className="sidebar-resizer sidebar__resizer"
+                        className="sidebar-resizer sidebar-resizer"
                         onPointerDown={isMini ? undefined : resize.begin}
                         onPointerMove={resize.move}
                         onPointerUp={resize.end}
@@ -128,7 +128,7 @@ const SidebarHeader = forwardRef<HTMLDivElement, SidebarRegionProps>((
     {className, children, ...props},
     ref
 ) => (
-    <div ref={ref} className={clsx('sidebar-header', 'sidebar__header', className)} {...props}>
+    <div ref={ref} className={clsx('sidebar-header', 'sidebar-header', className)} {...props}>
         {children}
     </div>
 ));
@@ -138,7 +138,7 @@ const SidebarContent = forwardRef<HTMLDivElement, SidebarRegionProps>((
     {className, children, ...props},
     ref
 ) => (
-    <div ref={ref} className={clsx('sidebar-content', 'sidebar__content', className)} {...props}>
+    <div ref={ref} className={clsx('sidebar-content', 'sidebar-content', className)} {...props}>
         {children}
     </div>
 ));
@@ -148,7 +148,7 @@ const SidebarFooter = forwardRef<HTMLDivElement, SidebarRegionProps>((
     {className, children, ...props},
     ref
 ) => (
-    <div ref={ref} className={clsx('sidebar-footer', 'sidebar__footer', className)} {...props}>
+    <div ref={ref} className={clsx('sidebar-footer', 'sidebar-footer', className)} {...props}>
         {children}
     </div>
 ));
@@ -165,7 +165,7 @@ const SidebarNav = forwardRef<HTMLUListElement, SidebarNavProps>((
     {className, children, ...props},
     ref
 ) => (
-    <ul ref={ref} className={clsx('sidebar-nav', 'sidebar__nav', className)} {...props}>
+    <ul ref={ref} className={clsx('sidebar-nav', 'sidebar-nav', className)} {...props}>
         {children}
     </ul>
 ));
@@ -181,7 +181,7 @@ const SidebarItem = forwardRef<HTMLLIElement, SidebarItemProps>((
     {className, children, ...props},
     ref
 ) => (
-    <li ref={ref} className={clsx('sidebar-item', 'sidebar__item', className)} {...props}>
+    <li ref={ref} className={clsx('sidebar-item', 'sidebar-item', className)} {...props}>
         {children}
     </li>
 ));
@@ -234,12 +234,12 @@ const SidebarLink = forwardRef<HTMLElement, SidebarLinkInnerProps>((
     return (
         <Component
             ref={ref}
-            className={clsx('sidebar-link', 'sidebar__link', active && 'is-active', className)}
+            className={clsx('sidebar-link', 'sidebar-link', active && 'is-active', className)}
             aria-current={active ? 'page' : undefined}
             {...props}
         >
-            <span className="sidebar-icon sidebar__icon">{renderedIcon}</span>
-            {!isMini && <span className="sidebar-label sidebar__label">{children}</span>}
+            <span className="sidebar-icon sidebar-icon">{renderedIcon}</span>
+            {!isMini && <span className="sidebar-label sidebar-label">{children}</span>}
         </Component>
     );
 }) as unknown as SidebarLinkComponent & { displayName?: string };
@@ -256,7 +256,7 @@ const SidebarIcon = forwardRef<HTMLSpanElement, SidebarIconProps>((
     {className, children, ...props},
     ref
 ) => (
-    <span ref={ref} className={clsx('sidebar-icon', 'sidebar__icon', className)} {...props}>
+    <span ref={ref} className={clsx('sidebar-icon', 'sidebar-icon', className)} {...props}>
         {children}
     </span>
 ));
@@ -272,7 +272,7 @@ const SidebarLabel = forwardRef<HTMLSpanElement, SidebarLabelProps>((
     {className, children, ...props},
     ref
 ) => (
-    <span ref={ref} className={clsx('sidebar-label', 'sidebar__label', className)} {...props}>
+    <span ref={ref} className={clsx('sidebar-label', 'sidebar-label', className)} {...props}>
         {children}
     </span>
 ));
@@ -322,7 +322,7 @@ const SidebarDropdown = forwardRef<HTMLLIElement, SidebarDropdownProps>((
     return (
         <li
             ref={ref}
-            className={clsx('sidebar-item', 'sidebar__item', 'sidebar-dropdown', 'sidebar__dropdown', isOpen && 'is-open', className)}
+            className={clsx('sidebar-item', 'sidebar-item', 'sidebar-dropdown', 'sidebar-dropdown', isOpen && 'is-open', className)}
             onMouseEnter={updateFlyoutPosition}
             onFocus={updateFlyoutPosition}
             {...props}
@@ -331,19 +331,19 @@ const SidebarDropdown = forwardRef<HTMLLIElement, SidebarDropdownProps>((
                 ref={triggerRef as React.Ref<HTMLButtonElement>}
                 type="button"
                 ghost
-                className="sidebar-dropdown-trigger sidebar__dropdown-trigger"
+                className="sidebar-dropdown-trigger sidebar-dropdown-trigger"
                 onClick={toggle}
                 aria-expanded={isOpen}
                 aria-haspopup="true"
             >
-                <span className="sidebar-icon sidebar__icon">{renderedIcon}</span>
-                {!isMini && <span className="sidebar-label sidebar__label">{title}</span>}
-                {!isMini && <svg className="sidebar-dropdown-caret sidebar__dropdown-caret" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <span className="sidebar-icon sidebar-icon">{renderedIcon}</span>
+                {!isMini && <span className="sidebar-label sidebar-label">{title}</span>}
+                {!isMini && <svg className="sidebar-dropdown-caret sidebar-dropdown-caret" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                     <polyline points="6 9 12 15 18 9"></polyline>
                 </svg>}
             </Button>
-            <div ref={flyoutRef} className="sidebar-dropdown-menu-wrapper sidebar__dropdown-menu-wrapper" style={isMini ? flyoutStyle : undefined}>
-                <div className="sidebar-dropdown-menu sidebar__dropdown-menu">
+            <div ref={flyoutRef} className="sidebar-dropdown-menu-wrapper sidebar-dropdown-menu-wrapper" style={isMini ? flyoutStyle : undefined}>
+                <div className="sidebar-dropdown-menu sidebar-dropdown-menu">
                     {children}
                 </div>
             </div>
@@ -381,8 +381,8 @@ const SidebarDropdownItem = forwardRef<HTMLElement, SidebarDropdownItemInnerProp
             ref={ref}
             className={clsx(
                 'sidebar-dropdown-item',
-                'sidebar__dropdown-item',
-                variant !== 'default' && `sidebar__dropdown-item--${variant}`,
+                'sidebar-dropdown-item',
+                variant !== 'default' && `sidebar-dropdown-item--${variant}`,
                 active && 'is-active',
                 disabled && 'is-disabled',
                 className
@@ -413,4 +413,5 @@ export const Sidebar = Object.assign(SidebarComponent, {
     Dropdown: SidebarDropdown,
     DropdownItem: SidebarDropdownItem,
 });
+
 

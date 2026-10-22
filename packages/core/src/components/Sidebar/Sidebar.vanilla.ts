@@ -37,8 +37,8 @@ export class LycoSidebarController {
 
     constructor(sidebar: HTMLElement) {
         this.sidebar = sidebar;
-        this.resizer = sidebar.querySelector<HTMLElement>('.sidebar__resizer, .sidebar-resizer');
-        this.dropdowns = sidebar.querySelectorAll<HTMLElement>('.sidebar__dropdown, .sidebar-dropdown');
+        this.resizer = sidebar.querySelector<HTMLElement>('.sidebar-resizer, .sidebar-resizer');
+        this.dropdowns = sidebar.querySelectorAll<HTMLElement>('.sidebar-dropdown, .sidebar-dropdown');
         const defaultWidth = Number(this.sidebar.dataset.defaultWidth) || 256;
         const minWidth = Number(this.sidebar.dataset.minWidth) || 200;
         const maxWidth = Number(this.sidebar.dataset.maxWidth) || 400;
@@ -82,8 +82,8 @@ export class LycoSidebarController {
         }
 
         this.dropdowns.forEach(dropdown => {
-            const trigger = dropdown.querySelector<HTMLElement>('.sidebar__dropdown-trigger, .sidebar-dropdown-trigger');
-            const menu = dropdown.querySelector<HTMLElement>('.sidebar__dropdown-menu-wrapper, .sidebar-dropdown-menu-wrapper');
+            const trigger = dropdown.querySelector<HTMLElement>('.sidebar-dropdown-trigger, .sidebar-dropdown-trigger');
+            const menu = dropdown.querySelector<HTMLElement>('.sidebar-dropdown-menu-wrapper, .sidebar-dropdown-menu-wrapper');
 
             const listeners: DropdownListeners = {el: dropdown};
 
@@ -159,3 +159,4 @@ export class LycoSidebarController {
         delete this.sidebar.dataset.lycoInitialized;
     }
 }
+
