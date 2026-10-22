@@ -771,7 +771,7 @@ This exhaustive unit/color candidate ledger lists lines with raw dimensional/tim
 
   **Verify:** `npm run test:unit -- tests/unit/navbar-types.test.tsx tests/unit/interaction.test.tsx`; `npm run test:parity -- tests/parity/navigation.spec.ts tests/parity/menu.spec.ts --project=chromium`; `npm run audit:contracts -- --check loc --components Navbar,DropdownMenu,ContextMenu`; `npm run lint -w @loreschaeffer/lyco-ui`. No explicit-any errors; warnings remain individually triaged. Covers C12, H01/H02/H07/H18/H22, M01/M07.
 
-- [ ] Task 2.2 — Compose Sidebar from Collapse, Menu and Drawer; isolate resizing
+- [x] Task 2.2 — Compose Sidebar from Collapse, Menu and Drawer; isolate resizing
 
   **Targets:** modify `packages/core/src/components/Sidebar/Sidebar.tsx`, `packages/core/src/components/Sidebar/Sidebar.vanilla.ts`, `packages/core/src/components/Sidebar/Sidebar.scss`; create `packages/core/src/components/Sidebar/SidebarContext.tsx`, `packages/core/src/components/Sidebar/SidebarRegions.tsx`, `packages/core/src/components/Sidebar/SidebarDropdown.tsx`, `packages/core/src/components/Sidebar/SidebarLink.tsx`, `packages/core/src/components/Sidebar/useSidebarResize.ts`, `packages/core/src/components/Sidebar/SidebarResizeController.ts`, `packages/core/src/components/Sidebar/_layout.scss`, `packages/core/src/components/Sidebar/_mini.scss`, `tests/parity/sidebar.spec.ts`.
 
