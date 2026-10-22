@@ -1,4 +1,5 @@
-import {FOCUSABLE_ELEMENTS_SELECTOR, trapFocus} from '../../utils/keyboard';
+import {openModalLayer} from '../../interaction/modal-layer';
+import {trapFocus} from '../../interaction/focus-scope';
 import {BaseController} from '../../vanilla/BaseController';
 import {controllerRegistry} from '../../vanilla/controller-registry';
 
@@ -51,8 +52,7 @@ export class LycoModalController extends BaseController {
     private readonly modal: HTMLElement;
     private readonly dialog: HTMLElement | null;
     private isOpen: boolean = false;
-    private previouslyFocusedElement: HTMLElement | null = null;
-    private focusTimeoutId?: number;
+    private disposeLayer?: () => void;
 
     private readonly _onKeyDown: (e: KeyboardEvent) => void;
     private readonly _onBackdropClick: (e: MouseEvent) => void;
@@ -79,13 +79,13 @@ export class LycoModalController extends BaseController {
 
     private bindEvents(): void {
         this.listen(this.modal, 'click', this._onBackdropClick as EventListener);
+        this.listen(this.modal, 'keydown', this._onKeyDown as EventListener);
 
         const closeButtons = this.modal.querySelectorAll('[data-lyco-dismiss="modal"]');
         closeButtons.forEach(btn => this.listen(btn, 'click', this._onCloseClick as EventListener));
     }
 
     public override destroy(): void {
-        if (this.focusTimeoutId) window.clearTimeout(this.focusTimeoutId);
         if (this.isOpen) {
             this.hide();
         }
@@ -97,55 +97,33 @@ export class LycoModalController extends BaseController {
     public show(): void {
         if (this.isOpen) return;
         this.isOpen = true;
-        this.previouslyFocusedElement = document.activeElement as HTMLElement;
-
-        this.modal.style.display = 'flex';
-        this.modal.classList.remove('hidden');
-        this.modal.removeAttribute('aria-hidden');
-        this.modal.setAttribute('aria-modal', 'true');
-
-        document.body.classList.add('modal-open');
-        document.addEventListener('keydown', this._onKeyDown);
-
-        void this.modal.offsetWidth;
-
-        if (this.focusTimeoutId) window.clearTimeout(this.focusTimeoutId);
-        this.focusTimeoutId = window.setTimeout(() => {
-            if (this.dialog) {
-                const autoFocusElement = this.dialog.querySelector('[autofocus]') as HTMLElement;
-                if (autoFocusElement) {
-                    autoFocusElement.focus();
-                    return;
-                }
-
-                const focusableElements = this.dialog.querySelectorAll(
-                    FOCUSABLE_ELEMENTS_SELECTOR
-                ) as NodeListOf<HTMLElement>;
-
-                if (focusableElements.length > 0) {
-                    focusableElements[0].focus();
-                } else {
-                    this.dialog.focus();
-                }
+        const returnFocus = document.activeElement instanceof HTMLElement ? document.activeElement : undefined;
+        this.disposeLayer = openModalLayer({
+            root: this.modal,
+            initialFocus: this.dialog ?? undefined,
+            returnFocus,
+            onOpen: () => {
+                this.modal.style.display = 'flex';
+                this.modal.classList.remove('hidden');
+                this.modal.removeAttribute('aria-hidden');
+                this.modal.setAttribute('aria-modal', 'true');
+                document.body.classList.add('modal-open');
+            },
+            onClose: () => {
+                this.modal.style.display = 'none';
+                this.modal.setAttribute('aria-hidden', 'true');
+                this.modal.removeAttribute('aria-modal');
+                document.body.classList.remove('modal-open');
             }
-        }, 50);
+        });
     }
 
     public hide(): void {
         if (!this.isOpen) return;
         this.isOpen = false;
 
-        this.modal.style.display = 'none';
-        this.modal.setAttribute('aria-hidden', 'true');
-        this.modal.removeAttribute('aria-modal');
-
-        document.body.classList.remove('modal-open');
-        document.removeEventListener('keydown', this._onKeyDown);
-
-        if (this.previouslyFocusedElement) {
-            this.previouslyFocusedElement.focus();
-            this.previouslyFocusedElement = null;
-        }
+        this.disposeLayer?.();
+        this.disposeLayer = undefined;
     }
 
     private handleBackdropClick(e: MouseEvent): void {
@@ -157,6 +135,7 @@ export class LycoModalController extends BaseController {
 
     private handleKeyDown(e: KeyboardEvent): void {
         const closeOnEscape = this.modal.getAttribute('data-lyco-close-on-escape') !== 'false';
+        if (!this.isOpen) return;
         if (closeOnEscape && e.key === 'Escape') {
             this.hide();
         }

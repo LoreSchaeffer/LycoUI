@@ -747,7 +747,7 @@ This exhaustive unit/color candidate ledger lists lines with raw dimensional/tim
 
   **Verify:** `npm run test:unit -- tests/unit/floating.test.ts`; `npm run test:parity -- tests/parity/floating.spec.ts tests/parity/collapse.spec.ts --project=chromium`. Covers H05/H08/H09, M02/M04/M05.
 
-- [ ] Task 1.5 — Extract one Modal/Drawer focus and layer engine
+- [x] Task 1.5 — Extract one Modal/Drawer focus and layer engine
 
   **Targets:** modify `packages/core/src/components/Modal/Modal.tsx`, `packages/core/src/components/Modal/Modal.vanilla.ts`, `packages/core/src/utils/keyboard.ts`; create `packages/core/src/interaction/modal-layer.ts`, `packages/core/src/interaction/focus-scope.ts`, `packages/core/src/hooks/useFocusTrap.ts`, `packages/core/src/primitives/Drawer/Drawer.tsx`, `packages/core/src/primitives/Drawer/DrawerController.ts`, `packages/core/src/styles/primitives/_overlay.scss`, `tests/unit/modal-layer.test.ts`, `tests/parity/overlay.spec.ts`.
 

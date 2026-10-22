@@ -1,0 +1,17 @@
+.overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 1050;
+}
+
+.drawer {
+  border: 0;
+  margin: 0;
+  max-width: min(100%, 32rem);
+  min-height: 100%;
+  padding: 0;
+}
+
+.drawer-panel {
+  min-height: 100%;
+}

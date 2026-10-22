@@ -14,4 +14,19 @@ describe('modal layer', () => {
     closeSecond();
     expect(document.body.style.overflow).toBe('');
   });
+
+  it('focuses the requested target and restores focus after close', async () => {
+    const trigger = document.createElement('button');
+    const dialog = document.createElement('dialog');
+    const primary = document.createElement('button');
+    dialog.append(primary);
+    document.body.append(trigger, dialog);
+    trigger.focus();
+
+    const close = openModalLayer({root: dialog, initialFocus: primary, returnFocus: trigger});
+    await Promise.resolve();
+    expect(document.activeElement).toBe(primary);
+    close();
+    expect(document.activeElement).toBe(trigger);
+  });
 });

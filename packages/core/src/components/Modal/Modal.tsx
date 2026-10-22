@@ -1,6 +1,7 @@
-import React, {useCallback, useEffect, useRef} from 'react';
+import React, {useEffect, useImperativeHandle, useRef} from 'react';
 import {createPortal} from 'react-dom';
-import {FOCUSABLE_ELEMENTS_SELECTOR, trapFocus} from '../../utils/keyboard';
+import {openModalLayer} from '../../interaction/modal-layer';
+import {useFocusTrap} from '../../hooks/useFocusTrap';
 import './Modal.scss';
 
 /**
@@ -48,58 +49,33 @@ export const ModalBase = React.forwardRef<HTMLDialogElement, ModalProps>(({
                                                                               closeOnOverlayClick = true,
                                                                               closeOnEscape = true
                                                                           }, ref) => {
-    const dialogRef = useRef<HTMLDivElement>(null);
+    const dialogRef = useRef<HTMLDialogElement>(null);
     const previouslyFocusedElement = useRef<HTMLElement | null>(null);
-
-    const handleKeyDown = useCallback((e: KeyboardEvent) => {
-        if (closeOnEscape && e.key === 'Escape') {
-            onClose();
-        }
-
-        if (dialogRef.current) {
-            trapFocus(e, dialogRef.current);
-        }
-    }, [onClose, closeOnEscape]);
+    useImperativeHandle(ref, () => dialogRef.current as HTMLDialogElement, []);
+    useFocusTrap(dialogRef, isOpen);
 
     useEffect(() => {
-        if (isOpen) {
-            previouslyFocusedElement.current = document.activeElement as HTMLElement;
-            document.addEventListener('keydown', handleKeyDown);
-            document.body.classList.add('modal-open');
+        const dialog = dialogRef.current;
+        if (!isOpen || !dialog) return;
+        previouslyFocusedElement.current = document.activeElement as HTMLElement;
+        return openModalLayer({
+            root: dialog,
+            returnFocus: previouslyFocusedElement.current ?? undefined,
+            onOpen: () => document.body.classList.add('modal-open'),
+            onClose: () => document.body.classList.remove('modal-open')
+        });
+    }, [isOpen]);
 
-            setTimeout(() => {
-                if (dialogRef.current) {
-                    const autoFocusElement = dialogRef.current.querySelector('[autofocus]') as HTMLElement;
-                    if (autoFocusElement) {
-                        autoFocusElement.focus();
-                        return;
-                    }
-
-                    const focusableElements = dialogRef.current.querySelectorAll(
-                        FOCUSABLE_ELEMENTS_SELECTOR
-                    ) as NodeListOf<HTMLElement>;
-
-                    if (focusableElements.length > 0) {
-                        focusableElements[0].focus();
-                    } else {
-                        dialogRef.current.focus();
-                    }
-                }
-            }, 0);
-        } else {
-            document.removeEventListener('keydown', handleKeyDown);
-            document.body.classList.remove('modal-open');
-            if (previouslyFocusedElement.current) {
-                previouslyFocusedElement.current.focus();
-                previouslyFocusedElement.current = null;
-            }
-        }
-
-        return () => {
-            document.removeEventListener('keydown', handleKeyDown);
-            document.body.classList.remove('modal-open');
+    useEffect(() => {
+        if (!isOpen || !closeOnEscape) return;
+        const dialog = dialogRef.current;
+        if (!dialog) return;
+        const onKeyDown = (event: KeyboardEvent) => {
+            if (event.key === 'Escape') onClose();
         };
-    }, [isOpen, handleKeyDown]);
+        dialog.addEventListener('keydown', onKeyDown);
+        return () => dialog.removeEventListener('keydown', onKeyDown);
+    }, [closeOnEscape, isOpen, onClose]);
 
     const handleBackdropClick = React.useCallback((e: React.MouseEvent<HTMLDialogElement>) => {
         if (closeOnOverlayClick && e.target === e.currentTarget) {
@@ -116,12 +92,15 @@ export const ModalBase = React.forwardRef<HTMLDialogElement, ModalProps>(({
             role={role}
             aria-modal="true"
             tabIndex={-1}
+            onCancel={(event) => {
+                event.preventDefault();
+                if (closeOnEscape) onClose();
+            }}
             onClick={handleBackdropClick}
-            ref={ref}
+            ref={dialogRef}
         >
             <div
                 className={`modal__dialog modal__dialog--${size} ${centered ? 'modal__dialog--centered' : ''} ${scrollable ? 'modal__dialog--scrollable' : ''}`}
-                ref={dialogRef}
                 tabIndex={-1}
             >
                 <div className="modal__content">
