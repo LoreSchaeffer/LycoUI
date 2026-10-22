@@ -1,7 +1,8 @@
 import {BaseController} from '../../vanilla/BaseController';
 import {controllerRegistry} from '../../vanilla/controller-registry';
 import {createSafeSvg} from '../../utils/safe-content';
-
+import {resolveFieldValidation, type FieldValidationMode} from '../../interaction/field-validation';
+import {createFieldLabel, ensureFieldId, renderFieldMessage} from './InputRenderer';
 export function initLycoInputs(root: ParentNode = document): void {
     const nativeInputs = root.querySelectorAll<HTMLInputElement>('input.input-custom');
     nativeInputs.forEach(input => {
@@ -12,7 +13,6 @@ export function initLycoInputs(root: ParentNode = document): void {
         }
     });
 }
-
 class LycoInputController extends BaseController {
     private readonly nativeInput: HTMLInputElement;
     private readonly wrapper: HTMLDivElement;
@@ -20,34 +20,29 @@ class LycoInputController extends BaseController {
     private messageEl?: HTMLDivElement;
     private upBtn: HTMLButtonElement | null = null;
     private downBtn: HTMLButtonElement | null = null;
-
     private readonly _onFocus: () => void;
     private readonly _onBlur: () => void;
     private readonly _onInput: () => void;
     private readonly _onUpStep: () => void;
     private readonly _onDownStep: () => void;
-
     private hasBlurred = false;
-    private validation: string;
-
+    private validation: FieldValidationMode;
     constructor(nativeInput: HTMLInputElement) {
         super();
         this.nativeInput = nativeInput;
         this.wrapper = document.createElement('div');
         this.container = document.createElement('div');
-        this.validation = nativeInput.getAttribute('data-validation') || 'disabled';
-
+        const validation = nativeInput.getAttribute('data-validation');
+        this.validation = validation === 'auto' || validation === 'valid' || validation === 'invalid' ? validation : 'disabled';
         this._onFocus = () => this.handleFocus();
         this._onBlur = () => this.handleBlur();
         this._onInput = () => this.handleInput();
         this._onUpStep = () => this.handleStep(1);
         this._onDownStep = () => this.handleStep(-1);
-
         this.buildUI();
         this.bindEvents();
         this.syncFilledState();
     }
-
     private buildUI(): void {
         const variant = this.nativeInput.getAttribute('data-variant') || 'primary';
         const size = this.nativeInput.getAttribute('data-size') || 'md';
@@ -59,13 +54,11 @@ class LycoInputController extends BaseController {
         const iconEndSvg = this.nativeInput.getAttribute('data-icon-end');
         const isDisabled = this.nativeInput.disabled;
         const isReadonly = this.nativeInput.hasAttribute('readonly');
-
+        ensureFieldId(this.nativeInput);
         const hasIconStart = Boolean(iconStartSvg);
         const hasIconEnd = Boolean(iconEndSvg);
         const showSteps = isNumber && showStepButtons && !isDisabled && !isReadonly;
-
         this.wrapper.className = 'input-wrapper';
-
         const containerClasses = [
             'input',
             size && size !== 'md' ? `input--${size}` : '',
@@ -76,13 +69,10 @@ class LycoInputController extends BaseController {
         if (hasIconStart) containerClasses.push('input--has-icon-start');
         if (hasIconEnd || showSteps) containerClasses.push('input--has-icon-end');
         this.container.className = containerClasses.join(' ');
-
         if (variant) {
             this.container.style.setProperty('--input-color-base', `var(--${variant}-500, var(--color-${variant}))`);
         }
-
         this.nativeInput.parentNode?.insertBefore(this.wrapper, this.nativeInput);
-
         if (hasIconStart && iconStartSvg) {
             const iconEl = document.createElement('span');
             iconEl.className = 'input__icon input__icon--start';
@@ -90,28 +80,12 @@ class LycoInputController extends BaseController {
             if (safeSvg) iconEl.appendChild(safeSvg);
             this.container.appendChild(iconEl);
         }
-
         this.nativeInput.classList.remove('input-custom');
         this.nativeInput.classList.add('input__field');
         this.container.appendChild(this.nativeInput);
-
         if (labelText) {
-            const label = document.createElement('label');
-            label.className = 'input__label';
-            label.textContent = labelText;
-            if (this.nativeInput.id) {
-                label.setAttribute('for', this.nativeInput.id);
-            }
-            if (this.nativeInput.required) {
-                const req = document.createElement('span');
-                req.className = 'input__required';
-                req.setAttribute('aria-hidden', 'true');
-                req.textContent = ' *';
-                label.appendChild(req);
-            }
-            this.container.appendChild(label);
+            this.container.appendChild(createFieldLabel('input__label', this.nativeInput, labelText));
         }
-
         if (hasIconEnd && !showSteps && iconEndSvg) {
             const iconEl = document.createElement('span');
             iconEl.className = 'input__icon input__icon--end';
@@ -119,102 +93,64 @@ class LycoInputController extends BaseController {
             if (safeSvg) iconEl.appendChild(safeSvg);
             this.container.appendChild(iconEl);
         }
-
         if (showSteps) {
             const stepContainer = document.createElement('div');
             stepContainer.className = 'input__step-buttons';
-
             this.upBtn = document.createElement('button');
             this.upBtn.type = 'button';
             this.upBtn.className = 'input__step-btn input__step-btn--up';
             this.upBtn.setAttribute('aria-label', 'Increment');
-            this.upBtn.tabIndex = -1;
             this.upBtn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"/></svg>';
             this.listen(this.upBtn, 'click', this._onUpStep);
-
             this.downBtn = document.createElement('button');
             this.downBtn.type = 'button';
             this.downBtn.className = 'input__step-btn input__step-btn--down';
             this.downBtn.setAttribute('aria-label', 'Decrement');
-            this.downBtn.tabIndex = -1;
             this.downBtn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>';
             this.listen(this.downBtn, 'click', this._onDownStep);
-
             stepContainer.appendChild(this.upBtn);
             stepContainer.appendChild(this.downBtn);
             this.container.appendChild(stepContainer);
         }
-
         this.wrapper.appendChild(this.container);
-
-        const validationMsg = this.nativeInput.getAttribute('data-validation-message');
-        if (this.validation !== 'disabled' || validationMsg) {
-            this.messageEl = document.createElement('div');
-            this.messageEl.className = 'input__message';
-            this.wrapper.appendChild(this.messageEl);
-        }
-
-        if (this.validation === 'valid') {
-            this.container.classList.add('is-valid');
-            if (this.messageEl && validationMsg) {
-                this.messageEl.textContent = validationMsg;
-                this.messageEl.classList.add('input__message--valid');
-            }
-        } else if (this.validation === 'invalid') {
-            this.container.classList.add('is-invalid');
-            if (this.messageEl && validationMsg) {
-                this.messageEl.textContent = validationMsg;
-                this.messageEl.classList.add('input__message--invalid');
-            }
-        }
+        this.syncValidation();
     }
-
     private bindEvents(): void {
         this.listen(this.nativeInput, 'focus', this._onFocus);
         this.listen(this.nativeInput, 'blur', this._onBlur);
         this.listen(this.nativeInput, 'input', this._onInput);
     }
-
     private handleFocus(): void {
         this.container.classList.add('is-focused');
     }
-
     private handleBlur(): void {
         this.container.classList.remove('is-focused');
         this.hasBlurred = true;
         this.syncFilledState();
-
         if (this.validation === 'auto') {
             this.runAutoValidation();
         }
     }
-
     private handleInput(): void {
         this.syncFilledState();
-
         if (this.validation === 'auto' && this.hasBlurred) {
             this.runAutoValidation();
         }
     }
-
     private handleStep(direction: 1 | -1): void {
         if (this.nativeInput.disabled || this.nativeInput.hasAttribute('readonly')) return;
-
         if (direction === 1) {
             this.nativeInput.stepUp();
         } else {
             this.nativeInput.stepDown();
         }
-
         this.nativeInput.dispatchEvent(new Event('input', {bubbles: true}));
         this.nativeInput.dispatchEvent(new Event('change', {bubbles: true}));
         this.syncFilledState();
-
         if (this.validation === 'auto' && this.hasBlurred) {
             this.runAutoValidation();
         }
     }
-
     private syncFilledState(): void {
         if (this.nativeInput.value.length > 0) {
             this.container.classList.add('is-filled');
@@ -222,49 +158,30 @@ class LycoInputController extends BaseController {
             this.container.classList.remove('is-filled');
         }
     }
-
     private runAutoValidation(): void {
-        this.container.classList.remove('is-valid', 'is-invalid');
-        if (this.messageEl) {
-            this.messageEl.classList.remove('input__message--valid', 'input__message--invalid');
-            this.messageEl.textContent = '';
-        }
-
-        const overrideMsg = this.nativeInput.getAttribute('data-validation-message');
-        const nativeValid = this.nativeInput.checkValidity();
-
-        if (!nativeValid) {
-            this.container.classList.add('is-invalid');
-            if (this.messageEl) {
-                this.messageEl.textContent = overrideMsg || this.nativeInput.validationMessage;
-                this.messageEl.classList.add('input__message--invalid');
-            }
-            return;
-        }
-
-        const fnName = this.nativeInput.getAttribute('data-validation-fn');
-        if (fnName && typeof window.lycoValidators?.[fnName] === 'function') {
-            const customError = window.lycoValidators[fnName](this.nativeInput.value);
-            if (customError) {
-                this.container.classList.add('is-invalid');
-                if (this.messageEl) {
-                    this.messageEl.textContent = overrideMsg || customError;
-                    this.messageEl.classList.add('input__message--invalid');
-                }
-                return;
-            }
-        }
-
-        this.container.classList.add('is-valid');
-        if (this.messageEl && overrideMsg) {
-            this.messageEl.textContent = overrideMsg;
-            this.messageEl.classList.add('input__message--valid');
-        }
+        this.syncValidation();
     }
-
+    private syncValidation(): void {
+        const nativeValid = this.nativeInput.checkValidity();
+        const fnName = this.nativeInput.getAttribute('data-validation-fn');
+        let customMessage: string | null = null;
+        if (fnName && typeof window.lycoValidators?.[fnName] === 'function') {
+            customMessage = window.lycoValidators[fnName](this.nativeInput.value) ?? null;
+        }
+        const result = resolveFieldValidation({
+            mode: this.validation,
+            hasBlurred: this.hasBlurred,
+            nativeValid,
+            nativeMessage: this.nativeInput.validationMessage,
+            customMessage,
+            explicitMessage: this.nativeInput.getAttribute('data-validation-message') || undefined,
+        });
+        this.container.classList.toggle('is-valid', result.state === 'valid');
+        this.container.classList.toggle('is-invalid', result.state === 'invalid');
+        this.messageEl = renderFieldMessage(this.wrapper, this.nativeInput, this.messageEl, 'input__message', result);
+    }
     public override destroy(): void {
         super.destroy();
-
         this.nativeInput.classList.remove('input__field');
         this.nativeInput.classList.add('input-custom');
         this.wrapper.parentNode?.insertBefore(this.nativeInput, this.wrapper);

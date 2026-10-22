@@ -1,11 +1,12 @@
 import './Textarea.scss';
 import type {TextareaHTMLAttributes} from 'react';
-import React, {type CSSProperties, forwardRef, useCallback, useEffect, useId, useRef, useState} from 'react';
+import React, {type CSSProperties, forwardRef, useCallback, useId, useRef} from 'react';
 import clsx from 'clsx';
 import type {FullVariant, SizeVariant} from '../../types/types';
 import {useFieldValidation} from '../../hooks/useFieldValidation';
 import {FieldLabel} from '../Input/FieldLabel';
 import {FieldMessage} from '../Input/FieldMessage';
+import {useInputState} from '../Input/useInputState';
 
 /**
  * TextareaValidation state options.
@@ -73,10 +74,7 @@ export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
         const messageId = `${textareaId}-message`;
 
         const innerRef = useRef<HTMLTextAreaElement>(null);
-        const [isFocused, setIsFocused] = useState(false);
-        const [isFilled, setIsFilled] = useState(
-            () => Boolean(value !== undefined ? value : defaultValue)
-        );
+        const {isFocused, isFilled, focus, blur, input: syncInputState} = useInputState(value, defaultValue);
         const {hasBlurred, markBlurred, validate, validation: fieldValidation} = useFieldValidation(validation, validationFn, validationMessage);
 
         const mergedRef = useCallback((node: HTMLTextAreaElement | null) => {
@@ -85,19 +83,13 @@ export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
             else if (ref) (ref as React.MutableRefObject<HTMLTextAreaElement | null>).current = node;
         }, [ref]);
 
-        useEffect(() => {
-            if (value !== undefined) {
-                setIsFilled(String(value).length > 0);
-            }
-        }, [value]);
-
         const handleFocus = useCallback((e: React.FocusEvent<HTMLTextAreaElement>) => {
-            setIsFocused(true);
+            focus();
             onFocus?.(e);
         }, [onFocus]);
 
         const handleBlur = useCallback((e: React.FocusEvent<HTMLTextAreaElement>) => {
-            setIsFocused(false);
+            blur();
             markBlurred();
 
             if (validation === 'auto') {
@@ -108,7 +100,7 @@ export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
         }, [onBlur, validation, validate]);
 
         const handleChange = useCallback((e: React.ChangeEvent<HTMLTextAreaElement>) => {
-            setIsFilled(e.target.value.length > 0);
+            syncInputState(e.target.value);
 
             if (validation === 'auto' && hasBlurred) {
                 validate(e.target);

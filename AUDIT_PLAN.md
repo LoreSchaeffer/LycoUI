@@ -811,7 +811,7 @@ This exhaustive unit/color candidate ledger lists lines with raw dimensional/tim
 
   **Verify:** `npm run test:unit -- tests/unit/timed-dismiss.test.ts`; `npm run test:parity -- tests/parity/toast.spec.ts --project=chromium`; `npm run audit:contracts -- --check loc --components Notification,Snackbar,Alert`. Covers C11, H14/H20, M01/M07.
 
-- [ ] Task 2.6 — Split field state/validation and input views
+- [x] Task 2.6 — Split field state/validation and input views
 
   **Targets:** modify `packages/core/src/components/Input/Input.tsx`, `packages/core/src/components/Input/Input.vanilla.ts`, `packages/core/src/components/Input/Input.scss`, `packages/core/src/components/Textarea/Textarea.tsx`, `packages/core/src/components/Textarea/Textarea.scss`; create `packages/core/src/interaction/field-validation.ts`, `packages/core/src/hooks/useFieldValidation.ts`, `packages/core/src/components/Input/Input.types.ts`, `packages/core/src/components/Input/useInputState.ts`, `packages/core/src/components/Input/InputAdornment.tsx`, `packages/core/src/components/Input/InputStepButtons.tsx`, `packages/core/src/components/Input/FieldLabel.tsx`, `packages/core/src/components/Input/FieldMessage.tsx`, `packages/core/src/components/Input/InputRenderer.ts`, `packages/core/src/components/Input/_field.scss`, `packages/core/src/components/Input/_validation.scss`, `packages/core/src/components/Textarea/_field.scss`, `packages/core/src/components/Textarea/_validation.scss`, `tests/unit/field-validation.test.ts`.
 

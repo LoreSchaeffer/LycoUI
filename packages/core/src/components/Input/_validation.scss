@@ -1,0 +1,13 @@
+.input__message {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  font-size: var(--text-caption);
+  margin-top: 2px;
+  padding-left: var(--spacing-1);
+  line-height: 1.2;
+  color: var(--color-text-secondary);
+  &--valid { color: var(--color-success); }
+  &--invalid { color: var(--color-danger); }
+}
