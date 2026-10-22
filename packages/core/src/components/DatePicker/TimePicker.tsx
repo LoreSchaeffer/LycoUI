@@ -297,8 +297,8 @@ export const TimePicker = forwardRef<HTMLDivElement, TimePickerProps>(
                 id={pickerId}
                 className={clsx(
                     'datepicker',
-                    'datepicker--time',
-                    size !== 'md' && `datepicker--${size}`,
+                    'datepicker-time',
+                    size !== 'md' && `datepicker-${size}`,
                     disabled && 'is-disabled',
                     isComponentInvalid && 'is-invalid',
                     isOpen && 'is-open',
@@ -308,7 +308,7 @@ export const TimePicker = forwardRef<HTMLDivElement, TimePickerProps>(
                 {...props}
             >
                 <div
-                    className="datepicker__trigger"
+                    className="datepicker-trigger"
                     onClick={(e) => {
                         e.stopPropagation(); // CRITICAL: Prevent bubbling to document
                         if (disabled) return;
@@ -317,7 +317,7 @@ export const TimePicker = forwardRef<HTMLDivElement, TimePickerProps>(
                     }}
                 >
                     {/* Clock icon */}
-                    <span className="datepicker__icon" aria-hidden="true">
+                    <span className="datepicker-icon" aria-hidden="true">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                             <circle cx="12" cy="12" r="10"/>
                             <polyline points="12 6 12 12 16 14"/>
@@ -327,7 +327,7 @@ export const TimePicker = forwardRef<HTMLDivElement, TimePickerProps>(
                     <input
                         ref={inputRef}
                         type={isMobile ? "time" : "text"}
-                        className="datepicker__input"
+                        className="datepicker-input"
                         placeholder={placeholder}
                         value={isMobile ? nativeValue : inputValue}
                         onChange={isMobile ? handleNativeChange : handleInputChange}
@@ -347,7 +347,7 @@ export const TimePicker = forwardRef<HTMLDivElement, TimePickerProps>(
                     {/* Clear button */}
                     {inputValue && (
                         <span
-                            className="datepicker__clear"
+                            className="datepicker-clear"
                             role="button"
                             aria-label="Clear time"
                             tabIndex={disabled ? -1 : 0}
@@ -364,7 +364,7 @@ export const TimePicker = forwardRef<HTMLDivElement, TimePickerProps>(
                     )}
 
                     {/* Chevron */}
-                    <svg className="datepicker__chevron" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <svg className="datepicker-chevron" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                         <polyline points="6 9 12 15 18 9"/>
                     </svg>
                 </div>
@@ -373,7 +373,7 @@ export const TimePicker = forwardRef<HTMLDivElement, TimePickerProps>(
                     <div
                         ref={popoverRef}
                         id={popoverId}
-                        className="datepicker__popover"
+                        className="datepicker-popover"
                         role="dialog"
                         aria-label="Time picker"
                         style={{
@@ -406,3 +406,4 @@ export const TimePicker = forwardRef<HTMLDivElement, TimePickerProps>(
 );
 
 TimePicker.displayName = 'TimePicker';
+

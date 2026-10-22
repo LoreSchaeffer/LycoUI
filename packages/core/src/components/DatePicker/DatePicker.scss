@@ -20,13 +20,13 @@
   &--sm {
     font-size: var(--text-body-sm);
 
-    .datepicker__trigger {
+    .datepicker-trigger {
       height: calc(var(--spacing-8, 2rem) + 2px);
       padding: var(--spacing-1) var(--spacing-3);
     }
 
-    .datepicker__icon svg,
-    .datepicker__clear svg {
+    .datepicker-icon svg,
+    .datepicker-clear svg {
       width: 0.875rem;
       height: 0.875rem;
     }
@@ -35,13 +35,13 @@
   &--lg {
     font-size: var(--font-size-lg);
 
-    .datepicker__trigger {
+    .datepicker-trigger {
       height: calc(var(--spacing-12, 3rem) + 2px);
       padding: var(--spacing-3) var(--spacing-4);
     }
 
-    .datepicker__icon svg,
-    .datepicker__clear svg {
+    .datepicker-icon svg,
+    .datepicker-clear svg {
       width: 1.125rem;
       height: 1.125rem;
     }
@@ -54,7 +54,7 @@
     opacity: 0.6;
     cursor: not-allowed;
 
-    .datepicker__trigger {
+    .datepicker-trigger {
       pointer-events: none;
       background-color: var(--color-bg-root);
     }
@@ -64,18 +64,18 @@
   // INVALID STATE
   // ==========================================================================
   &.is-invalid {
-    .datepicker__trigger {
+    .datepicker-trigger {
       border-color: var(--color-danger);
     }
 
-    &.is-open .datepicker__trigger,
-    .datepicker__trigger:focus-within {
+    &.is-open .datepicker-trigger,
+    .datepicker-trigger:focus-within {
       border-color: var(--color-danger);
       box-shadow: 0 0 0 1px var(--color-void),
       0 0 0 3px var(--color-danger);
     }
 
-    .datepicker__input {
+    .datepicker-input {
       color: var(--color-danger);
     }
   }
@@ -109,8 +109,8 @@
     }
   }
 
-  &:not(.is-invalid).is-open .datepicker__trigger,
-  &:not(.is-invalid) .datepicker__trigger:focus-within {
+  &:not(.is-invalid).is-open .datepicker-trigger,
+  &:not(.is-invalid) .datepicker-trigger:focus-within {
     border-color: var(--datepicker-color-base);
     box-shadow: 0 0 0 1px var(--color-void),
     0 0 0 3px var(--datepicker-color-base);
@@ -197,7 +197,7 @@
     margin: 0;
   }
 
-  &.is-open .datepicker__chevron {
+  &.is-open .datepicker-chevron {
     transform: rotate(180deg);
   }
 
@@ -549,3 +549,4 @@
     }
   }
 }
+

@@ -176,12 +176,12 @@ const Calendar = memo(forwardRef<HTMLDivElement, CalendarProps>(function Calenda
     const focusedDayTime = focusedDay.getTime();
 
     return (
-        <div className="datepicker__calendar" ref={ref}>
+        <div className="datepicker-calendar" ref={ref}>
             {/* Header */}
-            <div className="datepicker__cal-header">
+            <div className="datepicker-cal-header">
                 <button
                     type="button"
-                    className="datepicker__cal-nav-btn"
+                    className="datepicker-cal-nav-btn"
                     onClick={onPrevMonth}
                     aria-label="Previous month"
                 >
@@ -189,10 +189,10 @@ const Calendar = memo(forwardRef<HTMLDivElement, CalendarProps>(function Calenda
                         <polyline points="15 18 9 12 15 6"/>
                     </svg>
                 </button>
-                <span className="datepicker__cal-title" aria-live="polite">{monthYearLabel}</span>
+                <span className="datepicker-cal-title" aria-live="polite">{monthYearLabel}</span>
                 <button
                     type="button"
-                    className="datepicker__cal-nav-btn"
+                    className="datepicker-cal-nav-btn"
                     onClick={onNextMonth}
                     aria-label="Next month"
                 >
@@ -205,18 +205,18 @@ const Calendar = memo(forwardRef<HTMLDivElement, CalendarProps>(function Calenda
             {/* Calendar grid */}
             <div
                 ref={gridRef}
-                className="datepicker__cal-grid"
+                className="datepicker-cal-grid"
                 role="grid"
                 aria-label={monthYearLabel}
                 tabIndex={0}
                 onKeyDown={handleGridKeyDown}
             >
                 {/* Day-of-week header row */}
-                <div className="datepicker__cal-row" role="row">
+                <div className="datepicker-cal-row" role="row">
                     {DAY_NAMES.map(name => (
                         <div
                             key={name}
-                            className="datepicker__cal-day-header"
+                            className="datepicker-cal-day-header"
                             role="columnheader"
                             aria-label={name}
                         >
@@ -227,7 +227,7 @@ const Calendar = memo(forwardRef<HTMLDivElement, CalendarProps>(function Calenda
 
                 {/* Day rows */}
                 {rows.map((week, rowIdx) => (
-                    <div key={rowIdx} className="datepicker__cal-row" role="row">
+                    <div key={rowIdx} className="datepicker-cal-row" role="row">
                         {week.map(day => {
                             const dayNorm = stripTime(day);
                             const dayTime = dayNorm.getTime();
@@ -241,7 +241,7 @@ const Calendar = memo(forwardRef<HTMLDivElement, CalendarProps>(function Calenda
                                 <div
                                     key={dayTime}
                                     className={clsx(
-                                        'datepicker__cal-cell',
+                                        'datepicker-cal-cell',
                                         !isCurrentMonth && 'is-outside',
                                         isSelected && 'is-selected',
                                         isToday && 'is-today',
@@ -268,3 +268,4 @@ const Calendar = memo(forwardRef<HTMLDivElement, CalendarProps>(function Calenda
 Calendar.displayName = 'Calendar';
 
 export default Calendar;
+

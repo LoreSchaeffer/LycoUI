@@ -376,8 +376,8 @@ export const DateTimePicker = forwardRef<HTMLDivElement, DateTimePickerProps>(
                 id={pickerId}
                 className={clsx(
                     'datepicker',
-                    'datepicker--datetime',
-                    size !== 'md' && `datepicker--${size}`,
+                    'datepicker-datetime',
+                    size !== 'md' && `datepicker-${size}`,
                     disabled && 'is-disabled',
                     isComponentInvalid && 'is-invalid',
                     isOpen && 'is-open',
@@ -387,7 +387,7 @@ export const DateTimePicker = forwardRef<HTMLDivElement, DateTimePickerProps>(
                 {...props}
             >
                 <div
-                    className="datepicker__trigger"
+                    className="datepicker-trigger"
                     onClick={(e) => {
                         e.stopPropagation(); // CRITICAL: Prevent bubbling to document
                         if (disabled) return;
@@ -403,7 +403,7 @@ export const DateTimePicker = forwardRef<HTMLDivElement, DateTimePickerProps>(
                     }}
                 >
                     {/* Calendar-clock icon */}
-                    <span className="datepicker__icon" aria-hidden="true">
+                    <span className="datepicker-icon" aria-hidden="true">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                             <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
                             <line x1="16" y1="2" x2="16" y2="6"/>
@@ -416,7 +416,7 @@ export const DateTimePicker = forwardRef<HTMLDivElement, DateTimePickerProps>(
                     <input
                         ref={inputRef}
                         type={isMobile ? "datetime-local" : "text"}
-                        className="datepicker__input"
+                        className="datepicker-input"
                         placeholder={placeholder}
                         value={isMobile ? nativeValue : inputValue}
                         onChange={isMobile ? handleNativeChange : handleInputChange}
@@ -442,7 +442,7 @@ export const DateTimePicker = forwardRef<HTMLDivElement, DateTimePickerProps>(
 
                     {inputValue && (
                         <span
-                            className="datepicker__clear"
+                            className="datepicker-clear"
                             role="button"
                             aria-label="Clear date and time"
                             tabIndex={disabled ? -1 : 0}
@@ -458,7 +458,7 @@ export const DateTimePicker = forwardRef<HTMLDivElement, DateTimePickerProps>(
                         </span>
                     )}
 
-                    <svg className="datepicker__chevron" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <svg className="datepicker-chevron" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                         <polyline points="6 9 12 15 18 9"/>
                     </svg>
                 </div>
@@ -467,7 +467,7 @@ export const DateTimePicker = forwardRef<HTMLDivElement, DateTimePickerProps>(
                     <div
                         ref={popoverRef}
                         id={popoverId}
-                        className={clsx('datepicker__popover', 'datepicker__popover--datetime')}
+                        className={clsx('datepicker-popover', 'datepicker-popover--datetime')}
                         role="dialog"
                         aria-label="Date and time picker"
                         style={{
@@ -478,9 +478,9 @@ export const DateTimePicker = forwardRef<HTMLDivElement, DateTimePickerProps>(
                             } as CSSProperties : {}),
                         }}
                     >
-                        <div className="datepicker__datetime-body">
+                        <div className="datepicker-datetime-body">
                             {(!isMobile || mobileStep === 'date') && (
-                                <div className="datepicker__calendar-section">
+                                <div className="datepicker-calendar-section">
                                     <Calendar
                                         viewDate={viewDate}
                                         selectedDate={draftDate}
@@ -494,10 +494,10 @@ export const DateTimePicker = forwardRef<HTMLDivElement, DateTimePickerProps>(
                                 </div>
                             )}
                             
-                            {!isMobile && <div className="datepicker__vertical-divider" role="separator"/>}
+                            {!isMobile && <div className="datepicker-vertical-divider" role="separator"/>}
                             
                             {(!isMobile || mobileStep === 'time') && (
-                                <div className="datepicker__time-section">
+                                <div className="datepicker-time-section">
                                     <TimeInput
                                         hours={draftHours}
                                         minutes={draftMinutes}
@@ -508,11 +508,11 @@ export const DateTimePicker = forwardRef<HTMLDivElement, DateTimePickerProps>(
                                 </div>
                             )}
                         </div>
-                        <div className="datepicker__datetime-footer">
+                        <div className="datepicker-datetime-footer">
                             {isMobile && mobileStep === 'time' && (
                                 <button
                                     type="button"
-                                    className="datepicker__btn datepicker__btn--secondary"
+                                    className="datepicker-btn datepicker-btn--secondary"
                                     onClick={() => setMobileStep('date')}
                                 >
                                     Back
@@ -520,7 +520,7 @@ export const DateTimePicker = forwardRef<HTMLDivElement, DateTimePickerProps>(
                             )}
                             <button
                                 type="button"
-                                className="datepicker__btn datepicker__btn--primary"
+                                className="datepicker-btn datepicker-btn--primary"
                                 onClick={isMobile && mobileStep === 'date' ? () => setMobileStep('time') : handleApply}
                             >
                                 {isMobile && mobileStep === 'date' ? 'Next' : 'Apply'}
@@ -541,3 +541,4 @@ export const DateTimePicker = forwardRef<HTMLDivElement, DateTimePickerProps>(
 );
 
 DateTimePicker.displayName = 'DateTimePicker';
+
