@@ -1,0 +1,150 @@
+@use "../../styles/tokens/breakpoints" as *;
+
+@mixin navbar-item-base {
+  display: flex;
+  align-items: center;
+  padding: var(--navbar-item-padding, var(--spacing-2) var(--spacing-3));
+  color: var(--color-text-secondary);
+  text-decoration: none;
+  font-weight: var(--font-weight-medium);
+  font-size: var(--navbar-font-size, var(--text-body-sm));
+  border-radius: var(--radius-md);
+  transition: background-color var(--duration-fast) var(--ease-default), color var(--duration-fast) var(--ease-default);
+
+  &:hover, &:focus-visible {
+    color: var(--color-text-primary);
+    background-color: var(--surface-elevated);
+    text-decoration: none;
+    outline: none;
+  }
+}
+
+.navbar {
+  // Variables
+  --navbar-bg: var(--surface-base, var(--color-bg-root));
+  --navbar-text: var(--color-text-primary);
+  --navbar-padding-x: var(--spacing-5);
+  --navbar-zindex: var(--z-index-sticky, 1020);
+  --navbar-border: var(--color-border-subtle);
+  --navbar-height: 64px;
+
+  position: relative;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  min-height: var(--navbar-height, 64px);
+  padding: 0 var(--navbar-padding-x);
+  background-color: var(--navbar-bg);
+  color: var(--navbar-text);
+  border-bottom: 1px solid var(--navbar-border);
+
+  // Sizes
+  &--sm {
+    --navbar-height: 48px;
+    --navbar-font-size: var(--font-size-sm, 14px);
+    --navbar-gap: var(--spacing-2, 8px);
+    --navbar-item-padding: var(--spacing-1, 4px) var(--spacing-2, 8px);
+  }
+
+  &--md {
+    --navbar-height: 64px;
+  }
+
+  &--lg {
+    --navbar-height: 80px;
+    --navbar-font-size: var(--font-size-lg, 18px);
+    --navbar-gap: var(--spacing-6, 24px);
+    --navbar-item-padding: var(--spacing-3, 12px) var(--spacing-4, 16px);
+  }
+
+  // Positions
+  &--sticky {
+    position: sticky;
+    top: 0;
+    z-index: var(--navbar-zindex);
+  }
+
+  &--fixed {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: var(--navbar-zindex);
+  }
+
+  // Variants (Base, Dark, Light)
+  &--base {
+    --navbar-bg: var(--surface-base, var(--color-bg-root));
+    --navbar-text: var(--color-text-primary);
+  }
+
+  &--dark {
+    --navbar-bg: var(--slate-900);
+    --navbar-text: var(--white);
+  }
+
+  &--light {
+    --navbar-bg: var(--white);
+    --navbar-text: var(--slate-900);
+  }
+
+  &--transparent {
+    --navbar-bg: transparent;
+    --navbar-text: inherit;
+    border-bottom-color: transparent;
+  }
+
+  // Elevations (Optional, but structural borders preferred in Linear)
+  &-elevation-0 {
+    box-shadow: none;
+  }
+
+  &-elevation-1 {
+    box-shadow: var(--shadow-sm);
+  }
+
+  &-elevation-2 {
+    box-shadow: var(--shadow-md);
+  }
+
+  &-elevation-3 {
+    box-shadow: var(--shadow-lg);
+  }
+
+  &-elevation-4 {
+    box-shadow: var(--shadow-xl);
+  }
+
+  // Color Variants (Solid & Dim)
+  &.navbar-variant {
+    &.navbar-dim {
+      background-color: var(--navbar-color-dim);
+      color: var(--color-text-primary);
+      border-bottom-color: transparent;
+    }
+
+    &.navbar-solid {
+      background-color: var(--navbar-color-base);
+      color: var(--navbar-text-color, var(--white));
+      border-bottom-color: transparent;
+
+      .navbar-link, .navbar-brand, .navbar-toggle {
+        color: inherit;
+      }
+
+      .navbar-link {
+        color: color-mix(in srgb, currentColor 85%, transparent);
+
+        &:hover, &:focus-visible, &.is-active {
+          color: currentColor;
+          background-color: color-mix(in srgb, currentColor 10%, transparent);
+        }
+      }
+    }
+  }
+
+
+  // Elements
+}

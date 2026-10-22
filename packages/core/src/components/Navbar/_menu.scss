@@ -1,0 +1,173 @@
+@use "../../styles/tokens/breakpoints" as *;
+// --- DESKTOP DROPDOWN MIXIN ---
+@mixin navbar-desktop-dropdown {
+  .navbar-dropdown-menu {
+    display: block; // Override mobile flex
+    position: absolute;
+    top: calc(100% + var(--spacing-1));
+    left: 0;
+    right: auto;
+    z-index: var(--z-index-dropdown, 1030);
+    min-width: max-content;
+    width: auto;
+    padding: var(--spacing-1);
+    background-color: var(--surface-floating, var(--color-bg-surface));
+    border: 1px solid var(--color-border-subtle);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-xl);
+
+    &--right {
+      left: auto;
+      right: 0;
+    }
+
+    // Entry animation starting state
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-0.5rem);
+    transition: opacity var(--duration-fast) var(--ease-out), transform var(--duration-fast) var(--ease-out), visibility var(--duration-fast) var(--ease-out);
+
+    &.is-open {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
+    }
+  }
+
+  // Nested SubMenu
+  .navbar-dropdown-submenu {
+    // Nested Menu Positioning & Animation Reset
+    > .navbar-dropdown-menu--nested {
+      top: calc(var(--spacing-1, 0.25rem) * -1); // Align nicely with parent item
+      left: 100%;
+      right: auto;
+      margin-left: var(--spacing-1);
+
+      // Override animation for side-entry
+      transform: translateX(-0.5rem);
+
+      &.is-open {
+        transform: translateX(0);
+      }
+    }
+
+    &:hover > .navbar-dropdown-menu--nested,
+    &:focus-within > .navbar-dropdown-menu--nested {
+      opacity: 1;
+      visibility: visible;
+      transform: translateX(0);
+    }
+
+    // Smart positioning for when menu touches right edge of viewport
+    &--flip-left {
+      > .navbar-dropdown-menu--nested {
+        left: auto;
+        right: 100%;
+        margin-left: 0;
+        margin-right: var(--spacing-1);
+        transform: translateX(0.5rem); // entering from the left now
+      }
+
+      &:hover > .navbar-dropdown-menu--nested,
+      &:focus-within > .navbar-dropdown-menu--nested {
+        transform: translateX(0);
+      }
+    }
+  }
+
+  // Automatically flip nested menus in right-aligned dropdowns
+  .navbar-dropdown-menu--right {
+    .navbar-dropdown-submenu > .navbar-dropdown-menu--nested {
+      left: auto !important;
+      right: 100% !important;
+      margin-left: 0;
+      margin-right: var(--spacing-1);
+      transform: translateX(0.5rem);
+    }
+
+    .navbar-dropdown-submenu:hover > .navbar-dropdown-menu--nested,
+    .navbar-dropdown-submenu:focus-within > .navbar-dropdown-menu--nested {
+      transform: translateX(0);
+    }
+  }
+
+  .navbar-dropdown-submenu-trigger .navbar-dropdown-caret {
+    transform: rotate(-90deg); // Point right by default on desktop
+  }
+
+  .navbar-dropdown-submenu.is-open > .navbar-dropdown-submenu-trigger .navbar-dropdown-caret {
+    transform: rotate(-90deg); // Keep pointing right when open on desktop
+  }
+}
+
+// Generate Expand Modifiers for responsive layouts
+@each $bp-name, $bp-value in $breakpoints {
+  .navbar-expand-#{$bp-name} {
+    @include respond-to($bp-name) {
+      .navbar-toggle {
+        display: none;
+      }
+
+      .navbar-collapse {
+        display: flex !important;
+        flex-basis: auto;
+        grid-template-rows: 1fr; // Override grid animation
+      }
+
+      .navbar-collapse-inner {
+        overflow: visible;
+        flex-direction: row;
+        align-items: center;
+      }
+
+      .navbar-nav {
+        flex-direction: row;
+        align-items: center;
+        gap: var(--navbar-gap, var(--spacing-4));
+        padding-top: 0;
+        padding-bottom: 0;
+        width: auto;
+      }
+
+      .navbar-link {
+        padding: var(--spacing-2) var(--spacing-3);
+      }
+
+      @include navbar-desktop-dropdown;
+    }
+  }
+}
+
+// Always expanded
+.navbar-expand-always {
+  .navbar-toggle {
+    display: none;
+  }
+
+  .navbar-collapse {
+    display: flex !important;
+    flex-basis: auto;
+    grid-template-rows: 1fr;
+  }
+
+  .navbar-collapse-inner {
+    overflow: visible;
+    flex-direction: row;
+    align-items: center;
+  }
+
+  .navbar-nav {
+    flex-direction: row;
+    align-items: center;
+    gap: var(--navbar-gap, var(--spacing-4));
+    padding-top: 0;
+    padding-bottom: 0;
+    width: auto;
+  }
+
+  .navbar-link {
+    padding: var(--spacing-2) var(--spacing-3);
+  }
+
+  @include navbar-desktop-dropdown;
+}
