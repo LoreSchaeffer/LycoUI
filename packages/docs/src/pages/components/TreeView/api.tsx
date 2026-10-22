@@ -22,13 +22,13 @@ export const treeItemApi: PropDefinition[] = [
     },
     {
         name: 'label',
-        type: 'ReactNode',
+        type: 'React.ReactNode',
 
         description: 'The label to display for the item.'
     },
     {
         name: 'icon',
-        type: 'ReactNode',
+        type: 'React.ReactNode',
         description: 'Optional custom icon. If undefined, a default chevron is used if it has children.'
     },
     {
@@ -46,6 +46,11 @@ export const treeItemApi: PropDefinition[] = [
         name: 'onToggle',
         type: '(expanded: boolean) => void',
         description: 'Callback fired when expansion state changes.'
+    },
+    {
+        name: 'children',
+        type: 'React.ReactNode',
+        description: 'Nested tree items.'
     }
 ];
 

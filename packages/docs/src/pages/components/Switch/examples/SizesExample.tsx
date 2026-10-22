@@ -5,20 +5,20 @@ export const description = <p>Switches come in three sizes: small, medium (defau
 export const order = 2;
 
 export const vanillaHtml = `
-<label class="switch switch--sm" for="s_sm" style="--switch-color-base: var(--color-primary); --switch-color-contrast: var(--white);">
-    <input type="checkbox" role="switch" id="s_sm" class="switch__input">
-    <span class="switch__control" aria-hidden="true"></span>
-    <span class="switch__label">Small</span>
+<label class="switch switch-sm" for="s_sm" style="--switch-color-base: var(--color-primary); --switch-color-contrast: var(--white);">
+    <input type="checkbox" role="switch" id="s_sm" class="switch-input">
+    <span class="switch-control" aria-hidden="true"></span>
+    <span class="switch-label">Small</span>
 </label>
 <label class="switch" for="s_md" style="--switch-color-base: var(--color-primary); --switch-color-contrast: var(--white);">
-    <input type="checkbox" role="switch" id="s_md" class="switch__input">
-    <span class="switch__control" aria-hidden="true"></span>
-    <span class="switch__label">Medium</span>
+    <input type="checkbox" role="switch" id="s_md" class="switch-input">
+    <span class="switch-control" aria-hidden="true"></span>
+    <span class="switch-label">Medium</span>
 </label>
-<label class="switch switch--lg" for="s_lg" style="--switch-color-base: var(--color-primary); --switch-color-contrast: var(--white);">
-    <input type="checkbox" role="switch" id="s_lg" class="switch__input">
-    <span class="switch__control" aria-hidden="true"></span>
-    <span class="switch__label">Large</span>
+<label class="switch switch-lg" for="s_lg" style="--switch-color-base: var(--color-primary); --switch-color-contrast: var(--white);">
+    <input type="checkbox" role="switch" id="s_lg" class="switch-input">
+    <span class="switch-control" aria-hidden="true"></span>
+    <span class="switch-label">Large</span>
 </label>
 `;
 

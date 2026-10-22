@@ -50,11 +50,16 @@
     border-bottom: 1px solid var(--code-border);
   }
 
-  &-header-left,
-  &-header-right {
+  &-header-left {
     display: flex;
     align-items: center;
     gap: var(--spacing-2);
+  }
+
+  &-header-right {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
   }
 
   &-lang-label {

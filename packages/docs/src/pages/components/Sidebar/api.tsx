@@ -27,7 +27,7 @@ export const sidebarProps: PropDefinition[] = [
     },
     {
         name: 'variant',
-        type: "'fixed' | 'overlay' | 'push'",
+        type: "'overlay' | 'push' | 'fixed'",
         defaultValue: "'fixed'",
         description: 'Defines how the sidebar interacts with the page layout.'
     },

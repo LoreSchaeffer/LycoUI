@@ -11,33 +11,33 @@ export const order = 1;
 
 export const vanillaHtml = `
 <!-- Trigger Button -->
-<button class="button button--primary" data-lyco-toggle="modal" data-lyco-target="#basicModal">
+<button class="btn btn-primary" data-lyco-toggle="modal" data-lyco-target="#basicModal">
     Edit Profile
 </button>
 
 <!-- Modal -->
 <div class="modal hidden" id="basicModal" tabindex="-1">
-    <div class="modal__dialog modal__dialog--md modal__dialog--centered">
-        <div class="modal__content">
-            <div class="modal__header">
-                <h3 class="modal__title">Edit Profile</h3>
-                <button type="button" class="modal__close" data-lyco-dismiss="modal" aria-label="Close">
+    <div class="modal-dialog modal-dialog-md modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Edit Profile</h3>
+                <button type="button" class="modal-close" data-lyco-dismiss="modal" aria-label="Close">
                     <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
                 </button>
             </div>
-            <div class="modal__body">
+            <div class="modal-body">
                 <div style="margin-bottom: 1rem;">
                     <label style="display: block; margin-bottom: 0.5rem; font-size: 0.875rem;">Full Name</label>
-                    <input type="text" class="input__field" placeholder="John Doe" style="width: 100%;" />
+                    <input type="text" class="input-field" placeholder="John Doe" style="width: 100%;" />
                 </div>
                 <div>
                     <label style="display: block; margin-bottom: 0.5rem; font-size: 0.875rem;">Email Address</label>
-                    <input type="email" class="input__field" placeholder="john@example.com" style="width: 100%;" />
+                    <input type="email" class="input-field" placeholder="john@example.com" style="width: 100%;" />
                 </div>
             </div>
-            <div class="modal__footer">
-                <button class="button button--neutral" data-lyco-dismiss="modal">Cancel</button>
-                <button class="button button--primary">Save Changes</button>
+            <div class="modal-footer">
+                <button class="btn btn-neutral" data-lyco-dismiss="modal">Cancel</button>
+                <button class="btn btn-primary">Save Changes</button>
             </div>
         </div>
     </div>

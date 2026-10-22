@@ -6,49 +6,49 @@ export const description = <p>The Navbar supports multiple sizes (<code>sm</code
 export const order = 7;
 
 export const vanillaHtml = `
-<nav class="navbar navbar--base navbar--sm navbar--expand-always" style="margin-bottom: 1rem;">
-  <div class="navbar__container">
-    <a class="navbar__brand" href="#">LycoUI</a>
-    <div class="navbar__collapse is-open">
-      <div class="navbar__collapse-inner">
-        <ul class="navbar__nav">
-          <li class="navbar__item"><a class="navbar__link is-active" href="#">sm (48px)</a></li>
+<nav class="navbar navbar-base navbar-sm navbar-expand-always" style="margin-bottom: 1rem;">
+  <div class="navbar-container">
+    <a class="navbar-brand" href="#">LycoUI</a>
+    <div class="navbar-collapse is-open">
+      <div class="navbar-collapse-inner">
+        <ul class="navbar-nav">
+          <li class="navbar-item"><a class="navbar-link is-active" href="#">sm (48px)</a></li>
         </ul>
       </div>
     </div>
   </div>
 </nav>
-<nav class="navbar navbar--base navbar--md navbar--expand-always" style="margin-bottom: 1rem;">
-  <div class="navbar__container">
-    <a class="navbar__brand" href="#">LycoUI</a>
-    <div class="navbar__collapse is-open">
-      <div class="navbar__collapse-inner">
-        <ul class="navbar__nav">
-          <li class="navbar__item"><a class="navbar__link is-active" href="#">md (64px)</a></li>
+<nav class="navbar navbar-base navbar-md navbar-expand-always" style="margin-bottom: 1rem;">
+  <div class="navbar-container">
+    <a class="navbar-brand" href="#">LycoUI</a>
+    <div class="navbar-collapse is-open">
+      <div class="navbar-collapse-inner">
+        <ul class="navbar-nav">
+          <li class="navbar-item"><a class="navbar-link is-active" href="#">md (64px)</a></li>
         </ul>
       </div>
     </div>
   </div>
 </nav>
-<nav class="navbar navbar--base navbar--lg navbar--expand-always" style="margin-bottom: 1rem;">
-  <div class="navbar__container">
-    <a class="navbar__brand" href="#">LycoUI</a>
-    <div class="navbar__collapse is-open">
-      <div class="navbar__collapse-inner">
-        <ul class="navbar__nav">
-          <li class="navbar__item"><a class="navbar__link is-active" href="#">lg (80px)</a></li>
+<nav class="navbar navbar-base navbar-lg navbar-expand-always" style="margin-bottom: 1rem;">
+  <div class="navbar-container">
+    <a class="navbar-brand" href="#">LycoUI</a>
+    <div class="navbar-collapse is-open">
+      <div class="navbar-collapse-inner">
+        <ul class="navbar-nav">
+          <li class="navbar-item"><a class="navbar-link is-active" href="#">lg (80px)</a></li>
         </ul>
       </div>
     </div>
   </div>
 </nav>
-<nav class="navbar navbar--base navbar--expand-always" style="--navbar-height: 100px;">
-  <div class="navbar__container">
-    <a class="navbar__brand" href="#">LycoUI</a>
-    <div class="navbar__collapse is-open">
-      <div class="navbar__collapse-inner">
-        <ul class="navbar__nav">
-          <li class="navbar__item"><a class="navbar__link is-active" href="#">Custom (100px)</a></li>
+<nav class="navbar navbar-base navbar-expand-always" style="--navbar-height: 100px;">
+  <div class="navbar-container">
+    <a class="navbar-brand" href="#">LycoUI</a>
+    <div class="navbar-collapse is-open">
+      <div class="navbar-collapse-inner">
+        <ul class="navbar-nav">
+          <li class="navbar-item"><a class="navbar-link is-active" href="#">Custom (100px)</a></li>
         </ul>
       </div>
     </div>

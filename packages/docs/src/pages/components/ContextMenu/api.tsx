@@ -9,13 +9,13 @@ export const contextMenuProps: PropDefinition[] = [
     },
     {
         name: 'label',
-        type: 'ReactNode',
+        type: 'React.ReactNode',
         defaultValue: 'undefined',
         description: 'The text or content to display for the item.'
     },
     {
         name: 'icon',
-        type: 'ReactNode',
+        type: 'React.ReactNode',
         defaultValue: 'undefined',
         description: 'Optional icon to display to the left of the label.'
     },

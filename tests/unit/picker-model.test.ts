@@ -1,5 +1,5 @@
 import {describe, expect, it} from 'vitest';
-import {clampDate, formatLocalDate, parseLocalDate} from '../../packages/core/src/components/DatePicker/date-model';
+import {clampDate, formatLocalDate, parseDateString, parseLocalDate} from '../../packages/core/src/components/DatePicker/date-model';
 import {formatTime, parseTime} from '../../packages/core/src/components/DatePicker/time-model';
 
 describe('picker models', () => {
@@ -15,5 +15,10 @@ describe('picker models', () => {
     expect(parseTime('24:00')).toBeNull();
     expect(parseTime('12:30 AM')).toEqual({hours: 0, minutes: 30});
     expect(parseTime('1:30 PM')).toEqual({hours: 13, minutes: 30});
+  });
+  it('rejects incomplete and normalized locale date strings', () => {
+    expect(parseDateString('1', 'medium')).toBeNull();
+    expect(parseDateString('Feb 30, 2024', 'medium')).toBeNull();
+    expect(parseDateString('Feb 29, 2024', 'medium')).not.toBeNull();
   });
 });

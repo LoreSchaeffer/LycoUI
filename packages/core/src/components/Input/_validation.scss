@@ -8,7 +8,7 @@
   padding-left: var(--spacing-1);
   line-height: 1.2;
   color: var(--color-text-secondary);
-  &-valid { color: var(--color-success); }
-  &-invalid { color: var(--color-danger); }
+  &--valid { color: var(--color-success); }
+  &--invalid { color: var(--color-danger); }
 }
 

@@ -7,37 +7,37 @@ export const order = 1;
 
 export const vanillaHtml = `
 <!-- Basic / Dropdown Example -->
-<nav class="navbar navbar--base navbar--expand-lg" style="margin-bottom: 2rem;">
-  <div class="navbar__container">
-    <a class="navbar__brand" href="#">LycoUI</a>
-    <button type="button" class="navbar__toggle" aria-expanded="false" aria-controls="navbar-collapse-basic">
+<nav class="navbar navbar-base navbar-expand-lg" style="margin-bottom: 2rem;">
+  <div class="navbar-container">
+    <a class="navbar-brand" href="#">LycoUI</a>
+    <button type="button" class="navbar-toggle" aria-expanded="false" aria-controls="navbar-collapse-basic">
       <span></span><span></span><span></span>
     </button>
-    <div class="navbar__collapse" id="navbar-collapse-basic">
-      <div class="navbar__collapse-inner">
-        <ul class="navbar__nav">
-          <li class="navbar__item"><a class="navbar__link is-active" href="#">Dashboard</a></li>
-          <li class="navbar__item"><a class="navbar__link" href="#">Projects</a></li>
+    <div class="navbar-collapse" id="navbar-collapse-basic">
+      <div class="navbar-collapse-inner">
+        <ul class="navbar-nav">
+          <li class="navbar-item"><a class="navbar-link is-active" href="#">Dashboard</a></li>
+          <li class="navbar-item"><a class="navbar-link" href="#">Projects</a></li>
         </ul>
-        <ul class="navbar__nav navbar__nav--align-end">
-          <li class="navbar__item navbar__dropdown">
-            <button type="button" class="navbar__dropdown-trigger" aria-expanded="false" aria-haspopup="true">
+        <ul class="navbar-nav navbar-nav-align-end">
+          <li class="navbar-item navbar-dropdown">
+            <button type="button" class="navbar-dropdown-trigger" aria-expanded="false" aria-haspopup="true">
               Profile
-              <svg class="navbar__dropdown-caret" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+              <svg class="navbar-dropdown-caret" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
             </button>
-            <div class="navbar__dropdown-menu navbar__dropdown-menu--right">
-              <a href="#" class="navbar__dropdown-item">Account Details</a>
-              <div class="navbar__dropdown-submenu">
-                <button type="button" class="navbar__dropdown-submenu-trigger" aria-haspopup="true">
+            <div class="navbar-dropdown-menu navbar-dropdown-right">
+              <a href="#" class="navbar-dropdown-item">Account Details</a>
+              <div class="navbar-dropdown-submenu">
+                <button type="button" class="navbar-dropdown-submenu-trigger" aria-haspopup="true">
                   <span>Theme Settings</span>
-                  <svg class="navbar__dropdown-caret" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                  <svg class="navbar-dropdown-caret" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
                 </button>
-                <div class="navbar__dropdown-menu navbar__dropdown-menu--nested">
-                  <a href="#" class="navbar__dropdown-item">Light Mode</a>
-                  <a href="#" class="navbar__dropdown-item">Dark Mode</a>
+                <div class="navbar-dropdown-menu navbar-dropdown-nested">
+                  <a href="#" class="navbar-dropdown-item">Light Mode</a>
+                  <a href="#" class="navbar-dropdown-item">Dark Mode</a>
                 </div>
               </div>
-              <a href="#" class="navbar__dropdown-item navbar__dropdown-item--danger">Sign Out</a>
+              <a href="#" class="navbar-dropdown-item navbar-dropdown-item-danger">Sign Out</a>
             </div>
           </li>
         </ul>
@@ -47,25 +47,25 @@ export const vanillaHtml = `
 </nav>
 
 <!-- Centered Brand Example -->
-<nav class="navbar navbar--base navbar-elevation-1 navbar--expand-lg" style="margin-bottom: 2rem;">
-  <div class="navbar__container">
-    <button type="button" class="navbar__toggle" aria-expanded="false" aria-controls="navbar-centered-brand">
+<nav class="navbar navbar-base navbar-elevation-1 navbar-expand-lg" style="margin-bottom: 2rem;">
+  <div class="navbar-container">
+    <button type="button" class="navbar-toggle" aria-expanded="false" aria-controls="navbar-centered-brand">
       <span></span><span></span><span></span>
     </button>
     
-    <a class="navbar__brand navbar__brand--centered" href="#">
+    <a class="navbar-brand navbar-brand-centered" href="#">
       LycoUI
     </a>
     
-    <div class="navbar__collapse" id="navbar-centered-brand">
-      <div class="navbar__collapse-inner" style="width: 100%; display: flex; flex-direction: inherit; gap: 1rem;">
-        <ul class="navbar__nav navbar__nav--align-start">
-          <li class="navbar__item"><a class="navbar__link" href="#">Men</a></li>
-          <li class="navbar__item"><a class="navbar__link" href="#">Women</a></li>
+    <div class="navbar-collapse" id="navbar-centered-brand">
+      <div class="navbar-collapse-inner" style="width: 100%; display: flex; flex-direction: inherit; gap: 1rem;">
+        <ul class="navbar-nav navbar-nav-align-start">
+          <li class="navbar-item"><a class="navbar-link" href="#">Men</a></li>
+          <li class="navbar-item"><a class="navbar-link" href="#">Women</a></li>
         </ul>
-        <ul class="navbar__nav navbar__nav--align-end">
-          <li class="navbar__item"><a class="navbar__link" href="#">Account</a></li>
-          <li class="navbar__item"><a class="navbar__link" href="#">Cart (0)</a></li>
+        <ul class="navbar-nav navbar-nav-align-end">
+          <li class="navbar-item"><a class="navbar-link" href="#">Account</a></li>
+          <li class="navbar-item"><a class="navbar-link" href="#">Cart (0)</a></li>
         </ul>
       </div>
     </div>
@@ -73,18 +73,18 @@ export const vanillaHtml = `
 </nav>
 
 <!-- Right Aligned Example -->
-<nav class="navbar navbar--base navbar-elevation-1 navbar--expand-lg">
-  <div class="navbar__container">
-    <a class="navbar__brand" href="#">LycoUI</a>
-    <button type="button" class="navbar__toggle" aria-expanded="false" aria-controls="navbar-right-aligned">
+<nav class="navbar navbar-base navbar-elevation-1 navbar-expand-lg">
+  <div class="navbar-container">
+    <a class="navbar-brand" href="#">LycoUI</a>
+    <button type="button" class="navbar-toggle" aria-expanded="false" aria-controls="navbar-right-aligned">
       <span></span><span></span><span></span>
     </button>
-    <div class="navbar__collapse" id="navbar-right-aligned">
-      <div class="navbar__collapse-inner">
-        <ul class="navbar__nav navbar__nav--align-end">
-          <li class="navbar__item"><a class="navbar__link is-active" href="#">Home</a></li>
-          <li class="navbar__item"><a class="navbar__link" href="#">About</a></li>
-          <li class="navbar__item"><a class="navbar__link" href="#">Contact</a></li>
+    <div class="navbar-collapse" id="navbar-right-aligned">
+      <div class="navbar-collapse-inner">
+        <ul class="navbar-nav navbar-nav-align-end">
+          <li class="navbar-item"><a class="navbar-link is-active" href="#">Home</a></li>
+          <li class="navbar-item"><a class="navbar-link" href="#">About</a></li>
+          <li class="navbar-item"><a class="navbar-link" href="#">Contact</a></li>
         </ul>
       </div>
     </div>

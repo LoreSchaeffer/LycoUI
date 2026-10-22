@@ -9,7 +9,7 @@ export const tooltipProps: PropDefinition[] = [
     },
     {
         name: 'position',
-        type: "'top' | 'bottom' | 'left' | 'right'",
+        type: 'TooltipPosition',
         defaultValue: "'top'",
         description: 'The preferred placement of the tooltip relative to its trigger.',
     },
@@ -18,6 +18,12 @@ export const tooltipProps: PropDefinition[] = [
         type: 'ReactElement',
         defaultValue: 'undefined',
         description: 'The trigger element the tooltip wraps.',
+    },
+    {
+        name: 'offset',
+        type: 'number',
+        defaultValue: '8',
+        description: 'Distance in pixels between the tooltip and its trigger.',
     }
 ];
 

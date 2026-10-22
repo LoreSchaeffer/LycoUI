@@ -3,7 +3,7 @@ import type {PropDefinition} from "../../../components/api-reference/ApiReferenc
 export const breadcrumbsPropsData: PropDefinition[] = [
     {
         name: 'children',
-        type: 'ReactNode',
+        type: 'React.ReactNode',
         description: 'The breadcrumb items and separators to be rendered inside the `<nav>` element.'
     }
 ];
@@ -11,7 +11,7 @@ export const breadcrumbsPropsData: PropDefinition[] = [
 export const breadcrumbItemPropsData: PropDefinition[] = [
     {
         name: 'children',
-        type: 'ReactNode',
+        type: 'React.ReactNode',
         description: 'The content of the breadcrumb item, usually an `<a>` or `<span>` tag.'
     },
     {
@@ -25,7 +25,7 @@ export const breadcrumbItemPropsData: PropDefinition[] = [
 export const breadcrumbSeparatorPropsData: PropDefinition[] = [
     {
         name: 'children',
-        type: 'ReactNode',
+        type: 'React.ReactNode',
         defaultValue: "'/'",
         description: 'Custom separator content. Defaults to a slash.'
     }

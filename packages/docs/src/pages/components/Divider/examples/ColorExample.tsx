@@ -6,11 +6,11 @@ export const order = 4;
 
 export const vanillaHtml = `
 <div style="display: flex; flex-direction: column; width: 100%; text-align: center; gap: var(--spacing-4);">
-  <hr role="separator" aria-orientation="horizontal" class="divider divider--horizontal divider--spacing-none divider--length-full" style="--divider-color: var(--color-primary);" />
+  <hr role="separator" aria-orientation="horizontal" class="divider divider-horizontal divider-spacing-none divider-length-full" style="--divider-color: var(--color-primary);" />
   
-  <hr role="separator" aria-orientation="horizontal" class="divider divider--horizontal divider--spacing-none divider--length-full" style="--divider-color: var(--color-danger);" />
+  <hr role="separator" aria-orientation="horizontal" class="divider divider-horizontal divider-spacing-none divider-length-full" style="--divider-color: var(--color-danger);" />
   
-  <hr role="separator" aria-orientation="horizontal" class="divider divider--horizontal divider--spacing-none divider--length-full" style="--divider-color: #10b981;" />
+  <hr role="separator" aria-orientation="horizontal" class="divider divider-horizontal divider-spacing-none divider-length-full" style="--divider-color: #10b981;" />
 </div>
 `;
 

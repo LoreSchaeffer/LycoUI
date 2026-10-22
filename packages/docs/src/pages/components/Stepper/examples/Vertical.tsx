@@ -6,34 +6,34 @@ export const description = 'A vertical stepper is useful for timelines, sidebars
 export const order = 2;
 
 export const vanillaHtml = `
-<ol class="stepper stepper--vertical">
+<ol class="stepper stepper-vertical">
   <li class="step is-completed">
     <span class="hidden">Completed: </span>
-    <div class="step__header">
-      <div class="step__icon">1</div>
+    <div class="step-header">
+      <div class="step-icon">1</div>
     </div>
-    <div class="step__content">
-      <div class="step__title">Account Creation</div>
-      <div class="step__description">Account has been created successfully.</div>
+    <div class="step-content">
+      <div class="step-title">Account Creation</div>
+      <div class="step-description">Account has been created successfully.</div>
     </div>
   </li>
   <li class="step is-completed">
     <span class="hidden">Completed: </span>
-    <div class="step__header">
-      <div class="step__icon">2</div>
+    <div class="step-header">
+      <div class="step-icon">2</div>
     </div>
-    <div class="step__content">
-      <div class="step__title">Email Verification</div>
-      <div class="step__description">Email verified via magic link.</div>
+    <div class="step-content">
+      <div class="step-title">Email Verification</div>
+      <div class="step-description">Email verified via magic link.</div>
     </div>
   </li>
   <li class="step is-active" aria-current="step">
-    <div class="step__header">
-      <div class="step__icon">3</div>
+    <div class="step-header">
+      <div class="step-icon">3</div>
     </div>
-    <div class="step__content">
-      <div class="step__title">Setup Profile</div>
-      <div class="step__description">Add your avatar and bio.</div>
+    <div class="step-content">
+      <div class="step-title">Setup Profile</div>
+      <div class="step-description">Add your avatar and bio.</div>
     </div>
   </li>
 </ol>

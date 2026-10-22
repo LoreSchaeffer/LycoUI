@@ -8,10 +8,10 @@ export const vanillaHtml = `
 <div style="display: flex; align-items: center; gap: var(--spacing-4); height: var(--spacing-8); background: var(--surface-floating); padding: var(--spacing-2) var(--spacing-4); border-radius: var(--radius-full); width: max-content;">
   <span class="text-primary font-weight-semibold">File</span>
   
-  <div role="separator" aria-orientation="vertical" class="divider divider--vertical divider--spacing-none divider--length-full"></div>
+  <div role="separator" aria-orientation="vertical" class="divider divider-vertical divider-spacing-none divider-length-full"></div>
   
-  <button class="button button--neutral button--sm">Edit</button>
-  <button class="button button--neutral button--sm">View</button>
+  <button class="btn btn-neutral btn-sm">Edit</button>
+  <button class="btn btn-neutral btn-sm">View</button>
 </div>
 `;
 

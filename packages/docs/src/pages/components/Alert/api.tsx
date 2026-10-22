@@ -10,7 +10,7 @@ export const alertProps: PropDefinition[] = [
     },
     {
         name: 'icon',
-        type: 'ReactNode',
+        type: 'React.ReactNode',
         defaultValue: 'undefined',
         description: 'Icon displayed on the left side of the alert.',
     },

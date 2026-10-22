@@ -7,10 +7,11 @@ export const description = <p>Wrap your app in a <code>NotificationProvider</cod
 export const order = 4;
 
 export const vanillaHtml = `
+<script type="module">import {notification} from "@loreschaeffer/lyco-ui/vanilla"; window.__lycoNotification = notification;</script>
 <!-- Change the default position before showing -->
 <script>
-  LycoUI.notification.setPosition('top-left');
-  LycoUI.notification.show({ message: 'Top-left notification!' });
+  window.__lycoNotification.setPosition('top-left');
+  window.__lycoNotification.show({ message: 'Top-left notification!' });
 </script>
 `;
 

@@ -14,20 +14,20 @@
 .snackbar {
   // Consume the injected variable with fallback
   --snackbar-border: var(--snackbar-color-base, var(--neutral-900));
-  --snackbar-bg: var(--surface-floating, var(--color-bg-surface));
+  --snackbar-bg: color-mix(in srgb, var(--snackbar-border) 8%, var(--surface-floating, var(--color-bg-surface)));
   --snackbar-text: var(--color-text-primary);
   --snackbar-radius: var(--radius-md);
 
   pointer-events: auto;
   position: relative;
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   padding: var(--spacing-3) var(--spacing-4);
   background-color: var(--snackbar-bg);
   color: var(--snackbar-text);
   border-radius: var(--snackbar-radius);
   border: 1px solid var(--color-border-subtle);
-  border-left: 3px solid var(--snackbar-border);
+  border-bottom: 3px solid var(--snackbar-border);
   box-shadow: var(--shadow-xl);
   font-family: var(--font-family-base);
   font-size: var(--text-body-sm);
@@ -66,7 +66,7 @@
   justify-content: center;
   width: var(--size-5, 1.25rem);
   height: var(--size-5, 1.25rem);
-  color: inherit;
+  color: var(--snackbar-border);
   opacity: 0.9;
 
   svg {

@@ -3,12 +3,12 @@ import type {PropDefinition} from '../../../components/api-reference/ApiReferenc
 export const switchPropsData: PropDefinition[] = [
     {
         name: 'label',
-        type: 'ReactNode',
+        type: 'React.ReactNode',
         description: 'Text or component to display next to the switch. Automatically wrapped in a label element for accessibility.'
     },
     {
         name: 'variant',
-        type: 'FullVariant',
+        type: "FullVariant | 'default'",
         typeLink: '/docs/types#full-variant',
         defaultValue: "'primary'",
         description: 'Applies semantic colors from the global palette to the switch background when checked.'

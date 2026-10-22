@@ -2,7 +2,7 @@ import './Alert.scss';
 import React, {type CSSProperties, forwardRef, memo, useCallback, useEffect, useRef, useState} from 'react';
 import clsx from 'clsx';
 import type {FullVariant} from '../../types/types';
-import {getContrastColor} from '../../utils/theme';
+import {getContrastColor, getVariantColor} from '../../utils/theme';
 import {TimedDismiss} from '../../interaction/timed-dismiss';
 
 /**
@@ -94,7 +94,7 @@ export const Alert = memo(forwardRef<HTMLDivElement, AlertProps>((
             )}
             role="alert"
             style={{
-                '--alert-color-base': `var(--${variant}-500, var(--color-${variant}))`,
+                '--alert-color-base': getVariantColor(variant),
                 '--alert-color-contrast': getContrastColor(variant),
                 ...style
             } as CSSProperties}

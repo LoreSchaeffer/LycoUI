@@ -7,14 +7,14 @@ export const order = 3;
 
 export const vanillaHtml = `
 <div class="datepicker">
-  <div class="datepicker__trigger" data-lyco-timepicker data-use-12-hour="true">
-    <div class="datepicker__icon">
+  <div class="datepicker-trigger" data-lyco-timepicker data-use-12-hour="true">
+    <div class="datepicker-icon">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
         <circle cx="12" cy="12" r="10"></circle>
         <polyline points="12 6 12 12 16 14"></polyline>
       </svg>
     </div>
-    <input type="time" class="datepicker__input" placeholder="Select time..." />
+    <input type="time" class="datepicker-input" placeholder="Select time..." />
   </div>
 </div>
 `;

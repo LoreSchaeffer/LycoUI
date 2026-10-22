@@ -172,21 +172,26 @@ export const DatePicker = forwardRef<HTMLDivElement, DatePickerProps>(
         const handleInputChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
             const val = e.target.value;
             setInputValue(val);
-            if (!val) {
+            setIsInvalid(false);
+        }, []);
+
+        const handleInputCommit = useCallback(() => {
+            if (!inputValue) {
                 setIsInvalid(false);
                 onChange?.(null);
                 return;
             }
 
-            const parsed = parseDateString(val, dateFormat);
+            const parsed = parseDateString(inputValue, dateFormat);
             if (parsed) {
                 setIsInvalid(false);
                 setViewDate(new Date(parsed.getFullYear(), parsed.getMonth(), 1));
                 onChange?.(parsed);
             } else {
                 setIsInvalid(true);
+                setInputValue(displayValue);
             }
-        }, [onChange, dateFormat]);
+        }, [dateFormat, displayValue, inputValue, onChange]);
 
         const handlePrevMonth = useCallback(() => {
             setViewDate(prev => new Date(prev.getFullYear(), prev.getMonth() - 1, 1));
@@ -200,15 +205,16 @@ export const DatePicker = forwardRef<HTMLDivElement, DatePickerProps>(
             (e: KeyboardEvent<HTMLInputElement>) => {
                 if (disabled) return;
                 if (e.key === 'Enter') {
-                    if (!isOpen) setIsOpen(true);
-                    else setIsOpen(false);
+                    e.preventDefault();
+                    handleInputCommit();
+                    setIsOpen(false);
                 } else if (e.key === 'Escape') {
                     setIsOpen(false);
                 } else if (e.key === 'Tab') {
                     setIsOpen(false);
                 }
             },
-            [disabled, isOpen]
+            [disabled, handleInputCommit]
         );
 
         const colorBase = isColored
@@ -272,6 +278,7 @@ export const DatePicker = forwardRef<HTMLDivElement, DatePickerProps>(
                             if (!isMobile && !disabled && !isOpen) setIsOpen(true);
                         }}
                         onKeyDown={!isMobile ? handleTriggerKeyDown : undefined}
+                        onBlur={!isMobile ? handleInputCommit : undefined}
                         disabled={disabled}
                         aria-haspopup={!isMobile ? "dialog" : undefined}
                         aria-expanded={!isMobile ? isOpen : undefined}

@@ -5,11 +5,11 @@ export const description = <p>Avatars can display images, text initials, or icon
 export const order = 1;
 
 export const vanillaHtml = `
-<div class="avatar avatar--md avatar--circle">
-  <img src="https://i.pravatar.cc/150?img=32" alt="User profile" class="avatar__image" />
+<div class="avatar avatar-md avatar-circle">
+  <img src="https://i.pravatar.cc/150?img=32" alt="User profile" class="avatar-image" />
 </div>
-<div class="avatar avatar--md avatar--circle">
-  <div class="avatar__fallback">JD</div>
+<div class="avatar avatar-md avatar-circle">
+  <div class="avatar-fallback">JD</div>
 </div>
 `;
 

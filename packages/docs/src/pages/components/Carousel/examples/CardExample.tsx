@@ -6,28 +6,28 @@ export const description = <p>Using <code>centerMode</code> combined with <code>
 export const order = 2;
 
 export const vanillaHtml = `
-<div class="carousel carousel--center-mode" style="--carousel-gap: var(--spacing-6); --carousel-slide-width: 70%;">
-  <div class="carousel__track">
+<div class="carousel carousel-center-mode" style="--carousel-gap: var(--spacing-6); --carousel-slide-width: 70%;">
+  <div class="carousel-track">
     <!-- Note: In a vanilla environment with infinite mode, DOM nodes must be duplicated at boundaries -->
-    <div class="carousel__slide is-active">
-      <div class="card card--elevated">
+    <div class="carousel-slide is-active">
+      <div class="card card-elevated">
         <h3>Feature A</h3>
         <p>Description of feature A.</p>
-        <button class="button button--primary">Learn More</button>
+        <button class="btn btn-primary">Learn More</button>
       </div>
     </div>
-    <div class="carousel__slide">
-      <div class="card card--elevated">
+    <div class="carousel-slide">
+      <div class="card card-elevated">
         <h3>Feature B</h3>
         <p>Description of feature B.</p>
-        <button class="button button--primary">Learn More</button>
+        <button class="btn btn-primary">Learn More</button>
       </div>
     </div>
-    <div class="carousel__slide">
-      <div class="card card--elevated">
+    <div class="carousel-slide">
+      <div class="card card-elevated">
         <h3>Feature C</h3>
         <p>Description of feature C.</p>
-        <button class="button button--primary">Learn More</button>
+        <button class="btn btn-primary">Learn More</button>
       </div>
     </div>
   </div>

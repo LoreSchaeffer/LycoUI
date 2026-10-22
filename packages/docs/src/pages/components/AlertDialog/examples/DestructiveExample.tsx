@@ -7,22 +7,22 @@ export const description = <p>Use for destructive actions like deleting an accou
 export const order = 2;
 
 export const vanillaHtml = `
-<button class="button button--danger" data-lyco-toggle="modal" data-lyco-target="#delete-account-alert">
+<button class="btn btn-danger" data-lyco-toggle="modal" data-lyco-target="#delete-account-alert">
     Delete Account
 </button>
 
 <dialog class="modal" id="delete-account-alert" role="alertdialog" data-lyco-close-on-overlay-click="false" data-lyco-close-on-escape="false">
-    <div class="modal__dialog modal__dialog--md modal__dialog--centered">
-        <div class="modal__content">
-            <div class="modal__header">
-                <h3 class="modal__title">Are you absolutely sure?</h3>
+    <div class="modal-dialog modal-dialog-md modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Are you absolutely sure?</h3>
             </div>
-            <div class="modal__body">
+            <div class="modal-body">
                 This action cannot be undone. This will permanently delete your account and remove your data from our servers.
             </div>
-            <div class="modal__footer" style="display: flex; justify-content: flex-end; gap: 8px;">
-                <button class="button button--secondary" data-lyco-dismiss="modal" autofocus>Cancel</button>
-                <button class="button button--danger" data-lyco-dismiss="modal">Yes, delete account</button>
+            <div class="modal-footer" style="display: flex; justify-content: flex-end; gap: 8px;">
+                <button class="btn btn-secondary" data-lyco-dismiss="modal" autofocus>Cancel</button>
+                <button class="btn btn-danger" data-lyco-dismiss="modal">Yes, delete account</button>
             </div>
         </div>
     </div>

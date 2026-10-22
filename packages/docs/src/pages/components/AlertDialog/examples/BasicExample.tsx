@@ -6,22 +6,22 @@ export const description = <p>A standard alert dialog used to confirm user inten
 export const order = 1;
 
 export const vanillaHtml = `
-<button class="button button--primary" data-lyco-toggle="modal" data-lyco-target="#publish-post-alert">
+<button class="btn btn-primary" data-lyco-toggle="modal" data-lyco-target="#publish-post-alert">
     Publish Post
 </button>
 
 <dialog class="modal" id="publish-post-alert" role="alertdialog" data-lyco-close-on-overlay-click="false" data-lyco-close-on-escape="false">
-    <div class="modal__dialog modal__dialog--md modal__dialog--centered">
-        <div class="modal__content">
-            <div class="modal__header">
-                <h3 class="modal__title">Publish this article?</h3>
+    <div class="modal-dialog modal-dialog-md modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Publish this article?</h3>
             </div>
-            <div class="modal__body">
+            <div class="modal-body">
                 This will make the article visible to all users. Notifications will be sent to your subscribers immediately.
             </div>
-            <div class="modal__footer" style="display: flex; justify-content: flex-end; gap: 8px;">
-                <button class="button button--secondary" data-lyco-dismiss="modal" autofocus>Cancel</button>
-                <button class="button button--primary" data-lyco-dismiss="modal">Publish Now</button>
+            <div class="modal-footer" style="display: flex; justify-content: flex-end; gap: 8px;">
+                <button class="btn btn-secondary" data-lyco-dismiss="modal" autofocus>Cancel</button>
+                <button class="btn btn-primary" data-lyco-dismiss="modal">Publish Now</button>
             </div>
         </div>
     </div>

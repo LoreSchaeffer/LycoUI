@@ -5,13 +5,13 @@ export const description = <p>Use the <code>icon</code> prop to render an icon i
 export const order = 3;
 
 export const vanillaHtml = `
-<div class="alert alert--success has-icon" role="alert">
-  <span class="alert__icon">
+<div class="alert alert-success has-icon" role="alert">
+  <span class="alert-icon">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
   </span>
-  <div class="alert__content">
-    <div class="alert__title">Payment Processed</div>
-    <div class="alert__description">Your receipt has been sent via email.</div>
+  <div class="alert-content">
+    <div class="alert-title">Payment Processed</div>
+    <div class="alert-description">Your receipt has been sent via email.</div>
   </div>
 </div>
 `;
@@ -31,14 +31,14 @@ export default function IconExample() {
         <Row>
             <Col span={6}>
                 <Alert variant="success" icon={<SuccessIcon/>}>
-                    <div className="alert__title">Payment Processed</div>
-                    <div className="alert__description">Your receipt has been sent via email.</div>
+                    <div className="alert-title">Payment Processed</div>
+                    <div className="alert-description">Your receipt has been sent via email.</div>
                 </Alert>
             </Col>
             <Col span={6}>
                 <Alert variant="danger" icon={<ErrorIcon/>}>
-                    <div className="alert__title">Connection Failed</div>
-                    <div className="alert__description">Could not connect to the database.</div>
+                    <div className="alert-title">Connection Failed</div>
+                    <div className="alert-description">Could not connect to the database.</div>
                 </Alert>
             </Col>
         </Row>

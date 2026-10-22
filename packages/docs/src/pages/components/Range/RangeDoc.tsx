@@ -10,14 +10,16 @@ const rawSources = import.meta.glob('./examples/*.tsx', {
 
 export default function RangeDoc() {
     return (
-        <DocTemplate
-            title="Range"
-            description="An interactive slider component with a customizable droplet tooltip."
-            importCode="import { Range } from '@loreschaeffer/lyco-ui';"
-            a11yNotes={`Uses \`<input type="range">\` (slider). Keyboard accessible via Arrow keys, Page Up/Down, Home, and End. Ensures \`aria-valuemin\`, \`aria-valuemax\`, and \`aria-valuenow\` are present.`}
-            exampleModules={exampleModules}
-            rawSources={rawSources as Record<string, string>}
-            apiConfig={apiConfig}
-        />
+        <div className="docs-range">
+            <DocTemplate
+                title="Range"
+                description="An interactive slider component with a customizable droplet tooltip."
+                importCode="import { Range } from '@loreschaeffer/lyco-ui';"
+                a11yNotes={`Uses \`<input type="range">\` (slider). Keyboard accessible via Arrow keys, Page Up/Down, Home, and End. Ensures \`aria-valuemin\`, \`aria-valuemax\`, and \`aria-valuenow\` are present.`}
+                exampleModules={exampleModules}
+                rawSources={rawSources as Record<string, string>}
+                apiConfig={apiConfig}
+            />
+        </div>
     );
 }

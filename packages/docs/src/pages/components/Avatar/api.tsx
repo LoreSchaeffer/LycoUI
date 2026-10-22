@@ -14,7 +14,7 @@ export const avatarProps: PropDefinition[] = [
     },
     {
         name: 'fallback',
-        type: 'ReactNode',
+        type: 'React.ReactNode',
         description: 'A fallback to display if the image is missing or fails to load. Can be text initials or a React node (like an Icon).'
     },
     {

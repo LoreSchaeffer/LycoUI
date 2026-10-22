@@ -3,6 +3,7 @@ import React, {type CSSProperties, forwardRef, useCallback} from 'react';
 import clsx from 'clsx';
 import type {FullVariant, NotificationPosition} from '../../types/types';
 import {NOTIFICATION_CLOSE_SVG, NOTIFICATION_SEMANTIC_SVG} from '../../utils/icons';
+import {getVariantColor} from '../../utils/theme';
 
 const CheckIcon = React.memo(() => (
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -125,7 +126,7 @@ export const Notification = forwardRef<HTMLDivElement, NotificationProps>((
             role="status"
             aria-live="polite"
             style={{
-                '--notification-color-base': `var(--${variant}-500, var(--color-${variant}))`,
+                '--notification-color-base': getVariantColor(variant),
                 ...props.style
             } as CSSProperties}
             {...props}

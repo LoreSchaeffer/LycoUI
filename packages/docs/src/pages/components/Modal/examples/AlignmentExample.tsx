@@ -6,9 +6,9 @@ export const description = <p>Modals are vertically centered by default. You can
 export const order = 4;
 
 export const vanillaHtml = `
-<!-- Remove modal__dialog--centered class for top-aligned modal -->
+<!-- Remove modal-dialog--centered class for top-aligned modal -->
 <div class="modal hidden" id="topModal" tabindex="-1">
-    <div class="modal__dialog modal__dialog--md">
+    <div class="modal-dialog modal-dialog-md">
         <!-- content -->
     </div>
 </div>

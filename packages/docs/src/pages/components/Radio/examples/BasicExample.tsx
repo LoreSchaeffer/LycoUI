@@ -5,20 +5,20 @@ export const description = <p>Group radio buttons using the same <code>name</cod
 export const order = 1;
 
 export const vanillaHtml = `
-<label for="plan-basic" class="radio radio--primary">
-    <input type="radio" id="plan-basic" name="subscription-plan" value="basic" class="radio__input" checked>
-    <span class="radio__control" aria-hidden="true"></span>
-    <span class="radio__label">Basic Plan ($9/mo)</span>
+<label for="plan-basic" class="radio radio-primary">
+    <input type="radio" id="plan-basic" name="subscription-plan" value="basic" class="radio-input" checked>
+    <span class="radio-control" aria-hidden="true"></span>
+    <span class="radio-label">Basic Plan ($9/mo)</span>
 </label>
-<label for="plan-pro" class="radio radio--primary">
-    <input type="radio" id="plan-pro" name="subscription-plan" value="pro" class="radio__input">
-    <span class="radio__control" aria-hidden="true"></span>
-    <span class="radio__label">Pro Plan ($29/mo)</span>
+<label for="plan-pro" class="radio radio-primary">
+    <input type="radio" id="plan-pro" name="subscription-plan" value="pro" class="radio-input">
+    <span class="radio-control" aria-hidden="true"></span>
+    <span class="radio-label">Pro Plan ($29/mo)</span>
 </label>
-<label for="plan-enterprise" class="radio radio--primary is-disabled">
-    <input type="radio" id="plan-enterprise" name="subscription-plan" value="enterprise" class="radio__input" disabled>
-    <span class="radio__control" aria-hidden="true"></span>
-    <span class="radio__label">Enterprise Plan (Contact Sales)</span>
+<label for="plan-enterprise" class="radio radio-primary is-disabled">
+    <input type="radio" id="plan-enterprise" name="subscription-plan" value="enterprise" class="radio-input" disabled>
+    <span class="radio-control" aria-hidden="true"></span>
+    <span class="radio-label">Enterprise Plan (Contact Sales)</span>
 </label>
 `;
 

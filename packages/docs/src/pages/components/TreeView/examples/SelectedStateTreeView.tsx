@@ -7,24 +7,24 @@ export const order = 3;
 
 export const vanillaHtml = `
 <ul class="treeview" role="tree">
-  <li class="treeview__item" role="treeitem" aria-expanded="true" tabindex="-1" id="components">
-    <div class="treeview__item-content">
-      <span class="treeview__icon treeview__icon--chevron">
+  <li class="treeview-item" role="treeitem" aria-expanded="true" tabindex="-1" id="components">
+    <div class="treeview-item-content">
+      <span class="treeview-icon treeview-icon-chevron">
          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6-6-6z" /></svg>
       </span>
-      <span class="treeview__label">components</span>
+      <span class="treeview-label">components</span>
     </div>
-    <ul class="treeview__group" role="group">
-      <li class="treeview__item" role="treeitem" aria-selected="true" tabindex="0" id="treeview">
-        <div class="treeview__item-content is-selected">
-          <span class="treeview__icon"></span>
-          <span class="treeview__label">TreeView</span>
+    <ul class="treeview-group" role="group">
+      <li class="treeview-item" role="treeitem" aria-selected="true" tabindex="0" id="treeview">
+        <div class="treeview-item-content is-selected">
+          <span class="treeview-icon"></span>
+          <span class="treeview-label">TreeView</span>
         </div>
       </li>
-      <li class="treeview__item" role="treeitem" aria-selected="false" tabindex="-1" id="button">
-        <div class="treeview__item-content">
-          <span class="treeview__icon"></span>
-          <span class="treeview__label">Button</span>
+      <li class="treeview-item" role="treeitem" aria-selected="false" tabindex="-1" id="btn">
+        <div class="treeview-item-content">
+          <span class="treeview-icon"></span>
+          <span class="treeview-label">Button</span>
         </div>
       </li>
     </ul>

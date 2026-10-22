@@ -20,13 +20,19 @@ export const colorPickerProps: PropDefinition[] = [
     {
         name: 'swatches',
         type: 'string[]',
-        description: 'Preset colors shown in the dialog. Omitting this prop uses the default palette.',
+        description: 'Preset colors shown in the dialog. When omitted or empty, clicking the trigger opens the native color picker directly.',
+    },
+    {
+        name: 'compact',
+        type: 'boolean',
+        defaultValue: 'false',
+        description: 'Shows only the color swatch as the trigger.',
     },
     {
         name: 'disabled',
         type: 'boolean',
         defaultValue: 'false',
-        description: 'Disables text editing and opening the color dialog.',
+        description: 'Disables text editing and opening either the color dialog or native picker.',
     },
     {
         name: 'className',

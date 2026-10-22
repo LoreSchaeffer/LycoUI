@@ -5,9 +5,9 @@ export const description = <p>Use the <code>variant</code> prop to control the c
 export const order = 1;
 
 export const vanillaHtml = `
-<span class="spinner spinner--classic spinner--primary" role="status" aria-label="Loading"></span>
-<span class="spinner spinner--classic spinner--neutral" role="status" aria-label="Loading"></span>
-<span class="spinner spinner--classic spinner--success" role="status" aria-label="Loading"></span>
+<span class="spinner spinner-classic spinner-primary" role="status" aria-label="Loading"></span>
+<span class="spinner spinner-classic spinner-neutral" role="status" aria-label="Loading"></span>
+<span class="spinner spinner-classic spinner-success" role="status" aria-label="Loading"></span>
 `;
 
 export default function VariantsExample() {

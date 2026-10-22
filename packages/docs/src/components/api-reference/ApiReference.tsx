@@ -32,7 +32,9 @@ export const PropsTable: React.FC<PropsTableProps> = ({title, data}) => {
                     {data.map((row) => (
                         <TableRow key={row.name}>
                             <TableCell className="td-prop">
-                                <code>{row.name}</code>
+                                <div style={{display: 'flex', alignItems: 'center', gap: '0.5rem'}}>
+                                    <code>{row.name}</code>{row.required && <Badge variant="danger">required</Badge>}
+                                </div>
                             </TableCell>
                             <TableCell className="td-type">
                                 {row.typeLink ? (

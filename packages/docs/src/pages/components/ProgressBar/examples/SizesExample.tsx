@@ -5,8 +5,8 @@ export const description = <p>Adjust the thickness and border-radius using the <
 export const order = 3;
 
 export const vanillaHtml = `
-<div class="progress progress--sm" role="progressbar" aria-valuenow="50">
-  <div class="progress__bar" style="width: 50%;"></div>
+<div class="progress progress-sm" role="progressbar" aria-valuenow="50">
+  <div class="progress-bar" style="width: 50%;"></div>
 </div>
 `;
 

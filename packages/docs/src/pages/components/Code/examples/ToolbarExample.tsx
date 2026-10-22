@@ -5,25 +5,25 @@ export const description = <p>Enable header toolbars with <code>showCopy</code>,
 export const order = 3;
 
 export const vanillaHtml = `
-<div class="code--block" data-language="css">
-  <div class="code__header">
-    <div class="code__header-left">
-      <select class="code__lang-select">
+<div class="code-block" data-language="css">
+  <div class="code-header">
+    <div class="code-header-left">
+      <select class="code-lang-select">
         <option value="css">css</option>
         <option value="html">html</option>
       </select>
     </div>
-    <div class="code__header-right">
-      <button type="button" class="code__action" title="Copy code" aria-label="Copy code">
+    <div class="code-header-right">
+      <button type="button" class="code-action" title="Copy code" aria-label="Copy code">
         <!-- SVG icon for Copy -->
       </button>
-      <button type="button" class="code__action" title="Download code" aria-label="Download code">
+      <button type="button" class="code-action" title="Download code" aria-label="Download code">
         <!-- SVG icon for Download -->
       </button>
     </div>
   </div>
-  <div class="code__body">
-    <pre class="code__highlight"><code>.card { border-radius: 8px; }</code></pre>
+  <div class="code-body">
+    <pre class="code-highlight"><code>.card { border-radius: 8px; }</code></pre>
   </div>
 </div>
 `;

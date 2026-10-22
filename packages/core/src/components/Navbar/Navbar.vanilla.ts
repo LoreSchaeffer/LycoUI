@@ -29,7 +29,9 @@ export class LycoNavbarController extends BaseController {
         const collapses = [...navbar.querySelectorAll<HTMLElement>('.navbar-collapse')];
         toggles.forEach((toggle, index) => {
             const controlsId = toggle.getAttribute('aria-controls');
-            const panel = controlsId ? document.getElementById(controlsId) : collapses[index];
+            const panel = controlsId
+                ? collapses.find(candidate => candidate.id === controlsId)
+                : collapses[index];
             if (!panel) return;
             const controller = new CollapseController(toggle, panel, toggle.getAttribute('aria-expanded') === 'true');
             this.collapseControllers.push(controller);

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Table, TableBody, TableCell, TableHead, TableRow } from '@loreschaeffer/lyco-ui';
+import { Code, Table, TableBody, TableCell, TableHead, TableRow } from '@loreschaeffer/lyco-ui';
 
 export default function TypesDoc() {
     const getColorBg = (val: string) => {
@@ -14,13 +14,35 @@ export default function TypesDoc() {
 
     return (
         <article>
-            <h1>Custom Types</h1>
+            <h1>Shared Types</h1>
             <div className="text-lead mb-8">
                 <p>
                     Lyco UI uses several shared custom TypeScript types to maintain consistency across the component library.
                     Whenever a component's property accepts one of these types, it refers to the exact string literal values defined below.
                 </p>
             </div>
+
+            <section className="mb-10" id="component-types">
+                <h2 className="mb-4">Component Types</h2>
+                <p className="text-secondary mb-4">
+                    Public component prop aliases such as <Code inline>FullVariant</Code>, <Code inline>SizeVariant</Code>, <Code inline>SpinnerType</Code>, and <Code inline>SortDirection</Code> are exported from the package entry point.
+                </p>
+            </section>
+
+            <section className="mb-10" id="context-types">
+                <h2 className="mb-4">Context Types</h2>
+                <p className="text-secondary mb-4">
+                    Context helpers expose typed state and actions for notifications, snackbars, and context menus. Use the provider before calling the corresponding hook.
+                </p>
+            </section>
+
+            <section className="mb-10" id="polymorphic-types">
+                <h2 className="mb-4">Polymorphic Types</h2>
+                <p className="text-secondary mb-4">
+                    Components that support an <Code inline>as</Code> prop use React&apos;s element-type contract while preserving the component&apos;s own props.
+                </p>
+                <Code language="tsx" code={'type PolymorphicProps<T extends React.ElementType> = { as?: T };'} />
+            </section>
 
             <section className="mb-10" id="color-variant">
                 <h2 className="mb-4">ColorVariant</h2>

@@ -6,7 +6,7 @@ export const description = <p>A standard static sidebar using the provided navig
 export const order = 1;
 
 export const vanillaHtml = `
-<aside class="sidebar sidebar--fixed" style="position: relative; height: 400px;">
+<aside class="sidebar sidebar-fixed" style="position: relative; height: 400px;">
   <div class="sidebar-header">
     <strong>LycoUI Admin</strong>
   </div>

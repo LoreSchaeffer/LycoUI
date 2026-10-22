@@ -10,13 +10,18 @@ const notificationProps: PropDefinition[] = [
     },
     {
         name: 'icon',
-        type: 'ReactNode',
+        type: 'React.ReactNode',
         description: 'Custom icon. Overrides the auto-semantic icon. Pass null to suppress.'
     },
     {
         name: 'title',
-        type: 'ReactNode',
+        type: 'React.ReactNode',
         description: 'Bold heading displayed above the message body.'
+    },
+    {
+        name: 'description',
+        type: 'React.ReactNode',
+        description: 'Optional descriptive content.'
     },
     {
         name: 'closable',
@@ -31,9 +36,21 @@ const notificationProps: PropDefinition[] = [
         description: 'Removes shadows and transparent border for a flat appearance.'
     },
     {
+        name: 'isExiting',
+        type: 'boolean',
+        defaultValue: 'false',
+        description: 'Indicates that the notification is animating out.'
+    },
+    {
         name: 'duration',
         type: 'number',
         description: 'Duration in seconds. Controls the progress bar animation length.'
+    },
+    {
+        name: 'position',
+        type: 'NotificationPosition',
+        defaultValue: "'bottom-right'",
+        description: 'Position of the notification stack.'
     },
     {
         name: 'onClose',
@@ -43,6 +60,12 @@ const notificationProps: PropDefinition[] = [
 ];
 
 const providerProps: PropDefinition[] = [
+    {
+        name: 'children',
+        type: 'React.ReactNode',
+        required: true,
+        description: 'The application content rendered inside the provider.'
+    },
     {
         name: 'position',
         type: "NotificationPosition",
@@ -61,13 +84,18 @@ const providerProps: PropDefinition[] = [
 const notificationOptionsProps: PropDefinition[] = [
     {
         name: 'message',
-        type: 'ReactNode',
+        type: 'React.ReactNode',
         description: 'Body text of the notification. Required.'
     },
     {
         name: 'title',
-        type: 'ReactNode',
+        type: 'React.ReactNode',
         description: 'Bold heading above the message.'
+    },
+    {
+        name: 'description',
+        type: 'React.ReactNode',
+        description: 'Optional descriptive content.'
     },
     {
         name: 'variant',
@@ -78,7 +106,7 @@ const notificationOptionsProps: PropDefinition[] = [
     },
     {
         name: 'icon',
-        type: 'ReactNode',
+        type: 'React.ReactNode',
         description: 'Custom icon. Pass null to suppress the auto-semantic icon.'
     },
     {

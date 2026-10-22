@@ -2,14 +2,21 @@ import type {PropDefinition} from '../../../components/api-reference/ApiReferenc
 
 export const cardPropsData: PropDefinition[] = [
     {
+        name: 'children',
+        type: 'React.ReactNode',
+        description: 'Content rendered inside the card.'
+    },
+    {
         name: 'elevation',
-        type: '0 | 1 | 2 | 3 | 4',
+        type: 'CardElevation',
+        typeLink: '/docs/types#card-elevation',
         defaultValue: '1',
         description: <>Controls the shadow depth and background lightness. Applies <code>.card--elevation-*</code>.</>
     },
     {
         name: 'padding',
-        type: "'none' | 'sm' | 'md' | 'lg'",
+        type: 'CardPadding',
+        typeLink: '/docs/types#card-padding',
         defaultValue: "'none'",
         description: 'Controls the internal spacing of the main card container (useful if not using compound sections).'
     },
@@ -33,6 +40,12 @@ export const cardPropsData: PropDefinition[] = [
         description: 'Strips shadows and background gradients for a clean flat appearance. Applies .card--flat class.'
     },
     {
+        name: 'flat',
+        type: 'boolean',
+        defaultValue: 'false',
+        description: 'Renders without elevation.'
+    },
+    {
         name: 'interactive',
         type: 'boolean',
         defaultValue: 'false',
@@ -43,7 +56,7 @@ export const cardPropsData: PropDefinition[] = [
 export const cardSectionPropsData: PropDefinition[] = [
     {
         name: 'children',
-        type: 'ReactNode',
+        type: 'React.ReactNode',
         description: 'Content to be rendered inside the section.'
     },
     {

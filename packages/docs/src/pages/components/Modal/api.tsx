@@ -4,13 +4,36 @@ export const modalProps: PropDefinition[] = [
     {
         name: 'isOpen',
         type: 'boolean',
-        defaultValue: 'false',
+        required: true,
         description: 'Controls whether the modal is open and visible on screen.'
     },
     {
         name: 'onClose',
         type: '() => void',
         description: 'Callback fired when the user attempts to close the modal (e.g. clicking the backdrop, pressing Escape, or clicking a dismiss button).'
+    },
+    {
+        name: 'id',
+        type: 'string',
+        description: 'The dialog id.'
+    },
+    {
+        name: 'role',
+        type: 'React.AriaRole',
+        defaultValue: "'dialog'",
+        description: 'The ARIA role for the dialog.'
+    },
+    {
+        name: 'closeOnOverlayClick',
+        type: 'boolean',
+        defaultValue: 'true',
+        description: 'Whether clicking the overlay closes the modal.'
+    },
+    {
+        name: 'closeOnEscape',
+        type: 'boolean',
+        defaultValue: 'true',
+        description: 'Whether Escape closes the modal.'
     },
     {
         name: 'size',
@@ -32,7 +55,7 @@ export const modalProps: PropDefinition[] = [
     },
     {
         name: 'children',
-        type: 'ReactNode',
+        type: 'React.ReactNode',
         description: 'The content of the modal, typically ModalHeader, ModalBody, and ModalFooter.'
     },
     {
@@ -45,7 +68,7 @@ export const modalProps: PropDefinition[] = [
 export const modalHeaderProps: PropDefinition[] = [
     {
         name: 'children',
-        type: 'ReactNode',
+        type: 'React.ReactNode',
         description: 'The content of the header, typically ModalTitle and a close button.'
     },
     {
@@ -64,7 +87,7 @@ export const modalTitleProps: PropDefinition[] = [
     },
     {
         name: 'children',
-        type: 'ReactNode',
+        type: 'React.ReactNode',
         description: 'The title text.'
     }
 ];
@@ -72,7 +95,7 @@ export const modalTitleProps: PropDefinition[] = [
 export const modalBodyProps: PropDefinition[] = [
     {
         name: 'children',
-        type: 'ReactNode',
+        type: 'React.ReactNode',
         description: 'The main scrollable content of the modal.'
     },
     {
@@ -85,7 +108,7 @@ export const modalBodyProps: PropDefinition[] = [
 export const modalFooterProps: PropDefinition[] = [
     {
         name: 'children',
-        type: 'ReactNode',
+        type: 'React.ReactNode',
         description: 'Action buttons or footer content.'
     },
     {

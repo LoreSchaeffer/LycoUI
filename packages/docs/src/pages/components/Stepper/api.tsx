@@ -20,19 +20,13 @@ export const stepperPropsData: PropDefinition[] = [
         description: 'If true, the stepper uses a significantly smaller visual footprint, suitable for tight spaces.'
     },
     {
-        name: 'hideNumbers',
-        type: 'boolean',
-        defaultValue: 'false',
-        description: 'If true, hides the default numerical index inside the step circles.'
-    },
-    {
         name: 'color',
         type: 'string',
         description: 'Custom theme color name (e.g. `fuchsia`, `teal`) to override the default primary color.'
     },
     {
         name: 'children',
-        type: 'ReactNode',
+        type: 'React.ReactNode',
         description: 'The `Step` components to be rendered inside the stepper.'
     }
 ];
@@ -40,17 +34,17 @@ export const stepperPropsData: PropDefinition[] = [
 export const stepPropsData: PropDefinition[] = [
     {
         name: 'title',
-        type: 'ReactNode',
+        type: 'React.ReactNode',
         description: 'The main title of the step.'
     },
     {
         name: 'description',
-        type: 'ReactNode',
+        type: 'React.ReactNode',
         description: 'An optional description providing more details about the step.'
     },
     {
         name: 'icon',
-        type: 'ReactNode',
+        type: 'React.ReactNode',
         description: 'An optional custom icon to override the default step number.'
     },
     {
@@ -70,6 +64,12 @@ export const stepPropsData: PropDefinition[] = [
         type: 'boolean',
         defaultValue: 'false',
         description: 'Marks the step as being in a warning state, applying warning colors.'
+    },
+    {
+        name: 'hideNumbers',
+        type: 'boolean',
+        defaultValue: 'false',
+        description: 'If true, hides the default numerical index inside the step circles.'
     },
     {
         name: 'index',

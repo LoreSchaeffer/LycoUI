@@ -70,6 +70,12 @@ export const description = (
     </p>
 );
 export const order = 2;
+export const vanillaHtml = `
+<table class="table" data-lyco-datatable data-columns="id,name,category,price,stock,status">
+  <thead><tr><th>#</th><th>Product</th><th>Category</th><th>Price</th><th>Stock</th><th>Status</th></tr></thead>
+  <tbody><tr><td>1</td><td>Wireless Headphones</td><td>Audio</td><td>$79.99</td><td>142</td><td>In Stock</td></tr></tbody>
+</table>
+`;
 
 export default function CustomRenderExample() {
     return (

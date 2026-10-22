@@ -4,7 +4,10 @@ export interface GalleryImage { id: string | number; url: string; thumbnailUrl?:
 interface Props { images: GalleryImage[]; currentIndex: number; scale: number; position: {x: number; y: number}; isDragging: boolean; onClose: () => void; onPrevious: () => void; onNext: () => void; onSelect: (index: number) => void; onWheel: React.WheelEventHandler<HTMLDivElement>; onPointerDown: React.PointerEventHandler<HTMLDivElement>; onPointerMove: React.PointerEventHandler<HTMLDivElement>; onPointerUp: React.PointerEventHandler<HTMLDivElement>; }
 export const ImageViewerRenderer = ({images, currentIndex, scale, position, isDragging, onClose, onPrevious, onNext, onSelect, onWheel, onPointerDown, onPointerMove, onPointerUp}: Props) => {
     const image = images[currentIndex];
-    return <div className="image-viewer-container">
+    const handleBackdropClick = (event: React.MouseEvent<HTMLDivElement>) => {
+        if (event.target === event.currentTarget) onClose();
+    };
+    return <div className="image-viewer-container" onClick={handleBackdropClick}>
         <ImageViewerClose onClose={onClose}/>
         {currentIndex > 0 && <ImageViewerNavigation direction="prev" onClick={onPrevious}/>} 
         <div className="image-viewer-image-wrapper" onWheel={onWheel} onPointerDown={onPointerDown} onPointerMove={onPointerMove} onPointerUp={onPointerUp} onPointerCancel={onPointerUp} style={{transform: `translate(${position.x}px, ${position.y}px) scale(${scale})`, transition: isDragging ? 'none' : 'transform 0.1s ease-out'}}><img src={image.url} alt={image.alt || ''} className="image-viewer-image" draggable={false}/></div>

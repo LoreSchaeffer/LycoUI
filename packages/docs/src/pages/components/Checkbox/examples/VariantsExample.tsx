@@ -6,20 +6,20 @@ export const description = <p>Use the <code>variant</code> prop to apply semanti
 export const order = 2;
 
 export const vanillaHtml = `
-<label for="c-green" class="checkbox checkbox--green">
-    <input type="checkbox" id="c-green" class="checkbox__input" checked>
-    <span class="checkbox__control" aria-hidden="true"></span>
-    <span class="checkbox__label">Variant green</span>
+<label for="c-green" class="checkbox checkbox-green">
+    <input type="checkbox" id="c-green" class="checkbox-input" checked>
+    <span class="checkbox-control" aria-hidden="true"></span>
+    <span class="checkbox-label">Variant green</span>
 </label>
-<label for="c-red" class="checkbox checkbox--red">
-    <input type="checkbox" id="c-red" class="checkbox__input" checked>
-    <span class="checkbox__control" aria-hidden="true"></span>
-    <span class="checkbox__label">Variant red</span>
+<label for="c-red" class="checkbox checkbox-red">
+    <input type="checkbox" id="c-red" class="checkbox-input" checked>
+    <span class="checkbox-control" aria-hidden="true"></span>
+    <span class="checkbox-label">Variant red</span>
 </label>
-<label for="c-success" class="checkbox checkbox--success">
-    <input type="checkbox" id="c-success" class="checkbox__input" checked>
-    <span class="checkbox__control" aria-hidden="true"></span>
-    <span class="checkbox__label">Variant success</span>
+<label for="c-success" class="checkbox checkbox-success">
+    <input type="checkbox" id="c-success" class="checkbox-input" checked>
+    <span class="checkbox-control" aria-hidden="true"></span>
+    <span class="checkbox-label">Variant success</span>
 </label>
 `;
 

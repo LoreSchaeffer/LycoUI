@@ -6,16 +6,17 @@ export const description = <p>When using a semantic variant (<code>success</code
 export const order = 2;
 
 export const vanillaHtml = `
-<button class="btn btn-success" onclick="LycoUI.notification.show({ message: 'Changes saved.', variant: 'success' })">
+<script type="module">import {notification} from "@loreschaeffer/lyco-ui/vanilla"; window.__lycoNotification = notification;</script>
+<button class="btn btn-success" onclick="window.__lycoNotification.show({ message: 'Changes saved.', variant: 'success' })">
   Success
 </button>
-<button class="btn btn-warning" onclick="LycoUI.notification.show({ message: 'Disk space running low.', variant: 'warning' })">
+<button class="btn btn-warning" onclick="window.__lycoNotification.show({ message: 'Disk space running low.', variant: 'warning' })">
   Warning
 </button>
-<button class="btn btn-danger" onclick="LycoUI.notification.show({ message: 'Failed to connect.', variant: 'danger' })">
+<button class="btn btn-danger" onclick="window.__lycoNotification.show({ message: 'Failed to connect.', variant: 'danger' })">
   Danger
 </button>
-<button class="btn btn-info" onclick="LycoUI.notification.show({ message: 'Update available.', variant: 'info' })">
+<button class="btn btn-info" onclick="window.__lycoNotification.show({ message: 'Update available.', variant: 'info' })">
   Info
 </button>
 `;

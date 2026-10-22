@@ -3,7 +3,7 @@ import type {PropDefinition} from '../../../components/api-reference/ApiReferenc
 export const spinnerPropsData: PropDefinition[] = [
     {
         name: 'type',
-        type: "'classic' | 'growing'",
+        type: 'SpinnerType',
         defaultValue: "'classic'",
         description: 'Defines the visual animation style of the spinner.'
     },

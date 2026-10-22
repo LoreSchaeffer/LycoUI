@@ -212,18 +212,23 @@ export const DateTimePicker = forwardRef<HTMLDivElement, DateTimePickerProps>(
         const handleInputChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
             const val = e.target.value;
             setInputValue(val);
-            if (!val) {
+            setIsInvalid(false);
+        }, []);
+
+        const handleInputCommit = useCallback(() => {
+            if (!inputValue) {
                 setIsInvalid(false);
                 setDraftDate(null);
                 setDraftHours(0);
                 setDraftMinutes(0);
+                onChange?.(null);
                 return;
             }
 
-            const timeMatch = val.match(/\s+(\d{1,2}:\d{2}(?:\s*(?:AM|PM|am|pm))?)$/);
+            const timeMatch = inputValue.match(/\s+(\d{1,2}:\d{2}(?:\s*(?:AM|PM|am|pm))?)$/);
             if (timeMatch) {
                 const timePart = timeMatch[1];
-                const datePart = val.substring(0, timeMatch.index).trim();
+                const datePart = inputValue.substring(0, timeMatch.index).trim();
 
                 const parsedDate = parseDateString(datePart, dateFormat);
                 if (parsedDate) {
@@ -238,29 +243,28 @@ export const DateTimePicker = forwardRef<HTMLDivElement, DateTimePickerProps>(
                             else if (ampm === 'PM') h += 12;
                         }
 
-                        if (h >= 0 && h <= 23 && m >= 0 && m <= 59) {
+                        const validHour = ampm
+                            ? Number(match[1]) >= 1 && Number(match[1]) <= 12
+                            : !resolved12Hour && h >= 0 && h <= 23;
+                        if (validHour && m >= 0 && m <= 59) {
                             parsedDate.setHours(h, m, 0, 0);
                             setIsInvalid(false);
                             setDraftDate(parsedDate);
                             setDraftHours(h);
                             setDraftMinutes(m);
                             setViewDate(new Date(parsedDate.getFullYear(), parsedDate.getMonth(), 1));
+                            onChange?.(parsedDate);
                             return;
                         }
                     }
                 }
             }
-            // Fallback for simple date without time if the user is still typing
-            const partialDate = parseDateString(val, dateFormat);
-            if (partialDate) {
-                setIsInvalid(false);
-                setDraftDate(partialDate);
-                setViewDate(new Date(partialDate.getFullYear(), partialDate.getMonth(), 1));
-                return;
-            }
-
             setIsInvalid(true);
-        }, [dateFormat, resolved12Hour]);
+            setInputValue(displayValue);
+            setDraftDate(value ?? null);
+            setDraftHours(value?.getHours() ?? 0);
+            setDraftMinutes(value?.getMinutes() ?? 0);
+        }, [dateFormat, displayValue, inputValue, onChange, resolved12Hour, value]);
 
         const handlePrevMonth = useCallback(() => {
             setViewDate(prev => new Date(prev.getFullYear(), prev.getMonth() - 1, 1));
@@ -274,21 +278,16 @@ export const DateTimePicker = forwardRef<HTMLDivElement, DateTimePickerProps>(
             (e: KeyboardEvent<HTMLInputElement>) => {
                 if (disabled) return;
                 if (e.key === 'Enter') {
-                    if (!isOpen) {
-                        setDraftDate(value ?? null);
-                        setDraftHours(value?.getHours() ?? 0);
-                        setDraftMinutes(value?.getMinutes() ?? 0);
-                        if (value) setViewDate(new Date(value.getFullYear(), value.getMonth(), 1));
-                        setIsOpen(true);
-                        setMobileStep('date');
-                    } else setIsOpen(false);
+                    e.preventDefault();
+                    handleInputCommit();
+                    setIsOpen(false);
                 } else if (e.key === 'Escape') {
                     setIsOpen(false);
                 } else if (e.key === 'Tab') {
                     setIsOpen(false);
                 }
             },
-            [disabled, isOpen, value]
+            [disabled, handleInputCommit]
         );
 
         const colorBase = isColored
@@ -368,6 +367,7 @@ export const DateTimePicker = forwardRef<HTMLDivElement, DateTimePickerProps>(
                             }
                         }}
                         onKeyDown={!isMobile ? handleTriggerKeyDown : undefined}
+                        onBlur={!isMobile ? handleInputCommit : undefined}
                         disabled={disabled}
                         aria-haspopup={!isMobile ? "dialog" : undefined}
                         aria-expanded={!isMobile ? isOpen : undefined}

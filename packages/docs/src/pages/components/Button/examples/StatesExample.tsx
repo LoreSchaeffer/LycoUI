@@ -9,10 +9,10 @@ export const description = (<p>
 export const order = 5;
 
 export const vanillaHtml = `
-<button class="btn btn--primary btn--outlined">Outlined</button>
-<button class="btn btn--primary btn--ghost">Ghost</button>
-<button class="btn btn--primary btn--loading">Loading</button>
-<button class="btn btn--primary" disabled>Disabled</button>
+<button class="btn btn-primary btn-outline">Outlined</button>
+<button class="btn btn-primary btn-ghost">Ghost</button>
+<button class="btn btn-primary btn-loading">Loading</button>
+<button class="btn btn-primary" disabled>Disabled</button>
 `;
 
 export default function StatesExample() {

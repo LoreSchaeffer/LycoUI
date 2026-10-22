@@ -6,20 +6,20 @@ export const description = <p>Adjust the dimensions using the <code>size</code> 
 export const order = 3;
 
 export const vanillaHtml = `
-<label for="r-sm" class="radio radio--primary radio--sm">
-    <input type="radio" id="r-sm" name="size-group" class="radio__input" checked>
-    <span class="radio__control" aria-hidden="true"></span>
-    <span class="radio__label">Size sm</span>
+<label for="r-sm" class="radio radio-primary radio-sm">
+    <input type="radio" id="r-sm" name="size-group" class="radio-input" checked>
+    <span class="radio-control" aria-hidden="true"></span>
+    <span class="radio-label">Size sm</span>
 </label>
-<label for="r-md" class="radio radio--primary">
-    <input type="radio" id="r-md" name="size-group" class="radio__input" checked>
-    <span class="radio__control" aria-hidden="true"></span>
-    <span class="radio__label">Size md</span>
+<label for="r-md" class="radio radio-primary">
+    <input type="radio" id="r-md" name="size-group" class="radio-input" checked>
+    <span class="radio-control" aria-hidden="true"></span>
+    <span class="radio-label">Size md</span>
 </label>
-<label for="r-lg" class="radio radio--primary radio--lg">
-    <input type="radio" id="r-lg" name="size-group" class="radio__input" checked>
-    <span class="radio__control" aria-hidden="true"></span>
-    <span class="radio__label">Size lg</span>
+<label for="r-lg" class="radio radio-primary radio-lg">
+    <input type="radio" id="r-lg" name="size-group" class="radio-input" checked>
+    <span class="radio-control" aria-hidden="true"></span>
+    <span class="radio-label">Size lg</span>
 </label>
 `;
 

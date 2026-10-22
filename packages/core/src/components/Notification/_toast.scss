@@ -3,7 +3,7 @@
 // ==========================================================================
 .notification {
   --notification-color-base: var(--color-border-subtle); // Default subtle color for left border/icon
-  --notification-bg: var(--color-surface-elevated);
+  --notification-bg: color-mix(in srgb, var(--notification-color-base) 8%, var(--color-surface-elevated));
   --notification-text: var(--color-text-primary);
   --notification-border: var(--color-border-subtle);
   --notification-radius: var(--radius-md);

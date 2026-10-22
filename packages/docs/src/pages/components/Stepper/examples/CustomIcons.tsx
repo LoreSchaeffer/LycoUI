@@ -6,26 +6,26 @@ export const description = 'You can override the default numerical indicators wi
 export const order = 4;
 
 export const vanillaHtml = `
-<ol class="stepper stepper--horizontal">
+<ol class="stepper stepper-horizontal">
   <li class="step is-completed">
     <span class="hidden">Completed: </span>
-    <div class="step__header">
-      <div class="step__icon">
+    <div class="step-header">
+      <div class="step-icon">
         <svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/></svg>
       </div>
     </div>
-    <div class="step__content">
-      <div class="step__title">Cart</div>
+    <div class="step-content">
+      <div class="step-title">Cart</div>
     </div>
   </li>
   <li class="step is-active is-warning" aria-current="step">
-    <div class="step__header">
-      <div class="step__icon">
+    <div class="step-header">
+      <div class="step-icon">
         <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/></svg>
       </div>
     </div>
-    <div class="step__content">
-      <div class="step__title">Review</div>
+    <div class="step-content">
+      <div class="step-title">Review</div>
     </div>
   </li>
 </ol>

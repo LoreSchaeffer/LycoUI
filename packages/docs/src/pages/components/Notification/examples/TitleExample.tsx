@@ -5,7 +5,8 @@ export const description = <p>Pass a <code>title</code> prop for a bold heading 
 export const order = 3;
 
 export const vanillaHtml = `
-<button class="btn btn-primary" onclick="LycoUI.notification.show({
+<script type="module">import {notification} from "@loreschaeffer/lyco-ui/vanilla"; window.__lycoNotification = notification;</script>
+<button class="btn btn-primary" onclick="window.__lycoNotification.show({
   title: 'Deployment Complete',
   message: 'Your application has been deployed to production.',
   variant: 'success',

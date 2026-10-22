@@ -1,6 +1,7 @@
 import type {NotificationPosition} from '../../types/types';
 import {NOTIFICATION_CLOSE_SVG, NOTIFICATION_SEMANTIC_SVG} from '../../utils/icons';
 import {createSafeSvg} from '../../utils/safe-content';
+import {getVariantColor} from '../../utils/theme';
 import {durationToMilliseconds, TimedDismiss} from '../../interaction/timed-dismiss';
 
 /**
@@ -83,7 +84,7 @@ class LycoNotificationManager {
         el.setAttribute('aria-live', 'polite');
         el.id = id;
 
-        el.style.setProperty('--notification-color-base', `var(--${variant}-500, var(--color-${variant}))`);
+        el.style.setProperty('--notification-color-base', getVariantColor(variant));
 
         const resolvedIcon = options.icon !== undefined
             ? options.icon

@@ -5,14 +5,14 @@ export const description = <p>The <code>variant</code> prop dynamically maps to 
 export const order = 0;
 
 export const vanillaHtml = `
-<button class="btn btn--primary">Primary</button>
-<button class="btn btn--neutral">Neutral</button>
-<button class="btn btn--danger">Danger</button>
-<button class="btn btn--warning">Warning</button>
-<button class="btn btn--success">Success</button>
-<button class="btn btn--info">Info</button>
-<button class="btn btn--purple">Purple</button>
-<button class="btn btn--white">White</button>
+<button class="btn btn-primary">Primary</button>
+<button class="btn btn-neutral">Neutral</button>
+<button class="btn btn-danger">Danger</button>
+<button class="btn btn-warning">Warning</button>
+<button class="btn btn-success">Success</button>
+<button class="btn btn-info">Info</button>
+<button class="btn btn-purple">Purple</button>
+<button class="btn btn-white">White</button>
 `;
 
 export default function VariantsExample() {

@@ -3,8 +3,17 @@ const LIGHT_COLORS = [
     'amber',
     'yellow',
     'lime',
-    'warning'
+    'warning',
+    'white'
 ];
+
+/**
+ * Returns the CSS color variable for a semantic variant, including the standalone white token.
+ */
+export const getVariantColor = (variant: string | undefined): string => {
+    if (variant === 'white') return 'var(--white, #ffffff)';
+    return `var(--${variant ?? 'primary'}-500, var(--color-${variant ?? 'primary'}))`;
+};
 
 /**
  * Returns the appropriate CSS variable for text/icon contrast based on the variant.

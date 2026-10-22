@@ -7,36 +7,36 @@ export const description = <p>Use the <code>unstyled</code> prop on <code>Navbar
 export const order = 2;
 
 export const vanillaHtml = `
-<nav class="navbar navbar--base navbar--expand-lg">
-  <div class="navbar__container">
-    <a class="navbar__brand" href="#">LycoUI</a>
-    <button type="button" class="navbar__toggle" aria-expanded="false" aria-controls="navbar-collapse-avatar">
+<nav class="navbar navbar-base navbar-expand-lg">
+  <div class="navbar-container">
+    <a class="navbar-brand" href="#">LycoUI</a>
+    <button type="button" class="navbar-toggle" aria-expanded="false" aria-controls="navbar-collapse-avatar">
       <span></span><span></span><span></span>
     </button>
-    <div class="navbar__collapse" id="navbar-collapse-avatar">
-      <div class="navbar__collapse-inner">
-        <ul class="navbar__nav">
-          <li class="navbar__item">
-            <a class="navbar__link is-active" href="#" aria-current="page">Dashboard</a>
+    <div class="navbar-collapse" id="navbar-collapse-avatar">
+      <div class="navbar-collapse-inner">
+        <ul class="navbar-nav">
+          <li class="navbar-item">
+            <a class="navbar-link is-active" href="#" aria-current="page">Dashboard</a>
           </li>
-          <li class="navbar__item">
-            <a class="navbar__link" href="#">Projects</a>
+          <li class="navbar-item">
+            <a class="navbar-link" href="#">Projects</a>
           </li>
         </ul>
-        <ul class="navbar__nav navbar__nav--align-end">
-          <li class="navbar__item navbar__dropdown">
-            <button type="button" class="navbar__dropdown-trigger navbar__dropdown-trigger--unstyled" aria-expanded="false" aria-haspopup="true">
+        <ul class="navbar-nav navbar-nav-align-end">
+          <li class="navbar-item navbar-dropdown">
+            <button type="button" class="navbar-dropdown-trigger navbar-dropdown-trigger-unstyled" aria-expanded="false" aria-haspopup="true">
               <span style="display:flex;align-items:center;gap:0.5rem;">
-                <div class="avatar avatar--md avatar--circle" aria-hidden="true">
-                  <div class="avatar__fallback">LR</div>
+                <div class="avatar avatar-md avatar-circle" aria-hidden="true">
+                  <div class="avatar-fallback">LR</div>
                 </div>
-                <span style="font-size:0.875rem;font-weight:500;color:var(--color-text-primary);">Lorenzo R.</span>
+                <span style="font-size:0.875rem;font-weight:500;color:var(--color-text-primary);">Rick A.</span>
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
               </span>
             </button>
-              <a href="#" class="navbar__dropdown-item">Profile</a>
-              <a href="#" class="navbar__dropdown-item">Settings</a>
-              <a href="#" class="navbar__dropdown-item navbar__dropdown-item--danger">Sign Out</a>
+              <a href="#" class="navbar-dropdown-item">Profile</a>
+              <a href="#" class="navbar-dropdown-item">Settings</a>
+              <a href="#" class="navbar-dropdown-item navbar-dropdown-item-danger">Sign Out</a>
             </div>
           </li>
         </ul>

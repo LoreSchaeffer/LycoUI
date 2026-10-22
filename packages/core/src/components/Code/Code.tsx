@@ -39,6 +39,8 @@ export interface CodeProps extends Omit<HTMLAttributes<HTMLElement>, 'onChange'>
     onChange?: (code: string) => void;
 }
 
+const defaultSupportedLanguages = ['javascript', 'typescript', 'html', 'css', 'json', 'bash', 'tsx', 'jsx', 'scss'];
+
 
 /**
  * Code component.
@@ -55,7 +57,7 @@ export const Code = memo(forwardRef<HTMLElement, CodeProps>((
         showCopy = false,
         showDownload = false,
         showLanguageSelector = false,
-        supportedLanguages = ['javascript', 'typescript', 'html', 'css', 'json', 'bash', 'tsx', 'jsx', 'scss'],
+        supportedLanguages = defaultSupportedLanguages,
         fileName = 'snippet',
         tabSize = 2,
         onChange,

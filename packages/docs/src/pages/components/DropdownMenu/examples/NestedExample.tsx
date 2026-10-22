@@ -6,38 +6,38 @@ export const description = "A dropdown menu featuring nested submenus. Submenus 
 export const order = 4;
 
 export const vanillaHtml = `
-<div class="dropdown-menu">
-  <button class="button button--base button--md" aria-haspopup="menu" aria-expanded="false" onclick="this.classList.toggle('is-open'); this.nextElementSibling.hidden = !this.nextElementSibling.hidden">
+<div class="dropdown-menu" id="dropdown-nested">
+  <button class="btn btn-base btn-md" aria-haspopup="menu" aria-expanded="false" aria-controls="dropdown-nested-menu" onclick="this.classList.toggle('is-open'); this.nextElementSibling.hidden = !this.nextElementSibling.hidden">
     Share
   </button>
-  <div class="dropdown-menu__content" role="menu" hidden>
-    <div class="dropdown-menu__item" role="menuitem" tabindex="0">Copy Link</div>
-    <div class="dropdown-menu__separator" role="separator"></div>
+  <div class="dropdown-menu" id="dropdown-nested-menu" role="menu" hidden>
+    <div class="dropdown-item" role="menuitem" tabindex="0">Copy Link</div>
+    <div class="dropdown-divider" role="separator"></div>
     
-    <div class="dropdown-menu__submenu" onmouseenter="this.querySelector('.dropdown-menu__submenu-content').classList.add('is-open')" onmouseleave="this.querySelector('.dropdown-menu__submenu-content').classList.remove('is-open')">
-      <button type="button" class="dropdown-menu__submenu-trigger" aria-haspopup="true" aria-expanded="false">
+    <div class="dropdown-submenu" onmouseenter="this.querySelector('.dropdown-submenu-content').classList.add('is-open')" onmouseleave="this.querySelector('.dropdown-submenu-content').classList.remove('is-open')">
+      <button type="button" class="dropdown-submenu-trigger" aria-haspopup="true" aria-expanded="false">
         <span>Send via...</span>
-        <svg class="dropdown-menu__caret" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <svg class="dropdown-caret" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
           <polyline points="9 18 15 12 9 6"></polyline>
         </svg>
       </button>
-      <div class="dropdown-menu__submenu-content" role="menu">
-        <div class="dropdown-menu__item" role="menuitem" tabindex="0">Email</div>
-        <div class="dropdown-menu__item" role="menuitem" tabindex="0">Messages</div>
-        <div class="dropdown-menu__item" role="menuitem" tabindex="0">WhatsApp</div>
+      <div class="dropdown-submenu-content" role="menu">
+        <div class="dropdown-item" role="menuitem" tabindex="0">Email</div>
+        <div class="dropdown-item" role="menuitem" tabindex="0">Messages</div>
+        <div class="dropdown-item" role="menuitem" tabindex="0">WhatsApp</div>
       </div>
     </div>
     
-    <div class="dropdown-menu__submenu" onmouseenter="this.querySelector('.dropdown-menu__submenu-content').classList.add('is-open')" onmouseleave="this.querySelector('.dropdown-menu__submenu-content').classList.remove('is-open')">
-      <button type="button" class="dropdown-menu__submenu-trigger" aria-haspopup="true" aria-expanded="false">
+    <div class="dropdown-submenu" onmouseenter="this.querySelector('.dropdown-submenu-content').classList.add('is-open')" onmouseleave="this.querySelector('.dropdown-submenu-content').classList.remove('is-open')">
+      <button type="button" class="dropdown-submenu-trigger" aria-haspopup="true" aria-expanded="false">
         <span>Social Media</span>
-        <svg class="dropdown-menu__caret" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <svg class="dropdown-caret" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
           <polyline points="9 18 15 12 9 6"></polyline>
         </svg>
       </button>
-      <div class="dropdown-menu__submenu-content" role="menu">
-        <div class="dropdown-menu__item" role="menuitem" tabindex="0">Twitter</div>
-        <div class="dropdown-menu__item" role="menuitem" tabindex="0">LinkedIn</div>
+      <div class="dropdown-submenu-content" role="menu">
+        <div class="dropdown-item" role="menuitem" tabindex="0">Twitter</div>
+        <div class="dropdown-item" role="menuitem" tabindex="0">LinkedIn</div>
       </div>
     </div>
   </div>

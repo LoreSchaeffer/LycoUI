@@ -6,32 +6,32 @@ export const description = 'A standard vertical timeline, aligned to the left.';
 export const order = 1;
 
 export const vanillaHtml = `
-<ol class="timeline timeline--vertical">
-  <li class="timeline__item">
-    <div class="timeline__icon-wrapper">
-      <div class="timeline__icon"></div>
+<ol class="timeline timeline-vertical">
+  <li class="timeline-item">
+    <div class="timeline-icon-wrapper">
+      <div class="timeline-icon"></div>
     </div>
-    <div class="timeline__content">
-      <div class="timeline__title">Repository created</div>
-      <div class="timeline__time"><time>Oct 1, 2026</time></div>
-    </div>
-  </li>
-  <li class="timeline__item">
-    <div class="timeline__icon-wrapper">
-      <div class="timeline__icon"></div>
-    </div>
-    <div class="timeline__content">
-      <div class="timeline__title">Pull request merged</div>
-      <div class="timeline__time"><time>Oct 15, 2026</time></div>
+    <div class="timeline-content">
+      <div class="timeline-title">Repository created</div>
+      <div class="timeline-time"><time>Oct 1, 2026</time></div>
     </div>
   </li>
-  <li class="timeline__item">
-    <div class="timeline__icon-wrapper">
-      <div class="timeline__icon"></div>
+  <li class="timeline-item">
+    <div class="timeline-icon-wrapper">
+      <div class="timeline-icon"></div>
     </div>
-    <div class="timeline__content">
-      <div class="timeline__title">Version 1.0 deployed</div>
-      <div class="timeline__time"><time>Oct 20, 2026</time></div>
+    <div class="timeline-content">
+      <div class="timeline-title">Pull request merged</div>
+      <div class="timeline-time"><time>Oct 15, 2026</time></div>
+    </div>
+  </li>
+  <li class="timeline-item">
+    <div class="timeline-icon-wrapper">
+      <div class="timeline-icon"></div>
+    </div>
+    <div class="timeline-content">
+      <div class="timeline-title">Version 1.0 deployed</div>
+      <div class="timeline-time"><time>Oct 20, 2026</time></div>
     </div>
   </li>
 </ol>

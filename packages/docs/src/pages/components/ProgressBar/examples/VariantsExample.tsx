@@ -6,8 +6,8 @@ export const order = 2;
 
 export const vanillaHtml = `
 <div class="mb-4">
-  <div class="progress progress--success" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">
-    <div class="progress__bar" style="width: 100%;"></div>
+  <div class="progress progress-success" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">
+    <div class="progress-bar" style="width: 100%;"></div>
   </div>
 </div>
 `;

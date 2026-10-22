@@ -5,10 +5,10 @@ export const description = <p>Display formatted code using the <code>language</c
 export const order = 2;
 
 export const vanillaHtml = `
-<div class="code--block" data-language="javascript">
-  <div class="code__body">
+<div class="code-block" data-language="javascript">
+  <div class="code-body">
     <!-- In Vanilla HTML, you are responsible for rendering the highlighted HTML, or you can just output pre/code -->
-    <pre class="code__highlight"><code>const greeting = "Hello Vanilla JS!";
+    <pre class="code-highlight"><code>const greeting = "Hello Vanilla JS!";
 console.log(greeting);</code></pre>
   </div>
 </div>

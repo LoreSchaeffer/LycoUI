@@ -7,16 +7,16 @@ export const order = 1;
 export const vanillaHtml = `
 <div style="display: flex; flex-direction: column; width: 100%; text-align: center; gap: var(--spacing-4);">
   <small class="text-muted">sm (50%)</small>
-  <hr role="separator" aria-orientation="horizontal" class="divider divider--horizontal divider--spacing-none divider--length-sm" />
+  <hr role="separator" aria-orientation="horizontal" class="divider divider-horizontal divider-spacing-none divider-length-sm" />
   
   <small class="text-muted">md (75%)</small>
-  <hr role="separator" aria-orientation="horizontal" class="divider divider--horizontal divider--spacing-none divider--length-md" />
+  <hr role="separator" aria-orientation="horizontal" class="divider divider-horizontal divider-spacing-none divider-length-md" />
   
   <small class="text-muted">lg (98%)</small>
-  <hr role="separator" aria-orientation="horizontal" class="divider divider--horizontal divider--spacing-none divider--length-lg" />
+  <hr role="separator" aria-orientation="horizontal" class="divider divider-horizontal divider-spacing-none divider-length-lg" />
   
   <small class="text-muted">full (100%)</small>
-  <hr role="separator" aria-orientation="horizontal" class="divider divider--horizontal divider--spacing-none divider--length-full" />
+  <hr role="separator" aria-orientation="horizontal" class="divider divider-horizontal divider-spacing-none divider-length-full" />
 </div>
 `;
 

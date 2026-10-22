@@ -7,49 +7,49 @@ export const description = 'A vertical timeline where items alternate left and r
 export const order = 2;
 
 export const vanillaHtml = `
-<ol class="timeline timeline--vertical timeline--alternate">
-  <li class="timeline__item has-color" style="--timeline-color-base: var(--color-success);">
-    <div class="timeline__icon-wrapper">
-      <div class="timeline__icon">
+<ol class="timeline timeline-vertical timeline-alternate">
+  <li class="timeline-item has-color" style="--timeline-color-base: var(--color-success);">
+    <div class="timeline-icon-wrapper">
+      <div class="timeline-icon">
         <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
           <polyline points="20 6 9 17 4 12"></polyline>
         </svg>
       </div>
     </div>
-    <div class="timeline__content">
-      <div class="timeline__title">Requirement Gathering</div>
-      <div class="timeline__time"><time>Jan 2026</time></div>
+    <div class="timeline-content">
+      <div class="timeline-title">Requirement Gathering</div>
+      <div class="timeline-time"><time>Jan 2026</time></div>
     </div>
   </li>
-  <li class="timeline__item has-color" style="--timeline-color-base: var(--color-success);">
-    <div class="timeline__icon-wrapper">
-      <div class="timeline__icon">
+  <li class="timeline-item has-color" style="--timeline-color-base: var(--color-success);">
+    <div class="timeline-icon-wrapper">
+      <div class="timeline-icon">
         <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
           <polyline points="20 6 9 17 4 12"></polyline>
         </svg>
       </div>
     </div>
-    <div class="timeline__content">
-      <div class="timeline__title">UI/UX Design</div>
-      <div class="timeline__time"><time>Feb 2026</time></div>
+    <div class="timeline-content">
+      <div class="timeline-title">UI/UX Design</div>
+      <div class="timeline-time"><time>Feb 2026</time></div>
     </div>
   </li>
-  <li class="timeline__item has-color" style="--timeline-color-base: var(--color-primary);">
-    <div class="timeline__icon-wrapper">
-      <div class="timeline__icon"></div>
+  <li class="timeline-item has-color" style="--timeline-color-base: var(--color-primary);">
+    <div class="timeline-icon-wrapper">
+      <div class="timeline-icon"></div>
     </div>
-    <div class="timeline__content">
-      <div class="timeline__title">Development Phase</div>
-      <div class="timeline__time"><time>Mar 2026</time></div>
+    <div class="timeline-content">
+      <div class="timeline-title">Development Phase</div>
+      <div class="timeline-time"><time>Mar 2026</time></div>
     </div>
   </li>
-  <li class="timeline__item">
-    <div class="timeline__icon-wrapper">
-      <div class="timeline__icon"></div>
+  <li class="timeline-item">
+    <div class="timeline-icon-wrapper">
+      <div class="timeline-icon"></div>
     </div>
-    <div class="timeline__content">
-      <div class="timeline__title">Beta Release</div>
-      <div class="timeline__time"><time>Apr 2026</time></div>
+    <div class="timeline-content">
+      <div class="timeline-title">Beta Release</div>
+      <div class="timeline-time"><time>Apr 2026</time></div>
     </div>
   </li>
 </ol>

@@ -14,24 +14,25 @@ export function usePickerPopover(
     onDismiss: () => void,
 ): PickerPopoverState {
     const popoverRef = useRef<HTMLDivElement>(null);
-    const [popoverStyles, setPopoverStyles] = useState<CSSProperties>({});
+    const [popoverStyles, setPopoverStyles] = useState<CSSProperties>({visibility: 'hidden'});
 
     const updatePosition = useCallback(() => {
         if (!open || !triggerRef.current || !popoverRef.current) return;
         const trigger = triggerRef.current.getBoundingClientRect();
         const surface = popoverRef.current.getBoundingClientRect();
-        const scrollX = window.scrollX;
-        const scrollY = window.scrollY;
-        let left = trigger.left + scrollX;
-        let top = trigger.bottom + scrollY + 8;
-        if (left + surface.width > document.documentElement.clientWidth + scrollX - 16) left = trigger.right + scrollX - surface.width;
-        if (left < scrollX + 16) left = scrollX + 16;
-        if (trigger.bottom + surface.height + 8 > window.innerHeight && trigger.top - surface.height - 8 > 0) top = trigger.top + scrollY - surface.height - 8;
-        setPopoverStyles({position: 'absolute', top: `${top}px`, left: `${left}px`, zIndex: 'var(--z-dropdown, 9999)'});
+        let left = trigger.left;
+        let top = trigger.bottom + 8;
+        if (trigger.bottom + surface.height + 8 > window.innerHeight && trigger.top - surface.height - 8 > 0) top = trigger.top - surface.height - 8;
+        const nextStyles: CSSProperties = {position: 'fixed', top: `${top}px`, left: `${left}px`, zIndex: 'var(--z-dropdown, 9999)', visibility: 'visible'};
+        Object.assign(popoverRef.current.style, nextStyles);
+        setPopoverStyles(nextStyles);
     }, [open, triggerRef]);
 
     useLayoutEffect(() => {
-        if (!open) return;
+        if (!open) {
+            setPopoverStyles({visibility: 'hidden'});
+            return;
+        }
         updatePosition();
         window.addEventListener('scroll', updatePosition, true);
         window.addEventListener('resize', updatePosition);

@@ -6,31 +6,31 @@ export const description = 'Demonstrates a stepper with a step in an error state
 export const order = 3;
 
 export const vanillaHtml = `
-<ol class="stepper stepper--horizontal">
+<ol class="stepper stepper-horizontal">
   <li class="step is-completed">
     <span class="hidden">Completed: </span>
-    <div class="step__header">
-      <div class="step__icon">1</div>
+    <div class="step-header">
+      <div class="step-icon">1</div>
     </div>
-    <div class="step__content">
-      <div class="step__title">Setup</div>
+    <div class="step-content">
+      <div class="step-title">Setup</div>
     </div>
   </li>
   <li class="step is-error">
-    <div class="step__header">
-      <div class="step__icon">2</div>
+    <div class="step-header">
+      <div class="step-icon">2</div>
     </div>
-    <div class="step__content">
-      <div class="step__title">Connection Failed</div>
-      <div class="step__description">Check your network</div>
+    <div class="step-content">
+      <div class="step-title">Connection Failed</div>
+      <div class="step-description">Check your network</div>
     </div>
   </li>
   <li class="step">
-    <div class="step__header">
-      <div class="step__icon">3</div>
+    <div class="step-header">
+      <div class="step-icon">3</div>
     </div>
-    <div class="step__content">
-      <div class="step__title">Sync</div>
+    <div class="step-content">
+      <div class="step-title">Sync</div>
     </div>
   </li>
 </ol>

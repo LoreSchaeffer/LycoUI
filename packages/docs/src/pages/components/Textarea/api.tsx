@@ -20,7 +20,7 @@ export const textareaProps: PropDefinition[] = [
     },
     {
         name: 'validation',
-        type: "'disabled' | 'auto' | 'valid' | 'invalid'",
+        type: 'TextareaValidation',
         defaultValue: "'disabled'",
         description: 'The validation state of the textarea.'
     },
@@ -42,7 +42,7 @@ export const textareaProps: PropDefinition[] = [
     },
     {
         name: 'resize',
-        type: "'none' | 'vertical' | 'horizontal' | 'both'",
+        type: 'TextareaResize',
         defaultValue: "'both'",
         description: 'Controls the resizability of the textarea.'
     },

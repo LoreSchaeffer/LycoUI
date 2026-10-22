@@ -45,6 +45,12 @@ export const description = (
     </p>
 );
 export const order = 1;
+export const vanillaHtml = `
+<table class="table" data-lyco-datatable data-columns="id,name,email" data-page-size="10">
+  <thead><tr><th>ID</th><th>Name</th><th>Email</th></tr></thead>
+  <tbody><tr><td>1</td><td>Ada Lovelace</td><td>ada@example.com</td></tr></tbody>
+</table>
+`;
 
 export default function BasicExample() {
     return (

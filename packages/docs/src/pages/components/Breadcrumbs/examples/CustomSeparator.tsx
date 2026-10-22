@@ -6,23 +6,23 @@ export const description = <p>You can pass any <code>ReactNode</code> as a child
 export const order = 2;
 
 export const vanillaHtml = `
-<div class="card card--elevation-1 card--padding-md">
-  <div class="card__body">
+<div class="card card-elevation-1 card-padding-md">
+  <div class="card-body">
     <nav aria-label="Breadcrumb" class="breadcrumbs">
-      <ol class="breadcrumbs__list">
-        <li class="breadcrumbs__item"><a href="/">Settings</a></li>
-        <li aria-hidden="true" class="breadcrumbs__separator">
+      <ol class="breadcrumbs-list">
+        <li class="breadcrumbs-item"><a href="/">Settings</a></li>
+        <li aria-hidden="true" class="breadcrumbs-separator">
           <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
           </svg>
         </li>
-        <li class="breadcrumbs__item"><a href="/account">Account</a></li>
-        <li aria-hidden="true" class="breadcrumbs__separator">
+        <li class="breadcrumbs-item"><a href="/account">Account</a></li>
+        <li aria-hidden="true" class="breadcrumbs-separator">
           <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
           </svg>
         </li>
-        <li class="breadcrumbs__item is-current" aria-current="page">Security</li>
+        <li class="breadcrumbs-item is-current" aria-current="page">Security</li>
       </ol>
     </nav>
   </div>

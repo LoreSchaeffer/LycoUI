@@ -20,6 +20,12 @@
   &__preview {
     padding: var(--spacing-8);
 
+    .docs-range & {
+      // Range tooltips are positioned above their thumb; reserve room for
+      // the largest droplet while the card continues to clip its own corners.
+      padding-top: calc(var(--spacing-8) + var(--spacing-4));
+    }
+
     &.layout-row {
       display: flex;
       flex-direction: row;

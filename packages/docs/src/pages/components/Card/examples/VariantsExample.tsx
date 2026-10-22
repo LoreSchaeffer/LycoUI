@@ -6,8 +6,8 @@ export const description = <p>By default, applying a <code>variant</code> render
 export const order = 3;
 
 export const vanillaHtml = `
-<div class="card card--elevation-1 card--variant card--dim card--primary">
-    <div class="card__body">
+<div class="card card-elevation-1 card-variant card-dim card-primary">
+    <div class="card-body">
         <h4 class="mb-2">primary</h4>
         <p class="mb-0">Dim variant applied.</p>
     </div>

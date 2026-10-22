@@ -5,10 +5,10 @@ export const description = <p>Use the <code>outlined</code> prop to remove backg
 export const order = 1;
 
 export const vanillaHtml = `
-<button class="btn btn--primary btn--outlined">Primary Outlined</button>
-<button class="btn btn--success btn--outlined">Success Outlined</button>
-<button class="btn btn--danger btn--outlined">Danger Outlined</button>
-<button class="btn btn--warning btn--outlined">Warning Outlined</button>
+<button class="btn btn-primary btn-outline">Primary Outlined</button>
+<button class="btn btn-success btn-outline">Success Outlined</button>
+<button class="btn btn-danger btn-outline">Danger Outlined</button>
+<button class="btn btn-warning btn-outline">Warning Outlined</button>
 `;
 
 export default function OutlinedExample() {

@@ -42,36 +42,36 @@ export default function ResizeExample() {
 export const vanillaHtml = `
 <div class="mb-4">
   <div class="textarea-wrapper">
-    <div class="textarea textarea--resize-both is-filled">
-      <textarea id="resize-b" class="textarea__field">Drag the bottom right corner in any direction.</textarea>
-      <label class="textarea__label" for="resize-b">Both (Default)</label>
+    <div class="textarea textarea-resize-both is-filled">
+      <textarea id="resize-b" class="textarea-field">Drag the bottom right corner in any direction.</textarea>
+      <label class="textarea-label" for="resize-b">Both (Default)</label>
     </div>
   </div>
 </div>
 
 <div class="mb-4">
   <div class="textarea-wrapper">
-    <div class="textarea textarea--resize-vertical is-filled">
-      <textarea id="resize-v" class="textarea__field">Drag the bottom right corner up or down.</textarea>
-      <label class="textarea__label" for="resize-v">Vertical</label>
+    <div class="textarea textarea-resize-vertical is-filled">
+      <textarea id="resize-v" class="textarea-field">Drag the bottom right corner up or down.</textarea>
+      <label class="textarea-label" for="resize-v">Vertical</label>
     </div>
   </div>
 </div>
 
 <div class="mb-4">
   <div class="textarea-wrapper">
-    <div class="textarea textarea--resize-horizontal is-filled">
-      <textarea id="resize-h" class="textarea__field">Drag the bottom right corner left or right.</textarea>
-      <label class="textarea__label" for="resize-h">Horizontal</label>
+    <div class="textarea textarea-resize-horizontal is-filled">
+      <textarea id="resize-h" class="textarea-field">Drag the bottom right corner left or right.</textarea>
+      <label class="textarea-label" for="resize-h">Horizontal</label>
     </div>
   </div>
 </div>
 
 <div class="mb-4">
   <div class="textarea-wrapper">
-    <div class="textarea textarea--resize-none is-filled">
-      <textarea id="resize-n" class="textarea__field">This textarea cannot be resized.</textarea>
-      <label class="textarea__label" for="resize-n">None</label>
+    <div class="textarea textarea-resize-none is-filled">
+      <textarea id="resize-n" class="textarea-field">This textarea cannot be resized.</textarea>
+      <label class="textarea-label" for="resize-n">None</label>
     </div>
   </div>
 </div>

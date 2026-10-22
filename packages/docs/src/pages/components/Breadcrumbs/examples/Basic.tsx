@@ -7,15 +7,15 @@ export const description = <p>A standard breadcrumbs trail using default slash s
 export const order = 1;
 
 export const vanillaHtml = `
-<div class="card card--elevation-1 card--padding-md">
-  <div class="card__body">
+<div class="card card-elevation-1 card-padding-md">
+  <div class="card-body">
     <nav aria-label="Breadcrumb" class="breadcrumbs">
-      <ol class="breadcrumbs__list">
-        <li class="breadcrumbs__item"><a href="/">Home</a></li>
-        <li aria-hidden="true" class="breadcrumbs__separator">/</li>
-        <li class="breadcrumbs__item"><a href="/components">Components</a></li>
-        <li aria-hidden="true" class="breadcrumbs__separator">/</li>
-        <li class="breadcrumbs__item is-current" aria-current="page">Breadcrumbs</li>
+      <ol class="breadcrumbs-list">
+        <li class="breadcrumbs-item"><a href="/">Home</a></li>
+        <li aria-hidden="true" class="breadcrumbs-separator">/</li>
+        <li class="breadcrumbs-item"><a href="/components">Components</a></li>
+        <li aria-hidden="true" class="breadcrumbs-separator">/</li>
+        <li class="breadcrumbs-item is-current" aria-current="page">Breadcrumbs</li>
       </ol>
     </nav>
   </div>

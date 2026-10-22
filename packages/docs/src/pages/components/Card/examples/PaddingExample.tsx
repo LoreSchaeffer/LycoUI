@@ -6,10 +6,10 @@ export const description = <p>Control the internal spacing of the card container
 export const order = 5;
 
 export const vanillaHtml = `
-<div class="card card--elevation-1 card--padding-none">
+<div class="card card-elevation-1 card-padding-none">
     <p class="text-center mb-0 m-4">Padding: <strong>none</strong></p>
 </div>
-<div class="card card--elevation-1 card--padding-md">
+<div class="card card-elevation-1 card-padding-md">
     <p class="text-center mb-0">Padding: <strong>md</strong></p>
 </div>
 `;

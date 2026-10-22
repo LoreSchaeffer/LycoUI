@@ -5,12 +5,12 @@ export const description = <p>Structure your cards gracefully using <code>Card.H
 export const order = 0;
 
 export const vanillaHtml = `
-<div class="card card--elevation-1">
-    <div class="card__header">Project Overview</div>
-    <div class="card__body">
+<div class="card card-elevation-1">
+    <div class="card-header">Project Overview</div>
+    <div class="card-body">
         <p class="mb-0">This is the main content area of the card.</p>
     </div>
-    <div class="card__footer text-secondary">Last updated 2 days ago</div>
+    <div class="card-footer text-secondary">Last updated 2 days ago</div>
 </div>
 `;
 

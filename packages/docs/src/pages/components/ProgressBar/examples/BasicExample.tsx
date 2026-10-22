@@ -8,7 +8,7 @@ export const vanillaHtml = `
 <div class="mb-4">
   <div class="text-sm fw-bold mb-2">Downloading...</div>
   <div class="progress" role="progressbar" aria-valuenow="45" aria-valuemin="0" aria-valuemax="100">
-    <div class="progress__bar" style="width: 45%;"></div>
+    <div class="progress-bar" style="width: 45%;"></div>
   </div>
 </div>
 `;

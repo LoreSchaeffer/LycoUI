@@ -3,12 +3,12 @@ import type {PropDefinition} from '../../../components/api-reference/ApiReferenc
 export const radioPropsData: PropDefinition[] = [
     {
         name: 'label',
-        type: 'ReactNode',
+        type: 'React.ReactNode',
         description: 'Text or component to display next to the radio. Automatically wrapped in a label element.'
     },
     {
         name: 'variant',
-        type: 'FullVariant',
+        type: "FullVariant | 'default'",
         typeLink: '/docs/types#full-variant',
         defaultValue: "'primary'",
         description: 'Applies semantic colors from the global palette to the radio background and border.'

@@ -4,6 +4,11 @@ import {Code, Col, Row} from '@loreschaeffer/lyco-ui';
 export const title = 'Editable Code Block';
 export const description = <p>Setting <code>editable</code> to true overlays a transparent textarea. You can edit the code, and syntax highlighting updates in real-time.</p>;
 export const order = 4;
+export const vanillaHtml = `
+<div class="code-block" data-language="typescript" data-editable="true">
+  <textarea class="code-textarea">interface User { id: number; }</textarea>
+</div>
+`;
 
 export default function EditableExample() {
     const [code, setCode] = useState(`interface User {

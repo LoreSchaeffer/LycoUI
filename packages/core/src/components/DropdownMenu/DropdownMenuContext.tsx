@@ -5,8 +5,9 @@ import {createContext, useContext} from 'react';
  */
 export interface DropdownMenuContextValue {
     isOpen: boolean;
+    menuId: string;
     setIsOpen: (isOpen: boolean) => void;
-    closeMenu: () => void;
+    closeMenu: (returnFocus?: boolean) => void;
     triggerRef: React.RefObject<HTMLButtonElement | null>;
 }
 

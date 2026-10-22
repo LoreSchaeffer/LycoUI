@@ -20,9 +20,19 @@ const paginationProps: PropDefinition[] = [
         description: 'Visual style variant of the pagination.'
     },
     {
-        name: 'onPageChange',
+        name: 'onChange',
         type: '(page: number) => void',
         description: 'Callback fired when the user changes the page.'
+    },
+    {
+        name: 'prevIcon',
+        type: 'React.ReactNode',
+        description: 'Icon for the previous-page control.'
+    },
+    {
+        name: 'nextIcon',
+        type: 'React.ReactNode',
+        description: 'Icon for the next-page control.'
     },
     {
         name: 'colorVariant',

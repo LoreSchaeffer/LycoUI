@@ -6,8 +6,8 @@ export const description = <p>Use the <code>elevation</code> prop to control the
 export const order = 1;
 
 export const vanillaHtml = `
-<div class="card card--elevation-0">
-    <div class="card__body">
+<div class="card card-elevation-0">
+    <div class="card-body">
         <h3 class="mb-2">Elevation 0</h3>
         <p class="text-secondary mb-0">Surface depth and shadow adjustments.</p>
     </div>

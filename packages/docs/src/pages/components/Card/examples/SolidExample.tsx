@@ -6,8 +6,8 @@ export const description = <p>Set <code>isDim={`{false}`}</code> to force a soli
 export const order = 4;
 
 export const vanillaHtml = `
-<div class="card card--elevation-1 card--variant card--solid card--primary">
-    <div class="card__body">
+<div class="card card-elevation-1 card-variant card-solid card-primary">
+    <div class="card-body">
         <h4 class="mb-2">primary</h4>
         <p class="mb-0">Solid variant with automatic contrast.</p>
     </div>

@@ -16,7 +16,7 @@ export const vanillaHtml = `
 </div>
 <div>
   <div class="text-sm fw-bold mb-2 text-secondary">Without Step Buttons</div>
-  <input type="number" class="input-custom" data-show-step-buttons="false" value="42" />
+  <input type="number" class="input-custom" data-show-step-btns="false" value="42" />
 </div>
 `;
 

@@ -3,29 +3,29 @@ import type {PropDefinition} from '../../../components/api-reference/ApiReferenc
 export const rangeProps: PropDefinition[] = [
     {
         name: 'value',
-        type: 'number',
+        type: 'string | number | readonly string[]',
         description: 'The current value of the range slider. Use for controlled components.',
     },
     {
         name: 'defaultValue',
-        type: 'number',
+        type: 'string | number | readonly string[]',
         description: 'The default value of the range slider. Use for uncontrolled components.',
     },
     {
         name: 'min',
-        type: 'number',
+        type: 'number | string',
         defaultValue: '0',
         description: 'The minimum allowed value.',
     },
     {
         name: 'max',
-        type: 'number',
+        type: 'number | string',
         defaultValue: '100',
         description: 'The maximum allowed value.',
     },
     {
         name: 'step',
-        type: 'number',
+        type: 'number | string',
         defaultValue: '1',
         description: 'The stepping interval.',
     },

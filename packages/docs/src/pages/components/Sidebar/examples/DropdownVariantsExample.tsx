@@ -18,7 +18,7 @@ export const vanillaHtml = `
   <div class="sidebar-content">
     <ul class="sidebar-nav">
       <li class="sidebar-item sidebar-dropdown is-open">
-        <button type="button" class="btn btn--ghost sidebar-dropdown-trigger" aria-expanded="true" aria-haspopup="true">
+        <button type="button" class="btn btn-ghost sidebar-dropdown-trigger" aria-expanded="true" aria-haspopup="true">
           <span class="sidebar-icon">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
           </span>
@@ -30,13 +30,13 @@ export const vanillaHtml = `
             <!-- Default item -->
             <a class="sidebar-dropdown-item" href="#">General Preferences</a>
             <!-- Primary item -->
-            <a class="sidebar-dropdown-item sidebar__dropdown-item--primary" href="#">Upgrade Plan</a>
+            <a class="sidebar-dropdown-item sidebar-dropdown-item-primary" href="#">Upgrade Plan</a>
             <!-- Success item -->
-            <a class="sidebar-dropdown-item sidebar__dropdown-item--success" href="#">Operational Status</a>
+            <a class="sidebar-dropdown-item sidebar-dropdown-item-success" href="#">Operational Status</a>
             <!-- Warning item -->
-            <a class="sidebar-dropdown-item sidebar__dropdown-item--warning" href="#">Maintenance Mode</a>
+            <a class="sidebar-dropdown-item sidebar-dropdown-item-warning" href="#">Maintenance Mode</a>
             <!-- Danger destructive item -->
-            <a class="sidebar-dropdown-item sidebar__dropdown-item--danger" href="#">Delete Account</a>
+            <a class="sidebar-dropdown-item sidebar-dropdown-item-danger" href="#">Delete Account</a>
             <!-- Disabled item -->
             <a class="sidebar-dropdown-item is-disabled" href="#" aria-disabled="true">Archived Logs (Locked)</a>
           </div>

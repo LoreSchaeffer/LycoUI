@@ -55,7 +55,7 @@ export const docsNavigation: DocNavigationCategory[] = [
             },
 
             {
-                name: 'Custom Types',
+                name: 'Shared Types',
                 path: '/docs/types',
                 component: lazy(() => import('../pages/types/TypesDoc.tsx')),
                 subItems: [

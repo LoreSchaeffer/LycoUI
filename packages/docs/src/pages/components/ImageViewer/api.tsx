@@ -4,7 +4,7 @@ export const imageViewerProps: PropDefinition[] = [
     {
         name: 'isOpen',
         type: 'boolean',
-        defaultValue: 'false',
+        required: true,
         description: 'Controls whether the image viewer is open and visible on screen.'
     },
     {
@@ -33,7 +33,7 @@ export const imageViewerProps: PropDefinition[] = [
 export const imageViewerImageProps: PropDefinition[] = [
     {
         name: 'id',
-        type: 'string | number',
+        type: 'string',
         description: 'Unique identifier for the image.'
     },
     {

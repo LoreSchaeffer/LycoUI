@@ -5,13 +5,13 @@ export const description = <p>The Tabs component supports semantic color variant
 export const order = 2;
 
 export const vanillaHtml = `
-<div class="tabs tabs--success" data-lyco-tabs>
-  <div class="tabs__list" role="tablist">
-    <button type="button" class="tabs__trigger is-active" role="tab" aria-selected="true" data-lyco-tab-value="1">Success Tab 1</button>
-    <button type="button" class="tabs__trigger" role="tab" aria-selected="false" data-lyco-tab-value="2">Success Tab 2</button>
+<div class="tabs tabs-success" data-lyco-tabs>
+  <div class="tabs-list" role="tablist">
+    <button type="button" class="tabs-trigger is-active" role="tab" aria-selected="true" data-lyco-tab-value="1">Success Tab 1</button>
+    <button type="button" class="tabs-trigger" role="tab" aria-selected="false" data-lyco-tab-value="2">Success Tab 2</button>
   </div>
-  <div class="tabs__content" role="tabpanel" data-lyco-tab-value="1">Content 1</div>
-  <div class="tabs__content" role="tabpanel" data-lyco-tab-value="2" hidden aria-hidden="true" style="display: none;">Content 2</div>
+  <div class="tabs-content" role="tabpanel" data-lyco-tab-value="1">Content 1</div>
+  <div class="tabs-content" role="tabpanel" data-lyco-tab-value="2" hidden aria-hidden="true" style="display: none;">Content 2</div>
 </div>
 `;
 

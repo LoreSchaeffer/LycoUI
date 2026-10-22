@@ -3,7 +3,12 @@ import {Badge, Card, Code, getContrastColor, Table, TableBody, TableCell, TableH
 
 const hues = ['red', 'orange', 'amber', 'yellow', 'lime', 'green', 'teal', 'cyan', 'blue', 'indigo', 'purple', 'fuchsia', 'pink'];
 const lightnessSteps = [50, 100, 200, 300, 400, 500, 600, 700, 800, 900, 950];
-const neutralSteps = [50, 100, 200, 300, 400, 500, 600, 700, 800, 900, 950];
+const neutralSteps = [50, 100, 150, 200, 250, 300, 350, 400, 450, 500, 550, 600, 650, 700, 750, 800, 850, 900, 950];
+const neutralThemes = [
+    {name: 'Slate', colors: ['#ffffff', '#e5e5e6', '#dbdee3', '#d0d6e0', '#c1c7d1', '#b2b8c2', '#9ea4ad', '#8a8f98', '#767b83', '#62666d', '#575b61', '#4c4f55', '#42454a', '#383b3f', '#2e3035', '#23252a', '#1d1e21', '#161718', '#0f1011']},
+    {name: 'Gray', colors: ['#fbfbfb', '#eeeeee', '#e3e3e3', '#d8d8d8', '#cbcbcb', '#bdbdbd', '#aaaaaa', '#969696', '#838383', '#707070', '#636363', '#555555', '#494949', '#3d3d3d', '#333333', '#292929', '#222222', '#1a1a1a', '#101010']},
+    {name: 'Zinc', colors: ['#fbfaf9', '#f4f1ee', '#ede9e4', '#e6e0da', '#dcd4cd', '#d2c8bf', '#bdb2a9', '#a89c92', '#958980', '#81766e', '#726861', '#635a54', '#564e49', '#49423e', '#3d3734', '#302c2a', '#262322', '#1c1a19', '#100f0e']}
+];
 
 const semanticColors = [
     {name: 'Primary', var: '--color-primary'},
@@ -18,9 +23,10 @@ interface ColorSwatchProps {
     colorVar: string;
     label: string | number;
     textColor?: string;
+    colorValue?: string;
 }
 
-const ColorSwatch: React.FC<ColorSwatchProps> = ({colorVar, label, textColor}) => {
+const ColorSwatch: React.FC<ColorSwatchProps> = ({colorVar, label, textColor, colorValue}) => {
     const {showNotification} = useNotification();
 
     const handleCopy = () => {
@@ -36,7 +42,7 @@ const ColorSwatch: React.FC<ColorSwatchProps> = ({colorVar, label, textColor}) =
         <Card
             className="docs-colors__palette-step"
             style={{
-                backgroundColor: `var(${colorVar})`,
+                backgroundColor: colorValue || `var(${colorVar})`,
                 color: textColor || 'var(--neutral-950)',
                 cursor: 'pointer',
                 display: 'flex',
@@ -142,27 +148,27 @@ const Colors: React.FC = () => {
             </section>
 
             <section className="mb-12">
-                <h2 className="mt-12 mb-6">Neutral Palette</h2>
+                <h2 className="mt-12 mb-6">Neutral Palettes</h2>
                 <p className="text-secondary mb-8">
-                    Neutral tokens provide the structural colors for backgrounds, surfaces, borders, and typography. Use the numeric <Code inline>--neutral-50</Code> through <Code inline>--neutral-950</Code> aliases so your styles follow the active neutral theme.
+                    Compare the cool Slate, neutral Gray, and warm Zinc source scales below. Each scale includes every 50-point increment from <Code inline>--neutral-50</Code> through <Code inline>--neutral-950</Code>; the active <Code inline>data-theme</Code> selects which values those aliases resolve to.
                 </p>
 
-                <div className="docs-colors__palette-row mb-1" style={{display: 'flex', alignItems: 'center'}}>
-                    <span className="docs-colors__palette-title" style={{width: '80px', fontWeight: 'bold'}}>Neutral</span>
-                    <div className="docs-colors__palette-steps" style={{display: 'grid', gridTemplateColumns: 'repeat(11, 1fr)', flex: 1, gap: '4px'}}>
-                        {neutralSteps.map(step => {
-                            const colorVar = `--neutral-${step}`;
-                            return (
+                {neutralThemes.map(theme => (
+                    <div key={theme.name} className="docs-colors__palette-row mb-3" style={{display: 'flex', alignItems: 'center'}}>
+                        <span className="docs-colors__palette-title" style={{minWidth: '80px', flexShrink: 0, fontWeight: 'bold'}}>{theme.name}</span>
+                        <div className="docs-colors__palette-steps" style={{display: 'grid', gridTemplateColumns: 'repeat(19, minmax(48px, 1fr))', flex: 1, minWidth: 0, overflowX: 'auto', gap: '4px'}}>
+                            {neutralSteps.map((step, index) => (
                                 <ColorSwatch
                                     key={step}
-                                    colorVar={colorVar}
+                                    colorVar={`--neutral-${step}`}
+                                    colorValue={theme.colors[index]}
                                     label={step}
                                     textColor={step >= 600 ? 'var(--white)' : 'var(--neutral-950)'}
                                 />
-                            );
-                        })}
+                            ))}
+                        </div>
                     </div>
-                </div>
+                ))}
             </section>
 
             <section className="mb-12">

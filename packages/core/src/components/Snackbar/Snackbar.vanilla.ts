@@ -1,4 +1,4 @@
-import {getContrastColor} from '../../utils/theme';
+import {getContrastColor, getVariantColor} from '../../utils/theme';
 import {createSafeSvg} from '../../utils/safe-content';
 import {durationToMilliseconds, TimedDismiss} from '../../interaction/timed-dismiss';
 
@@ -54,7 +54,7 @@ class LycoSnackbarManager {
         const snackbar = document.createElement('div');
         const variant = options.variant || 'secondary';
         snackbar.className = 'snackbar';
-        snackbar.style.setProperty('--snackbar-color-base', `var(--${variant}-500, var(--color-${variant}))`);
+        snackbar.style.setProperty('--snackbar-color-base', getVariantColor(variant));
         snackbar.style.setProperty('--snackbar-color-contrast', getContrastColor(variant));
         if (options.closable) snackbar.classList.add('snackbar-closable');
         if (options.icon) snackbar.classList.add('has-icon');

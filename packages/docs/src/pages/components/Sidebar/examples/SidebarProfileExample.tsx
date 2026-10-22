@@ -17,7 +17,7 @@ export const vanillaHtml = `
   <!-- EXPANDED SIDEBAR -->
   <aside class="sidebar" style="--sidebar-width: 256px;">
     <div class="sidebar-header">
-      <button class="btn btn--ghost btn--icon" type="button" aria-label="Toggle Menu">
+      <button class="btn btn-ghost btn-icon" type="button" aria-label="Toggle Menu">
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
       </button>
       <span style="font-weight:600;font-size:1.125rem;margin-left:0.5rem;">LycoApp</span>
@@ -37,16 +37,16 @@ export const vanillaHtml = `
     <div class="sidebar-footer">
       <ul class="sidebar-nav">
         <li class="sidebar-item sidebar-dropdown">
-          <button type="button" class="btn btn--ghost sidebar-dropdown-trigger" aria-expanded="false" aria-haspopup="true">
+          <button type="button" class="btn btn-ghost sidebar-dropdown-trigger" aria-expanded="false" aria-haspopup="true">
             <span class="sidebar-icon">
-              <div class="avatar avatar--sm avatar--circle" aria-hidden="true">
-                <div class="avatar__fallback">LR</div>
+              <div class="avatar avatar-sm avatar-circle" aria-hidden="true">
+                <div class="avatar-fallback">LR</div>
               </div>
             </span>
             <span class="sidebar-label">
               <div style="display:flex;flex-direction:column;align-items:flex-start;line-height:1.2;">
-                <span style="font-size:var(--font-size-sm);font-weight:500;color:var(--color-text-primary);">Lorenzo R.</span>
-                <span style="font-size:var(--font-size-xs);color:var(--color-text-secondary);">lorenzo@example.com</span>
+                <span style="font-size:var(--font-size-sm);font-weight:500;color:var(--color-text-primary);">Rick A.</span>
+                <span style="font-size:var(--font-size-xs);color:var(--color-text-secondary);">rick@example.com</span>
               </div>
             </span>
             <svg class="sidebar-dropdown-caret" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
@@ -55,7 +55,7 @@ export const vanillaHtml = `
             <div class="sidebar-dropdown-menu">
               <a class="sidebar-dropdown-item" href="#">Profile</a>
               <a class="sidebar-dropdown-item" href="#">Settings</a>
-              <a class="sidebar-dropdown-item sidebar__dropdown-item--danger" href="#">Sign Out</a>
+              <a class="sidebar-dropdown-item sidebar-dropdown-item-danger" href="#">Sign Out</a>
             </div>
           </div>
         </li>
@@ -66,7 +66,7 @@ export const vanillaHtml = `
   <!-- COLLAPSED / MINI SIDEBAR -->
   <aside class="sidebar is-mini" style="border-left: 1px solid var(--color-border-subtle);">
     <div class="sidebar-header">
-      <button class="btn btn--ghost btn--icon" type="button" aria-label="Toggle Menu">
+      <button class="btn btn-ghost btn-icon" type="button" aria-label="Toggle Menu">
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
       </button>
       <span style="font-weight:600;font-size:1.125rem;margin-left:0.5rem;">LycoApp</span>
@@ -85,10 +85,10 @@ export const vanillaHtml = `
     <div class="sidebar-footer">
       <ul class="sidebar-nav">
         <li class="sidebar-item sidebar-dropdown">
-          <button type="button" class="btn btn--ghost sidebar-dropdown-trigger" aria-expanded="false" aria-haspopup="true">
+          <button type="button" class="btn btn-ghost sidebar-dropdown-trigger" aria-expanded="false" aria-haspopup="true">
             <span class="sidebar-icon">
-              <div class="avatar avatar--sm avatar--circle" aria-hidden="true">
-                <div class="avatar__fallback">LR</div>
+              <div class="avatar avatar-sm avatar-circle" aria-hidden="true">
+                <div class="avatar-fallback">LR</div>
               </div>
             </span>
           </button>
@@ -96,7 +96,7 @@ export const vanillaHtml = `
             <div class="sidebar-dropdown-menu">
               <a class="sidebar-dropdown-item" href="#">Profile</a>
               <a class="sidebar-dropdown-item" href="#">Settings</a>
-              <a class="sidebar-dropdown-item sidebar__dropdown-item--danger" href="#">Sign Out</a>
+              <a class="sidebar-dropdown-item sidebar-dropdown-item-danger" href="#">Sign Out</a>
             </div>
           </div>
         </li>
@@ -159,8 +159,8 @@ export default function SidebarProfileExample() {
                                     title={
                                         !isMini && (
                                             <div style={{display: 'flex', flexDirection: 'column', alignItems: 'flex-start', lineHeight: 1.2}}>
-                                                <span style={{fontSize: 'var(--font-size-sm)', fontWeight: 500, color: 'var(--color-text-primary)'}}>Lorenzo R.</span>
-                                                <span style={{fontSize: 'var(--font-size-xs)', color: 'var(--color-text-secondary)'}}>lorenzo@example.com</span>
+                                                <span style={{fontSize: 'var(--font-size-sm)', fontWeight: 500, color: 'var(--color-text-primary)'}}>Rick A.</span>
+                                                <span style={{fontSize: 'var(--font-size-xs)', color: 'var(--color-text-secondary)'}}>rick@example.com</span>
                                             </div>
                                         )
                                     }

@@ -7,9 +7,9 @@ export const order = 3;
 
 export const vanillaHtml = `
 <label class="switch" for="s_success" style="--switch-color-base: var(--color-success); --switch-color-contrast: var(--black);">
-    <input type="checkbox" role="switch" id="s_success" class="switch__input" checked>
-    <span class="switch__control" aria-hidden="true"></span>
-    <span class="switch__label">Success</span>
+    <input type="checkbox" role="switch" id="s_success" class="switch-input" checked>
+    <span class="switch-control" aria-hidden="true"></span>
+    <span class="switch-label">Success</span>
 </label>
 `;
 

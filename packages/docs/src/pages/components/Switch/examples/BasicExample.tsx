@@ -6,14 +6,14 @@ export const order = 1;
 
 export const vanillaHtml = `
 <label class="switch" for="s1" style="--switch-color-base: var(--color-primary); --switch-color-contrast: var(--white);">
-    <input type="checkbox" role="switch" id="s1" class="switch__input">
-    <span class="switch__control" aria-hidden="true"></span>
-    <span class="switch__label">Wi-Fi</span>
+    <input type="checkbox" role="switch" id="s1" class="switch-input">
+    <span class="switch-control" aria-hidden="true"></span>
+    <span class="switch-label">Wi-Fi</span>
 </label>
 <label class="switch" for="s2" style="--switch-color-base: var(--color-primary); --switch-color-contrast: var(--white);">
-    <input type="checkbox" role="switch" id="s2" class="switch__input" checked>
-    <span class="switch__control" aria-hidden="true"></span>
-    <span class="switch__label">Bluetooth</span>
+    <input type="checkbox" role="switch" id="s2" class="switch-input" checked>
+    <span class="switch-control" aria-hidden="true"></span>
+    <span class="switch-label">Bluetooth</span>
 </label>
 `;
 

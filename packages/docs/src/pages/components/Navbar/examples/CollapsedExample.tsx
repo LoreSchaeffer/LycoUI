@@ -5,37 +5,37 @@ export const description = <p>Use the <code>expand="never"</code> property to fo
 export const order = 2;
 
 export const vanillaHtml = `
-<nav class="navbar navbar--base">
-  <div class="navbar__container">
-    <a class="navbar__brand" href="#">MobileApp</a>
-    <button type="button" class="navbar__toggle" aria-expanded="false" aria-controls="navbar-collapse-mobile">
+<nav class="navbar navbar-base">
+  <div class="navbar-container">
+    <a class="navbar-brand" href="#">MobileApp</a>
+    <button type="button" class="navbar-toggle" aria-expanded="false" aria-controls="navbar-collapse-mobile">
       <span></span><span></span><span></span>
     </button>
-    <div class="navbar__collapse" id="navbar-collapse-mobile">
-      <div class="navbar__collapse-inner">
-        <ul class="navbar__nav">
-          <li class="navbar__item">
-            <a class="navbar__link is-active" href="#" aria-current="page">Dashboard</a>
+    <div class="navbar-collapse" id="navbar-collapse-mobile">
+      <div class="navbar-collapse-inner">
+        <ul class="navbar-nav">
+          <li class="navbar-item">
+            <a class="navbar-link is-active" href="#" aria-current="page">Dashboard</a>
           </li>
-          <li class="navbar__item navbar__dropdown">
-            <button type="button" class="navbar__dropdown-trigger btn btn--unstyled" aria-expanded="false" aria-haspopup="true">
+          <li class="navbar-item navbar-dropdown">
+            <button type="button" class="navbar-dropdown-trigger btn btn-unstyled" aria-expanded="false" aria-haspopup="true">
               <div style="display: flex; align-items: center; gap: 8px;">
-                <div class="avatar avatar--sm avatar--circle">
-                  <div class="avatar__fallback">LR</div>
+                <div class="avatar avatar-sm avatar-circle">
+                  <div class="avatar-fallback">LR</div>
                 </div>
-                <span>Lorenzo R.</span>
+                <span>Rick A.</span>
               </div>
             </button>
-            <div class="navbar__dropdown-menu">
-              <a href="#" class="navbar__dropdown-item">Settings</a>
-              <div class="navbar__dropdown-submenu">
-                <button type="button" class="navbar__dropdown-submenu-trigger" aria-haspopup="true">
+            <div class="navbar-dropdown-menu">
+              <a href="#" class="navbar-dropdown-item">Settings</a>
+              <div class="navbar-dropdown-submenu">
+                <button type="button" class="navbar-dropdown-submenu-trigger" aria-haspopup="true">
                   <span>Theme</span>
-                  <svg class="navbar__dropdown-caret" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                  <svg class="navbar-dropdown-caret" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
                 </button>
-                <div class="navbar__dropdown-menu navbar__dropdown-menu--nested">
-                  <a href="#" class="navbar__dropdown-item">Light</a>
-                  <a href="#" class="navbar__dropdown-item">Dark</a>
+                <div class="navbar-dropdown-menu navbar-dropdown-nested">
+                  <a href="#" class="navbar-dropdown-item">Light</a>
+                  <a href="#" class="navbar-dropdown-item">Dark</a>
                 </div>
               </div>
             </div>
@@ -63,7 +63,7 @@ export default function CollapsedExample() {
                                 <Navbar.Dropdown unstyled title={
                                     <div style={{display: 'flex', alignItems: 'center', gap: '8px'}}>
                                         <Avatar fallback="LR" size="sm"/>
-                                        <span>Lorenzo R.</span>
+                                        <span>Rick A.</span>
                                     </div>
                                 }>
                                     <Navbar.DropdownItem href="#">Settings</Navbar.DropdownItem>

@@ -5,10 +5,11 @@ export const description = <p>Notifications support the full LycoUI color palett
 export const order = 5;
 
 export const vanillaHtml = `
-<button class="btn btn-primary" onclick="LycoUI.notification.show({ message: 'Primary notification', variant: 'primary' })">
+<script type="module">import {notification} from "@loreschaeffer/lyco-ui/vanilla"; window.__lycoNotification = notification;</script>
+<button class="btn btn-primary" onclick="window.__lycoNotification.show({ message: 'Primary notification', variant: 'primary' })">
   Primary
 </button>
-<button class="btn btn-purple" onclick="LycoUI.notification.show({ message: 'Purple notification', variant: 'purple' })">
+<button class="btn btn-purple" onclick="window.__lycoNotification.show({ message: 'Purple notification', variant: 'purple' })">
   Purple
 </button>
 `;

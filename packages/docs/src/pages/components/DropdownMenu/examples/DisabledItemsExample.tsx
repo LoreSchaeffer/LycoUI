@@ -6,13 +6,13 @@ export const description = "Items can be disabled using the `disabled` prop, whi
 export const order = 3;
 
 export const vanillaHtml = `
-<div class="dropdown-menu">
-  <button class="dropdown-menu__trigger" aria-haspopup="menu" aria-expanded="false" onclick="this.classList.toggle('is-open'); this.nextElementSibling.hidden = !this.nextElementSibling.hidden">
+<div class="dropdown-menu" id="dropdown-disabled">
+  <button class="dropdown-trigger" aria-haspopup="menu" aria-expanded="false" aria-controls="dropdown-disabled-menu" onclick="this.classList.toggle('is-open'); this.nextElementSibling.hidden = !this.nextElementSibling.hidden">
     View Options
   </button>
-  <div class="dropdown-menu__content" role="menu" hidden>
-    <div class="dropdown-menu__item" role="menuitem" tabindex="0">View Details</div>
-    <div class="dropdown-menu__item is-disabled" role="menuitem" aria-disabled="true" tabindex="-1">Edit (No Permission)</div>
+  <div class="dropdown-menu" id="dropdown-disabled-menu" role="menu" hidden>
+    <div class="dropdown-item" role="menuitem" tabindex="0">View Details</div>
+    <div class="dropdown-item is-disabled" role="menuitem" aria-disabled="true" tabindex="-1">Edit (No Permission)</div>
   </div>
 </div>
 `;

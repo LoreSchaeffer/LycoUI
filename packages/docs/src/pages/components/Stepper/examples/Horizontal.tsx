@@ -6,33 +6,33 @@ export const description = 'A standard horizontal wizard flow showing completed,
 export const order = 1;
 
 export const vanillaHtml = `
-<ol class="stepper stepper--horizontal">
+<ol class="stepper stepper-horizontal">
   <li class="step is-completed">
     <span class="hidden">Completed: </span>
-    <div class="step__header">
-      <div class="step__icon">1</div>
+    <div class="step-header">
+      <div class="step-icon">1</div>
     </div>
-    <div class="step__content">
-      <div class="step__title">Personal Info</div>
-      <div class="step__description">Enter your details</div>
+    <div class="step-content">
+      <div class="step-title">Personal Info</div>
+      <div class="step-description">Enter your details</div>
     </div>
   </li>
   <li class="step is-active" aria-current="step">
-    <div class="step__header">
-      <div class="step__icon">2</div>
+    <div class="step-header">
+      <div class="step-icon">2</div>
     </div>
-    <div class="step__content">
-      <div class="step__title">Shipping</div>
-      <div class="step__description">Choose delivery method</div>
+    <div class="step-content">
+      <div class="step-title">Shipping</div>
+      <div class="step-description">Choose delivery method</div>
     </div>
   </li>
   <li class="step">
-    <div class="step__header">
-      <div class="step__icon">3</div>
+    <div class="step-header">
+      <div class="step-icon">3</div>
     </div>
-    <div class="step__content">
-      <div class="step__title">Payment</div>
-      <div class="step__description">Provide credit card</div>
+    <div class="step-content">
+      <div class="step-title">Payment</div>
+      <div class="step-description">Provide credit card</div>
     </div>
   </li>
 </ol>

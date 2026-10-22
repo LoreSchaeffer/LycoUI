@@ -30,20 +30,20 @@ export const vanillaHtml = `
 <div class="mb-4">
   <div class="textarea-wrapper">
     <div class="textarea is-valid is-filled">
-      <textarea id="valid-input" class="textarea__field" aria-describedby="valid-msg">This is a valid message.</textarea>
-      <label class="textarea__label" for="valid-input">Valid Input</label>
+      <textarea id="valid-input" class="textarea-field" aria-describedby="valid-msg">This is a valid message.</textarea>
+      <label class="textarea-label" for="valid-input">Valid Input</label>
     </div>
-    <div id="valid-msg" class="textarea__message textarea__message--valid" role="status">Looks good!</div>
+    <div id="valid-msg" class="textarea-message textarea-message-valid" role="status">Looks good!</div>
   </div>
 </div>
 
 <div class="mb-4">
   <div class="textarea-wrapper">
     <div class="textarea is-invalid">
-      <textarea id="invalid-input" class="textarea__field" aria-invalid="true" aria-describedby="invalid-msg"></textarea>
-      <label class="textarea__label" for="invalid-input">Invalid Input</label>
+      <textarea id="invalid-input" class="textarea-field" aria-invalid="true" aria-describedby="invalid-msg"></textarea>
+      <label class="textarea-label" for="invalid-input">Invalid Input</label>
     </div>
-    <div id="invalid-msg" class="textarea__message textarea__message--invalid" role="alert">This field is required.</div>
+    <div id="invalid-msg" class="textarea-message textarea-message-invalid" role="alert">This field is required.</div>
   </div>
 </div>
 `;

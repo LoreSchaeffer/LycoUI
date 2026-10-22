@@ -7,42 +7,42 @@ export const order = 1;
 
 export const vanillaHtml = `
 <ul class="treeview" role="tree">
-  <li class="treeview__item" role="treeitem" aria-expanded="true" tabindex="0" id="src">
-    <div class="treeview__item-content">
-      <span class="treeview__icon treeview__icon--chevron">
+  <li class="treeview-item" role="treeitem" aria-expanded="true" tabindex="0" id="src">
+    <div class="treeview-item-content">
+      <span class="treeview-icon treeview-icon-chevron">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6-6-6z" /></svg>
       </span>
-      <span class="treeview__label">src</span>
+      <span class="treeview-label">src</span>
     </div>
-    <ul class="treeview__group" role="group">
-      <li class="treeview__item" role="treeitem" aria-expanded="false" tabindex="-1" id="components">
-        <div class="treeview__item-content">
-          <span class="treeview__icon treeview__icon--chevron">
+    <ul class="treeview-group" role="group">
+      <li class="treeview-item" role="treeitem" aria-expanded="false" tabindex="-1" id="components">
+        <div class="treeview-item-content">
+          <span class="treeview-icon treeview-icon-chevron">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6-6-6z" /></svg>
           </span>
-          <span class="treeview__label">components</span>
+          <span class="treeview-label">components</span>
         </div>
       </li>
-      <li class="treeview__item" role="treeitem" tabindex="-1" id="index">
-        <div class="treeview__item-content">
-          <span class="treeview__icon"></span>
-          <span class="treeview__label">index.ts</span>
+      <li class="treeview-item" role="treeitem" tabindex="-1" id="index">
+        <div class="treeview-item-content">
+          <span class="treeview-icon"></span>
+          <span class="treeview-label">index.ts</span>
         </div>
       </li>
     </ul>
   </li>
-  <li class="treeview__item" role="treeitem" aria-expanded="false" tabindex="-1" id="public">
-    <div class="treeview__item-content">
-      <span class="treeview__icon treeview__icon--chevron">
+  <li class="treeview-item" role="treeitem" aria-expanded="false" tabindex="-1" id="public">
+    <div class="treeview-item-content">
+      <span class="treeview-icon treeview-icon-chevron">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6-6-6z" /></svg>
       </span>
-      <span class="treeview__label">public</span>
+      <span class="treeview-label">public</span>
     </div>
   </li>
-  <li class="treeview__item" role="treeitem" tabindex="-1" id="package">
-    <div class="treeview__item-content">
-      <span class="treeview__icon"></span>
-      <span class="treeview__label">package.json</span>
+  <li class="treeview-item" role="treeitem" tabindex="-1" id="package">
+    <div class="treeview-item-content">
+      <span class="treeview-icon"></span>
+      <span class="treeview-label">package.json</span>
     </div>
   </li>
 </ul>

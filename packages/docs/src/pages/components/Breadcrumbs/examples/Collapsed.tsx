@@ -6,19 +6,19 @@ export const description = <p>When directory structures or paths are extremely d
 export const order = 3;
 
 export const vanillaHtml = `
-<div class="card card--elevation-1 card--padding-md">
-  <div class="card__body">
+<div class="card card-elevation-1 card-padding-md">
+  <div class="card-body">
     <nav aria-label="Breadcrumb" class="breadcrumbs">
-      <ol class="breadcrumbs__list">
-        <li class="breadcrumbs__item"><a href="/">Projects</a></li>
-        <li aria-hidden="true" class="breadcrumbs__separator">/</li>
-        <li class="breadcrumbs__item">
+      <ol class="breadcrumbs-list">
+        <li class="breadcrumbs-item"><a href="/">Projects</a></li>
+        <li aria-hidden="true" class="breadcrumbs-separator">/</li>
+        <li class="breadcrumbs-item">
           <span aria-label="More links">...</span>
         </li>
-        <li aria-hidden="true" class="breadcrumbs__separator">/</li>
-        <li class="breadcrumbs__item"><a href="/src">src</a></li>
-        <li aria-hidden="true" class="breadcrumbs__separator">/</li>
-        <li class="breadcrumbs__item is-current" aria-current="page">App.tsx</li>
+        <li aria-hidden="true" class="breadcrumbs-separator">/</li>
+        <li class="breadcrumbs-item"><a href="/src">src</a></li>
+        <li aria-hidden="true" class="breadcrumbs-separator">/</li>
+        <li class="breadcrumbs-item is-current" aria-current="page">App.tsx</li>
       </ol>
     </nav>
   </div>

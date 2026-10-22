@@ -2,7 +2,7 @@ import './Snackbar.scss';
 import React, {type CSSProperties, forwardRef} from 'react';
 import clsx from 'clsx';
 import type {FullVariant} from '../../types/types';
-import {getContrastColor} from '../../utils/theme.ts';
+import {getContrastColor, getVariantColor} from '../../utils/theme.ts';
 
 /**
  * SnackbarProps.
@@ -54,7 +54,7 @@ export const Snackbar = forwardRef<HTMLDivElement, SnackbarProps>((
             role="status"
             aria-live="polite"
             style={{
-                '--snackbar-color-base': `var(--${variant}-500, var(--color-${variant}))`,
+                '--snackbar-color-base': getVariantColor(variant),
                 '--snackbar-color-contrast': getContrastColor(variant),
                 ...style
             } as CSSProperties}

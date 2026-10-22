@@ -12,7 +12,7 @@ export const vanillaHtml = `
 
 <!-- Backdrop must be placed right before the sidebar in vanilla JS -->
 <div class="sidebar-backdrop" onclick="document.getElementById('my-sidebar').classList.remove('is-open')"></div>
-<aside id="my-sidebar" class="sidebar sidebar--overlay">
+<aside id="my-sidebar" class="sidebar sidebar-overlay">
   <div class="sidebar-header">
     <strong>Mobile Menu</strong>
   </div>

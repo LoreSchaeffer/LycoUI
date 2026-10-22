@@ -5,8 +5,8 @@ export const description = <p>Use the <code>interactive</code> prop to enable sm
 export const order = 2;
 
 export const vanillaHtml = `
-<div class="card card--interactive card--elevation-1">
-    <div class="card__body">
+<div class="card card-interactive card-elevation-1">
+    <div class="card-body">
         <h4 class="mb-2">Hover me</h4>
         <p class="text-secondary mb-0">This card is interactive and will elevate slightly.</p>
     </div>

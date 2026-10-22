@@ -22,7 +22,7 @@ export const codeProps: PropDefinition[] = [
     {
         name: 'theme',
         type: 'string',
-        defaultValue: "'andromeeda'",
+        defaultValue: "'lyco-dark'",
         description: 'The Shiki theme to use for syntax highlighting (requires shiki to be installed).'
     },
     {
@@ -30,6 +30,12 @@ export const codeProps: PropDefinition[] = [
         type: 'boolean',
         defaultValue: 'false',
         description: 'If true, turns the code block into a lightweight code editor.'
+    },
+    {
+        name: 'inline',
+        type: 'boolean',
+        defaultValue: 'false',
+        description: 'Renders code as inline text instead of a block.'
     },
     {
         name: 'showCopy',
@@ -60,6 +66,12 @@ export const codeProps: PropDefinition[] = [
         type: 'string',
         defaultValue: "'snippet'",
         description: 'The default filename used when downloading the code.'
+    },
+    {
+        name: 'tabSize',
+        type: 'number',
+        defaultValue: '2',
+        description: 'The number of spaces per tab.'
     },
     {
         name: 'onChange',

@@ -4,8 +4,10 @@ export const description = <p>To use the global Context Menu system, you must wr
 export const order = 1;
 
 export const vanillaHtml = `
-<!-- In Vanilla JS, LycoUI handles the provider logic automatically. 
-     Just ensure you have the vanilla.js bundle loaded. -->
+<div class="interactive-zone" data-lyco-context-menu="#context-menu-provider-example">Right click me</div>
+<ul id="context-menu-provider-example" class="context-menu" role="menu" hidden tabindex="-1">
+  <li class="context-menu-item" role="menuitem">Open</li>
+</ul>
 `;
 
 export default function ProviderSetupExample() {

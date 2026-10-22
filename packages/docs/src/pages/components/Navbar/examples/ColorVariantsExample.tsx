@@ -4,32 +4,32 @@ export const title = 'Color Variants';
 export const description = <p>Navbars support all semantic and palette colors. Use the <code>dim</code> prop for a softer look.</p>;
 export const order = 3;
 export const vanillaHtml = `
-<nav class="navbar navbar-variant navbar-primary navbar-solid navbar-elevation-1 navbar--expand-lg mb-4">
-  <div class="navbar__container">
-    <a class="navbar__brand" href="#">Primary Solid</a>
-    <button type="button" class="navbar__toggle" aria-expanded="false" aria-controls="navbar-primary">
+<nav class="navbar navbar-variant navbar-primary navbar-solid navbar-elevation-1 navbar-expand-lg mb-4">
+  <div class="navbar-container">
+    <a class="navbar-brand" href="#">Primary Solid</a>
+    <button type="button" class="navbar-toggle" aria-expanded="false" aria-controls="navbar-primary">
       <span></span><span></span><span></span>
     </button>
-    <div class="navbar__collapse" id="navbar-primary">
-      <div class="navbar__collapse-inner">
-        <ul class="navbar__nav">
-          <li class="navbar__item"><a class="navbar__link is-active" href="#">Home</a></li>
+    <div class="navbar-collapse" id="navbar-primary">
+      <div class="navbar-collapse-inner">
+        <ul class="navbar-nav">
+          <li class="navbar-item"><a class="navbar-link is-active" href="#">Home</a></li>
         </ul>
       </div>
     </div>
   </div>
 </nav>
 
-<nav class="navbar navbar-variant navbar-success navbar-dim navbar-elevation-1 navbar--expand-lg mb-4">
-  <div class="navbar__container">
-    <a class="navbar__brand" href="#">Success Dim</a>
-    <button type="button" class="navbar__toggle" aria-expanded="false" aria-controls="navbar-success-dim">
+<nav class="navbar navbar-variant navbar-success navbar-dim navbar-elevation-1 navbar-expand-lg mb-4">
+  <div class="navbar-container">
+    <a class="navbar-brand" href="#">Success Dim</a>
+    <button type="button" class="navbar-toggle" aria-expanded="false" aria-controls="navbar-success-dim">
       <span></span><span></span><span></span>
     </button>
-    <div class="navbar__collapse" id="navbar-success-dim">
-      <div class="navbar__collapse-inner">
-        <ul class="navbar__nav">
-          <li class="navbar__item"><a class="navbar__link is-active" href="#">Home</a></li>
+    <div class="navbar-collapse" id="navbar-success-dim">
+      <div class="navbar-collapse-inner">
+        <ul class="navbar-nav">
+          <li class="navbar-item"><a class="navbar-link is-active" href="#">Home</a></li>
         </ul>
       </div>
     </div>

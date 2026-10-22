@@ -1,5 +1,5 @@
 import './DropdownMenu.scss';
-import React, {forwardRef, useCallback, useRef} from 'react';
+import React, {forwardRef, useCallback, useId, useRef} from 'react';
 import {DropdownMenuContext} from './DropdownMenuContext';
 import {useControllableState} from '../../hooks/useControllableState';
 import {classContract} from '../../styles/class-contract';
@@ -19,19 +19,20 @@ export interface DropdownMenuProps {
  */
 export const DropdownMenu: React.FC<DropdownMenuProps> = ({children, isOpen: controlledIsOpen, onOpenChange}) => {
     const triggerRef = useRef<HTMLButtonElement>(null);
+    const menuId = `lyco-dropdown-${useId().replace(/:/g, '')}`;
     const [isOpen, setIsOpen] = useControllableState({
         value: controlledIsOpen,
         defaultValue: false,
         onChange: onOpenChange
     });
 
-    const closeMenu = useCallback(() => {
+    const closeMenu = useCallback((returnFocus = true) => {
         setIsOpen(false);
-        triggerRef.current?.focus();
+        if (returnFocus) triggerRef.current?.focus();
     }, [setIsOpen]);
 
     return (
-        <DropdownMenuContext.Provider value={{isOpen, setIsOpen, closeMenu, triggerRef}}>
+        <DropdownMenuContext.Provider value={{isOpen, menuId, setIsOpen, closeMenu, triggerRef}}>
             <div className={classContract.dropdown.root}>
                 {children}
             </div>
@@ -57,7 +58,7 @@ export const DropdownMenuTrigger = forwardRef<HTMLButtonElement, DropdownMenuTri
         const context = React.useContext(DropdownMenuContext);
         if (!context) throw new Error('DropdownMenuTrigger must be used within DropdownMenu');
 
-        const {isOpen, setIsOpen, triggerRef} = context;
+        const {isOpen, menuId, setIsOpen, triggerRef} = context;
 
         const handleRef = (node: HTMLButtonElement) => {
             triggerRef.current = node;
@@ -97,9 +98,10 @@ export const DropdownMenuTrigger = forwardRef<HTMLButtonElement, DropdownMenuTri
                         child.props.onClick(e);
                     }
                 },
+                ...props,
                 'aria-haspopup': 'menu',
                 'aria-expanded': isOpen,
-                ...props
+                'aria-controls': menuId
             } as React.HTMLAttributes<HTMLElement>);
         }
 
@@ -107,10 +109,11 @@ export const DropdownMenuTrigger = forwardRef<HTMLButtonElement, DropdownMenuTri
             <button
                 ref={handleRef}
                 className={`${classContract.dropdown.trigger} ${isOpen ? 'is-open' : ''} ${className}`}
+                {...props}
                 aria-haspopup="menu"
                 aria-expanded={isOpen}
+                aria-controls={menuId}
                 onClick={handleClick}
-                {...props}
             >
                 {children}
             </button>

@@ -5,7 +5,7 @@ export const description = <p>Setting <code>inline</code> to true renders the co
 export const order = 1;
 
 export const vanillaHtml = `
-<p>Here is an example of <code class="code--inline">inline code</code> within a sentence.</p>
+<p>Here is an example of <code class="code-inline">inline code</code> within a sentence.</p>
 `;
 
 export default function InlineExample() {

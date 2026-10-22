@@ -1,5 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {Modal} from '../Modal';
+import {lockBodyScroll} from '../../interaction/body-scroll-lock';
 import {clampGalleryIndex, nextGalleryIndex} from './gallery-model';
 import {ImageViewerRenderer, type GalleryImage} from './ImageViewerRenderer';
 import {useImageTransform} from './useImageTransform';
@@ -9,6 +10,10 @@ export interface ImageViewerProps { isOpen: boolean; images: ImageViewerImage[];
 export const ImageViewer = React.forwardRef<HTMLDialogElement, ImageViewerProps>(({isOpen, images, initialIndex = 0, onClose, className = '', id}, ref) => {
     const [currentIndex, setCurrentIndex] = useState(initialIndex);
     const transform = useImageTransform();
+    useEffect(() => {
+        if (!isOpen || images.length === 0) return;
+        return lockBodyScroll();
+    }, [isOpen]);
     useEffect(() => { if (isOpen) setCurrentIndex(clampGalleryIndex(initialIndex, images.length)); transform.reset(); }, [isOpen, initialIndex, images.length]);
     if (!isOpen || images.length === 0) return null;
     const stop = (handler: () => void) => () => handler();

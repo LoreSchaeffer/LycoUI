@@ -22,7 +22,7 @@ export const datePickerPropsData: PropDefinition[] = [
     },
     {
         name: 'variant',
-        type: 'FullVariant | "default"',
+        type: "FullVariant | 'default'",
         typeLink: '/docs/types#full-variant',
         defaultValue: "'primary'",
         description: 'Semantic color variant applied to focus rings, the selected day cell, and the Apply button.',
@@ -68,7 +68,7 @@ export const datePickerPropsData: PropDefinition[] = [
     },
     {
         name: 'validation',
-        type: '"disabled" | "auto" | "valid" | "invalid"',
+        type: "'disabled' | 'auto' | 'valid' | 'invalid'",
         defaultValue: "'disabled'",
         description: 'Controls validation behavior.',
     },
@@ -90,12 +90,12 @@ export const datePickerPropsData: PropDefinition[] = [
 export const timePickerPropsData: PropDefinition[] = [
     {
         name: 'value',
-        type: '{ hours: number; minutes: number } | null',
+        type: 'TimeValue | null',
         description: 'The currently selected time (controlled). hours: 0–23, minutes: 0–59. The input allows manual typing (auto-parsed & validated).',
     },
     {
         name: 'onChange',
-        type: '(time: { hours: number; minutes: number } | null) => void',
+        type: '(time: TimeValue | null) => void',
         description: 'Callback fired when the user selects or clears a time.',
     },
     {
@@ -111,8 +111,13 @@ export const timePickerPropsData: PropDefinition[] = [
         description: 'If true, enables 12-hour format with AM/PM selection.',
     },
     {
+        name: 'locale',
+        type: 'string',
+        description: 'A BCP 47 locale tag used for time formatting.',
+    },
+    {
         name: 'variant',
-        type: 'FullVariant | "default"',
+        type: "FullVariant | 'default'",
         typeLink: '/docs/types#full-variant',
         defaultValue: "'primary'",
         description: 'Semantic color variant applied to focus rings and selected time items.',
@@ -137,7 +142,7 @@ export const timePickerPropsData: PropDefinition[] = [
     },
     {
         name: 'validation',
-        type: '"disabled" | "auto" | "valid" | "invalid"',
+        type: "'disabled' | 'auto' | 'valid' | 'invalid'",
         defaultValue: "'disabled'",
         description: 'Controls validation behavior.',
     },
@@ -175,7 +180,7 @@ export const dateTimePickerPropsData: PropDefinition[] = [
     },
     {
         name: 'variant',
-        type: 'FullVariant | "default"',
+        type: "FullVariant | 'default'",
         typeLink: '/docs/types#full-variant',
         defaultValue: "'primary'",
         description: 'Semantic color variant.',
@@ -226,7 +231,7 @@ export const dateTimePickerPropsData: PropDefinition[] = [
     },
     {
         name: 'validation',
-        type: '"disabled" | "auto" | "valid" | "invalid"',
+        type: "'disabled' | 'auto' | 'valid' | 'invalid'",
         defaultValue: "'disabled'",
         description: 'Controls validation behavior.',
     },

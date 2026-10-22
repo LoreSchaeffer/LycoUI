@@ -7,13 +7,13 @@ export const order = 3;
 
 export const vanillaHtml = `
 <div class="modal hidden" id="scrollModal" tabindex="-1">
-    <div class="modal__dialog modal__dialog--scrollable modal__dialog--centered">
-        <div class="modal__content">
-            <div class="modal__header">...</div>
-            <div class="modal__body">
+    <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">...</div>
+            <div class="modal-body">
                 <!-- Long content here -->
             </div>
-            <div class="modal__footer">...</div>
+            <div class="modal-footer">...</div>
         </div>
     </div>
 </div>

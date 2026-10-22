@@ -6,11 +6,12 @@ export const description = <p>Use the <code>useNotification</code> hook inside a
 export const order = 1;
 
 export const vanillaHtml = `
+<script type="module">import {notification} from "@loreschaeffer/lyco-ui/vanilla"; window.__lycoNotification = notification;</script>
 <!-- Triggering a Notification via Javascript -->
-<button class="btn btn-primary" onclick="LycoUI.notification.show({ message: 'Profile saved successfully!' })">
+<button class="btn btn-primary" onclick="window.__lycoNotification.show({ message: 'Profile saved successfully!' })">
   Show Notification
 </button>
-<button class="btn btn-neutral" onclick="LycoUI.notification.show({ message: 'This stays longer.', duration: 'long', closable: true })">
+<button class="btn btn-neutral" onclick="window.__lycoNotification.show({ message: 'This stays longer.', duration: 'long', closable: true })">
   Show Long
 </button>
 `;

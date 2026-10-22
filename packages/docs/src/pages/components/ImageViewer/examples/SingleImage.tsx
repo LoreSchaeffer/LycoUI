@@ -6,21 +6,21 @@ export const description = 'A basic image viewer displaying a single image. The 
 export const order = 1;
 
 export const vanillaHtml = `
-<button class="button button--primary" data-lyco-toggle="modal" data-lyco-target="#my-viewer-single">
+<button class="btn btn-primary" data-lyco-toggle="modal" data-lyco-target="#my-viewer-single">
   View Image
 </button>
 
 <div class="modal image-viewer" id="my-viewer-single" data-lyco-image-viewer="true" style="display: none;">
-  <div class="image-viewer__container" data-lyco-dismiss="modal">
-    <button class="image-viewer__close" aria-label="Close" data-lyco-dismiss="modal">
+  <div class="image-viewer-container" data-lyco-dismiss="modal">
+    <button class="image-viewer-close" aria-label="Close" data-lyco-dismiss="modal">
       <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
         <line x1="18" y1="6" x2="6" y2="18"></line>
         <line x1="6" y1="6" x2="18" y2="18"></line>
       </svg>
     </button>
 
-    <div class="image-viewer__image-wrapper">
-      <img src="https://picsum.photos/seed/lyco1/800/600" class="image-viewer__image" />
+    <div class="image-viewer-image-wrapper">
+      <img src="https://picsum.photos/seed/lyco1/800/600" class="image-viewer-image" />
     </div>
   </div>
 </div>

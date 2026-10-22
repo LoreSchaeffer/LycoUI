@@ -7,19 +7,19 @@ export const description = "Dropdown items can include icons for better visual s
 export const order = 2;
 
 export const vanillaHtml = `
-<div class="dropdown-menu">
-  <button aria-label="More options" style="background: transparent; border: none; cursor: pointer; padding: 4px;" aria-haspopup="menu" aria-expanded="false" onclick="this.classList.toggle('is-open'); this.nextElementSibling.hidden = !this.nextElementSibling.hidden">
+<div class="dropdown-menu" id="dropdown-icons">
+  <button aria-label="More options" style="background: transparent; border: none; cursor: pointer; padding: 4px;" aria-haspopup="menu" aria-expanded="false" aria-controls="dropdown-icons-menu" onclick="this.classList.toggle('is-open'); this.nextElementSibling.hidden = !this.nextElementSibling.hidden">
     <svg>...</svg>
   </button>
-  <div class="dropdown-menu__content" role="menu" hidden>
-    <div class="dropdown-menu__item" role="menuitem" tabindex="0">
+  <div class="dropdown-menu" id="dropdown-icons-menu" role="menu" hidden>
+    <div class="dropdown-item" role="menuitem" tabindex="0">
       <svg>...</svg> Edit
     </div>
-    <div class="dropdown-menu__item" role="menuitem" tabindex="0">
+    <div class="dropdown-item" role="menuitem" tabindex="0">
       <svg>...</svg> Duplicate
     </div>
-    <div class="dropdown-menu__separator" role="separator"></div>
-    <div class="dropdown-menu__item dropdown-menu__item--destructive" role="menuitem" tabindex="0">
+    <div class="dropdown-divider" role="separator"></div>
+    <div class="dropdown-item dropdown-item-destructive" role="menuitem" tabindex="0">
       <svg>...</svg> Delete
     </div>
   </div>

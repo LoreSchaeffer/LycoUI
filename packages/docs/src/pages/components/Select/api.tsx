@@ -17,13 +17,42 @@ export const selectPropsData: PropDefinition[] = [
         description: 'Callback fired when a new option is selected.'
     },
     {
+        name: 'placeholder',
+        type: 'string',
+        defaultValue: "'Select an option'",
+        description: 'Placeholder displayed when no option is selected.'
+    },
+    {
+        name: 'disabled',
+        type: 'boolean',
+        defaultValue: 'false',
+        description: 'Disables the select.'
+    },
+    {
+        name: 'searchable',
+        type: 'boolean',
+        defaultValue: 'false',
+        description: 'Enables option searching.'
+    },
+    {
+        name: 'allowCustomValues',
+        type: 'boolean',
+        defaultValue: 'false',
+        description: 'Allows values outside the option list.'
+    },
+    {
+        name: 'validate',
+        type: '(value: string | number) => string | null',
+        description: 'Validates the selected value.'
+    },
+    {
         name: 'icon',
-        type: 'ReactNode',
+        type: 'React.ReactNode',
         description: 'Default leading icon displayed when no option is selected or when the selected option lacks an icon.'
     },
     {
         name: 'variant',
-        type: 'FullVariant',
+        type: "FullVariant | 'default'",
         typeLink: '/docs/types#full-variant',
         defaultValue: "'primary'",
         description: 'Applies semantic colors to focus rings and active states.'
@@ -40,17 +69,17 @@ export const selectPropsData: PropDefinition[] = [
 export const selectOptionPropsData: PropDefinition[] = [
     {
         name: 'label',
-        type: 'string',
+        type: 'string | undefined',
         description: 'The visible text for the option.'
     },
     {
         name: 'value',
-        type: 'string | number',
+        type: 'string | number | undefined',
         description: 'The underlying value of the option.'
     },
     {
         name: 'icon',
-        type: 'ReactNode',
+        type: 'React.ReactNode',
         description: 'Optional leading icon for this specific option.'
     },
     {

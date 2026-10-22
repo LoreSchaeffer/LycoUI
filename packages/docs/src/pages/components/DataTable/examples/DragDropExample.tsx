@@ -34,6 +34,12 @@ export const description = (
     </p>
 );
 export const order = 5;
+export const vanillaHtml = `
+<table class="table" data-lyco-datatable data-reorderable="true">
+  <thead><tr><th>No.</th><th>Step Name</th><th>Description</th></tr></thead>
+  <tbody><tr draggable="true"><td>1</td><td>Gather requirements</td><td>Collect specs from stakeholders</td></tr></tbody>
+</table>
+`;
 
 export default function DragDropExample() {
     const [steps, setSteps] = useState(initialSteps);

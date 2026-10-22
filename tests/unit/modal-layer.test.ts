@@ -6,13 +6,16 @@ describe('modal layer', () => {
     const first = document.createElement('dialog');
     const second = document.createElement('dialog');
     document.body.append(first, second);
+    document.documentElement.style.overflow = 'auto';
     const closeFirst = openModalLayer({root: first});
     const closeSecond = openModalLayer({root: second});
     closeFirst();
     expect(document.body.style.overflow).toBe('hidden');
+    expect(document.documentElement.style.overflow).toBe('hidden');
     closeSecond();
     closeSecond();
     expect(document.body.style.overflow).toBe('');
+    expect(document.documentElement.style.overflow).toBe('auto');
   });
 
   it('focuses the requested target and restores focus after close', async () => {

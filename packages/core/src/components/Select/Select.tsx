@@ -1,5 +1,5 @@
 import './Select.scss';
-import {type ChangeEvent, type CSSProperties, forwardRef, type HTMLAttributes, type KeyboardEvent, type ReactNode, useCallback, useEffect, useId, useRef, useState} from 'react';
+import {type ChangeEvent, type CSSProperties, forwardRef, type HTMLAttributes, type KeyboardEvent, type ReactNode, useCallback, useEffect, useId, useLayoutEffect, useRef, useState} from 'react';
 import type {FullVariant, SizeVariant} from '../../types/types.ts';
 import {useSelectState} from './useSelectState';
 import {SelectRenderer} from './SelectRenderer';
@@ -34,15 +34,19 @@ export const Select = forwardRef<HTMLDivElement, SelectProps>((
     const updatePosition = useCallback(() => {
         if (!isOpen || !containerRef.current) return;
         const rect = containerRef.current.getBoundingClientRect();
-        setDropdownStyles({
+        const nextStyles: CSSProperties = {
             position: 'absolute',
             top: `${rect.bottom + window.scrollY + 8}px`, // +8px for var(--spacing-2)
             left: `${rect.left + window.scrollX}px`,
             width: `${rect.width}px`,
             zIndex: 'var(--z-dropdown, 1050)'
-        });
+        };
+        if (listboxRef.current) {
+            Object.assign(listboxRef.current.style, nextStyles);
+        }
+        setDropdownStyles(nextStyles);
     }, [isOpen]);
-    useEffect(() => {
+    useLayoutEffect(() => {
         if (isOpen) {
             updatePosition();
             window.addEventListener('scroll', updatePosition, true);
@@ -116,7 +120,11 @@ export const Select = forwardRef<HTMLDivElement, SelectProps>((
     useEffect(() => {
         if (!isOpen) return;
         const handleOutsideClick = (e: MouseEvent) => {
-            if (containerRef.current && !containerRef.current.contains(e.target as Node)) {
+            if (
+                containerRef.current &&
+                !containerRef.current.contains(e.target as Node) &&
+                !listboxRef.current?.contains(e.target as Node)
+            ) {
                 handleBlurCommit();
                 setIsOpen(false);
             }
@@ -124,7 +132,7 @@ export const Select = forwardRef<HTMLDivElement, SelectProps>((
         document.addEventListener('mousedown', handleOutsideClick);
         return () => document.removeEventListener('mousedown', handleOutsideClick);
     }, [isOpen, handleBlurCommit]);
-    useEffect(() => {
+    useLayoutEffect(() => {
         if (isOpen && focusedIndex >= 0 && listboxRef.current) {
             const focusedEl = listboxRef.current.children[focusedIndex] as HTMLElement;
             if (focusedEl) {

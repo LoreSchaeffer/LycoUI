@@ -3,7 +3,7 @@ import type {PropDefinition} from "../../../components/api-reference/ApiReferenc
 const navbarProps: PropDefinition[] = [
     {
         name: 'variant',
-        type: "'base' | 'dark' | 'light' | 'transparent' | 'FullVariant'",
+        type: "'base' | 'dark' | 'light' | 'transparent' | FullVariant",
         typeLink: '/docs/types/full-variant',
         defaultValue: "'base'",
         description: 'Visual color variant of the navbar.'

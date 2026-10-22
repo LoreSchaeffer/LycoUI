@@ -16,7 +16,7 @@ export const tableProps: PropDefinition[] = [
     {
         name: 'hover',
         type: 'boolean',
-        defaultValue: 'false',
+        defaultValue: 'true',
         description: 'Enables a hover state on table rows within a tbody.',
     },
     {
@@ -45,6 +45,12 @@ export const tableRowProps: PropDefinition[] = [
         type: 'FullVariant',
         typeLink: '/docs/custom-types/full-variant',
         description: 'Applies a contextual color variant to the row.',
+    },
+    {
+        name: 'hover',
+        type: 'boolean',
+        defaultValue: 'false',
+        description: 'Enables hover styling on the row.',
     }
 ];
 
@@ -65,6 +71,11 @@ export const tableCellProps: PropDefinition[] = [
         name: 'as',
         type: "'td' | 'th'",
         description: 'Explicitly sets the underlying HTML element.',
+    },
+    {
+        name: 'scope',
+        type: 'string',
+        description: 'Explicitly sets the table-cell scope attribute.',
     }
 ];
 

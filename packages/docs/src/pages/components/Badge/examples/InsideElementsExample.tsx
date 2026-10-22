@@ -6,10 +6,10 @@ export const order = 3;
 
 export const vanillaHtml = `
 <button class="btn btn-primary">
-  Notifications <span class="badge badge--white badge--pill">4</span>
+  Notifications <span class="badge badge-white badge-pill">4</span>
 </button>
 
-<h2>Heading <span class="badge badge--neutral">New</span></h2>
+<h2>Heading <span class="badge badge-neutral">New</span></h2>
 `;
 
 export default function InsideElementsExample() {

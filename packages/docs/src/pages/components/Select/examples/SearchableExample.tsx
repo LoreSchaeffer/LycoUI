@@ -6,13 +6,13 @@ export const description = 'A select component that allows filtering options. Th
 export const order = 4;
 
 export const vanillaHtml = `
-<div class="select select--md">
-    <div class="select__trigger" tabindex="-1" role="combobox" aria-haspopup="listbox" aria-expanded="false" aria-controls="datalist-example">
-        <div class="select__content">
-            <input type="text" class="select__input" placeholder="Search countries..." list="country-options" role="textbox" />
+<div class="select select-md">
+    <div class="select-trigger" tabindex="-1" role="combobox" aria-haspopup="listbox" aria-expanded="false" aria-controls="datalist-example">
+        <div class="select-content">
+            <input type="text" class="select-input" placeholder="Search countries..." list="country-options" role="textbox" />
         </div>
-        <button type="button" class="select__chevron-btn" tabindex="-1" aria-label="Toggle dropdown">
-            <svg class="select__chevron" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <button type="button" class="select-chevron-btn" tabindex="-1" aria-label="Toggle dropdown">
+            <svg class="select-chevron" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                 <polyline points="6 9 12 15 18 9"></polyline>
             </svg>
         </button>
@@ -26,7 +26,7 @@ export const vanillaHtml = `
     <option value="Germany">Germany</option>
     <option value="France">France</option>
 </datalist>
-<p class="text-sm text-secondary mt-2">Note: For a fully styled Vanilla experience matching the React component, use the <code>data-searchable="true"</code> attribute on a native <code>&lt;select&gt;</code> and let LycoUI initialize it.</p>
+<p class="text-sm text-secondary mt-2">Note: For a fully styled Vanilla experience matching the React component, use the <code>data-searchable="true"</code> attribute on a native <code>&lt;select&gt;</code> and let the library initialize it.</p>
 `;
 
 export default function SearchableExample() {

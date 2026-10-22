@@ -24,7 +24,7 @@ export const vanillaHtml = `
 <div class="mb-4">
   <div class="textarea-wrapper">
     <div class="textarea">
-      <textarea class="textarea__field" placeholder="Write something..."></textarea>
+      <textarea class="textarea-field" placeholder="Write something..."></textarea>
     </div>
   </div>
 </div>
@@ -32,8 +32,8 @@ export const vanillaHtml = `
 <div class="mb-4">
   <div class="textarea-wrapper">
     <div class="textarea">
-      <textarea id="msg-input" class="textarea__field" placeholder="Type your message here"></textarea>
-      <label class="textarea__label" for="msg-input">Your Message</label>
+      <textarea id="msg-input" class="textarea-field" placeholder="Type your message here"></textarea>
+      <label class="textarea-label" for="msg-input">Your Message</label>
     </div>
   </div>
 </div>

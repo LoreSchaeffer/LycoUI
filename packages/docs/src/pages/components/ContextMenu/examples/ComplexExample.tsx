@@ -5,10 +5,14 @@ export const description = <p>This example demonstrates right-clicking an area t
 export const order = 2;
 
 export const vanillaHtml = `
-<!-- In Vanilla JS, attach data-lyco="context-menu" and provide a config ID or use the imperative JS API. -->
-<div class="interactive-zone" oncontextmenu="LycoUI.showContextMenu(event, myMenuConfig)">
+<div class="interactive-zone" data-lyco-context-menu="#context-menu-example">
   Right click me
 </div>
+<ul id="context-menu-example" class="context-menu" role="menu" hidden tabindex="-1">
+  <li class="context-menu-item" role="menuitem">Edit File</li>
+  <li class="context-menu-separator" role="separator"></li>
+  <li class="context-menu-item context-menu-item-danger" role="menuitem">Delete</li>
+</ul>
 `;
 
 function ContextBox() {

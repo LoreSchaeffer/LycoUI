@@ -40,6 +40,12 @@ export const description = (
     </p>
 );
 export const order = 4;
+export const vanillaHtml = `
+<table class="table" data-lyco-datatable data-persist-key="tasks" data-page-size="10">
+  <thead><tr><th>#</th><th>Title</th><th>Priority</th><th>Assignee</th></tr></thead>
+  <tbody><tr><td>1</td><td>Fix login bug</td><td>High</td><td>Alice</td></tr></tbody>
+</table>
+`;
 
 export default function PersistenceExample() {
     const [log, setLog] = useState<string[]>([]);

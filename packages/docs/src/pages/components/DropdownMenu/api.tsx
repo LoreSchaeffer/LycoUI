@@ -2,6 +2,11 @@ import type {PropDefinition} from '../../../components/api-reference/ApiReferenc
 
 export const dropdownMenuPropsData: PropDefinition[] = [
     {
+        name: 'children',
+        type: 'React.ReactNode',
+        description: 'The trigger, content, and other dropdown menu elements.'
+    },
+    {
         name: 'isOpen',
         type: 'boolean',
         description: 'The controlled open state of the dropdown menu.'
@@ -14,6 +19,11 @@ export const dropdownMenuPropsData: PropDefinition[] = [
 ];
 
 export const dropdownMenuItemPropsData: PropDefinition[] = [
+    {
+        name: 'children',
+        type: 'React.ReactNode',
+        description: 'The visible content of the menu item.'
+    },
     {
         name: 'disabled',
         type: 'boolean',
@@ -30,6 +40,11 @@ export const dropdownMenuItemPropsData: PropDefinition[] = [
 
 export const dropdownMenuTriggerPropsData: PropDefinition[] = [
     {
+        name: 'children',
+        type: 'React.ReactNode',
+        description: 'The trigger content, or the element to clone when asChild is true.'
+    },
+    {
         name: 'asChild',
         type: 'boolean',
         defaultValue: 'false',
@@ -37,8 +52,34 @@ export const dropdownMenuTriggerPropsData: PropDefinition[] = [
     }
 ];
 
+export const dropdownMenuContentPropsData: PropDefinition[] = [
+    {
+        name: 'children',
+        type: 'React.ReactNode',
+        description: 'The menu items rendered inside the portalled menu surface.'
+    }
+];
+
+export const dropdownMenuSeparatorPropsData: PropDefinition[] = [];
+
+export const dropdownMenuSubMenuPropsData: PropDefinition[] = [
+    {
+        name: 'title',
+        type: 'React.ReactNode',
+        description: 'The content of the submenu trigger.'
+    },
+    {
+        name: 'children',
+        type: 'React.ReactNode',
+        description: 'The items rendered inside the submenu.'
+    }
+];
+
 export const apiConfig = [
     {name: 'DropdownMenu Props', data: dropdownMenuPropsData},
     {name: 'DropdownMenuTrigger Props', data: dropdownMenuTriggerPropsData},
-    {name: 'DropdownMenuItem Props', data: dropdownMenuItemPropsData}
+    {name: 'DropdownMenuItem Props', data: dropdownMenuItemPropsData},
+    {name: 'DropdownMenuContent Props', data: dropdownMenuContentPropsData},
+    {name: 'DropdownMenuSeparator Props', data: dropdownMenuSeparatorPropsData},
+    {name: 'DropdownMenuSubMenu Props', data: dropdownMenuSubMenuPropsData}
 ];

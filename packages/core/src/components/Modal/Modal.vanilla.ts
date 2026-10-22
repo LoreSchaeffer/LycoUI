@@ -69,6 +69,8 @@ export class LycoModalController extends BaseController {
         this._onBackdropClick = (e: MouseEvent) => this.handleBackdropClick(e);
         this._onCloseClick = (e: MouseEvent) => {
             e.preventDefault();
+            const target = e.currentTarget as HTMLElement;
+            if (!target.matches('button, a, input, select, textarea, summary') && e.target !== target) return;
             this.hide();
         };
 

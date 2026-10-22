@@ -25,8 +25,25 @@ export function formatDateString(date: Date, format: string, locale?: string): s
 
 export function parseDateString(value: string, format: string): Date | null {
   if (['short', 'medium', 'long', 'full'].includes(format)) {
+    const numericParts = value.match(/\d+/g) ?? [];
+    const hasFourDigitYear = numericParts.some(part => /^\d{4}$/.test(part));
+    const hasCompleteDateParts = numericParts.length >= 3 || (numericParts.length >= 2 && /[a-zA-Z]/.test(value));
+    if (!hasFourDigitYear || !hasCompleteDateParts) return null;
     const date = new Date(value);
-    return Number.isNaN(date.getTime()) ? null : date;
+    if (Number.isNaN(date.getTime())) return null;
+
+    const yearIndex = numericParts.findIndex(part => /^\d{4}$/.test(part));
+    const dayPart = numericParts.length >= 3
+      ? numericParts[yearIndex === 0 ? 2 : 1]
+      : numericParts.find((_, index) => index !== yearIndex);
+    if (!dayPart || date.getFullYear() !== Number(numericParts[yearIndex]) || date.getDate() !== Number(dayPart)) return null;
+
+    if (numericParts.length >= 3) {
+      const monthPart = yearIndex === 0 ? numericParts[1] : numericParts[0];
+      if (date.getMonth() + 1 !== Number(monthPart)) return null;
+    }
+
+    return date;
   }
   const pattern = format.replace(/[.*+?^${}()|[\]\\]/g, '\\$&').replace('yyyy', '(\\d{4})').replace('MM', '(\\d{1,2})').replace('dd', '(\\d{1,2})');
   const match = new RegExp(`^${pattern}$`).exec(value);

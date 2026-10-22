@@ -2,20 +2,26 @@ import type {PropDefinition} from "../../../components/api-reference/ApiReferenc
 
 export const tabsProps: PropDefinition[] = [
     {
-        name: 'defaultActiveKey',
+        name: 'defaultValue',
         type: 'string',
         defaultValue: "''",
         description: 'The key of the tab that should be active by default.',
     },
     {
-        name: 'activeKey',
+        name: 'value',
         type: 'string',
         defaultValue: 'undefined',
         description: 'The key of the active tab (controlled mode).',
     },
     {
+        name: 'color',
+        type: 'SemanticVariant',
+        defaultValue: "'primary'",
+        description: 'Color variant for the active tab indicator.',
+    },
+    {
         name: 'onChange',
-        type: '(key: string) => void',
+        type: '(value: string) => void',
         defaultValue: 'undefined',
         description: 'Callback fired when the active tab changes.',
     }
@@ -23,7 +29,7 @@ export const tabsProps: PropDefinition[] = [
 
 export const tabTriggerProps: PropDefinition[] = [
     {
-        name: 'eventKey',
+        name: 'value',
         type: 'string',
         defaultValue: 'undefined',
         description: 'The unique key identifying this tab.',
@@ -38,7 +44,7 @@ export const tabTriggerProps: PropDefinition[] = [
 
 export const tabContentProps: PropDefinition[] = [
     {
-        name: 'eventKey',
+        name: 'value',
         type: 'string',
         defaultValue: 'undefined',
         description: 'The unique key linking this content to its trigger.',

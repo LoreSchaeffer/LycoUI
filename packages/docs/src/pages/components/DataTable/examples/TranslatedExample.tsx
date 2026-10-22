@@ -17,10 +17,10 @@ interface User {
 }
 
 const mockUsers: User[] = [
-    {id: 1, name: 'Lorenzo Schaeffer', role: 'Admin'},
+    {id: 1, name: 'Riccardo Verdi', role: 'Admin'},
     {id: 2, name: 'Mario Rossi', role: 'Editor'},
     {id: 3, name: 'Giulia Bianchi', role: 'Viewer'},
-    {id: 4, name: 'Luca Verdi', role: 'Editor'},
+    {id: 4, name: 'Luca Rosa', role: 'Editor'},
     {id: 5, name: 'Anna Neri', role: 'Viewer'},
     {id: 6, name: 'Marco Gialli', role: 'Viewer'},
     {id: 7, name: 'Sofia Viola', role: 'Admin'},

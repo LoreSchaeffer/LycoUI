@@ -7,7 +7,7 @@ export const order = 4;
 
 export const vanillaHtml = `
 <!-- In Vanilla JS, dragging the .sidebar-resizer updates --sidebar-width -->
-<aside class="sidebar sidebar--fixed" style="position: relative; height: 300px;">
+<aside class="sidebar sidebar-fixed" style="position: relative; height: 300px;">
   <div class="sidebar-content">
     <ul class="sidebar-nav">
       <li class="sidebar-item">

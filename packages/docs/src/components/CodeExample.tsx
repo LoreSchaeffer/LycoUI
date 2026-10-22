@@ -5,6 +5,7 @@ import clsx from 'clsx';
 import {renderToStaticMarkup} from "react-dom/server";
 import {formatHtml} from "../utils/html-formatter.ts";
 import {formatReact} from "../utils/react-formatter.ts";
+import {dedent} from "../utils/code-formatter.ts";
 import {Code, Tabs, TabsList, TabTrigger} from '@loreschaeffer/lyco-ui';
 
 export interface CodeExampleProps {
@@ -41,7 +42,7 @@ export const CodeExample: React.FC<CodeExampleProps> = ({
         return `<!-- ${safeHtmlHint} -->\n${beautifiedHtml}`;
     }, [children, htmlHint, vanillaHtml]);
 
-    const activeCode = activeTab === 'react' ? formatReact(reactCode).trim() : generatedHtml;
+    const activeCode = dedent(activeTab === 'react' ? formatReact(reactCode) : generatedHtml);
 
     const handleCopy = useCallback(async () => {
         try {

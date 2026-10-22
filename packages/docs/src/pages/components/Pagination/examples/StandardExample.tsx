@@ -6,7 +6,7 @@ export const description = <p>The standard pagination variant provides a list of
 export const order = 1;
 
 export const vanillaHtml = `
-<!-- Notice: For Vanilla, you only need to write the container. LycoUI JS builds the buttons automatically. -->
+<!-- Notice: For Vanilla, you only need to write the container. the LycoUI library builds the btns automatically. -->
 <nav class="pagination-custom" 
      data-variant="standard" 
      data-total-pages="10" 

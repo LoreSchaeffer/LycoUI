@@ -1,5 +1,6 @@
 interface LycoImageViewerElement extends HTMLElement {
     lycoImageViewer?: LycoImageViewerController;
+    lycoModal?: {hide(): void};
 }
 
 export function initLycoImageViewers(root: ParentNode = document): void {
@@ -20,6 +21,7 @@ export function initLycoImageViewers(root: ParentNode = document): void {
 export class LycoImageViewerController extends BaseController {
     private readonly viewer: HTMLElement;
     private readonly wrapper: HTMLElement | null;
+    private readonly backdrop: HTMLElement | null;
     private readonly mainImage: HTMLImageElement | null;
     private readonly prevBtn: HTMLButtonElement | null;
     private readonly nextBtn: HTMLButtonElement | null;
@@ -37,6 +39,7 @@ export class LycoImageViewerController extends BaseController {
     private readonly _onPointerUp: (e: PointerEvent) => void;
     private readonly _onPrevClick: (e: MouseEvent) => void;
     private readonly _onNextClick: (e: MouseEvent) => void;
+    private readonly _onBackdropClick: (e: MouseEvent) => void;
     private readonly _thumbnailListeners: ((e: MouseEvent) => void)[] = [];
     private readonly observer: MutationObserver;
 
@@ -44,6 +47,7 @@ export class LycoImageViewerController extends BaseController {
         super();
         this.viewer = viewerElement;
         this.wrapper = this.viewer.querySelector('.image-viewer-image-wrapper');
+        this.backdrop = this.viewer.querySelector('.image-viewer-container');
         this.mainImage = this.viewer.querySelector('.image-viewer-image');
 
         this.prevBtn = this.viewer.querySelector('.image-viewer-nav-prev');
@@ -61,6 +65,11 @@ export class LycoImageViewerController extends BaseController {
         this._onNextClick = (e: MouseEvent) => {
             e.stopPropagation();
             this.navigate(1);
+        };
+        this._onBackdropClick = (e: MouseEvent) => {
+            if (e.target === e.currentTarget) {
+                (this.viewer as LycoImageViewerElement).lycoModal?.hide();
+            }
         };
 
         // Determine initial index
@@ -87,6 +96,7 @@ export class LycoImageViewerController extends BaseController {
     }
 
     private bindEvents(): void {
+        if (this.backdrop) this.listen(this.backdrop, 'click', this._onBackdropClick as EventListener);
         if (this.prevBtn) this.listen(this.prevBtn, 'click', this._onPrevClick as EventListener);
         if (this.nextBtn) this.listen(this.nextBtn, 'click', this._onNextClick as EventListener);
 

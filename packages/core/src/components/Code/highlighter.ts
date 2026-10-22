@@ -5,7 +5,18 @@ const lycoDarkTheme: ThemeRegistrationRaw = {
     name: 'lyco-dark',
     type: 'dark',
     colors: {'editor.background': 'transparent', 'editor.foreground': 'var(--color-text-primary)'},
-    settings: [],
+    settings: [
+        {settings: {foreground: 'var(--color-text-primary)'}},
+        {scope: ['comment', 'punctuation.definition.comment'], settings: {foreground: '#6A9955'}},
+        {scope: ['keyword', 'storage', 'storage.type', 'storage.modifier'], settings: {foreground: '#569CD6'}},
+        {scope: ['entity.name.function', 'support.function'], settings: {foreground: '#DCDCAA'}},
+        {scope: ['entity.name.type', 'support.type', 'support.class'], settings: {foreground: '#4EC9B0'}},
+        {scope: ['string', 'constant.other.symbol'], settings: {foreground: '#CE9178'}},
+        {scope: ['constant.numeric', 'constant.language'], settings: {foreground: '#B5CEA8'}},
+        {scope: ['variable', 'meta.definition.variable'], settings: {foreground: '#9CDCFE'}},
+        {scope: ['entity.name.tag'], settings: {foreground: '#569CD6'}},
+        {scope: ['entity.other.attribute-name'], settings: {foreground: '#9CDCFE'}},
+    ],
 };
 
 let highlighterPromise: Promise<import('shiki/core').HighlighterCore> | null = null;

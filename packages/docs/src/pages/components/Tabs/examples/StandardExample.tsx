@@ -6,23 +6,23 @@ export const order = 1;
 
 export const vanillaHtml = `
 <div class="tabs" data-lyco-tabs>
-  <div class="tabs__list" role="tablist">
-    <button type="button" class="tabs__trigger is-active" role="tab" aria-selected="true" data-lyco-tab-value="overview">Overview</button>
-    <button type="button" class="tabs__trigger" role="tab" aria-selected="false" data-lyco-tab-value="integrations">Integrations</button>
-    <button type="button" class="tabs__trigger" role="tab" aria-selected="false" data-lyco-tab-value="billing">Billing</button>
-    <button type="button" class="tabs__trigger" role="tab" aria-selected="false" data-lyco-tab-value="security">Security</button>
+  <div class="tabs-list" role="tablist">
+    <button type="button" class="tabs-trigger is-active" role="tab" aria-selected="true" data-lyco-tab-value="overview">Overview</button>
+    <button type="button" class="tabs-trigger" role="tab" aria-selected="false" data-lyco-tab-value="integrations">Integrations</button>
+    <button type="button" class="tabs-trigger" role="tab" aria-selected="false" data-lyco-tab-value="billing">Billing</button>
+    <button type="button" class="tabs-trigger" role="tab" aria-selected="false" data-lyco-tab-value="security">Security</button>
   </div>
   <div style="padding: var(--spacing-4) 0">
-    <div class="tabs__content" role="tabpanel" data-lyco-tab-value="overview">
+    <div class="tabs-content" role="tabpanel" data-lyco-tab-value="overview">
       <p style="margin: 0">Welcome to your dashboard overview. Here you can see a high-level summary of your project's performance.</p>
     </div>
-    <div class="tabs__content" role="tabpanel" data-lyco-tab-value="integrations" hidden aria-hidden="true" style="display: none;">
+    <div class="tabs-content" role="tabpanel" data-lyco-tab-value="integrations" hidden aria-hidden="true" style="display: none;">
       <p style="margin: 0">Manage your connected third-party apps and webhooks.</p>
     </div>
-    <div class="tabs__content" role="tabpanel" data-lyco-tab-value="billing" hidden aria-hidden="true" style="display: none;">
+    <div class="tabs-content" role="tabpanel" data-lyco-tab-value="billing" hidden aria-hidden="true" style="display: none;">
       <p style="margin: 0">View your current subscription plan and payment history.</p>
     </div>
-    <div class="tabs__content" role="tabpanel" data-lyco-tab-value="security" hidden aria-hidden="true" style="display: none;">
+    <div class="tabs-content" role="tabpanel" data-lyco-tab-value="security" hidden aria-hidden="true" style="display: none;">
       <p style="margin: 0">Configure two-factor authentication and review security logs.</p>
     </div>
   </div>

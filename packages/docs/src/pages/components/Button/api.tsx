@@ -2,6 +2,11 @@ import type {PropDefinition} from "../../../components/api-reference/ApiReferenc
 
 export const buttonPropsData: PropDefinition[] = [
     {
+        name: 'children',
+        type: 'React.ReactNode',
+        description: 'The content of the button.'
+    },
+    {
         name: 'variant',
         type: 'FullVariant',
         typeLink: '/docs/types#full-variant',
@@ -54,22 +59,41 @@ export const buttonPropsData: PropDefinition[] = [
     },
     {
         name: 'icon',
-        type: 'ReactNode',
+        type: 'React.ReactNode',
         description: 'Standalone icon for square icon-only buttons. Disables children rendering.'
     },
     {
         name: 'iconStart',
-        type: 'ReactNode',
+        type: 'React.ReactNode',
         description: 'Icon element positioned before the text content.'
     },
     {
         name: 'iconEnd',
-        type: 'ReactNode',
+        type: 'React.ReactNode',
         description: 'Icon element positioned after the text content.'
+    },
+    {
+        name: 'spinnerType',
+        type: 'SpinnerType',
+        typeLink: '/docs/types#spinner-type',
+        defaultValue: "'classic'",
+        description: 'The visual style of the loading spinner.'
+    },
+    {
+        name: 'flat',
+        type: 'boolean',
+        defaultValue: 'false',
+        description: 'Renders the button without elevation or shadow.'
     }
 ];
 
 export const buttonGroupPropsData: PropDefinition[] = [
+    {
+        name: 'children',
+        type: 'React.ReactNode',
+        required: true,
+        description: 'The buttons rendered in the group.'
+    },
     {
         name: 'orientation',
         type: 'Orientation',

@@ -6,20 +6,20 @@ export const description = <p>Customize the active color using the <code>variant
 export const order = 2;
 
 export const vanillaHtml = `
-<label for="r-info" class="radio radio--info">
-    <input type="radio" id="r-info" name="notification-pref-info" class="radio__input" checked>
-    <span class="radio__control" aria-hidden="true"></span>
-    <span class="radio__label">Email Notifications (Info)</span>
+<label for="r-info" class="radio radio-info">
+    <input type="radio" id="r-info" name="notification-pref-info" class="radio-input" checked>
+    <span class="radio-control" aria-hidden="true"></span>
+    <span class="radio-label">Email Notifications (Info)</span>
 </label>
-<label for="r-success" class="radio radio--success">
-    <input type="radio" id="r-success" name="notification-pref-success" class="radio__input" checked>
-    <span class="radio__control" aria-hidden="true"></span>
-    <span class="radio__label">SMS Alerts (Success)</span>
+<label for="r-success" class="radio radio-success">
+    <input type="radio" id="r-success" name="notification-pref-success" class="radio-input" checked>
+    <span class="radio-control" aria-hidden="true"></span>
+    <span class="radio-label">SMS Alerts (Success)</span>
 </label>
-<label for="r-danger" class="radio radio--danger">
-    <input type="radio" id="r-danger" name="notification-pref-danger" class="radio__input" checked>
-    <span class="radio__control" aria-hidden="true"></span>
-    <span class="radio__label">Do Not Disturb (Danger)</span>
+<label for="r-danger" class="radio radio-danger">
+    <input type="radio" id="r-danger" name="notification-pref-danger" class="radio-input" checked>
+    <span class="radio-control" aria-hidden="true"></span>
+    <span class="radio-label">Do Not Disturb (Danger)</span>
 </label>
 `;
 

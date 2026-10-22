@@ -6,30 +6,30 @@ export const description = 'Use the `compact` and `hideNumbers` props for a slee
 export const order = 7;
 
 export const vanillaHtml = `
-<ol class="stepper stepper--horizontal stepper--compact">
+<ol class="stepper stepper-horizontal stepper-compact">
   <li class="step is-completed">
     <span class="hidden">Completed: </span>
-    <div class="step__header">
-      <div class="step__icon"></div>
+    <div class="step-header">
+      <div class="step-icon"></div>
     </div>
-    <div class="step__content">
-      <div class="step__title">Cart</div>
+    <div class="step-content">
+      <div class="step-title">Cart</div>
     </div>
   </li>
   <li class="step is-active" aria-current="step">
-    <div class="step__header">
-      <div class="step__icon"></div>
+    <div class="step-header">
+      <div class="step-icon"></div>
     </div>
-    <div class="step__content">
-      <div class="step__title">Billing</div>
+    <div class="step-content">
+      <div class="step-title">Billing</div>
     </div>
   </li>
   <li class="step">
-    <div class="step__header">
-      <div class="step__icon"></div>
+    <div class="step-header">
+      <div class="step-icon"></div>
     </div>
-    <div class="step__content">
-      <div class="step__title">Done</div>
+    <div class="step-content">
+      <div class="step-title">Done</div>
     </div>
   </li>
 </ol>

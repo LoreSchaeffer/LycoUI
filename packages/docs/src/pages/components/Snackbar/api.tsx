@@ -3,7 +3,7 @@ import type {PropDefinition} from "../../../components/api-reference/ApiReferenc
 export const snackbarOptionsProps: PropDefinition[] = [
     {
         name: 'message',
-        type: 'ReactNode | string',
+        type: 'React.ReactNode',
         description: 'The content of the Snackbar.'
     },
     {
@@ -15,7 +15,7 @@ export const snackbarOptionsProps: PropDefinition[] = [
     },
     {
         name: 'icon',
-        type: 'ReactNode',
+        type: 'React.ReactNode',
         description: 'An optional icon to display before the message.'
     },
     {

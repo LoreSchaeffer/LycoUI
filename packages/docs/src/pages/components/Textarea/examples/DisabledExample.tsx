@@ -29,8 +29,8 @@ export const vanillaHtml = `
 <div class="mb-4">
   <div class="textarea-wrapper">
     <div class="textarea is-disabled is-filled">
-      <textarea id="disabled-input" class="textarea__field" disabled>You cannot edit or focus me.</textarea>
-      <label class="textarea__label" for="disabled-input">Disabled Textarea</label>
+      <textarea id="disabled-input" class="textarea-field" disabled>You cannot edit or focus me.</textarea>
+      <label class="textarea-label" for="disabled-input">Disabled Textarea</label>
     </div>
   </div>
 </div>
@@ -38,8 +38,8 @@ export const vanillaHtml = `
 <div class="mb-4">
   <div class="textarea-wrapper">
     <div class="textarea is-readonly is-filled">
-      <textarea id="readonly-input" class="textarea__field" readonly>You can focus and copy me, but not edit.</textarea>
-      <label class="textarea__label" for="readonly-input">Readonly Textarea</label>
+      <textarea id="readonly-input" class="textarea-field" readonly>You can focus and copy me, but not edit.</textarea>
+      <label class="textarea-label" for="readonly-input">Readonly Textarea</label>
     </div>
   </div>
 </div>

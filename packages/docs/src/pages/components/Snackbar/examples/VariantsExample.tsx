@@ -5,11 +5,11 @@ export const description = <p>Snackbars support semantic variants that apply a c
 export const order = 2;
 
 export const vanillaHtml = `
-<div class="snackbar snackbar--success has-icon" role="status">
-  <span class="snackbar__icon">
+<div class="snackbar snackbar-success has-icon" role="status">
+  <span class="snackbar-icon">
     <!-- SVG Icon -->
   </span>
-  <div class="snackbar__content">Successfully connected to database.</div>
+  <div class="snackbar-content">Successfully connected to database.</div>
 </div>
 `;
 

@@ -15,7 +15,7 @@ export const timelinePropsData: PropDefinition[] = [
     },
     {
         name: 'children',
-        type: 'ReactNode',
+        type: 'React.ReactNode',
         description: 'The `TimelineItem` components to be rendered inside the timeline.'
     }
 ];
@@ -23,17 +23,17 @@ export const timelinePropsData: PropDefinition[] = [
 export const timelineItemPropsData: PropDefinition[] = [
     {
         name: 'title',
-        type: 'ReactNode',
+        type: 'React.ReactNode',
         description: 'The main title or content of the timeline event.'
     },
     {
         name: 'time',
-        type: 'ReactNode',
+        type: 'React.ReactNode',
         description: 'An optional timestamp or date for the event.'
     },
     {
         name: 'icon',
-        type: 'ReactNode',
+        type: 'React.ReactNode',
         description: 'An optional custom icon to override the default circular indicator.'
     },
     {

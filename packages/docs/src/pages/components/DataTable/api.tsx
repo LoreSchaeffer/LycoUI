@@ -41,7 +41,7 @@ export const dataTableProps: PropDefinition[] = [
     },
     {
         name: 'defaultSortDirection',
-        type: "'asc' | 'desc'",
+        type: 'SortDirection',
         defaultValue: "'asc'",
         description: 'Initial sort direction.',
     },
@@ -86,7 +86,7 @@ export const dataTableProps: PropDefinition[] = [
     },
     {
         name: 'localization',
-        type: '{ rowsPerPage?: string, showingResults?: (from, to, total) => string }',
+        type: '{ rowsPerPage?: string; showingResults?: (from: number, to: number, total: number) => string; }',
         description: 'Override default English text strings for internationalization support.',
     },
     {
@@ -113,17 +113,17 @@ export const dataTableProps: PropDefinition[] = [
     },
     {
         name: 'onRowClick',
-        type: '(event: MouseEvent, row: T, index: number) => void',
+        type: '(event: React.MouseEvent, row: T, index: number) => void',
         description: 'Fires when a row is clicked. Adds a pointer cursor to rows.',
     },
     {
         name: 'onRowContextMenu',
-        type: '(event: MouseEvent, row: T, index: number) => void',
+        type: '(event: React.MouseEvent, row: T, index: number) => void',
         description: 'Fires when a row is right-clicked.',
     },
     {
         name: 'onRowReorder',
-        type: '(sourceIndex: number, destIndex: number) => void',
+        type: '(sourceIndex: number, destinationIndex: number) => void',
         description: 'Enables drag-and-drop row reordering. When provided, pagination and sorting are disabled. Receives the drag source and destination indices.',
     },
     {
@@ -216,7 +216,7 @@ export const dataTableColumnProps: PropDefinition[] = [
     },
     {
         name: 'render',
-        type: '(row: T, index: number) => ReactNode',
+        type: '(row: T, rowIndex: number) => React.ReactNode',
         description: 'Custom cell renderer. Overrides the default display of row[id].',
     },
     {

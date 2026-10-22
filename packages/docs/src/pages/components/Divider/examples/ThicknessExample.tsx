@@ -7,13 +7,13 @@ export const order = 5;
 export const vanillaHtml = `
 <div style="display: flex; flex-direction: column; width: 100%; text-align: center; gap: var(--spacing-4);">
   <small class="text-muted">1px (Default)</small>
-  <hr role="separator" aria-orientation="horizontal" class="divider divider--horizontal divider--spacing-none divider--length-full" />
+  <hr role="separator" aria-orientation="horizontal" class="divider divider-horizontal divider-spacing-none divider-length-full" />
   
   <small class="text-muted">2px</small>
-  <hr role="separator" aria-orientation="horizontal" class="divider divider--horizontal divider--spacing-none divider--length-full" style="--divider-thickness: 2px;" />
+  <hr role="separator" aria-orientation="horizontal" class="divider divider-horizontal divider-spacing-none divider-length-full" style="--divider-thickness: 2px;" />
   
   <small class="text-muted">4px</small>
-  <hr role="separator" aria-orientation="horizontal" class="divider divider--horizontal divider--spacing-none divider--length-full" style="--divider-thickness: 4px;" />
+  <hr role="separator" aria-orientation="horizontal" class="divider divider-horizontal divider-spacing-none divider-length-full" style="--divider-thickness: 4px;" />
 </div>
 `;
 

@@ -7,12 +7,12 @@ export const order = 2;
 
 export const vanillaHtml = `
 <!-- Trigger Buttons -->
-<button class="button button--primary" data-lyco-toggle="modal" data-lyco-target="#smallModal">Small</button>
-<button class="button button--primary" data-lyco-toggle="modal" data-lyco-target="#largeModal">Large</button>
+<button class="btn btn-primary" data-lyco-toggle="modal" data-lyco-target="#smallModal">Small</button>
+<button class="btn btn-primary" data-lyco-toggle="modal" data-lyco-target="#largeModal">Large</button>
 
 <!-- Small Modal -->
 <div class="modal hidden" id="smallModal" tabindex="-1">
-    <div class="modal__dialog modal__dialog--sm modal__dialog--centered">
+    <div class="modal-dialog modal-dialog-sm modal-dialog-centered">
         <!-- content -->
     </div>
 </div>

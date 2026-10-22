@@ -19,12 +19,18 @@ export const alertDialogProps: PropDefinition[] = [
     },
     {
         name: 'children',
-        type: 'ReactNode',
+        type: 'React.ReactNode',
         description: 'The content of the AlertDialog, including Trigger and Content.'
     }
 ];
 
 export const alertDialogTriggerProps: PropDefinition[] = [
+    {
+        name: 'children',
+        type: 'React.ReactElement',
+        required: true,
+        description: 'The trigger element rendered by the dialog.'
+    },
     {
         name: 'asChild',
         type: 'boolean',
@@ -34,6 +40,12 @@ export const alertDialogTriggerProps: PropDefinition[] = [
 ];
 
 export const alertDialogContentProps: PropDefinition[] = [
+    {
+        name: 'children',
+        type: 'React.ReactNode',
+        required: true,
+        description: 'The content rendered inside the alert dialog.'
+    },
     {
         name: 'size',
         type: "'sm' | 'md' | 'lg' | 'xl'",

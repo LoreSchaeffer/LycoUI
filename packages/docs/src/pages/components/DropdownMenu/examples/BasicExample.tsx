@@ -6,16 +6,16 @@ export const description = "A simple dropdown menu demonstrating standard intera
 export const order = 1;
 
 export const vanillaHtml = `
-<div class="dropdown-menu">
+<div class="dropdown-menu" id="dropdown-basic">
   <!-- Here the trigger is any custom element (like our Button) -->
-  <button class="button button--primary button--md" aria-haspopup="menu" aria-expanded="false" onclick="this.classList.toggle('is-open'); this.nextElementSibling.hidden = !this.nextElementSibling.hidden">
+  <button class="btn btn-primary btn-md" aria-haspopup="menu" aria-expanded="false" aria-controls="dropdown-basic-menu" onclick="this.classList.toggle('is-open'); this.nextElementSibling.hidden = !this.nextElementSibling.hidden">
     Options
   </button>
-  <div class="dropdown-menu__content" role="menu" hidden>
-    <div class="dropdown-menu__item" role="menuitem" tabindex="0">Profile</div>
-    <div class="dropdown-menu__item" role="menuitem" tabindex="0">Settings</div>
-    <div class="dropdown-menu__separator" role="separator"></div>
-    <div class="dropdown-menu__item" role="menuitem" tabindex="0">Logout</div>
+  <div class="dropdown-menu" id="dropdown-basic-menu" role="menu" hidden>
+    <div class="dropdown-item" role="menuitem" tabindex="0">Profile</div>
+    <div class="dropdown-item" role="menuitem" tabindex="0">Settings</div>
+    <div class="dropdown-divider" role="separator"></div>
+    <div class="dropdown-item" role="menuitem" tabindex="0">Logout</div>
   </div>
 </div>
 `;

@@ -10,7 +10,7 @@ export const vanillaHtml = `
     <p class="mb-0">Block A</p>
   </div>
   
-  <hr role="separator" aria-orientation="horizontal" class="divider divider--horizontal divider--spacing-lg divider--length-full" />
+  <hr role="separator" aria-orientation="horizontal" class="divider divider-horizontal divider-spacing-lg divider-length-full" />
   
   <div style="background: var(--surface-elevated); padding: var(--spacing-4); border-radius: var(--radius-md);">
     <p class="mb-0">Block B</p>

@@ -9,24 +9,24 @@ export const vanillaHtml = `
 <div class="row">
   <div class="col-12">
     <div class="card">
-      <div class="card__body">
+      <div class="card-body">
         <div style="display: flex; justify-content: center; align-items: center; min-height: 400px; padding: var(--spacing-8) 0; width: 100%;">
           <div style="display: grid; grid-template-columns: auto auto auto; grid-template-rows: auto auto auto; gap: var(--spacing-4); justify-items: center; align-items: center; width: max-content;">
             
             <div style="grid-column: 2; grid-row: 1;">
-              <button type="button" class="btn btn--outline" data-lyco-tooltip="Save document &lt;span style='opacity:0.6; font-size:0.85em; margin-left:var(--spacing-2)'&gt;⌘S&lt;/span&gt;" data-lyco-tooltip-position="top">Save Action</button>
+              <button type="button" class="btn btn-outline" data-lyco-tooltip="Save document &lt;span style='opacity:0.6; font-size:0.85em; margin-left:var(--spacing-2)'&gt;⌘S&lt;/span&gt;" data-lyco-tooltip-position="top">Save Action</button>
             </div>
             
             <div style="grid-column: 1; grid-row: 2;">
-              <button type="button" class="btn btn--outline" data-lyco-tooltip="Tooltip on left" data-lyco-tooltip-position="left">Left</button>
+              <button type="button" class="btn btn-outline" data-lyco-tooltip="Tooltip on left" data-lyco-tooltip-position="left">Left</button>
             </div>
             
             <div style="grid-column: 3; grid-row: 2;">
-              <button type="button" class="btn btn--outline" data-lyco-tooltip="Tooltip on right" data-lyco-tooltip-position="right">Right</button>
+              <button type="button" class="btn btn-outline" data-lyco-tooltip="Tooltip on right" data-lyco-tooltip-position="right">Right</button>
             </div>
             
             <div style="grid-column: 2; grid-row: 3;">
-              <button type="button" class="btn btn--primary" data-lyco-tooltip="This action cannot be undone" data-lyco-tooltip-position="bottom">
+              <button type="button" class="btn btn-primary" data-lyco-tooltip="This action cannot be undone" data-lyco-tooltip-position="bottom">
                 <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right: var(--spacing-2); vertical-align: text-bottom;">
                   <circle cx="12" cy="12" r="10"></circle>
                   <line x1="12" y1="8" x2="12" y2="12"></line>

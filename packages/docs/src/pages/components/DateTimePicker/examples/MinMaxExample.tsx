@@ -7,8 +7,8 @@ export const order = 6;
 
 export const vanillaHtml = `
 <div class="datepicker">
-  <div class="datepicker__trigger" data-lyco-datepicker data-min-date="2026-09-01" data-max-date="2026-09-30">
-    <div class="datepicker__icon">
+  <div class="datepicker-trigger" data-lyco-datepicker data-min-date="2026-09-01" data-max-date="2026-09-30">
+    <div class="datepicker-icon">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
         <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
         <line x1="16" y1="2" x2="16" y2="6"></line>
@@ -16,7 +16,7 @@ export const vanillaHtml = `
         <line x1="3" y1="10" x2="21" y2="10"></line>
       </svg>
     </div>
-    <input type="text" class="datepicker__input" placeholder="Select date..." />
+    <input type="text" class="datepicker-input" placeholder="Select date..." />
   </div>
 </div>
 `;

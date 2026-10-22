@@ -6,8 +6,8 @@ export const order = 1;
 
 export const vanillaHtml = `
 <div class="snackbar-stack">
-  <div class="snackbar snackbar--neutral" role="status">
-    <div class="snackbar__content">Your preferences have been saved.</div>
+  <div class="snackbar snackbar-neutral" role="status">
+    <div class="snackbar-content">Your preferences have been saved.</div>
   </div>
 </div>
 `;

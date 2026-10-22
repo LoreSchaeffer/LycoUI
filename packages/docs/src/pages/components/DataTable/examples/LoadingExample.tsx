@@ -20,6 +20,11 @@ export const description = (
     </p>
 );
 export const order = 3;
+export const vanillaHtml = `
+<table class="table" data-lyco-datatable data-loading="true">
+  <thead><tr><th>#</th><th>Name</th><th>Value</th></tr></thead>
+</table>
+`;
 
 export default function LoadingExample() {
     return (

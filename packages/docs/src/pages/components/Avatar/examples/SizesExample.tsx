@@ -6,11 +6,11 @@ export const description = <p>Avatars come in four standard sizes (<code>sm</cod
 export const order = 2;
 
 export const vanillaHtml = `
-<div class="avatar avatar--sm avatar--circle">
-  <div class="avatar__fallback">S</div>
+<div class="avatar avatar-sm avatar-circle">
+  <div class="avatar-fallback">S</div>
 </div>
-<div class="avatar avatar--md avatar--square">
-  <img src="https://i.pravatar.cc/150?img=47" alt="User square" class="avatar__image" />
+<div class="avatar avatar-md avatar-square">
+  <img src="https://i.pravatar.cc/150?img=47" alt="User square" class="avatar-image" />
 </div>
 `;
 

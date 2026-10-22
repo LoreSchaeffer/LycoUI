@@ -1,4 +1,4 @@
-import React, {forwardRef, useCallback, useEffect, useRef, useState, type CSSProperties} from 'react';
+import React, {forwardRef, useCallback, useEffect, useLayoutEffect, useRef, useState, type CSSProperties} from 'react';
 import {createPortal} from 'react-dom';
 import {DropdownMenuContext} from './DropdownMenuContext';
 import {useKeyboardNav} from '../../hooks/useKeyboardNav';
@@ -17,7 +17,7 @@ export const DropdownMenuContent = forwardRef<HTMLDivElement, DropdownMenuConten
         const context = React.useContext(DropdownMenuContext);
         if (!context) throw new Error('DropdownMenuContent must be used within DropdownMenu');
 
-        const {isOpen, closeMenu, triggerRef} = context;
+        const {isOpen, menuId, closeMenu, triggerRef} = context;
         const contentRef = useRef<HTMLDivElement>(null);
 
         const handleRef = (node: HTMLDivElement) => {
@@ -34,17 +34,26 @@ export const DropdownMenuContent = forwardRef<HTMLDivElement, DropdownMenuConten
         const updatePosition = useCallback(() => {
             if (!isOpen || !triggerRef.current) return;
             const rect = triggerRef.current.getBoundingClientRect();
-            setDropdownStyles({
+            const nextStyles: CSSProperties = {
                 position: 'absolute',
                 top: `${rect.bottom + window.scrollY + 4}px`, // +4px spacing
                 left: `${rect.left + window.scrollX}px`,
                 zIndex: 'var(--z-dropdown, 1050)'
-            });
+            };
+            if (contentRef.current) {
+                contentRef.current.style.position = 'absolute';
+                contentRef.current.style.top = nextStyles.top as string;
+                contentRef.current.style.left = nextStyles.left as string;
+                contentRef.current.style.zIndex = nextStyles.zIndex as string;
+            }
+            setDropdownStyles(nextStyles);
         }, [isOpen, triggerRef]);
 
-        useEffect(() => {
+        useLayoutEffect(() => {
             if (isOpen) {
                 updatePosition();
+                const firstItem = contentRef.current?.querySelector<HTMLElement>('[role="menuitem"]:not([aria-disabled="true"])');
+                firstItem?.focus();
                 window.addEventListener('scroll', updatePosition, true);
                 window.addEventListener('resize', updatePosition);
                 return () => {
@@ -65,7 +74,7 @@ export const DropdownMenuContent = forwardRef<HTMLDivElement, DropdownMenuConten
                     triggerRef.current &&
                     !triggerRef.current.contains(e.target as Node)
                 ) {
-                    closeMenu();
+                    closeMenu(false);
                 }
             };
 
@@ -85,21 +94,11 @@ export const DropdownMenuContent = forwardRef<HTMLDivElement, DropdownMenuConten
             return () => document.removeEventListener('keydown', handleKeyDown);
         }, [isOpen, closeMenu]);
 
-        // Focus management and keyboard navigation
+        // Keyboard navigation
         const handleKeyDown = useKeyboardNav({
             itemSelector: '[role="menuitem"]:not([aria-disabled="true"])',
             loop: true
         });
-
-        useEffect(() => {
-            if (isOpen && contentRef.current) {
-                // Focus first item if available
-                const firstItem = contentRef.current.querySelector('[role="menuitem"]:not([aria-disabled="true"])') as HTMLElement;
-                if (firstItem) {
-                    firstItem.focus();
-                }
-            }
-        }, [isOpen]);
 
         if (!isOpen) return null;
 
@@ -111,6 +110,7 @@ export const DropdownMenuContent = forwardRef<HTMLDivElement, DropdownMenuConten
                 onKeyDown={handleKeyDown}
                 style={{ ...dropdownStyles, ...props.style }}
                 {...props}
+                id={menuId}
             >
                 {children}
             </div>,

@@ -5,15 +5,15 @@ export const description = <p>Bind a label to the checkbox. Clicking the label a
 export const order = 1;
 
 export const vanillaHtml = `
-<label for="c1" class="checkbox checkbox--primary">
-    <input type="checkbox" id="c1" class="checkbox__input">
-    <span class="checkbox__control" aria-hidden="true"></span>
-    <span class="checkbox__label">Accept terms and conditions</span>
+<label for="c1" class="checkbox checkbox-primary">
+    <input type="checkbox" id="c1" class="checkbox-input">
+    <span class="checkbox-control" aria-hidden="true"></span>
+    <span class="checkbox-label">Accept terms and conditions</span>
 </label>
-<label for="c2" class="checkbox checkbox--primary">
-    <input type="checkbox" id="c2" class="checkbox__input" checked>
-    <span class="checkbox__control" aria-hidden="true"></span>
-    <span class="checkbox__label">Subscribe to newsletter</span>
+<label for="c2" class="checkbox checkbox-primary">
+    <input type="checkbox" id="c2" class="checkbox-input" checked>
+    <span class="checkbox-control" aria-hidden="true"></span>
+    <span class="checkbox-label">Subscribe to newsletter</span>
 </label>
 `;
 

@@ -3,7 +3,7 @@ import type {PropDefinition} from '../../../components/api-reference/ApiReferenc
 export const inputProps: PropDefinition[] = [
     {
         name: 'type',
-        type: "'text' | 'number' | 'email' | 'password' | 'search' | 'tel' | 'url'",
+        type: 'HTMLInputTypeAttribute',
         defaultValue: "'text'",
         description: 'The HTML input type.',
     },
@@ -28,12 +28,12 @@ export const inputProps: PropDefinition[] = [
     },
     {
         name: 'iconStart',
-        type: 'ReactNode',
+        type: 'React.ReactNode',
         description: 'Icon displayed on the left side of the input.',
     },
     {
         name: 'iconEnd',
-        type: 'ReactNode',
+        type: 'React.ReactNode',
         description: 'Icon displayed on the right side of the input.',
     },
     {
@@ -54,7 +54,7 @@ export const inputProps: PropDefinition[] = [
     },
     {
         name: 'spinnerType',
-        type: "'classic' | 'growing'",
+        type: 'SpinnerType',
         defaultValue: "'classic'",
         description: 'Type of spinner animation when loading is true.',
     },
@@ -66,7 +66,7 @@ export const inputProps: PropDefinition[] = [
     },
     {
         name: 'validation',
-        type: "'disabled' | 'auto' | 'valid' | 'invalid'",
+        type: 'InputValidation',
         defaultValue: "'disabled'",
         description: "Controls validation behavior. 'disabled' = no validation. 'auto' = validates on blur using native constraints and validationFn. 'valid'/'invalid' = manual override.",
     },

@@ -2,7 +2,7 @@ import './Badge.scss';
 import React, {type CSSProperties, forwardRef, memo} from 'react';
 import clsx from 'clsx';
 import type {FullVariant} from '../../types/types';
-import {getContrastColor} from '../../utils/theme';
+import {getContrastColor, getVariantColor} from '../../utils/theme';
 
 /**
  * BadgeProps.
@@ -53,7 +53,7 @@ export const Badge = memo(forwardRef<HTMLSpanElement, BadgeProps>((
                 className
             )}
             style={{
-                '--badge-color-base': `var(--${variant}-500, var(--color-${variant}))`,
+                '--badge-color-base': getVariantColor(variant),
                 '--badge-color-contrast': getContrastColor(variant),
                 ...style
             } as CSSProperties}
