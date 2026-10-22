@@ -1,15 +1,16 @@
 import './DataTable.scss';
-import {type DragEvent, forwardRef, type HTMLAttributes, type ReactElement, type ReactNode, type Ref, useCallback, useImperativeHandle, useMemo, useRef, useState} from 'react';
+import {type DragEvent, forwardRef, type HTMLAttributes, type ReactElement, type ReactNode, type Ref, useCallback, useImperativeHandle, useMemo, useState} from 'react';
 import clsx from 'clsx';
 import type {FullVariant} from '../../types/types.ts';
 import {Table, TableBody, TableCell, TableHead, TableRow} from '../Table';
-import {Input} from '../Input';
 import {Select, type SelectOption} from '../Select';
 import {Pagination} from '../Pagination';
 import {Spinner} from '../Spinner';
 import {Checkbox} from '../Checkbox';
 import {deriveRows} from './data-model.ts';
 import {useRowSelection} from './useRowSelection.ts';
+import {useRowReorder} from './useRowReorder.ts';
+import {DataTableToolbar} from './DataTableToolbar.tsx';
 
 
 export type SortDirection = 'asc' | 'desc';
@@ -177,22 +178,6 @@ const SortNeutralIcon = () => (
     </svg>
 );
 
-const SearchIcon = () => (
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"
-         strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-        <circle cx="11" cy="11" r="8"/>
-        <line x1="21" y1="21" x2="16.65" y2="16.65"/>
-    </svg>
-);
-
-const ClearIcon = () => (
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"
-         strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-        <line x1="18" y1="6" x2="6" y2="18"/>
-        <line x1="6" y1="6" x2="18" y2="18"/>
-    </svg>
-);
-
 const DragHandleIcon = () => (
     <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" width="16" height="16">
         <circle cx="9" cy="6" r="1.5"/>
@@ -273,10 +258,8 @@ function DataTableInner<T>(
 
     const {keys: activeSelectedKeys, toggle: toggleSelection, toggleAll: toggleAllSelection} = useRowSelection(selectedRowKeys, defaultSelectedRowKeys, onSelectionChange);
 
-    const [dragIndex, setDragIndex] = useState<number | null>(null);
-    const [dragOverIndex, setDragOverIndex] = useState<number | null>(null);
+    const {dragIndex, dragOverIndex, onDragStart, onDragOver, onDragLeave, onDrop, onDragEnd} = useRowReorder(onRowReorder);
 
-    const toolbarRef = useRef<HTMLDivElement>(null);
     const isDragEnabled = Boolean(onRowReorder);
 
     useImperativeHandle(ref, () => ({
@@ -341,40 +324,6 @@ function DataTableInner<T>(
                 value: s,
             })),
         [pageSizeOptions]);
-
-    const handleDragStart = useCallback((e: DragEvent<HTMLTableRowElement>, index: number) => {
-        setDragIndex(index);
-        e.dataTransfer.effectAllowed = 'move';
-        e.dataTransfer.setData('text/plain', String(index));
-        requestAnimationFrame(() => {
-            const target = e.target as HTMLElement;
-            target.classList.add('is-dragging');
-        });
-    }, []);
-
-    const handleDragOver = useCallback((e: DragEvent<HTMLTableRowElement>, index: number) => {
-        e.preventDefault();
-        e.dataTransfer.dropEffect = 'move';
-        setDragOverIndex(index);
-    }, []);
-
-    const handleDragLeave = useCallback(() => {
-        setDragOverIndex(null);
-    }, []);
-
-    const handleDrop = useCallback((e: DragEvent<HTMLTableRowElement>, destIndex: number) => {
-        e.preventDefault();
-        if (dragIndex !== null && dragIndex !== destIndex) {
-            onRowReorder?.(dragIndex, destIndex);
-        }
-        setDragIndex(null);
-        setDragOverIndex(null);
-    }, [dragIndex, onRowReorder]);
-
-    const handleDragEnd = useCallback(() => {
-        setDragIndex(null);
-        setDragOverIndex(null);
-    }, []);
 
     const handleSelectAll = useCallback((checked: boolean) => {
         const allKeys = sortedData.map((row, idx) => getRowKey(row, idx));
@@ -459,38 +408,15 @@ function DataTableInner<T>(
             )}
             {...props}
         >
-            <div ref={toolbarRef} className="data-table__toolbar">
-                {/* Search */}
-                {searchable && !isDragEnabled && (
-                    <div className="data-table__search">
-                        <Input
-                            size="sm"
-                            placeholder={searchPlaceholder}
-                            value={searchQuery}
-                            onChange={(e) => handleSearch(e.target.value)}
-                            iconStart={<SearchIcon/>}
-                            iconEnd={searchQuery.length > 0 ? <ClearIcon/> : undefined}
-                            onIconEndClick={searchQuery.length > 0 ? () => handleSearch('') : undefined}
-                        />
-                    </div>
-                )}
-
-                {/* Right controls (Pagination top) */}
-                {!isDragEnabled && paginationPosition === 'top' && (
-                    <div className="data-table__toolbar-actions">
-                        {renderPaginationInfo()}
-                        {renderPaginationControls()}
-                    </div>
-                )}
-
-                {/* Drag mode toolbar */}
-                {isDragEnabled && (
-                    <div className="data-table__drag-info">
-                        <DragHandleIcon/>
-                        <span>Drag rows to reorder</span>
-                    </div>
-                )}
-            </div>
+            <DataTableToolbar
+                searchable={searchable}
+                dragEnabled={isDragEnabled}
+                searchPlaceholder={searchPlaceholder}
+                searchQuery={searchQuery}
+                onSearch={handleSearch}
+                topActions={paginationPosition === 'top' ? <>{renderPaginationInfo()}{renderPaginationControls()}</> : undefined}
+                dragInfo={<><DragHandleIcon/><span>Drag rows to reorder</span></>}
+            />
 
             {/* ========== TABLE ========== */}
             <div className="data-table__container">
@@ -590,11 +516,11 @@ function DataTableInner<T>(
                                         onClick={onRowClick ? (e) => onRowClick(e, row, absoluteIndex) : undefined}
                                         onContextMenu={onRowContextMenu ? (e) => onRowContextMenu(e, row, absoluteIndex) : undefined}
                                         draggable={isDragEnabled}
-                                        onDragStart={isDragEnabled ? (e) => handleDragStart(e as unknown as DragEvent<HTMLTableRowElement>, absoluteIndex) : undefined}
-                                        onDragOver={isDragEnabled ? (e) => handleDragOver(e as unknown as DragEvent<HTMLTableRowElement>, absoluteIndex) : undefined}
-                                        onDragLeave={isDragEnabled ? handleDragLeave : undefined}
-                                        onDrop={isDragEnabled ? (e) => handleDrop(e as unknown as DragEvent<HTMLTableRowElement>, absoluteIndex) : undefined}
-                                        onDragEnd={isDragEnabled ? handleDragEnd : undefined}
+                                        onDragStart={isDragEnabled ? (e) => onDragStart(e as unknown as DragEvent<HTMLTableRowElement>, absoluteIndex) : undefined}
+                                        onDragOver={isDragEnabled ? (e) => onDragOver(e as unknown as DragEvent<HTMLTableRowElement>, absoluteIndex) : undefined}
+                                        onDragLeave={isDragEnabled ? onDragLeave : undefined}
+                                        onDrop={isDragEnabled ? (e) => onDrop(e as unknown as DragEvent<HTMLTableRowElement>, absoluteIndex) : undefined}
+                                        onDragEnd={isDragEnabled ? onDragEnd : undefined}
                                     >
                                         {isDragEnabled && (
                                             <TableCell className="data-table__drag-cell">
