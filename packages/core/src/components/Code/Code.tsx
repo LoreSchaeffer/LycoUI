@@ -2,8 +2,9 @@ import './Code.scss';
 import type {ChangeEvent, HTMLAttributes, UIEvent} from 'react';
 import {forwardRef, memo, useCallback, useEffect, useMemo, useRef, useState} from 'react';
 import clsx from 'clsx';
-import {Select} from '../Select/Select';
-import {customTransformers, getShikiHighlighter} from '../../utils/shiki.config';
+import {CodeToolbar} from './CodeToolbar';
+import {CodeEditor} from './CodeEditor';
+import {useCodeHighlight} from './useCodeHighlight';
 
 
 /**
@@ -39,27 +40,6 @@ export interface CodeProps extends Omit<HTMLAttributes<HTMLElement>, 'onChange'>
 }
 
 
-const CopyIcon = () => (
-    <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" strokeWidth="2" fill="none" strokeLinecap="round" strokeLinejoin="round">
-        <rect x="9" y="9" width="13" height="13" rx="2" ry="2"/>
-        <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
-    </svg>
-);
-
-const CheckIcon = () => (
-    <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" strokeWidth="2" fill="none" strokeLinecap="round" strokeLinejoin="round">
-        <polyline points="20 6 9 17 4 12"/>
-    </svg>
-);
-
-const DownloadIcon = () => (
-    <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" strokeWidth="2" fill="none" strokeLinecap="round" strokeLinejoin="round">
-        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
-        <polyline points="7 10 12 15 17 10"/>
-        <line x1="12" y1="15" x2="12" y2="3"/>
-    </svg>
-);
-
 /**
  * Code component.
  */
@@ -69,7 +49,7 @@ export const Code = memo(forwardRef<HTMLElement, CodeProps>((
         code: propCode,
         defaultCode = '',
         language: propLanguage = 'javascript',
-        theme = 'andromeeda',
+        theme = 'lyco-dark',
         editable = false,
         inline = false,
         showCopy = false,
@@ -87,10 +67,8 @@ export const Code = memo(forwardRef<HTMLElement, CodeProps>((
     const [internalCode, setInternalCode] = useState(propCode ?? (typeof children === 'string' ? children : defaultCode));
     const [internalLang, setInternalLang] = useState(propLanguage);
 
-    const [highlightedHtml, setHighlightedHtml] = useState<string>('');
-    const [highlightStatus, setHighlightStatus] = useState<'loading' | 'success' | 'error'>('loading');
     const [isCopied, setIsCopied] = useState(false);
-    const textareaRef = useRef<HTMLTextAreaElement>(null);
+    const copyTimer = useRef<number | undefined>(undefined);
 
     const isControlled = propCode !== undefined;
     const rawCode = isControlled ? propCode : internalCode;
@@ -102,44 +80,15 @@ export const Code = memo(forwardRef<HTMLElement, CodeProps>((
         });
     }, [rawCode, tabSize]);
 
-    useEffect(() => {
-        let isMounted = true;
-
-        const processCode = async () => {
-            try {
-                setHighlightStatus('loading');
-
-                const langsToLoad = Array.from(new Set([...supportedLanguages, internalLang]));
-                const highlighter = await getShikiHighlighter(langsToLoad);
-
-                const html = highlighter.codeToHtml(currentCode, {
-                    lang: internalLang,
-                    theme: 'lyco-dark',
-                    transformers: customTransformers,
-                });
-
-                if (isMounted) {
-                    setHighlightedHtml(html);
-                    setHighlightStatus('success');
-                }
-            } catch {
-                // Syntax highlighting failed or shiki is not installed
-                if (isMounted) {
-                    setHighlightStatus('error');
-                }
-            }
-        };
-
-        processCode();
-
-        return () => {
-            isMounted = false;
-        };
-    }, [currentCode, internalLang, theme, supportedLanguages]);
+    const {html: highlightedHtml, status: highlightStatus} = useCodeHighlight(currentCode, internalLang, theme, supportedLanguages);
 
     useEffect(() => {
         setInternalLang(propLanguage);
     }, [propLanguage]);
+
+    useEffect(() => () => {
+        if (copyTimer.current) window.clearTimeout(copyTimer.current);
+    }, []);
 
     const handleChange = useCallback((e: ChangeEvent<HTMLTextAreaElement>) => {
         const newCode = e.target.value;
@@ -153,7 +102,8 @@ export const Code = memo(forwardRef<HTMLElement, CodeProps>((
         try {
             await navigator.clipboard.writeText(currentCode);
             setIsCopied(true);
-            setTimeout(() => setIsCopied(false), 2000);
+            if (copyTimer.current) window.clearTimeout(copyTimer.current);
+            copyTimer.current = window.setTimeout(() => setIsCopied(false), 2000);
         } catch (err) {
             console.error('Failed to copy code:', err);
         }
@@ -206,76 +156,8 @@ export const Code = memo(forwardRef<HTMLElement, CodeProps>((
             style={{'--lyco-code-tab-size': tabSize, ...props.style} as React.CSSProperties}
             {...props}
         >
-            {hasHeader && (
-                <div className="code__header">
-                    <div className="code__header-left">
-                        {showLanguageSelector ? (
-                            <Select
-                                className="code__lang-select"
-                                size="sm"
-                                value={internalLang}
-                                onChange={(val) => setInternalLang(String(val))}
-                                options={supportedLanguages.map(lang => ({label: lang, value: lang}))}
-                            />
-                        ) : (
-                            <span className="code__lang-label">{internalLang}</span>
-                        )}
-                    </div>
-                    <div className="code__header-right">
-                        {showCopy && (
-                            <button
-                                type="button"
-                                className={clsx('code__action', isCopied && 'is-copied')}
-                                onClick={handleCopy}
-                                title="Copy code"
-                                aria-label="Copy code"
-                            >
-                                <span className="icon-default"><CopyIcon/></span>
-                                <span className="icon-success"><CheckIcon/></span>
-                            </button>
-                        )}
-                        {showDownload && (
-                            <button
-                                type="button"
-                                className="code__action"
-                                onClick={handleDownload}
-                                title="Download code"
-                                aria-label="Download code"
-                            >
-                                <DownloadIcon/>
-                            </button>
-                        )}
-                    </div>
-                </div>
-            )}
-
-            <div className="code__body">
-                {editable && (
-                    <textarea
-                        ref={textareaRef}
-                        className="code__textarea"
-                        value={currentCode}
-                        onChange={handleChange}
-                        onScroll={handleScroll}
-                        spellCheck={false}
-                        aria-label="Code editor"
-                    />
-                )}
-
-                {highlightedHtml && highlightStatus === 'success' ? (
-                    <div
-                        className="code__highlight"
-                        dangerouslySetInnerHTML={{__html: highlightedHtml}}
-                        aria-hidden={editable}
-                    />
-                ) : (
-                    <div className="code__highlight">
-            <pre style={{color: highlightStatus === 'loading' ? 'transparent' : undefined}}>
-              <code>{currentCode}</code>
-            </pre>
-                    </div>
-                )}
-            </div>
+            {hasHeader && <CodeToolbar language={internalLang} languages={supportedLanguages} showCopy={showCopy} showDownload={showDownload} showLanguageSelector={showLanguageSelector} copied={isCopied} onLanguageChange={setInternalLang} onCopy={handleCopy} onDownload={handleDownload}/>}
+            <CodeEditor code={currentCode} editable={editable} html={highlightedHtml} status={highlightStatus} onChange={handleChange} onScroll={handleScroll}/>
         </div>
     );
 }));

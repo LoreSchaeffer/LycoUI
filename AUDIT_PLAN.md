@@ -821,7 +821,7 @@ This exhaustive unit/color candidate ledger lists lines with raw dimensional/tim
 
   **Verify:** `npm run test:unit -- tests/unit/field-validation.test.ts`; `npm run audit:contracts -- --check loc --components Input,Textarea`; core typecheck from the baseline. Covers C05, H12, M01; parity finishes in Task 3.4.
 
-- [ ] Task 2.7 — Isolate Code/editor behavior; make Shiki genuinely optional
+- [x] Task 2.7 — Isolate Code/editor behavior; make Shiki genuinely optional
 
   **Targets:** modify `packages/core/src/components/Code/Code.tsx`, `packages/core/src/components/Code/Code.vanilla.ts`, `packages/core/src/utils/shiki.config.ts`, `packages/core/vite.config.ts`; create `packages/core/src/components/Code/useCodeHighlight.ts`, `packages/core/src/components/Code/highlighter.ts`, `packages/core/src/components/Code/CodeToolbar.tsx`, `packages/core/src/components/Code/CodeEditor.tsx`, `tests/unit/code-highlight.test.ts`, `tests/parity/code-react.spec.ts`.
 
