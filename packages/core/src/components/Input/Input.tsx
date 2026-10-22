@@ -1,54 +1,18 @@
 import './Input.scss';
-import type {InputHTMLAttributes} from 'react';
-import React, {type CSSProperties, forwardRef, useCallback, useEffect, useId, useRef, useState} from 'react';
+import React, {type CSSProperties, forwardRef, useCallback, useId, useRef} from 'react';
 import clsx from 'clsx';
-import type {FullVariant, SizeVariant} from '../../types/types';
-import {Spinner, type SpinnerType} from '../Spinner';
+import {Spinner} from '../Spinner';
+import {useFieldValidation} from '../../hooks/useFieldValidation';
 
 /**
  * InputValidation.
  */
-export type InputValidation = 'disabled' | 'auto' | 'valid' | 'invalid';
-
-/**
- * Props for the Input component.
- */
-export interface InputProps extends Omit<InputHTMLAttributes<HTMLInputElement>, 'size'> {
-    /** The semantic color variant of the input. */
-    variant?: FullVariant;
-    /** The size of the input (sm, md, lg). Default is 'md'. */
-    size?: SizeVariant;
-    /** Label text for the input. Will float if the input has a value. */
-    label?: string;
-    /** An icon element to display at the start (left) of the input. */
-    iconStart?: React.ReactNode;
-    /** An icon element to display at the end (right) of the input. */
-    iconEnd?: React.ReactNode;
-    /** Callback fired when the start icon is clicked. */
-    onIconStartClick?: () => void;
-    /** Callback fired when the end icon is clicked. */
-    onIconEndClick?: () => void;
-    /** If true, displays a loading spinner. */
-    loading?: boolean;
-    /** The visual style of the loading spinner. */
-    spinnerType?: SpinnerType;
-    /** Where to place the spinner ('start' or 'end'). Default is 'end'. */
-    spinnerPlacement?: 'start' | 'end';
-    /** The validation state of the input ('valid', 'invalid', 'auto', 'disabled'). */
-    validation?: InputValidation;
-    /** A custom validation function that returns an error message string or null. */
-    validationFn?: (value: string) => string | null;
-    /** A static validation message to display. */
-    validationMessage?: string;
-    /** If true, shows numeric up/down step buttons for type="number". */
-    showStepButtons?: boolean;
-    /** If true, renders a flat version of the input without borders. */
-    flat?: boolean;
-}
-
-/**
- * Input component.
- */
+import type {InputProps} from './Input.types';
+import {FieldLabel} from './FieldLabel';
+import {FieldMessage} from './FieldMessage';
+import {InputAdornment} from './InputAdornment';
+import {InputStepButtons} from './InputStepButtons';
+import {useInputState} from './useInputState';
 export const Input = forwardRef<HTMLInputElement, InputProps>(
     (
         {
@@ -91,25 +55,14 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
         const messageId = `${inputId}-message`;
 
         const innerRef = useRef<HTMLInputElement>(null);
-        const [isFocused, setIsFocused] = useState(false);
-        const [isFilled, setIsFilled] = useState(
-            () => Boolean(value !== undefined ? value : defaultValue)
-        );
-        const [autoValidationState, setAutoValidationState] = useState<'valid' | 'invalid' | null>(null);
-        const [autoValidationMessage, setAutoValidationMessage] = useState<string>('');
-        const [hasBlurred, setHasBlurred] = useState(false);
+        const {isFocused, isFilled, focus, blur, input: syncInputState} = useInputState(value, defaultValue);
+        const {hasBlurred, markBlurred, validate, validation: fieldValidation} = useFieldValidation(validation, validationFn, validationMessage);
 
         const mergedRef = useCallback((node: HTMLInputElement | null) => {
             (innerRef as React.MutableRefObject<HTMLInputElement | null>).current = node;
             if (typeof ref === 'function') ref(node);
             else if (ref) (ref as React.MutableRefObject<HTMLInputElement | null>).current = node;
         }, [ref]);
-
-        useEffect(() => {
-            if (value !== undefined) {
-                setIsFilled(String(value).length > 0);
-            }
-        }, [value]);
 
         const handleIconStartClick = useCallback(() => {
             if (disabled || loading || readOnly) return;
@@ -121,52 +74,31 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
             if (onIconEndClick) onIconEndClick();
         }, [disabled, loading, readOnly, onIconEndClick]);
 
-        const runAutoValidation = useCallback((inputEl: HTMLInputElement) => {
-            const nativeValid = inputEl.checkValidity();
-            if (!nativeValid) {
-                setAutoValidationState('invalid');
-                setAutoValidationMessage(inputEl.validationMessage);
-                return;
-            }
-
-            if (validationFn) {
-                const customError = validationFn(inputEl.value);
-                if (customError) {
-                    setAutoValidationState('invalid');
-                    setAutoValidationMessage(customError);
-                    return;
-                }
-            }
-
-            setAutoValidationState('valid');
-            setAutoValidationMessage('');
-        }, [validationFn]);
-
         const handleFocus = useCallback((e: React.FocusEvent<HTMLInputElement>) => {
-            setIsFocused(true);
+            focus();
             onFocus?.(e);
         }, [onFocus]);
 
         const handleBlur = useCallback((e: React.FocusEvent<HTMLInputElement>) => {
-            setIsFocused(false);
-            setHasBlurred(true);
+            blur();
+            markBlurred();
 
             if (validation === 'auto') {
-                runAutoValidation(e.target);
+                validate(e.target);
             }
 
             onBlur?.(e);
-        }, [onBlur, validation, runAutoValidation]);
+        }, [onBlur, validation, validate]);
 
         const handleChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
-            setIsFilled(e.target.value.length > 0);
+            syncInputState(e.target.value);
 
             if (validation === 'auto' && hasBlurred) {
-                runAutoValidation(e.target);
+                validate(e.target);
             }
 
             onChange?.(e);
-        }, [onChange, validation, hasBlurred, runAutoValidation]);
+        }, [onChange, validation, hasBlurred, validate]);
 
         const handleStep = useCallback((e: React.MouseEvent, direction: 1 | -1) => {
             e.preventDefault();
@@ -185,30 +117,14 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
             }
             input.dispatchEvent(new Event('input', {bubbles: true}));
 
-            setIsFilled(input.value.length > 0);
+            syncInputState(input.value);
 
             if (validation === 'auto' && hasBlurred) {
-                runAutoValidation(input);
+                validate(input);
             }
-        }, [disabled, loading, readOnly, validation, hasBlurred, runAutoValidation]);
+        }, [disabled, loading, readOnly, validation, hasBlurred, validate]);
 
-        let visualValidation: 'valid' | 'invalid' | null = null;
-        if (validation === 'valid') {
-            visualValidation = 'valid';
-        } else if (validation === 'invalid') {
-            visualValidation = 'invalid';
-        } else if (validation === 'auto' && hasBlurred) {
-            visualValidation = autoValidationState;
-        }
-
-        let displayMessage = '';
-        if (validation !== 'disabled') {
-            if (validationMessage) {
-                displayMessage = validationMessage;
-            } else if (validation === 'auto' && autoValidationMessage) {
-                displayMessage = autoValidationMessage;
-            }
-        }
+        const {state: visualValidation, message: displayMessage} = fieldValidation;
 
         const showSpinnerStart = loading && spinnerPlacement === 'start';
         const showSpinnerEnd = loading && spinnerPlacement === 'end';
@@ -224,8 +140,8 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
                 <div
                     className={clsx(
                         'input',
-                        size && size !== 'md' && `input--${size}`,
-                        flat && 'input--flat',
+                        size && size !== 'md' && `input-${size}`,
+                        flat && 'input-flat',
                         isFocused && 'is-focused',
                         isFilled && 'is-filled',
                         disabled && 'is-disabled',
@@ -233,8 +149,8 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
                         loading && 'is-loading',
                         visualValidation === 'valid' && 'is-valid',
                         visualValidation === 'invalid' && 'is-invalid',
-                        hasIconStart && 'input--has-icon-start',
-                        (hasIconEnd || showSteps) && 'input--has-icon-end',
+                        hasIconStart && 'input-has-icon-start',
+                        (hasIconEnd || showSteps) && 'input-has-icon-end',
                         className
                     )}
                     style={{
@@ -243,25 +159,11 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
                 >
                     {/* Icon Start */}
                     {hasIconStart && (
-                        onIconStartClick && !loading ? (
-                            <button
-                                type="button"
-                                className="input__icon input__icon--start input__icon--clickable"
-                                onClick={handleIconStartClick}
-                                tabIndex={-1}
-                                aria-label="Input action"
-                            >
+                        <InputAdornment position="start" onClick={onIconStartClick && !loading ? handleIconStartClick : undefined}>
                                 {showSpinnerStart
-                                    ? <Spinner size={size} type={spinnerType} className="input__spinner"/>
+                                    ? <Spinner size={size} type={spinnerType} className="input-spinner"/>
                                     : iconStart}
-                            </button>
-                        ) : (
-                            <span className="input__icon input__icon--start">
-                {showSpinnerStart
-                    ? <Spinner size={size} type={spinnerType} className="input__spinner"/>
-                    : iconStart}
-              </span>
-                        )
+                        </InputAdornment>
                     )}
 
                     {/* Native Input */}
@@ -269,7 +171,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
                         ref={mergedRef}
                         id={inputId}
                         type={type}
-                        className="input__field"
+                        className="input-field"
                         disabled={disabled || loading}
                         value={value}
                         defaultValue={defaultValue}
@@ -286,81 +188,31 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
                     />
 
                     {/* Floating Label */}
-                    {label && (
-                        <label className="input__label" htmlFor={inputId}>
-                            {label}
-                            {required && <span className="input__required" aria-hidden="true"> *</span>}
-                        </label>
-                    )}
+                    {label && <FieldLabel className="input-label" htmlFor={inputId} label={label} required={required}/>} 
 
                     {/* Icon End */}
                     {(hasIconEnd && !showSteps) && (
-                        onIconEndClick && !loading ? (
-                            <button
-                                type="button"
-                                className="input__icon input__icon--end input__icon--clickable"
-                                onClick={handleIconEndClick}
-                                tabIndex={-1}
-                                aria-label="Input action"
-                            >
+                        <InputAdornment position="end" onClick={onIconEndClick && !loading ? handleIconEndClick : undefined}>
                                 {(showSpinnerEnd || (loading && !iconStart && !iconEnd))
-                                    ? <Spinner size={size} type={spinnerType} className="input__spinner"/>
+                                    ? <Spinner size={size} type={spinnerType} className="input-spinner"/>
                                     : iconEnd}
-                            </button>
-                        ) : (
-                            <span className="input__icon input__icon--end">
-                {(showSpinnerEnd || (loading && !iconStart && !iconEnd))
-                    ? <Spinner size={size} type={spinnerType} className="input__spinner"/>
-                    : iconEnd}
-              </span>
-                        )
+                        </InputAdornment>
                     )}
 
                     {/* Step Buttons for Number */}
                     {showSteps && (
-                        <div className="input__step-buttons">
-                            <button
-                                type="button"
-                                className="input__step-btn input__step-btn--up"
-                                onClick={(e) => handleStep(e, 1)}
-                                tabIndex={-1}
-                                aria-label="Increment"
-                            >
-                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                                    <polyline points="18 15 12 9 6 15"/>
-                                </svg>
-                            </button>
-                            <button
-                                type="button"
-                                className="input__step-btn input__step-btn--down"
-                                onClick={(e) => handleStep(e, -1)}
-                                tabIndex={-1}
-                                aria-label="Decrement"
-                            >
-                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                                    <polyline points="6 9 12 15 18 9"/>
-                                </svg>
-                            </button>
-                        </div>
+                        <InputStepButtons onStep={handleStep}/>
                     )}
                 </div>
 
                 {/* Validation Message */}
-                {displayMessage && (
-                    <div
-                        id={messageId}
-                        className={clsx(
-                            'input__message',
-                            visualValidation === 'valid' && 'input__message--valid',
-                            visualValidation === 'invalid' && 'input__message--invalid'
-                        )}
-                        role={visualValidation === 'invalid' ? 'alert' : 'status'}
-                    >
-                        {displayMessage}
-                    </div>
-                )}
+                <FieldMessage id={messageId} className="input-message" state={visualValidation}>{displayMessage}</FieldMessage>
             </div>
         );
     }
 );
 Input.displayName = 'Input';
+
+export type {InputProps, InputValidation} from './Input.types';
+
+

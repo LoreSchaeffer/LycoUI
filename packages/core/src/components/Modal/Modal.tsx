@@ -1,7 +1,10 @@
-import React, {useCallback, useEffect, useRef} from 'react';
+import React, {useEffect, useImperativeHandle, useRef} from 'react';
 import {createPortal} from 'react-dom';
-import {FOCUSABLE_ELEMENTS_SELECTOR, trapFocus} from '../../utils/keyboard';
+import {openModalLayer} from '../../interaction/modal-layer';
+import {useFocusTrap} from '../../hooks/useFocusTrap';
 import './Modal.scss';
+import {ModalBody, ModalFooter, ModalHeader, ModalTitle} from './ModalRegions';
+export type {ModalBodyProps, ModalFooterProps, ModalHeaderProps, ModalTitleProps} from './ModalRegions';
 
 /**
  * Props for the Modal component.
@@ -48,58 +51,33 @@ export const ModalBase = React.forwardRef<HTMLDialogElement, ModalProps>(({
                                                                               closeOnOverlayClick = true,
                                                                               closeOnEscape = true
                                                                           }, ref) => {
-    const dialogRef = useRef<HTMLDivElement>(null);
+    const dialogRef = useRef<HTMLDialogElement>(null);
     const previouslyFocusedElement = useRef<HTMLElement | null>(null);
-
-    const handleKeyDown = useCallback((e: KeyboardEvent) => {
-        if (closeOnEscape && e.key === 'Escape') {
-            onClose();
-        }
-
-        if (dialogRef.current) {
-            trapFocus(e, dialogRef.current);
-        }
-    }, [onClose, closeOnEscape]);
+    useImperativeHandle(ref, () => dialogRef.current as HTMLDialogElement, []);
+    useFocusTrap(dialogRef, isOpen);
 
     useEffect(() => {
-        if (isOpen) {
-            previouslyFocusedElement.current = document.activeElement as HTMLElement;
-            document.addEventListener('keydown', handleKeyDown);
-            document.body.classList.add('modal-open');
+        const dialog = dialogRef.current;
+        if (!isOpen || !dialog) return;
+        previouslyFocusedElement.current = document.activeElement as HTMLElement;
+        return openModalLayer({
+            root: dialog,
+            returnFocus: previouslyFocusedElement.current ?? undefined,
+            onOpen: () => document.body.classList.add('modal-open'),
+            onClose: () => document.body.classList.remove('modal-open')
+        });
+    }, [isOpen]);
 
-            setTimeout(() => {
-                if (dialogRef.current) {
-                    const autoFocusElement = dialogRef.current.querySelector('[autofocus]') as HTMLElement;
-                    if (autoFocusElement) {
-                        autoFocusElement.focus();
-                        return;
-                    }
-
-                    const focusableElements = dialogRef.current.querySelectorAll(
-                        FOCUSABLE_ELEMENTS_SELECTOR
-                    ) as NodeListOf<HTMLElement>;
-
-                    if (focusableElements.length > 0) {
-                        focusableElements[0].focus();
-                    } else {
-                        dialogRef.current.focus();
-                    }
-                }
-            }, 0);
-        } else {
-            document.removeEventListener('keydown', handleKeyDown);
-            document.body.classList.remove('modal-open');
-            if (previouslyFocusedElement.current) {
-                previouslyFocusedElement.current.focus();
-                previouslyFocusedElement.current = null;
-            }
-        }
-
-        return () => {
-            document.removeEventListener('keydown', handleKeyDown);
-            document.body.classList.remove('modal-open');
+    useEffect(() => {
+        if (!isOpen || !closeOnEscape) return;
+        const dialog = dialogRef.current;
+        if (!dialog) return;
+        const onKeyDown = (event: KeyboardEvent) => {
+            if (event.key === 'Escape') onClose();
         };
-    }, [isOpen, handleKeyDown]);
+        dialog.addEventListener('keydown', onKeyDown);
+        return () => dialog.removeEventListener('keydown', onKeyDown);
+    }, [closeOnEscape, isOpen, onClose]);
 
     const handleBackdropClick = React.useCallback((e: React.MouseEvent<HTMLDialogElement>) => {
         if (closeOnOverlayClick && e.target === e.currentTarget) {
@@ -116,15 +94,18 @@ export const ModalBase = React.forwardRef<HTMLDialogElement, ModalProps>(({
             role={role}
             aria-modal="true"
             tabIndex={-1}
+            onCancel={(event) => {
+                event.preventDefault();
+                if (closeOnEscape) onClose();
+            }}
             onClick={handleBackdropClick}
-            ref={ref}
+            ref={dialogRef}
         >
             <div
-                className={`modal__dialog modal__dialog--${size} ${centered ? 'modal__dialog--centered' : ''} ${scrollable ? 'modal__dialog--scrollable' : ''}`}
-                ref={dialogRef}
+                className={`modal-dialog modal-dialog-${size} ${centered ? 'modal-dialog-centered' : ''} ${scrollable ? 'modal-dialog-scrollable' : ''}`}
                 tabIndex={-1}
             >
-                <div className="modal__content">
+                <div className="modal-content">
                     {children}
                 </div>
             </div>
@@ -135,87 +116,6 @@ export const ModalBase = React.forwardRef<HTMLDialogElement, ModalProps>(({
 });
 ModalBase.displayName = 'Modal';
 
-/**
- * Props for the ModalHeader component.
- */
-export interface ModalHeaderProps extends React.HTMLAttributes<HTMLDivElement> {
-    children: React.ReactNode;
-}
-
-/**
- * ModalHeader component.
- * Acts as the structural container for the modal's title and contextual actions.
- */
-export const ModalHeader = React.forwardRef<HTMLDivElement, ModalHeaderProps>(
-    ({children, className = '', ...props}, ref) => (
-        <div ref={ref} className={`modal__header ${className}`} {...props}>
-            {children}
-        </div>
-    )
-);
-ModalHeader.displayName = 'ModalHeader';
-
-/**
- * Props for the ModalTitle component.
- */
-export interface ModalTitleProps extends React.HTMLAttributes<HTMLHeadingElement> {
-    children: React.ReactNode;
-    as?: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6';
-}
-
-/**
- * ModalTitle component.
- * Renders the accessible semantic heading for the modal. Defaults to an h3 tag.
- */
-export const ModalTitle = React.forwardRef<HTMLHeadingElement, ModalTitleProps>(
-    ({children, className = '', as: Component = 'h3', ...props}, ref) => (
-        <Component ref={ref} className={`modal__title ${className}`} {...props}>
-            {children}
-        </Component>
-    )
-);
-ModalTitle.displayName = 'ModalTitle';
-
-/**
- * Props for the ModalBody component.
- */
-export interface ModalBodyProps extends React.HTMLAttributes<HTMLDivElement> {
-    children: React.ReactNode;
-}
-
-/**
- * ModalBody component.
- * Container for the primary content of the modal. Scrollable if the modal is configured as scrollable.
- */
-export const ModalBody = React.forwardRef<HTMLDivElement, ModalBodyProps>(
-    ({children, className = '', ...props}, ref) => (
-        <div ref={ref} className={`modal__body ${className}`} {...props}>
-            {children}
-        </div>
-    )
-);
-ModalBody.displayName = 'ModalBody';
-
-/**
- * Props for the ModalFooter component.
- */
-export interface ModalFooterProps extends React.HTMLAttributes<HTMLDivElement> {
-    children: React.ReactNode;
-}
-
-/**
- * ModalFooter component.
- * Typically used to anchor primary and secondary action buttons at the bottom of the modal.
- */
-export const ModalFooter = React.forwardRef<HTMLDivElement, ModalFooterProps>(
-    ({children, className = '', ...props}, ref) => (
-        <div ref={ref} className={`modal__footer ${className}`} {...props}>
-            {children}
-        </div>
-    )
-);
-ModalFooter.displayName = 'ModalFooter';
-
 const ModalCompound = Object.assign(ModalBase, {
     Header: ModalHeader,
     Title: ModalTitle,
@@ -224,3 +124,5 @@ const ModalCompound = Object.assign(ModalBase, {
 });
 
 export {ModalCompound as Modal};
+
+

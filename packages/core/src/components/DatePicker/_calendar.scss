@@ -1,0 +1,146 @@
+.datepicker {
+  &-calendar {
+    width: 100%;
+  }
+
+  &-cal-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: var(--spacing-3);
+  }
+
+  &-cal-title {
+    font-size: var(--text-body-sm);
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-text-primary);
+    letter-spacing: -0.02em;
+  }
+
+  &-cal-nav-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 1.75rem;
+    height: 1.75rem;
+    padding: 0;
+    border: none;
+    border-radius: var(--radius-sm);
+    background-color: transparent;
+    color: var(--color-text-secondary);
+    cursor: pointer;
+    transition: background-color var(--duration-fast) var(--ease-default),
+    color var(--duration-fast) var(--ease-default);
+
+    svg {
+      width: 1rem;
+      height: 1rem;
+    }
+
+    &:hover {
+      background-color: var(--color-border-subtle);
+      color: var(--color-text-primary);
+    }
+
+    &:focus-visible {
+      outline: 2px solid var(--datepicker-color-base);
+      outline-offset: 1px;
+    }
+  }
+
+  // The grid is CSS Grid layout with 7 equal columns
+  &-cal-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: var(--spacing-1);
+    outline: none;
+
+    &:focus-visible {
+      border-radius: var(--radius-sm);
+      box-shadow: 0 0 0 2px var(--datepicker-color-base);
+    }
+  }
+
+  // Rows use display: contents so cells flow directly into the parent grid
+  &-cal-row {
+    display: contents;
+  }
+
+  &-cal-day-header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 2rem;
+    height: 1.5rem;
+    font-size: var(--text-caption);
+    font-weight: var(--font-weight-medium);
+    color: var(--color-text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    margin-bottom: var(--spacing-1);
+  }
+
+  &-cal-cell {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 2rem;
+    height: 2rem;
+    font-size: var(--text-body-sm);
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    position: relative;
+    color: var(--color-text-primary);
+    transition: background-color var(--duration-fast) var(--ease-default),
+    color var(--duration-fast) var(--ease-default);
+    outline: none;
+
+    &.is-outside {
+      opacity: 0.35;
+    }
+
+    &.is-today::after {
+      content: '';
+      position: absolute;
+      bottom: 3px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 4px;
+      height: 4px;
+      border-radius: 50%;
+      background-color: var(--datepicker-color-base);
+      opacity: 0.6;
+    }
+
+    &.is-selected {
+      background-color: var(--datepicker-color-base);
+      color: var(--datepicker-color-contrast);
+      font-weight: var(--font-weight-semibold);
+
+      &::after {
+        background-color: var(--datepicker-color-contrast);
+        opacity: 0.7;
+      }
+    }
+
+    &.is-disabled {
+      opacity: 0.25;
+      cursor: not-allowed;
+      pointer-events: none;
+    }
+
+    &:not(.is-disabled):not(.is-selected):hover {
+      background-color: color-mix(in srgb, var(--datepicker-color-base) 10%, transparent);
+    }
+
+    &.is-focused:not(.is-selected) {
+      background-color: color-mix(in srgb, var(--datepicker-color-base) 12%, transparent);
+      box-shadow: inset 0 0 0 1px var(--datepicker-color-base);
+    }
+
+    &:focus-visible {
+      box-shadow: 0 0 0 2px var(--datepicker-color-base);
+    }
+  }
+}
+

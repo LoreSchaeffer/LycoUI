@@ -1,19 +1,23 @@
 /**
  * Controller for the Vanilla JS Tooltip component.
  */
-export class TooltipController {
+export class TooltipController extends BaseController {
     private element: HTMLElement;
     private content: string;
     private position: string;
     private tooltipEl: HTMLElement | null = null;
+    private tooltipId?: string;
+    private readonly describedByBefore: string | null;
     private boundShow: (e: Event) => void;
     private boundHide: (e: Event) => void;
     private boundUpdatePosition: () => void;
 
     constructor(element: HTMLElement) {
+        super();
         this.element = element;
         this.content = this.element.dataset.lycoTooltip || '';
         this.position = this.element.dataset.lycoTooltipPosition || 'top';
+        this.describedByBefore = this.element.getAttribute('aria-describedby');
 
         if (!this.element.id) {
             this.element.id = `lyco-tooltip-trigger-${Math.random().toString(36).substr(2, 9)}`;
@@ -23,16 +27,14 @@ export class TooltipController {
         this.boundHide = this.hide.bind(this);
         this.boundUpdatePosition = this.updatePosition.bind(this);
 
-        if (this.element.dataset.lycoInitialized === 'true') return;
-
         this.init();
     }
 
     private init() {
-        this.element.addEventListener('mouseenter', this.boundShow);
-        this.element.addEventListener('focus', this.boundShow);
-        this.element.addEventListener('mouseleave', this.boundHide);
-        this.element.addEventListener('blur', this.boundHide);
+        this.listen(this.element, 'mouseenter', this.boundShow);
+        this.listen(this.element, 'focus', this.boundShow);
+        this.listen(this.element, 'mouseleave', this.boundHide);
+        this.listen(this.element, 'blur', this.boundHide);
 
         this.element.dataset.lycoInitialized = 'true';
     }
@@ -42,14 +44,14 @@ export class TooltipController {
         if (!this.content) return;
 
         this.tooltipEl = document.createElement('div');
-        this.tooltipEl.className = `tooltip__content tooltip__content--${this.position}`;
+        this.tooltipEl.className = `tooltip-content tooltip-content-${this.position}`;
         this.tooltipEl.setAttribute('role', 'tooltip');
 
-        const tooltipId = `lyco-tooltip-${Math.random().toString(36).substr(2, 9)}`;
-        this.tooltipEl.id = tooltipId;
-        this.element.setAttribute('aria-describedby', tooltipId);
+        this.tooltipId = `lyco-tooltip-${Math.random().toString(36).substr(2, 9)}`;
+        this.tooltipEl.id = this.tooltipId;
+        this.element.setAttribute('aria-describedby', [this.describedByBefore, this.tooltipId].filter(Boolean).join(' '));
 
-        this.tooltipEl.innerHTML = this.content;
+        setSafeText(this.tooltipEl, this.content);
 
         document.body.appendChild(this.tooltipEl);
         this.updatePosition();
@@ -80,7 +82,7 @@ export class TooltipController {
             targetPosition = 'left';
         }
 
-        this.tooltipEl.className = `tooltip__content tooltip__content--${targetPosition}`;
+        this.tooltipEl.className = `tooltip-content tooltip-content-${targetPosition}`;
 
         const scrollY = window.scrollY || window.pageYOffset;
         const scrollX = window.scrollX || window.pageXOffset;
@@ -120,25 +122,32 @@ export class TooltipController {
         if (this.tooltipEl) {
             this.tooltipEl.remove();
             this.tooltipEl = null;
-            this.element.removeAttribute('aria-describedby');
+            if (this.describedByBefore) this.element.setAttribute('aria-describedby', this.describedByBefore);
+            else this.element.removeAttribute('aria-describedby');
+            this.tooltipId = undefined;
         }
         window.removeEventListener('scroll', this.boundUpdatePosition, true);
         window.removeEventListener('resize', this.boundUpdatePosition);
     }
 
-    public destroy() {
+    public override destroy(): void {
         this.hide();
-        this.element.removeEventListener('mouseenter', this.boundShow);
-        this.element.removeEventListener('focus', this.boundShow);
-        this.element.removeEventListener('mouseleave', this.boundHide);
-        this.element.removeEventListener('blur', this.boundHide);
+        super.destroy();
         delete this.element.dataset.lycoInitialized;
     }
 }
 
-export const initTooltips = () => {
-    const elements = document.querySelectorAll('[data-lyco-tooltip]:not([data-lyco-initialized])');
+export const initTooltips = (root: ParentNode = document): void => {
+    const elements = root.querySelectorAll<HTMLElement>('[data-lyco-tooltip]');
     elements.forEach(element => {
-        new TooltipController(element as HTMLElement);
+        if (controllerRegistry.get(element, 'tooltip')) return;
+        const controller = new TooltipController(element);
+        controllerRegistry.register(element, 'tooltip', controller);
     });
 };
+import {setSafeText} from '../../utils/safe-content';
+import {BaseController} from '../../vanilla/BaseController';
+import {controllerRegistry} from '../../vanilla/controller-registry';
+
+
+

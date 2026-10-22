@@ -130,7 +130,7 @@ export const Tooltip = memo(forwardRef<HTMLDivElement, TooltipProps>((
                     }}
                     role="tooltip"
                     id={tooltipId}
-                    className={clsx('tooltip__content', `tooltip__content--${actualPosition}`, className)}
+                    className={clsx('tooltip-content', `tooltip-content-${actualPosition}`, className)}
                     style={{top: coords.top, left: coords.left}}
                     {...props}
                 >
@@ -142,6 +142,8 @@ export const Tooltip = memo(forwardRef<HTMLDivElement, TooltipProps>((
     );
 }));
 Tooltip.displayName = 'Tooltip';
+
+
 
 
 

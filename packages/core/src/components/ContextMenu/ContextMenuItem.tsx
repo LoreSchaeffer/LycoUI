@@ -56,18 +56,18 @@ export const ContextMenuItem = React.forwardRef<HTMLLIElement, ContextMenuItemPr
         }, []);
 
         if (item.type === 'separator') {
-            return <li ref={ref} className="context-menu__separator" role="separator" {...props} />;
+            return <li ref={ref} className="context-menu-separator" role="separator" {...props} />;
         }
 
         return (
             <li
                 ref={ref}
                 className={clsx(
-                    'context-menu__item',
-                    item.danger && 'context-menu__item--danger',
+                    'context-menu-item',
+                    item.danger && 'context-menu-item-danger',
                     item.disabled && 'is-disabled',
                     isHovered && 'is-hovered',
-                    hasSubmenu && 'context-menu__item--has-submenu'
+                    hasSubmenu && 'context-menu-item-has-submenu'
                 )}
                 role="menuitem"
                 onMouseEnter={handleMouseEnter}
@@ -79,17 +79,17 @@ export const ContextMenuItem = React.forwardRef<HTMLLIElement, ContextMenuItemPr
                 {...props}
             >
                 {item.icon && (
-                    <span className="context-menu__icon">
+                    <span className="context-menu-icon">
                     {item.icon}
                 </span>
                 )}
 
-                <span className="context-menu__label">
+                <span className="context-menu-label">
                 {item.label}
             </span>
 
                 {hasSubmenu && (
-                    <span className="context-menu__arrow">
+                    <span className="context-menu-arrow">
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                         <polyline points="9 18 15 12 9 6"></polyline>
                     </svg>
@@ -109,4 +109,6 @@ export const ContextMenuItem = React.forwardRef<HTMLLIElement, ContextMenuItemPr
         );
     });
 ContextMenuItem.displayName = 'ContextMenuItem';
+
+
 

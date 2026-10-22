@@ -1,0 +1,9 @@
+import {type ReactNode} from 'react';
+import clsx from 'clsx';
+import {usePageEditor} from './usePageEditor';
+interface Props { currentPage: number; totalPages: number; disabled: boolean; prevIcon: ReactNode; nextIcon: ReactNode; onChange: (page: number) => void; }
+export const PaginationCompact = ({currentPage, totalPages, disabled, prevIcon, nextIcon, onChange}: Props) => {
+    const editor = usePageEditor(currentPage, totalPages, onChange);
+    return <><button className={clsx('pagination-btn', 'pagination-btn-prev', (disabled || currentPage <= 1) && 'is-disabled')} onClick={() => onChange(currentPage - 1)} disabled={disabled || currentPage <= 1} aria-label="Previous page">{prevIcon}</button><div className="pagination-compact-info">{editor.isEditing ? <input ref={editor.inputRef} type="number" className="pagination-current-page-input" value={editor.inputValue} onChange={event => editor.setInputValue(event.target.value)} onBlur={editor.commit} onKeyDown={event => { if (event.key === 'Enter') editor.commit(); if (event.key === 'Escape') editor.cancel(); }} min={1} max={totalPages} aria-label="Current page"/> : <span className={clsx('pagination-current-page', disabled && 'is-disabled')} tabIndex={disabled ? -1 : 0} onClick={() => !disabled && editor.start()} onKeyDown={event => { if (!disabled && (event.key === 'Enter' || event.key === ' ')) { event.preventDefault(); editor.start(); } }} aria-label={`Page ${currentPage} of ${totalPages}. Click to jump to page.`} aria-disabled={disabled}>{currentPage}</span>}<span className="pagination-separator" aria-hidden="true">/</span><span className="pagination-total-pages">{totalPages}</span></div><button className={clsx('pagination-btn', 'pagination-btn-next', (disabled || currentPage >= totalPages) && 'is-disabled')} onClick={() => onChange(currentPage + 1)} disabled={disabled || currentPage >= totalPages} aria-label="Next page">{nextIcon}</button></>;
+};
+

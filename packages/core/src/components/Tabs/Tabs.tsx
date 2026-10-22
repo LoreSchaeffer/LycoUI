@@ -65,7 +65,7 @@ export const Tabs = forwardRef<HTMLDivElement, TabsProps>((
         <TabsContext.Provider value={contextValue}>
             <div
                 ref={ref}
-                className={clsx('tabs', color && `tabs--${color}`, className)}
+                className={clsx('tabs', color && `tabs-${color}`, className)}
                 {...props}
             >
                 {children}
@@ -97,7 +97,7 @@ export const TabsList = forwardRef<HTMLDivElement, TabsListProps>((
     return (
         <div
             ref={ref}
-            className={clsx('tabs__list', className)}
+            className={clsx('tabs-list', className)}
             role="tablist"
             onKeyDown={(e) => {
                 handleKeyDown(e);
@@ -145,7 +145,7 @@ export const TabTrigger = forwardRef<HTMLButtonElement, TabTriggerProps>((
             aria-controls={`${ctx.idPrefix}-panel-${value}`}
             aria-selected={isActive}
             disabled={disabled}
-            className={clsx('tabs__trigger', isActive && 'is-active', disabled && 'is-disabled', className)}
+            className={clsx('tabs-trigger', isActive && 'is-active', disabled && 'is-disabled', className)}
             onClick={handleClick}
             data-lyco-tab-value={value}
             {...props}
@@ -182,7 +182,7 @@ export const TabContent = forwardRef<HTMLDivElement, TabContentProps>((
             role="tabpanel"
             id={`${ctx.idPrefix}-panel-${value}`}
             aria-labelledby={`${ctx.idPrefix}-tab-${value}`}
-            className={clsx('tabs__content', className)}
+            className={clsx('tabs-content', className)}
             data-lyco-tab-value={value}
             hidden={!isActive}
             aria-hidden={!isActive}
@@ -194,3 +194,5 @@ export const TabContent = forwardRef<HTMLDivElement, TabContentProps>((
     );
 });
 TabContent.displayName = 'TabContent';
+
+

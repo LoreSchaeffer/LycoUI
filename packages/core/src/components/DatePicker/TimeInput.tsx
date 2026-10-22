@@ -123,13 +123,13 @@ const TimeInput = memo(forwardRef<HTMLDivElement, TimeInputProps>(function TimeI
     }, [currentAmPm, handleAmPmClick]);
 
     return (
-        <div className="datepicker__time" ref={ref}>
-            <span className="datepicker__time-label">Time</span>
-            <div className="datepicker__time-columns">
+        <div className="datepicker-time" ref={ref}>
+            <span className="datepicker-time-label">Time</span>
+            <div className="datepicker-time-columns">
                 {/* Hours column */}
                 <div
                     ref={hoursRef}
-                    className="datepicker__time-col"
+                    className="datepicker-time-col"
                     role="listbox"
                     aria-label="Hours"
                     tabIndex={0}
@@ -138,7 +138,7 @@ const TimeInput = memo(forwardRef<HTMLDivElement, TimeInputProps>(function TimeI
                     {hourOptions.map(h => (
                         <div
                             key={h}
-                            className={clsx('datepicker__time-item', h === displayHour && 'is-selected')}
+                            className={clsx('datepicker-time-item', h === displayHour && 'is-selected')}
                             role="option"
                             aria-selected={h === displayHour}
                             onClick={() => handleHourClick(h)}
@@ -148,12 +148,12 @@ const TimeInput = memo(forwardRef<HTMLDivElement, TimeInputProps>(function TimeI
                     ))}
                 </div>
 
-                <span className="datepicker__time-separator" aria-hidden="true">:</span>
+                <span className="datepicker-time-separator" aria-hidden="true">:</span>
 
                 {/* Minutes column */}
                 <div
                     ref={minutesRef}
-                    className="datepicker__time-col"
+                    className="datepicker-time-col"
                     role="listbox"
                     aria-label="Minutes"
                     tabIndex={0}
@@ -162,7 +162,7 @@ const TimeInput = memo(forwardRef<HTMLDivElement, TimeInputProps>(function TimeI
                     {MINUTES.map(m => (
                         <div
                             key={m}
-                            className={clsx('datepicker__time-item', m === minutes && 'is-selected')}
+                            className={clsx('datepicker-time-item', m === minutes && 'is-selected')}
                             role="option"
                             aria-selected={m === minutes}
                             onClick={() => handleMinuteClick(m)}
@@ -176,7 +176,7 @@ const TimeInput = memo(forwardRef<HTMLDivElement, TimeInputProps>(function TimeI
                 {use12Hour && (
                     <div
                         ref={ampmRef}
-                        className="datepicker__time-col"
+                        className="datepicker-time-col"
                         role="listbox"
                         aria-label="AM/PM"
                         tabIndex={0}
@@ -186,7 +186,7 @@ const TimeInput = memo(forwardRef<HTMLDivElement, TimeInputProps>(function TimeI
                         {AMPM.map(val => (
                             <div
                                 key={val}
-                                className={clsx('datepicker__time-item', val === currentAmPm && 'is-selected')}
+                                className={clsx('datepicker-time-item', val === currentAmPm && 'is-selected')}
                                 role="option"
                                 aria-selected={val === currentAmPm}
                                 onClick={() => handleAmPmClick(val)}
@@ -204,3 +204,4 @@ const TimeInput = memo(forwardRef<HTMLDivElement, TimeInputProps>(function TimeI
 TimeInput.displayName = 'TimeInput';
 
 export default TimeInput;
+

@@ -2,7 +2,7 @@ export function initLycoAlerts(): void {
     const alerts = document.querySelectorAll<HTMLDivElement>('.alert:not([data-lyco-initialized])');
     alerts.forEach(alert => {
         const durationAttr = alert.getAttribute('data-duration');
-        const hasCloseBtn = alert.querySelector('.alert__close') !== null;
+        const hasCloseBtn = alert.querySelector('.alert-close') !== null;
 
         if (durationAttr || hasCloseBtn) {
             new LycoAlertController(alert);
@@ -13,13 +13,13 @@ export function initLycoAlerts(): void {
 
 class LycoAlertController {
     private readonly element: HTMLDivElement;
-    private timerId?: number;
+    private dismiss?: TimedDismiss;
     private readonly closeBtn: HTMLButtonElement | null;
     private readonly _onCloseClick: () => void;
 
     constructor(element: HTMLDivElement) {
         this.element = element;
-        this.closeBtn = element.querySelector<HTMLButtonElement>('.alert__close');
+        this.closeBtn = element.querySelector<HTMLButtonElement>('.alert-close');
 
         this._onCloseClick = () => this.close();
 
@@ -37,23 +37,21 @@ class LycoAlertController {
     }
 
     private startTimer(durationSeconds: number): void {
-        let progress = this.element.querySelector<HTMLDivElement>('.alert__progress');
+        let progress = this.element.querySelector<HTMLDivElement>('.alert-progress');
         if (!progress) {
             progress = document.createElement('div');
-            progress.className = 'alert__progress';
+            progress.className = 'alert-progress';
             progress.style.animationDuration = `${durationSeconds}s`;
             this.element.appendChild(progress);
         }
 
-        this.timerId = window.setTimeout(() => {
-            this.close();
-        }, durationSeconds * 1000);
+        this.dismiss = new TimedDismiss(durationSeconds * 1000, () => this.close());
+        this.dismiss.start();
     }
 
     public destroy(): void {
-        if (this.timerId) {
-            window.clearTimeout(this.timerId);
-        }
+        this.dismiss?.destroy();
+        this.dismiss = undefined;
         if (this.closeBtn) {
             this.closeBtn.removeEventListener('click', this._onCloseClick);
         }
@@ -65,3 +63,6 @@ class LycoAlertController {
         this.element.remove();
     }
 }
+import {TimedDismiss} from '../../interaction/timed-dismiss';
+
+

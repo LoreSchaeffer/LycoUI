@@ -85,23 +85,23 @@ class AccordionItemController {
         const collapseId = `${baseId}-collapse`;
 
         this.element = document.createElement('div');
-        this.element.className = 'accordion__item';
+        this.element.className = 'accordion-item';
         if (disabled) this.element.classList.add('is-disabled');
 
         const header = document.createElement('h2');
-        header.className = 'accordion__header';
+        header.className = 'accordion-header';
         header.id = headerId;
 
         this.button = document.createElement('button');
         this.button.type = 'button';
-        this.button.className = 'accordion__button';
+        this.button.className = 'accordion-button';
         this.button.setAttribute('aria-expanded', String(initiallyOpen));
         this.button.setAttribute('aria-controls', collapseId);
         if (disabled) this.button.disabled = true;
 
         this.button.textContent = title;
         const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
-        svg.setAttribute('class', 'accordion__chevron');
+        svg.setAttribute('class', 'accordion-chevron');
         svg.setAttribute('viewBox', '0 0 24 24');
         svg.setAttribute('fill', 'none');
         svg.setAttribute('stroke', 'currentColor');
@@ -118,17 +118,17 @@ class AccordionItemController {
         this.element.appendChild(header);
 
         const collapse = document.createElement('div');
-        collapse.className = 'accordion__collapse';
+        collapse.className = 'accordion-collapse';
         collapse.id = collapseId;
         collapse.setAttribute('aria-labelledby', headerId);
         collapse.setAttribute('role', 'region');
         collapse.setAttribute('aria-hidden', String(!initiallyOpen || disabled));
 
         const collapseInner = document.createElement('div');
-        collapseInner.className = 'accordion__collapse-inner';
+        collapseInner.className = 'accordion-collapse-inner';
 
         const body = document.createElement('div');
-        body.className = 'accordion__body';
+        body.className = 'accordion-body';
 
         this.contentNodes.forEach(node => body.appendChild(node));
 
@@ -159,7 +159,7 @@ class AccordionItemController {
         this.element.classList.remove('is-open');
         this.button.setAttribute('aria-expanded', 'false');
 
-        const collapse = this.element.querySelector('.accordion__collapse');
+        const collapse = this.element.querySelector('.accordion-collapse');
         if (collapse) collapse.setAttribute('aria-hidden', 'true');
     }
 
@@ -175,7 +175,7 @@ class AccordionItemController {
 
         this.button.setAttribute('aria-expanded', String(this.open));
 
-        const collapse = this.element.querySelector('.accordion__collapse');
+        const collapse = this.element.querySelector('.accordion-collapse');
         if (collapse) collapse.setAttribute('aria-hidden', String(!this.open));
 
         this.parent.handleToggle(this);
@@ -186,4 +186,5 @@ class AccordionItemController {
         this.contentNodes.forEach(node => this.customItem.appendChild(node));
     }
 }
+
 

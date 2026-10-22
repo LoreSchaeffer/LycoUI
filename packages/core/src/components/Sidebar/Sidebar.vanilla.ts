@@ -1,4 +1,5 @@
 import {computeSideFlyoutPosition} from '../../utils/floating';
+import {SidebarResizeController} from './SidebarResizeController';
 
 export function initLycoSidebars(): void {
     const sidebars = document.querySelectorAll<HTMLElement>('.sidebar:not([data-lyco-initialized])');
@@ -31,13 +32,22 @@ export class LycoSidebarController {
     private readonly _onMouseUp: (e: MouseEvent) => void;
     private readonly _dropdownListeners: DropdownListeners[] = [];
 
-    private startX: number = 0;
     private startWidth: number = 0;
+    private readonly resizeController: SidebarResizeController;
 
     constructor(sidebar: HTMLElement) {
         this.sidebar = sidebar;
-        this.resizer = sidebar.querySelector<HTMLElement>('.sidebar__resizer, .sidebar-resizer');
-        this.dropdowns = sidebar.querySelectorAll<HTMLElement>('.sidebar__dropdown, .sidebar-dropdown');
+        this.resizer = sidebar.querySelector<HTMLElement>('.sidebar-resizer, .sidebar-resizer');
+        this.dropdowns = sidebar.querySelectorAll<HTMLElement>('.sidebar-dropdown, .sidebar-dropdown');
+        const defaultWidth = Number(this.sidebar.dataset.defaultWidth) || 256;
+        const minWidth = Number(this.sidebar.dataset.minWidth) || 200;
+        const maxWidth = Number(this.sidebar.dataset.maxWidth) || 400;
+        this.resizeController = new SidebarResizeController({
+            initialWidth: defaultWidth,
+            minWidth,
+            maxWidth,
+            onChange: (width) => this.sidebar.style.setProperty('--sidebar-width', `${width}px`)
+        });
 
         const datasetScale = this.sidebar.dataset.miniIconScale;
         if (datasetScale) {
@@ -45,13 +55,11 @@ export class LycoSidebarController {
         }
 
         this._onMouseMove = (e: MouseEvent) => {
-            const newWidth = this.startWidth + (e.clientX - this.startX);
-            if (newWidth >= 200 && newWidth <= 500) {
-                this.sidebar.style.setProperty('--sidebar-width', `${newWidth}px`);
-            }
+            this.resizeController.move(e.clientX);
         };
 
         this._onMouseUp = () => {
+            this.resizeController.end();
             this.sidebar.classList.remove('sidebar-resizing');
             document.removeEventListener('mousemove', this._onMouseMove);
             document.removeEventListener('mouseup', this._onMouseUp);
@@ -61,8 +69,9 @@ export class LycoSidebarController {
             if (this.sidebar.classList.contains('is-mini')) return;
 
             this.sidebar.classList.add('sidebar-resizing');
-            this.startX = e.clientX;
             this.startWidth = this.sidebar.offsetWidth;
+            this.resizeController.set(this.startWidth);
+            this.resizeController.begin(e.clientX);
 
             document.addEventListener('mousemove', this._onMouseMove);
             document.addEventListener('mouseup', this._onMouseUp);
@@ -73,8 +82,8 @@ export class LycoSidebarController {
         }
 
         this.dropdowns.forEach(dropdown => {
-            const trigger = dropdown.querySelector<HTMLElement>('.sidebar__dropdown-trigger, .sidebar-dropdown-trigger');
-            const menu = dropdown.querySelector<HTMLElement>('.sidebar__dropdown-menu-wrapper, .sidebar-dropdown-menu-wrapper');
+            const trigger = dropdown.querySelector<HTMLElement>('.sidebar-dropdown-trigger, .sidebar-dropdown-trigger');
+            const menu = dropdown.querySelector<HTMLElement>('.sidebar-dropdown-menu-wrapper, .sidebar-dropdown-menu-wrapper');
 
             const listeners: DropdownListeners = {el: dropdown};
 
@@ -137,6 +146,7 @@ export class LycoSidebarController {
         }
         document.removeEventListener('mousemove', this._onMouseMove);
         document.removeEventListener('mouseup', this._onMouseUp);
+        this.resizeController.destroy();
 
         this._dropdownListeners.forEach(({el, triggerEl, click, reposition}) => {
             if (triggerEl && click) triggerEl.removeEventListener('click', click);
@@ -149,3 +159,4 @@ export class LycoSidebarController {
         delete this.sidebar.dataset.lycoInitialized;
     }
 }
+

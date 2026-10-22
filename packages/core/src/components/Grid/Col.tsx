@@ -54,15 +54,15 @@ export const Col = forwardRef<HTMLDivElement, ColProps>((
             ref={ref}
             className={clsx(
                 'col',
-                span && `col--${span}`,
-                xs && `col--${xs}`,
-                sm && `col--sm-${sm}`,
-                md && `col--md-${md}`,
-                lg && `col--lg-${lg}`,
-                xl && `col--xl-${xl}`,
-                xxl && `col--xxl-${xxl}`,
-                stretch && 'col--stretch',
-                align !== 'auto' && `col--align-${align}`,
+                span && `col-${span}`,
+                xs && `col-${xs}`,
+                sm && `col-sm-${sm}`,
+                md && `col-md-${md}`,
+                lg && `col-lg-${lg}`,
+                xl && `col-xl-${xl}`,
+                xxl && `col-xxl-${xxl}`,
+                stretch && 'col-stretch',
+                align !== 'auto' && `col-align-${align}`,
                 className
             )}
             {...props}
@@ -73,3 +73,4 @@ export const Col = forwardRef<HTMLDivElement, ColProps>((
 });
 
 Col.displayName = "Col";
+

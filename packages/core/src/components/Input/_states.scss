@@ -1,0 +1,131 @@
+.input {
+  // ==========================================================================
+  // FOCUS STATE
+  // ==========================================================================
+  &.is-focused {
+    border-color: var(--input-color-base);
+    box-shadow: 0 0 0 1px var(--color-void), 0 0 0 3px var(--input-color-base);
+    --input-border-internal: var(--input-color-base);
+  }
+
+  // ==========================================================================
+  // DISABLED STATE
+  // ==========================================================================
+  &.is-disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    pointer-events: none;
+    background-color: var(--color-carbon);
+
+    .input-field {
+      color: var(--color-text-muted);
+      -webkit-text-fill-color: var(--color-text-muted); // Required for Safari
+    }
+  }
+
+  // ==========================================================================
+  // READONLY STATE
+  // ==========================================================================
+  &.is-readonly,
+  &:has(.input-field[readonly]) {
+    background-color: var(--color-carbon);
+    border-color: var(--color-border-subtle);
+
+    .input-field {
+      cursor: default;
+      color: var(--color-text-muted);
+      -webkit-text-fill-color: var(--color-text-muted);
+    }
+
+    .input-icon-clickable {
+      pointer-events: none;
+      opacity: 0.5;
+    }
+  }
+
+  // ==========================================================================
+  // LOADING STATE
+  // ==========================================================================
+  &.is-loading {
+    cursor: wait;
+  }
+
+  // ==========================================================================
+  // VALIDATION STATES
+  // ==========================================================================
+  &.is-valid {
+    border-color: var(--color-success);
+    --input-color-base: var(--color-success);
+
+    &.is-focused {
+      box-shadow: 0 0 0 1px var(--color-void), 0 0 0 3px var(--color-success);
+    }
+  }
+
+  &.is-invalid {
+    border-color: var(--color-danger);
+    --input-color-base: var(--color-danger);
+
+    &.is-focused {
+      box-shadow: 0 0 0 1px var(--color-void), 0 0 0 3px var(--color-danger);
+    }
+  }
+
+  // ==========================================================================
+  // FLAT MODIFIER
+  // ==========================================================================
+  &-flat {
+    box-shadow: none;
+    background-image: none;
+    background-color: var(--color-carbon);
+    border-color: transparent;
+
+    &:hover:not(.is-disabled):not(.is-invalid):not(.is-valid) {
+      background-color: var(--color-carbon-active);
+    }
+
+    &.is-focused {
+      background-color: var(--color-void);
+      border-color: var(--input-color-base);
+      box-shadow: 0 0 0 1px var(--color-void), 0 0 0 3px var(--input-color-base);
+    }
+  }
+
+  // ==========================================================================
+  // SIZES
+  // ==========================================================================
+  &-sm {
+    --input-height: var(--spacing-8, 2rem);
+    --input-padding-x: var(--spacing-2);
+    --input-font-size: var(--text-caption);
+    --input-icon-size: var(--spacing-4, 1rem);
+    --input-radius: var(--radius-sm);
+
+    .input-step-btn {
+      width: var(--spacing-6, 1.5rem);
+
+      svg {
+        width: 0.625rem;
+        height: 0.625rem;
+      }
+    }
+  }
+
+  &-lg {
+    --input-height: var(--spacing-12, 3rem);
+    --input-padding-x: var(--spacing-4);
+    --input-font-size: var(--font-size-base);
+    --input-icon-size: var(--spacing-6, 1.5rem);
+    --input-radius: var(--radius-lg);
+
+    .input-step-btn {
+      width: 2.5rem;
+
+      svg {
+        width: 0.875rem;
+        height: 0.875rem;
+      }
+    }
+  }
+}
+

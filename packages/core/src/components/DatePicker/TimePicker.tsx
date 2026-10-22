@@ -1,11 +1,13 @@
 import './DatePicker.scss';
-import {type CSSProperties, forwardRef, type HTMLAttributes, type KeyboardEvent, useCallback, useEffect, useLayoutEffect, useId, useMemo, useRef, useState,} from 'react';
+import {type CSSProperties, forwardRef, type HTMLAttributes, type KeyboardEvent, useCallback, useEffect, useId, useMemo, useRef, useState,} from 'react';
 import { createPortal } from 'react-dom';
 import clsx from 'clsx';
 import type {FullVariant, SizeVariant} from '../../types/types.ts';
 import {getContrastColor} from '../../utils/theme.ts';
 import {useMediaQuery} from '../../hooks/useMediaQuery.ts';
 import TimeInput from './TimeInput.tsx';
+import {parseTime} from './time-model';
+import {usePickerPopover} from './PickerPopover.tsx';
 
 /** Represents a selected time value. */
 /**
@@ -92,58 +94,7 @@ export const TimePicker = forwardRef<HTMLDivElement, TimePickerProps>(
 
         const containerRef = useRef<HTMLDivElement>(null);
         const inputRef = useRef<HTMLInputElement>(null);
-        const popoverRef = useRef<HTMLDivElement>(null);
-
-        const [popoverStyles, setPopoverStyles] = useState<CSSProperties>({});
-
-        const updatePosition = useCallback(() => {
-            if (!isOpen || !containerRef.current || !popoverRef.current) return;
-            const triggerRect = containerRef.current.getBoundingClientRect();
-            const popoverRect = popoverRef.current.getBoundingClientRect();
-            
-            const scrollX = window.scrollX;
-            const scrollY = window.scrollY;
-            const viewportWidth = document.documentElement.clientWidth;
-            const viewportHeight = window.innerHeight;
-            
-            let calculatedLeft = triggerRect.left + scrollX;
-            let calculatedTop = triggerRect.bottom + scrollY + 8;
-            
-            // X-Axis bounding (Right edge)
-            if (calculatedLeft + popoverRect.width > viewportWidth + scrollX - 16) {
-                // Align right edges
-                calculatedLeft = (triggerRect.right + scrollX) - popoverRect.width;
-            }
-            
-            // X-Axis bounding (Left edge strict clamp)
-            if (calculatedLeft < scrollX + 16) {
-                calculatedLeft = scrollX + 16;
-            }
-
-            // Y-Axis bounding (Flip to top if bottom overflows)
-            if (triggerRect.bottom + popoverRect.height + 8 > viewportHeight && triggerRect.top - popoverRect.height - 8 > 0) {
-                calculatedTop = triggerRect.top + scrollY - popoverRect.height - 8;
-            }
-
-            setPopoverStyles({
-                position: 'absolute',
-                top: `${calculatedTop}px`,
-                left: `${calculatedLeft}px`,
-                zIndex: 'var(--z-dropdown, 9999)',
-            });
-        }, [isOpen]);
-
-        useLayoutEffect(() => {
-            if (isOpen) {
-                updatePosition();
-                window.addEventListener('scroll', updatePosition, true);
-                window.addEventListener('resize', updatePosition);
-                return () => {
-                    window.removeEventListener('scroll', updatePosition, true);
-                    window.removeEventListener('resize', updatePosition);
-                };
-            }
-        }, [isOpen, updatePosition]);
+        const {popoverRef, popoverStyles} = usePickerPopover(isOpen, containerRef, popoverId, () => setIsOpen(false));
 
         const mergedRef = useCallback(
             (node: HTMLDivElement | null) => {
@@ -186,21 +137,6 @@ export const TimePicker = forwardRef<HTMLDivElement, TimePickerProps>(
             }
         }, [value, displayValue]);
 
-        // Close on outside click
-        useEffect(() => {
-            if (!isOpen) return;
-            const handleOutside = (e: MouseEvent) => {
-                const target = e.target as Node;
-                const popoverEl = document.getElementById(popoverId);
-                if (containerRef.current && !containerRef.current.contains(target) && (!popoverEl || !popoverEl.contains(target))) {
-                    setIsOpen(false);
-                }
-            };
-            document.addEventListener('mousedown', handleOutside);
-            return () => document.removeEventListener('mousedown', handleOutside);
-        }, [isOpen, popoverId]);
-
-
         const handleClear = useCallback(
             (e: React.MouseEvent) => {
                 e.stopPropagation();
@@ -224,10 +160,8 @@ export const TimePicker = forwardRef<HTMLDivElement, TimePickerProps>(
                 onChange?.(null);
                 return;
             }
-            const [h, m] = val.split(':').map(Number);
-            if (!isNaN(h) && !isNaN(m)) {
-                onChange?.({hours: h, minutes: m});
-            }
+            const time = parseTime(val);
+            if (time) onChange?.(time);
         }, [onChange]);
 
         const handleInputChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
@@ -239,25 +173,14 @@ export const TimePicker = forwardRef<HTMLDivElement, TimePickerProps>(
                 return;
             }
 
-            const match = val.match(/^(\d{1,2}):(\d{2})(?:\s*(AM|PM|am|pm))?$/);
-            if (match) {
-                let h = parseInt(match[1], 10);
-                const m = parseInt(match[2], 10);
-                const ampm = match[3]?.toUpperCase();
-
-                if (resolved12Hour && ampm) {
-                    if (h === 12) h = ampm === 'AM' ? 0 : 12;
-                    else if (ampm === 'PM') h += 12;
-                }
-
-                if (h >= 0 && h <= 23 && m >= 0 && m <= 59) {
-                    setIsInvalid(false);
-                    onChange?.({hours: h, minutes: m});
-                    return;
-                }
+            const parsed = parseTime(val);
+            if (parsed) {
+                setIsInvalid(false);
+                onChange?.(parsed);
+                return;
             }
             setIsInvalid(true);
-        }, [onChange, resolved12Hour]);
+        }, [onChange]);
 
         const handleTriggerKeyDown = useCallback(
             (e: KeyboardEvent<HTMLInputElement>) => {
@@ -298,8 +221,8 @@ export const TimePicker = forwardRef<HTMLDivElement, TimePickerProps>(
                 id={pickerId}
                 className={clsx(
                     'datepicker',
-                    'datepicker--time',
-                    size !== 'md' && `datepicker--${size}`,
+                    'datepicker-time',
+                    size !== 'md' && `datepicker-${size}`,
                     disabled && 'is-disabled',
                     isComponentInvalid && 'is-invalid',
                     isOpen && 'is-open',
@@ -309,7 +232,7 @@ export const TimePicker = forwardRef<HTMLDivElement, TimePickerProps>(
                 {...props}
             >
                 <div
-                    className="datepicker__trigger"
+                    className="datepicker-trigger"
                     onClick={(e) => {
                         e.stopPropagation(); // CRITICAL: Prevent bubbling to document
                         if (disabled) return;
@@ -318,7 +241,7 @@ export const TimePicker = forwardRef<HTMLDivElement, TimePickerProps>(
                     }}
                 >
                     {/* Clock icon */}
-                    <span className="datepicker__icon" aria-hidden="true">
+                    <span className="datepicker-icon" aria-hidden="true">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                             <circle cx="12" cy="12" r="10"/>
                             <polyline points="12 6 12 12 16 14"/>
@@ -328,7 +251,7 @@ export const TimePicker = forwardRef<HTMLDivElement, TimePickerProps>(
                     <input
                         ref={inputRef}
                         type={isMobile ? "time" : "text"}
-                        className="datepicker__input"
+                        className="datepicker-input"
                         placeholder={placeholder}
                         value={isMobile ? nativeValue : inputValue}
                         onChange={isMobile ? handleNativeChange : handleInputChange}
@@ -348,7 +271,7 @@ export const TimePicker = forwardRef<HTMLDivElement, TimePickerProps>(
                     {/* Clear button */}
                     {inputValue && (
                         <span
-                            className="datepicker__clear"
+                            className="datepicker-clear"
                             role="button"
                             aria-label="Clear time"
                             tabIndex={disabled ? -1 : 0}
@@ -365,7 +288,7 @@ export const TimePicker = forwardRef<HTMLDivElement, TimePickerProps>(
                     )}
 
                     {/* Chevron */}
-                    <svg className="datepicker__chevron" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <svg className="datepicker-chevron" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                         <polyline points="6 9 12 15 18 9"/>
                     </svg>
                 </div>
@@ -374,9 +297,16 @@ export const TimePicker = forwardRef<HTMLDivElement, TimePickerProps>(
                     <div
                         ref={popoverRef}
                         id={popoverId}
-                        className="datepicker__popover"
+                        className="datepicker-popover"
                         role="dialog"
                         aria-label="Time picker"
+                        onKeyDown={(event) => {
+                            if (event.key === 'Escape') {
+                                event.preventDefault();
+                                setIsOpen(false);
+                                inputRef.current?.focus();
+                            }
+                        }}
                         style={{
                             ...popoverStyles,
                             ...(isColored ? {
@@ -397,7 +327,7 @@ export const TimePicker = forwardRef<HTMLDivElement, TimePickerProps>(
                 )}
 
                 {isComponentInvalid && finalMessage && (
-                    <div className="input__message input__message--invalid" role="alert">
+                    <div className="input-message input-message-invalid" role="alert">
                         {finalMessage}
                     </div>
                 )}
@@ -407,3 +337,6 @@ export const TimePicker = forwardRef<HTMLDivElement, TimePickerProps>(
 );
 
 TimePicker.displayName = 'TimePicker';
+
+
+

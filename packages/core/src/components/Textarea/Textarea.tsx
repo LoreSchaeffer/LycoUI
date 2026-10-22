@@ -1,8 +1,12 @@
 import './Textarea.scss';
 import type {TextareaHTMLAttributes} from 'react';
-import React, {type CSSProperties, forwardRef, useCallback, useEffect, useId, useRef, useState} from 'react';
+import React, {type CSSProperties, forwardRef, useCallback, useId, useRef} from 'react';
 import clsx from 'clsx';
 import type {FullVariant, SizeVariant} from '../../types/types';
+import {useFieldValidation} from '../../hooks/useFieldValidation';
+import {FieldLabel} from '../Input/FieldLabel';
+import {FieldMessage} from '../Input/FieldMessage';
+import {useInputState} from '../Input/useInputState';
 
 /**
  * TextareaValidation state options.
@@ -70,13 +74,8 @@ export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
         const messageId = `${textareaId}-message`;
 
         const innerRef = useRef<HTMLTextAreaElement>(null);
-        const [isFocused, setIsFocused] = useState(false);
-        const [isFilled, setIsFilled] = useState(
-            () => Boolean(value !== undefined ? value : defaultValue)
-        );
-        const [autoValidationState, setAutoValidationState] = useState<'valid' | 'invalid' | null>(null);
-        const [autoValidationMessage, setAutoValidationMessage] = useState<string>('');
-        const [hasBlurred, setHasBlurred] = useState(false);
+        const {isFocused, isFilled, focus, blur, input: syncInputState} = useInputState(value, defaultValue);
+        const {hasBlurred, markBlurred, validate, validation: fieldValidation} = useFieldValidation(validation, validationFn, validationMessage);
 
         const mergedRef = useCallback((node: HTMLTextAreaElement | null) => {
             (innerRef as React.MutableRefObject<HTMLTextAreaElement | null>).current = node;
@@ -84,91 +83,48 @@ export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
             else if (ref) (ref as React.MutableRefObject<HTMLTextAreaElement | null>).current = node;
         }, [ref]);
 
-        useEffect(() => {
-            if (value !== undefined) {
-                setIsFilled(String(value).length > 0);
-            }
-        }, [value]);
-
-        const runAutoValidation = useCallback((textareaEl: HTMLTextAreaElement) => {
-            const nativeValid = textareaEl.checkValidity();
-            if (!nativeValid) {
-                setAutoValidationState('invalid');
-                setAutoValidationMessage(textareaEl.validationMessage);
-                return;
-            }
-
-            if (validationFn) {
-                const customError = validationFn(textareaEl.value);
-                if (customError) {
-                    setAutoValidationState('invalid');
-                    setAutoValidationMessage(customError);
-                    return;
-                }
-            }
-
-            setAutoValidationState('valid');
-            setAutoValidationMessage('');
-        }, [validationFn]);
-
         const handleFocus = useCallback((e: React.FocusEvent<HTMLTextAreaElement>) => {
-            setIsFocused(true);
+            focus();
             onFocus?.(e);
         }, [onFocus]);
 
         const handleBlur = useCallback((e: React.FocusEvent<HTMLTextAreaElement>) => {
-            setIsFocused(false);
-            setHasBlurred(true);
+            blur();
+            markBlurred();
 
             if (validation === 'auto') {
-                runAutoValidation(e.target);
+                validate(e.target);
             }
 
             onBlur?.(e);
-        }, [onBlur, validation, runAutoValidation]);
+        }, [onBlur, validation, validate]);
 
         const handleChange = useCallback((e: React.ChangeEvent<HTMLTextAreaElement>) => {
-            setIsFilled(e.target.value.length > 0);
+            syncInputState(e.target.value);
 
             if (validation === 'auto' && hasBlurred) {
-                runAutoValidation(e.target);
+                validate(e.target);
             }
 
             onChange?.(e);
-        }, [onChange, validation, hasBlurred, runAutoValidation]);
+        }, [onChange, validation, hasBlurred, validate]);
 
-        let visualValidation: 'valid' | 'invalid' | null = null;
-        if (validation === 'valid') {
-            visualValidation = 'valid';
-        } else if (validation === 'invalid') {
-            visualValidation = 'invalid';
-        } else if (validation === 'auto' && hasBlurred) {
-            visualValidation = autoValidationState;
-        }
-
-        let displayMessage = '';
-        if (validation !== 'disabled') {
-            if (validationMessage) {
-                displayMessage = validationMessage;
-            } else if (validation === 'auto' && autoValidationMessage) {
-                displayMessage = autoValidationMessage;
-            }
-        }
+        const {state: visualValidation, message: displayMessage} = fieldValidation;
 
         return (
             <div className="textarea-wrapper" style={style}>
                 <div
                     className={clsx(
                         'textarea',
-                        size && size !== 'md' && `textarea--${size}`,
-                        flat && 'textarea--flat',
+                        size && size !== 'md' && `textarea-${size}`,
+                        flat && 'textarea-flat',
                         isFocused && 'is-focused',
                         isFilled && 'is-filled',
                         disabled && 'is-disabled',
                         readOnly && 'is-readonly',
                         visualValidation === 'valid' && 'is-valid',
                         visualValidation === 'invalid' && 'is-invalid',
-                        `textarea--resize-${resize}`,
+                        `textarea-resize-${resize}`,
                         className
                     )}
                     style={{
@@ -178,7 +134,7 @@ export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
                     <textarea
                         ref={mergedRef}
                         id={textareaId}
-                        className="textarea__field"
+                        className="textarea-field"
                         disabled={disabled}
                         readOnly={readOnly}
                         value={value}
@@ -192,29 +148,14 @@ export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
                         {...props}
                     />
 
-                    {label && (
-                        <label className="textarea__label" htmlFor={textareaId}>
-                            {label}
-                            {required && <span className="textarea__required" aria-hidden="true"> *</span>}
-                        </label>
-                    )}
+                    {label && <FieldLabel className="textarea-label" htmlFor={textareaId} label={label} required={required}/>} 
                 </div>
 
-                {displayMessage && (
-                    <div
-                        id={messageId}
-                        className={clsx(
-                            'textarea__message',
-                            visualValidation === 'valid' && 'textarea__message--valid',
-                            visualValidation === 'invalid' && 'textarea__message--invalid'
-                        )}
-                        role={visualValidation === 'invalid' ? 'alert' : 'status'}
-                    >
-                        {displayMessage}
-                    </div>
-                )}
+                <FieldMessage id={messageId} className="textarea-message" state={visualValidation}>{displayMessage}</FieldMessage>
             </div>
         );
     }
 );
 Textarea.displayName = 'Textarea';
+
+

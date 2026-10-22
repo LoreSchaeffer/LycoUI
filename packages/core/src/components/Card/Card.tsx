@@ -56,14 +56,14 @@ const CardRoot = forwardRef<HTMLDivElement, CardProps>((
             ref={ref}
             className={clsx(
                 'card',
-                `card--elevation-${elevation}`,
-                `card--padding-${padding}`,
-                interactive && 'card--interactive',
+                `card-elevation-${elevation}`,
+                `card-padding-${padding}`,
+                interactive && 'card-interactive',
                 isColored && [
-                    'card--variant',
-                    isDim ? 'card--dim' : 'card--solid'
+                    'card-variant',
+                    isDim ? 'card-dim' : 'card-solid'
                 ],
-                (isFlat || flat) && 'card--flat',
+                (isFlat || flat) && 'card-flat',
                 className
             )}
             style={isColored ? {
@@ -88,21 +88,21 @@ export interface CardSectionProps extends HTMLAttributes<HTMLDivElement> {
 }
 
 const CardHeader = forwardRef<HTMLDivElement, CardSectionProps>(({children, className, ...props}, ref) => (
-    <div ref={ref} className={clsx('card__header', className)} {...props}>
+    <div ref={ref} className={clsx('card-header', className)} {...props}>
         {children}
     </div>
 ));
 CardHeader.displayName = 'CardHeader';
 
 const CardBody = forwardRef<HTMLDivElement, CardSectionProps>(({children, className, ...props}, ref) => (
-    <div ref={ref} className={clsx('card__body', className)} {...props}>
+    <div ref={ref} className={clsx('card-body', className)} {...props}>
         {children}
     </div>
 ));
 CardBody.displayName = 'CardBody';
 
 const CardFooter = forwardRef<HTMLDivElement, CardSectionProps>(({children, className, ...props}, ref) => (
-    <div ref={ref} className={clsx('card__footer', className)} {...props}>
+    <div ref={ref} className={clsx('card-footer', className)} {...props}>
         {children}
     </div>
 ));
@@ -116,4 +116,5 @@ export const Card = Object.assign(CardRoot, {
     Body: CardBody,
     Footer: CardFooter
 });
+
 

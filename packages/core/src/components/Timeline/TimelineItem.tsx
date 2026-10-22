@@ -39,19 +39,19 @@ export const TimelineItem = forwardRef<HTMLLIElement, TimelineItemProps>(
         return (
             <li
                 ref={ref}
-                className={clsx('timeline__item', {'has-color': !!color}, className)}
+                className={clsx('timeline-item', {'has-color': !!color}, className)}
                 style={customStyle}
                 {...props}
             >
-                <div className="timeline__icon-wrapper">
-                    <div className="timeline__icon">
+                <div className="timeline-icon-wrapper">
+                    <div className="timeline-icon">
                         {icon}
                     </div>
                 </div>
-                <div className="timeline__content">
-                    <div className="timeline__title">{title}</div>
+                <div className="timeline-content">
+                    <div className="timeline-title">{title}</div>
                     {time && (
-                        <div className="timeline__time">
+                        <div className="timeline-time">
                             {typeof time === 'string' ? <time>{time}</time> : time}
                         </div>
                     )}
@@ -62,3 +62,4 @@ export const TimelineItem = forwardRef<HTMLLIElement, TimelineItemProps>(
 );
 
 TimelineItem.displayName = 'TimelineItem';
+

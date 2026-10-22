@@ -3,6 +3,7 @@ import {createPortal} from 'react-dom';
 import type {ContextMenuItemDef, ContextMenuState} from './ContextMenuContext';
 import {ContextMenuContext} from './ContextMenuContext';
 import {ContextMenu} from './ContextMenu';
+import {createDismissableLayer} from '../../interaction/dismissable-layer';
 
 /**
  * ContextMenuProviderProps.
@@ -41,14 +42,6 @@ export const ContextMenuProvider: React.FC<ContextMenuProviderProps> = ({childre
     useEffect(() => {
         if (!state.isOpen) return;
 
-        const handleEscape = (e: KeyboardEvent) => {
-            if (e.key === 'Escape') hideContextMenu();
-        };
-
-        const handleOutsideClick = () => {
-            hideContextMenu();
-        };
-
         const handleScroll = () => {
             hideContextMenu();
         };
@@ -57,20 +50,15 @@ export const ContextMenuProvider: React.FC<ContextMenuProviderProps> = ({childre
             hideContextMenu();
         };
 
-        const timeoutId = setTimeout(() => {
-            document.addEventListener('click', handleOutsideClick);
-            document.addEventListener('contextmenu', handleOutsideClick);
-        }, 10);
-
-        document.addEventListener('keydown', handleEscape);
+        const releaseDismissableLayer = createDismissableLayer({
+            contains: (target) => document.querySelector('.context-menu')?.contains(target) ?? false,
+            onDismiss: hideContextMenu
+        });
         window.addEventListener('scroll', handleScroll, {passive: true, capture: true});
         window.addEventListener('blur', handleBlur);
 
         return () => {
-            clearTimeout(timeoutId);
-            document.removeEventListener('click', handleOutsideClick);
-            document.removeEventListener('contextmenu', handleOutsideClick);
-            document.removeEventListener('keydown', handleEscape);
+            releaseDismissableLayer();
             window.removeEventListener('scroll', handleScroll, {capture: true});
             window.removeEventListener('blur', handleBlur);
         };

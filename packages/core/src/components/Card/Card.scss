@@ -15,18 +15,18 @@
   // ==========================================================================
   // COMPOUND SECTIONS
   // ==========================================================================
-  &__header {
+  &-header {
     padding: var(--spacing-4) var(--spacing-6);
     border-bottom: 1px solid var(--color-border-subtle);
     font-weight: 600;
   }
 
-  &__body {
+  &-body {
     padding: var(--spacing-6);
     flex: 1 1 auto;
   }
 
-  &__footer {
+  &-footer {
     padding: var(--spacing-4) var(--spacing-6);
     border-top: 1px solid var(--color-border-subtle);
     background-color: var(--color-bg-subtle);
@@ -35,7 +35,7 @@
   // ==========================================================================
   // INTERACTIVE (Hoverable)
   // ==========================================================================
-  &--interactive {
+  &-interactive {
     cursor: pointer;
 
     &:hover {
@@ -48,25 +48,25 @@
   // ==========================================================================
   // ELEVATIONS
   // ==========================================================================
-  &--elevation-0 {
+  &-elevation-0 {
     box-shadow: none;
   }
 
-  &--elevation-1 {
+  &-elevation-1 {
     box-shadow: var(--shadow-sm);
   }
 
-  &--elevation-2 {
+  &-elevation-2 {
     box-shadow: var(--shadow-md);
     background-color: var(--color-surface-elevated);
   }
 
-  &--elevation-3 {
+  &-elevation-3 {
     box-shadow: var(--shadow-lg);
     background-color: var(--color-surface-elevated);
   }
 
-  &--elevation-4 {
+  &-elevation-4 {
     box-shadow: var(--shadow-xl);
     background-color: var(--color-surface-elevated);
     background-image: linear-gradient(180deg, color-mix(in srgb, var(--white) 3%, transparent) 0%, transparent 100%);
@@ -75,26 +75,26 @@
   // ==========================================================================
   // PADDING (For flat/non-compound usage)
   // ==========================================================================
-  &--padding-none {
+  &-padding-none {
     padding: 0;
   }
 
-  &--padding-sm {
+  &-padding-sm {
     padding: var(--spacing-4);
   }
 
-  &--padding-md {
+  &-padding-md {
     padding: var(--spacing-6);
   }
 
-  &--padding-lg {
+  &-padding-lg {
     padding: var(--spacing-8);
   }
 
   // ==========================================================================
   // FLAT MODIFIER
   // ==========================================================================
-  &--flat {
+  &-flat {
     box-shadow: none;
     background-image: none;
   }
@@ -102,16 +102,16 @@
   // ==========================================================================
   // COLOR VARIANTS (Solid & Dim)
   // ==========================================================================
-  &--variant {
+  &-variant {
     --card-color-dim: color-mix(in srgb, var(--card-color-base, var(--color-primary)) 15%, transparent);
     --card-text-color: var(--white);
 
-    &.card--dim {
+    &.card-dim {
       background-color: var(--card-color-dim);
       border-color: color-mix(in srgb, var(--card-color-base, var(--color-primary)) 25%, transparent);
     }
 
-    &.card--solid {
+    &.card-solid {
       background-color: var(--card-color-base, var(--color-primary));
       border-color: var(--card-color-base, var(--color-primary));
       color: var(--card-text-color, var(--white));
@@ -120,7 +120,7 @@
         color: inherit;
       }
 
-      .card__header, .card__footer {
+      .card-header, .card-footer {
         border-color: color-mix(in srgb, var(--white) 15%, transparent);
         background-color: transparent;
       }

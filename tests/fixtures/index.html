@@ -1,0 +1,17 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>LycoUI parity harness</title>
+  </head>
+  <body>
+    <div id="react-root"></div>
+    <button id="vanilla-button" class="btn">Vanilla button</button>
+    <button id="modal-toggle" data-lyco-toggle="modal" data-lyco-target="#lifecycle-modal">Open modal</button>
+    <div id="lifecycle-modal" class="modal hidden" aria-hidden="true">
+      <div class="modal__dialog" tabindex="-1"><button data-lyco-dismiss="modal">Close modal</button></div>
+    </div>
+    <script type="module" src="/main.tsx"></script>
+  </body>
+</html>

@@ -87,7 +87,7 @@ export const TreeView = forwardRef<HTMLUListElement, TreeViewProps>(
                     e.preventDefault();
                     if (target.getAttribute('aria-expanded') === 'false') {
                         // It's a closed group, open it by triggering a click on the content
-                        const content = target.querySelector('.treeview__item-content') as HTMLElement;
+                        const content = target.querySelector('.treeview-item-content') as HTMLElement;
                         if (content) content.click();
                     } else if (target.getAttribute('aria-expanded') === 'true') {
                         // It's an open group, move to first child
@@ -100,7 +100,7 @@ export const TreeView = forwardRef<HTMLUListElement, TreeViewProps>(
                     e.preventDefault();
                     if (target.getAttribute('aria-expanded') === 'true') {
                         // It's an open group, close it
-                        const content = target.querySelector('.treeview__item-content') as HTMLElement;
+                        const content = target.querySelector('.treeview-item-content') as HTMLElement;
                         if (content) content.click();
                     } else {
                         // Move to parent
@@ -116,7 +116,7 @@ export const TreeView = forwardRef<HTMLUListElement, TreeViewProps>(
                 case 'Enter':
                 case ' ':
                     e.preventDefault();
-                    const content = target.querySelector('.treeview__item-content') as HTMLElement;
+                    const content = target.querySelector('.treeview-item-content') as HTMLElement;
                     if (content) content.click();
                     break;
                 case 'Home':
@@ -161,3 +161,4 @@ interface TreeContextType {
  * A UI component for LycoUI.
  */
 export const TreeContext = React.createContext<TreeContextType>({});
+

@@ -6,12 +6,12 @@
   width: 100%;
 
   // Orientation
-  &--horizontal {
+  &-horizontal {
     flex-direction: row;
     align-items: flex-start;
   }
 
-  &--vertical {
+  &-vertical {
     flex-direction: column;
     align-items: flex-start;
   }
@@ -32,13 +32,13 @@
   // Allow custom text color for the icon, defaults to root bg
   --stepper-text-contrast: var(--color-bg-root);
 
-  .stepper--horizontal & {
+  .stepper-horizontal & {
     flex-direction: column;
     align-items: center;
     text-align: center;
   }
 
-  .stepper--vertical & {
+  .stepper-vertical & {
     flex-direction: row;
     align-items: flex-start;
     text-align: left;
@@ -65,7 +65,7 @@
 
   // Horizontal line positioning
   // Spans from the center of the current icon to the center of the next icon
-  .stepper--horizontal &::after {
+  .stepper-horizontal &::after {
     top: calc(1rem - 1px); // 1rem is half the 2rem icon size
     left: calc(50% + 1rem + var(--spacing-2)); // center + radius + gap
     width: calc(100% - 2rem - var(--spacing-4));
@@ -73,7 +73,7 @@
   }
 
   // Vertical line positioning
-  .stepper--vertical &::after {
+  .stepper-vertical &::after {
     top: 2.5rem; // Below the icon
     left: calc(1rem - 1px); // Center of 2rem icon
     bottom: 0.5rem; // Stop before next icon
@@ -81,8 +81,8 @@
   }
 
   // Compact Size — Horizontal line
-  // Combined selector: .stepper--compact.stepper--horizontal .step::after
-  .stepper--compact.stepper--horizontal &::after {
+  // Combined selector: .stepper-compact.stepper-horizontal .step::after
+  .stepper-compact.stepper-horizontal &::after {
     top: calc(0.625rem - 0.5px); // half of 1.25rem icon, minus half of 1px line
     left: calc(50% + 0.625rem + var(--spacing-2));
     width: calc(100% - 1.25rem - var(--spacing-4));
@@ -90,15 +90,15 @@
   }
 
   // Compact Size — Vertical line
-  // Combined selector: .stepper--compact.stepper--vertical .step::after
-  .stepper--compact.stepper--vertical &::after {
+  // Combined selector: .stepper-compact.stepper-vertical .step::after
+  .stepper-compact.stepper-vertical &::after {
     top: 1.5rem;
     left: calc(0.625rem - 0.5px);
     width: 1px;
   }
 
   // Compact Size — Vertical spacing
-  .stepper--compact.stepper--vertical & {
+  .stepper-compact.stepper-vertical & {
     padding-bottom: var(--spacing-3);
 
     &:last-child {
@@ -116,25 +116,25 @@
       background-color: var(--stepper-color-base, var(--color-primary));
     }
 
-    .step__icon {
+    .step-icon {
       background-color: var(--stepper-color-base, var(--color-primary));
       border-color: var(--stepper-color-base, var(--color-primary));
       color: var(--stepper-text-contrast);
     }
 
-    .step__title {
+    .step-title {
       color: var(--color-text-primary);
     }
   }
 
   // 2. Active
   &.is-active {
-    .step__icon {
+    .step-icon {
       border-color: var(--stepper-color-base, var(--color-primary));
       color: var(--stepper-color-base, var(--color-primary));
     }
 
-    .step__title {
+    .step-title {
       color: var(--stepper-color-base, var(--color-primary));
       font-weight: var(--font-weight-semibold);
     }
@@ -142,30 +142,30 @@
 
   // 3. Error
   &.is-error {
-    .step__icon {
+    .step-icon {
       border-color: var(--stepper-color-error);
       color: var(--stepper-color-error);
     }
 
-    .step__title {
+    .step-title {
       color: var(--stepper-color-error);
     }
   }
 
   // 4. Success (overrides pending/active if applied)
   &.is-success {
-    .step__icon {
+    .step-icon {
       border-color: var(--stepper-color-success);
       color: var(--stepper-color-success);
     }
 
-    .step__title {
+    .step-title {
       color: var(--stepper-color-success);
     }
 
     // If a success step is also completed (e.g. explicitly marked), make it filled
     &.is-completed {
-      .step__icon {
+      .step-icon {
         background-color: var(--stepper-color-success);
         color: var(--stepper-text-contrast);
       }
@@ -174,18 +174,18 @@
 
   // 5. Warning
   &.is-warning {
-    .step__icon {
+    .step-icon {
       border-color: var(--stepper-color-warning);
       color: var(--stepper-color-warning);
     }
 
-    .step__title {
+    .step-title {
       color: var(--stepper-color-warning);
     }
   }
 }
 
-.step__header {
+.step-header {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -193,7 +193,7 @@
   background-color: var(--color-bg-root); // Mask the line if it goes under
 }
 
-.step__icon {
+.step-icon {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -213,7 +213,7 @@
     fill: currentColor;
   }
 
-  .stepper--compact & {
+  .stepper-compact & {
     width: 1.25rem;
     height: 1.25rem;
     font-size: 0.65rem;
@@ -225,36 +225,37 @@
   }
 }
 
-.step__content {
+.step-content {
   margin-top: var(--spacing-2);
 
-  .stepper--horizontal & {
+  .stepper-horizontal & {
     padding: 0 var(--spacing-2);
   }
 
-  .stepper--vertical & {
+  .stepper-vertical & {
     margin-top: 0;
     margin-left: var(--spacing-4);
   }
 }
 
-.step__title {
+.step-title {
   color: var(--color-text-secondary);
   font-size: var(--text-body-sm);
   font-weight: var(--font-weight-medium);
   transition: color var(--duration-fast) var(--ease-default);
 
-  .stepper--compact & {
+  .stepper-compact & {
     font-size: var(--text-caption);
   }
 }
 
-.step__description {
+.step-description {
   color: var(--color-text-muted);
   font-size: var(--text-caption);
   margin-top: var(--spacing-1);
 
-  .stepper--compact & {
+  .stepper-compact & {
     font-size: 0.65rem;
   }
 }
+

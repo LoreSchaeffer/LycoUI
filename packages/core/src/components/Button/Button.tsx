@@ -4,6 +4,7 @@ import clsx from 'clsx';
 import type {Alignment, FullVariant, SizeVariant} from '../../types/types';
 import {Spinner, type SpinnerType} from '../Spinner';
 import {getContrastColor} from '../../utils/theme';
+import {classContract} from '../../styles/class-contract';
 
 /**
  * Props for the Button component.
@@ -58,6 +59,7 @@ export const Button = memo(forwardRef<HTMLButtonElement, ButtonProps>((
         iconStart,
         iconEnd,
         spinnerType = 'classic',
+        flat = false,
         className,
         disabled,
         style,
@@ -82,39 +84,40 @@ export const Button = memo(forwardRef<HTMLButtonElement, ButtonProps>((
             ref={ref}
             disabled={isDisabled}
             className={clsx(
-                'btn',
-                size && size !== 'md' && `btn--${size}`,
-                outlined && 'btn--outlined',
-                ghost && 'btn--ghost',
-                rounded && 'btn--rounded',
-                btnStatic && 'btn--static',
-                isLoading && 'btn--loading',
-                isIconOnly && 'btn--icon-only',
-                variant === 'white' && 'btn--white',
+                classContract.button.root,
+                size && size !== 'md' && classContract.button.size(size),
+                outlined && classContract.button.outline,
+                ghost && 'btn-ghost',
+                rounded && 'btn-rounded',
+                btnStatic && 'btn-static',
+                isLoading && 'btn-loading',
+                isIconOnly && 'btn-icon-only',
+                variant === 'white' && 'btn-white',
+                flat && classContract.button.flat,
                 className
             )}
             style={mergedStyle}
             {...props}
         >
             {isIconOnly && (
-                <span className="btn__icon">
-                    {isLoading ? <Spinner size={size} type={spinnerType} className="btn__spinner"/> : icon}
+                <span className={classContract.button.icon}>
+                    {isLoading ? <Spinner size={size} type={spinnerType} className="btn-spinner"/> : icon}
                 </span>
             )}
 
             {!isIconOnly && (
                 <>
                     {(showSpinnerStart || (!isLoading && iconStart)) && (
-                        <span className="btn__icon btn__icon--start">
-                            {showSpinnerStart ? <Spinner size={size} type={spinnerType} className="btn__spinner"/> : iconStart}
+                        <span className={`${classContract.button.icon} ${classContract.button.iconStart}`}>
+                            {showSpinnerStart ? <Spinner size={size} type={spinnerType} className="btn-spinner"/> : iconStart}
                         </span>
                     )}
 
                     {children}
 
                     {(showSpinnerEnd || (!isLoading && iconEnd)) && (
-                        <span className="btn__icon btn__icon--end">
-                            {showSpinnerEnd ? <Spinner size={size} type={spinnerType} className="btn__spinner"/> : iconEnd}
+                        <span className={`${classContract.button.icon} ${classContract.button.iconEnd}`}>
+                            {showSpinnerEnd ? <Spinner size={size} type={spinnerType} className="btn-spinner"/> : iconEnd}
                         </span>
                     )}
                 </>
@@ -123,5 +126,7 @@ export const Button = memo(forwardRef<HTMLButtonElement, ButtonProps>((
     );
 }));
 Button.displayName = 'Button';
+
+
 
 

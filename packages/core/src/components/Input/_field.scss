@@ -1,0 +1,176 @@
+.input-wrapper {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  padding-bottom: var(--input-message-reserve, 0px);
+}
+
+.input {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  background-color: var(--color-void, transparent);
+  border: 1px solid var(--color-border-base);
+
+  border-radius: var(--input-radius, var(--radius-md));
+  overflow: hidden;
+
+  transition: border-color var(--duration-fast) var(--ease-default),
+  box-shadow var(--duration-fast) var(--ease-default);
+  cursor: text;
+
+  --input-color-base: var(--color-primary);
+  --input-height: 2.75rem;
+  --input-padding-x: var(--spacing-3);
+  --input-font-size: var(--text-body-sm);
+  --input-icon-size: var(--spacing-5, 1.25rem);
+
+  &:hover:not(.is-disabled):not(.is-invalid):not(.is-valid) {
+    border-color: var(--color-border-strong);
+  }
+
+  // ==========================================================================
+  // NATIVE INPUT
+  // ==========================================================================
+  &-field {
+    flex: 1;
+    width: 100%;
+    height: var(--input-height);
+    padding: 0 var(--input-padding-x);
+    background: transparent;
+    border: none;
+    outline: none;
+    border-radius: inherit;
+    color: var(--color-text-primary);
+    font-family: var(--font-family-base);
+    font-size: var(--input-font-size);
+    font-weight: 400;
+    caret-color: var(--input-color-base);
+
+    &::placeholder {
+      color: var(--color-text-muted);
+      opacity: 1;
+    }
+
+    // Hide native number spinners — custom step buttons replace them
+    &[type="number"] {
+      -moz-appearance: textfield;
+      appearance: textfield;
+
+      &::-webkit-outer-spin-button,
+      &::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+      }
+    }
+
+    // File input styling
+    &[type="file"] {
+      padding: 0;
+      cursor: pointer;
+      line-height: var(--input-height);
+      color: var(--color-text-secondary);
+
+      &::file-selector-button {
+        height: var(--input-height);
+        padding: 0 var(--input-padding-x);
+        margin-right: var(--spacing-3);
+        background-color: var(--color-carbon);
+        border: none;
+        border-right: 1px solid var(--input-border-internal, var(--color-border-base));
+        border-start-start-radius: var(--input-radius);
+        border-end-start-radius: var(--input-radius);
+        color: var(--color-text-primary);
+        font-family: inherit;
+        font-size: var(--input-font-size);
+        font-weight: 500;
+        cursor: pointer;
+        transition: background-color var(--duration-fast) var(--ease-default);
+
+        &:hover {
+          background-color: var(--color-carbon-active);
+        }
+      }
+    }
+  }
+
+  // ==========================================================================
+  // FLOATING LABEL
+  // ==========================================================================
+  &-label {
+    position: absolute;
+    left: var(--input-padding-x);
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: var(--input-font-size);
+    color: var(--color-text-muted);
+    pointer-events: none;
+    transform-origin: left center;
+    transition: transform var(--duration-fast) var(--ease-default),
+    font-size var(--duration-fast) var(--ease-default),
+    color var(--duration-fast) var(--ease-default);
+    line-height: 1;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: calc(100% - var(--input-padding-x) * 2);
+  }
+
+  &-required {
+    color: var(--color-danger);
+  }
+
+  // When focused or filled, float the label up
+  &.is-focused &-label,
+  &.is-filled &-label {
+    transform: translateY(-130%) scale(0.8);
+    color: var(--color-text-secondary);
+  }
+
+  &.is-focused &-label {
+    color: var(--input-color-base);
+  }
+
+  // When label is present, add top padding to the field to make room
+  &:has(.input-label) .input-field {
+    padding-top: var(--spacing-3);
+  }
+
+  // Adjust label position when icon-start is present
+  &-has-icon-start .input-label {
+    left: calc(var(--input-padding-x) + var(--input-icon-size) + var(--spacing-2));
+  }
+
+  // Placeholder visibility with floating label
+  &:has(.input-label) .input-field::placeholder {
+    opacity: 0;
+    transition: opacity var(--duration-fast) var(--ease-default);
+  }
+
+  &.is-focused:has(.input-label) .input-field::placeholder {
+    opacity: 1;
+  }
+
+  // Hide placeholder natively for file inputs since it acts weird with floating label
+  &:has(.input-field[type="file"]) .input-field {
+    color: transparent;
+  }
+
+  &.is-focused:has(.input-field[type="file"]) .input-field,
+  &.is-filled:has(.input-field[type="file"]) .input-field {
+    color: var(--color-text-secondary);
+  }
+
+}
+
+// ==========================================================================
+// SPINNER INSIDE INPUT
+// ==========================================================================
+.input .input-spinner {
+  color: var(--input-color-base, currentColor);
+  width: var(--input-icon-size, 1.25rem);
+  height: var(--input-icon-size, 1.25rem);
+}
+

@@ -2,17 +2,12 @@ import React, {useCallback, useEffect, useMemo, useRef, useState} from 'react';
 import {SnackbarContext, type SnackbarOptions} from './SnackbarContext';
 import {Snackbar} from './Snackbar';
 import {createPortal} from 'react-dom';
+import {durationToMilliseconds, TimedDismiss} from '../../interaction/timed-dismiss';
 
 interface ActiveSnackbar extends SnackbarOptions {
     id: string;
     isExiting: boolean;
 }
-
-const DURATION_MAP: Record<string, number> = {
-    short: 3000,
-    medium: 5000,
-    long: 8000,
-};
 
 /**
  * SnackbarProvider component.
@@ -20,13 +15,11 @@ const DURATION_MAP: Record<string, number> = {
 export const SnackbarProvider: React.FC<{ children: React.ReactNode }> = ({children}) => {
     const [snackbars, setSnackbars] = useState<ActiveSnackbar[]>([]);
 
-    const timersRef = useRef<Map<string, number>>(new Map());
+    const timersRef = useRef<Map<string, TimedDismiss>>(new Map());
 
     const closeSnackbar = useCallback((id: string) => {
-        if (timersRef.current.has(id)) {
-            window.clearTimeout(timersRef.current.get(id));
-            timersRef.current.delete(id);
-        }
+        timersRef.current.get(id)?.destroy();
+        timersRef.current.delete(id);
 
         setSnackbars(prev => prev.map(sb => sb.id === id ? {...sb, isExiting: true} : sb));
 
@@ -46,20 +39,9 @@ export const SnackbarProvider: React.FC<{ children: React.ReactNode }> = ({child
 
         setSnackbars(prev => [...prev, newSnackbar]);
 
-        const durationType = options.duration || 'short';
-        let durationMs: number;
-
-        if (typeof durationType === 'number') {
-            durationMs = durationType * 1000;
-        } else {
-            durationMs = DURATION_MAP[durationType] || DURATION_MAP.short;
-        }
-
-        const timerId = window.setTimeout(() => {
-            closeSnackbar(id);
-        }, durationMs);
-
-        timersRef.current.set(id, timerId);
+        const dismiss = new TimedDismiss(durationToMilliseconds(options.duration), () => closeSnackbar(id));
+        timersRef.current.set(id, dismiss);
+        dismiss.start();
 
         return id;
     }, [closeSnackbar]);
@@ -67,9 +49,7 @@ export const SnackbarProvider: React.FC<{ children: React.ReactNode }> = ({child
     useEffect(() => {
         const timers = timersRef.current;
         return () => {
-            timers.forEach(timerId => {
-                window.clearTimeout(timerId);
-            });
+            timers.forEach(timer => timer.destroy());
             timers.clear();
         };
     }, []);

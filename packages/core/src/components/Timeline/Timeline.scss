@@ -6,18 +6,18 @@
   width: 100%;
 
   // Orientation
-  &--horizontal {
+  &-horizontal {
     flex-direction: row;
     align-items: flex-start;
   }
 
-  &--vertical {
+  &-vertical {
     flex-direction: column;
     align-items: flex-start;
   }
 }
 
-.timeline__item {
+.timeline-item {
   display: flex;
   position: relative;
 
@@ -45,7 +45,7 @@
   }
 
   // Horizontal Layout
-  .timeline--horizontal & {
+  .timeline-horizontal & {
     flex: 1;
     flex-direction: column;
     align-items: flex-start;
@@ -60,7 +60,7 @@
   }
 
   // Vertical Layout (Left Aligned by Default)
-  .timeline--vertical & {
+  .timeline-vertical & {
     flex-direction: row;
     align-items: flex-start;
     width: 100%;
@@ -79,7 +79,7 @@
   }
 
   // Vertical Layout (Alternating)
-  .timeline--vertical.timeline--alternate & {
+  .timeline-vertical.timeline-alternate & {
     width: 50%;
 
     // Odd items go to the left
@@ -93,12 +93,12 @@
         margin-left: -1px; // Center 2px line on the right edge
       }
 
-      .timeline__icon-wrapper {
+      .timeline-icon-wrapper {
         // Move right by half its width (1rem) so its center is exactly on the container edge
         transform: translateX(50%);
       }
 
-      .timeline__content {
+      .timeline-content {
         margin-left: 0;
         margin-right: var(--spacing-4);
       }
@@ -113,19 +113,19 @@
         margin-left: -1px; // Center 2px line on the left edge
       }
 
-      .timeline__icon-wrapper {
+      .timeline-icon-wrapper {
         // Move left by half its width (1rem) so its center is exactly on the container edge
         transform: translateX(-50%);
       }
 
-      .timeline__content {
+      .timeline-content {
         margin-left: var(--spacing-4);
       }
     }
   }
 }
 
-.timeline__icon-wrapper {
+.timeline-icon-wrapper {
   display: flex;
   align-items: flex-start;
   justify-content: center;
@@ -134,7 +134,7 @@
   z-index: var(--z-base, 1); // Above the line
 }
 
-.timeline__icon {
+.timeline-icon {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -158,34 +158,35 @@
 }
 
 // When item has a custom color, the icon becomes filled
-.timeline__item.has-color .timeline__icon {
+.timeline-item.has-color .timeline-icon {
   background-color: var(--timeline-color-base);
   color: var(--color-bg-root);
   border-color: var(--timeline-color-base);
 }
 
-.timeline__content {
+.timeline-content {
   margin-top: var(--spacing-2);
 
-  .timeline--horizontal & {
+  .timeline-horizontal & {
     padding: 0 var(--spacing-2);
   }
 
-  .timeline--vertical & {
+  .timeline-vertical & {
     margin-top: 0;
     margin-left: var(--spacing-4);
     flex: 1;
   }
 }
 
-.timeline__title {
+.timeline-title {
   color: var(--color-text-primary);
   font-size: var(--text-body-sm);
   font-weight: var(--font-weight-medium);
 }
 
-.timeline__time {
+.timeline-time {
   color: var(--color-text-muted);
   font-size: var(--text-caption);
   margin-top: var(--spacing-1);
 }
+

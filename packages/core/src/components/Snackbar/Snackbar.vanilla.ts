@@ -1,4 +1,6 @@
 import {getContrastColor} from '../../utils/theme';
+import {createSafeSvg} from '../../utils/safe-content';
+import {durationToMilliseconds, TimedDismiss} from '../../interaction/timed-dismiss';
 
 /**
  * SnackbarDurationVanilla.
@@ -17,33 +19,14 @@ export interface VanillaSnackbarOptions {
     isFlat?: boolean;
 }
 
-const DURATION_MAP: Record<string, number> = {
-    short: 3000,
-    medium: 5000,
-    long: 8000,
-};
-
-function parseSafeSvg(svgString: string): SVGSVGElement | null {
-    const template = document.createElement('template');
-    template.innerHTML = svgString;
-    const svg = template.content.querySelector('svg');
-    if (!svg) return null;
-
-    svg.querySelectorAll('script').forEach(s => s.remove());
-    Array.from(svg.attributes).forEach(attr => {
-        if (attr.name.startsWith('on')) svg.removeAttribute(attr.name);
-    });
-    return svg;
-}
-
 class LycoSnackbarManager {
     private stackContainer: HTMLDivElement | null = null;
     private snackbarCount = 0;
-    private activeSnackbars: Map<string, { el: HTMLDivElement, closeHandler: () => void, timerId?: number, exitTimerId?: number }> = new Map();
+    private activeSnackbars: Map<string, { el: HTMLDivElement, closeHandler: () => void, dismiss?: TimedDismiss, exitTimerId?: number }> = new Map();
 
     public destroy(): void {
         this.activeSnackbars.forEach((data) => {
-            if (data.timerId) window.clearTimeout(data.timerId);
+            data.dismiss?.destroy();
             if (data.exitTimerId) window.clearTimeout(data.exitTimerId);
             data.el.remove();
         });
@@ -73,17 +56,17 @@ class LycoSnackbarManager {
         snackbar.className = 'snackbar';
         snackbar.style.setProperty('--snackbar-color-base', `var(--${variant}-500, var(--color-${variant}))`);
         snackbar.style.setProperty('--snackbar-color-contrast', getContrastColor(variant));
-        if (options.closable) snackbar.classList.add('snackbar--closable');
+        if (options.closable) snackbar.classList.add('snackbar-closable');
         if (options.icon) snackbar.classList.add('has-icon');
-        if (options.isFlat) snackbar.classList.add('snackbar--flat');
+        if (options.isFlat) snackbar.classList.add('snackbar-flat');
         snackbar.setAttribute('role', 'status');
         snackbar.id = id;
 
         if (options.icon) {
             const iconSpan = document.createElement('span');
-            iconSpan.className = 'snackbar__icon';
+            iconSpan.className = 'snackbar-icon';
             if (typeof options.icon === 'string') {
-                const safeSvg = parseSafeSvg(options.icon);
+                const safeSvg = createSafeSvg(options.icon);
                 if (safeSvg) {
                     iconSpan.appendChild(safeSvg);
                 } else {
@@ -96,7 +79,7 @@ class LycoSnackbarManager {
         }
 
         const contentDiv = document.createElement('div');
-        contentDiv.className = 'snackbar__content';
+        contentDiv.className = 'snackbar-content';
         if (typeof options.message === 'string') {
             contentDiv.textContent = options.message;
         } else {
@@ -105,13 +88,13 @@ class LycoSnackbarManager {
         snackbar.appendChild(contentDiv);
 
         let closeBtn: HTMLButtonElement | null = null;
-        let timerId: number | undefined;
+        let dismiss: TimedDismiss | undefined;
         let exitTimerId: number | undefined;
 
         const closeHandler = () => {
             const active = this.activeSnackbars.get(id);
-            if (active && active.timerId) window.clearTimeout(active.timerId);
-            if (timerId) window.clearTimeout(timerId);
+            active?.dismiss?.destroy();
+            dismiss?.destroy();
             if (closeBtn) closeBtn.removeEventListener('click', closeHandler);
 
             snackbar.classList.add('is-exiting');
@@ -130,7 +113,7 @@ class LycoSnackbarManager {
         if (options.closable) {
             closeBtn = document.createElement('button');
             closeBtn.type = 'button';
-            closeBtn.className = 'snackbar__close';
+            closeBtn.className = 'snackbar-close';
             closeBtn.setAttribute('aria-label', 'Close');
             closeBtn.innerHTML = `
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -144,18 +127,14 @@ class LycoSnackbarManager {
 
         stack.appendChild(snackbar);
 
-        const durationType = options.duration || 'short';
-        const durationMs = typeof durationType === 'number' ? durationType * 1000 : (DURATION_MAP[durationType] || DURATION_MAP.short);
-
-        timerId = window.setTimeout(() => {
-            closeHandler();
-        }, durationMs);
-
-        this.activeSnackbars.set(id, {el: snackbar, closeHandler, timerId});
+        dismiss = new TimedDismiss(durationToMilliseconds(options.duration), closeHandler);
+        this.activeSnackbars.set(id, {el: snackbar, closeHandler, dismiss});
+        dismiss.start();
 
         return id;
     }
 }
 
 export const snackbar = new LycoSnackbarManager();
+
 

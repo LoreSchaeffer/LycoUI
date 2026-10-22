@@ -1,0 +1,87 @@
+.datepicker {
+  // ==========================================================================
+  // TRIGGER CONTENTS
+  // ==========================================================================
+  &-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    margin: 0;
+    color: var(--color-text-secondary);
+
+    svg {
+      width: 1rem;
+      height: 1rem;
+      margin: 0;
+    }
+  }
+
+  &-input {
+    flex: 1;
+    width: 100%;
+    background: transparent;
+    border: none;
+    outline: none;
+    color: inherit;
+    font-family: inherit;
+    font-size: inherit;
+    padding: 0;
+    margin: 0;
+    text-overflow: ellipsis;
+
+    &::placeholder {
+      color: var(--color-text-muted);
+      opacity: 1;
+    }
+
+    // Hide native OS picker icons (we use our own SVGs in the trigger)
+    &::-webkit-calendar-picker-indicator {
+      display: none;
+      -webkit-appearance: none;
+    }
+  }
+
+  &-clear {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    width: 1.25rem;
+    height: 1.25rem;
+    border-radius: var(--radius-full);
+    color: var(--color-text-secondary);
+    cursor: pointer;
+    transition: color var(--duration-fast) var(--ease-default),
+    background-color var(--duration-fast) var(--ease-default);
+
+    svg {
+      width: 0.75rem;
+      height: 0.75rem;
+    }
+
+    &:hover {
+      color: var(--color-text-primary);
+      background-color: var(--color-border-subtle);
+    }
+
+    &:focus-visible {
+      outline: 2px solid var(--datepicker-color-base);
+      outline-offset: 1px;
+    }
+  }
+
+  &-chevron {
+    width: 1.25em;
+    height: 1.25em;
+    color: var(--color-text-secondary);
+    transition: transform var(--duration-fast) var(--ease-default);
+    flex-shrink: 0;
+    margin: 0;
+  }
+
+  &.is-open .datepicker-chevron {
+    transform: rotate(180deg);
+  }
+}
+

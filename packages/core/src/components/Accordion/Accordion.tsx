@@ -149,17 +149,17 @@ export const AccordionItem = forwardRef<HTMLDivElement, AccordionItemProps>((
         <div
             ref={ref}
             className={clsx(
-                'accordion__item',
+                'accordion-item',
                 isOpen && 'is-open',
                 disabled && 'is-disabled',
                 className
             )}
             {...props}
         >
-            <h2 className="accordion__header" id={headerId}>
+            <h2 className="accordion-header" id={headerId}>
                 <button
                     type="button"
-                    className="accordion__button"
+                    className="accordion-button"
                     aria-expanded={isOpen}
                     aria-controls={collapseId}
                     disabled={disabled}
@@ -167,7 +167,7 @@ export const AccordionItem = forwardRef<HTMLDivElement, AccordionItemProps>((
                 >
                     {title}
                     <svg
-                        className="accordion__chevron"
+                        className="accordion-chevron"
                         viewBox="0 0 24 24"
                         fill="none"
                         stroke="currentColor"
@@ -181,13 +181,13 @@ export const AccordionItem = forwardRef<HTMLDivElement, AccordionItemProps>((
                 </button>
             </h2>
             <div
-                className="accordion__collapse"
+                className="accordion-collapse"
                 id={collapseId}
                 aria-labelledby={headerId}
                 role="region"
             >
-                <div className="accordion__collapse-inner">
-                    <div className="accordion__body">
+                <div className="accordion-collapse-inner">
+                    <div className="accordion-body">
                         {children}
                     </div>
                 </div>
@@ -196,3 +196,4 @@ export const AccordionItem = forwardRef<HTMLDivElement, AccordionItemProps>((
     );
 });
 AccordionItem.displayName = 'AccordionItem';
+

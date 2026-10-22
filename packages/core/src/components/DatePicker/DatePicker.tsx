@@ -1,11 +1,14 @@
 import './DatePicker.scss';
-import {type CSSProperties, forwardRef, type HTMLAttributes, type KeyboardEvent, useCallback, useEffect, useLayoutEffect, useId, useMemo, useRef, useState,} from 'react';
+import {type CSSProperties, forwardRef, type HTMLAttributes, type KeyboardEvent, useCallback, useEffect, useId, useMemo, useRef, useState,} from 'react';
 import { createPortal } from 'react-dom';
 import clsx from 'clsx';
 import type {FullVariant, SizeVariant} from '../../types/types.ts';
 import {getContrastColor} from '../../utils/theme.ts';
 import {useMediaQuery} from '../../hooks/useMediaQuery.ts';
 import Calendar from './Calendar.tsx';
+import {formatDateString, parseDateString, parseLocalDate} from './date-model';
+import {usePickerPopover} from './PickerPopover.tsx';
+export {formatDateString, parseDateString} from './date-model';
 
 /**
  * Props for the DatePicker component.
@@ -50,48 +53,6 @@ export interface DatePickerProps extends Omit<HTMLAttributes<HTMLDivElement>, 'o
 
 const pad2 = (n: number): string => String(n).padStart(2, '0');
 
-export function formatDateString(date: Date, format: string, locale?: string): string {
-    if (['short', 'medium', 'long', 'full'].includes(format)) {
-        return new Intl.DateTimeFormat(locale, {dateStyle: format as 'short' | 'medium' | 'long' | 'full'}).format(date);
-    }
-    const y = date.getFullYear().toString();
-    const m = pad2(date.getMonth() + 1);
-    const d = pad2(date.getDate());
-    return format.replace('yyyy', y).replace('MM', m).replace('dd', d);
-}
-
-export function parseDateString(str: string, format: string): Date | null {
-    if (['short', 'medium', 'long', 'full'].includes(format)) {
-        const parsed = new Date(str);
-        return isNaN(parsed.getTime()) ? null : parsed;
-    }
-    const tokens = {
-        'yyyy': '(\\d{4})',
-        'MM': '(\\d{1,2})',
-        'dd': '(\\d{1,2})'
-    };
-    const regexStr = format
-        .replace(/[.*+?^${}()|[\]\\]/g, '\\$&') // escape regex chars
-        .replace(/yyyy|MM|dd/g, (match) => tokens[match as keyof typeof tokens]);
-
-    const match = str.match(new RegExp(`^${regexStr}$`));
-    if (!match) return null;
-
-    let y = 0, m = 0, d = 0;
-    let idx = 1;
-    const formatTokens = format.match(/yyyy|MM|dd/g) || [];
-    for (const token of formatTokens) {
-        const val = parseInt(match[idx++], 10);
-        if (token === 'yyyy') y = val;
-        if (token === 'MM') m = val;
-        if (token === 'dd') d = val;
-    }
-    if (m >= 1 && m <= 12 && d >= 1 && d <= 31) {
-        const parsed = new Date(y, m - 1, d);
-        if (parsed.getFullYear() === y && parsed.getMonth() === m - 1 && parsed.getDate() === d) return parsed;
-    }
-    return null;
-}
 
 /**
  * A fully accessible date picker component with a popover calendar, keyboard navigation,
@@ -139,58 +100,7 @@ export const DatePicker = forwardRef<HTMLDivElement, DatePickerProps>(
 
         const containerRef = useRef<HTMLDivElement>(null);
         const inputRef = useRef<HTMLInputElement>(null);
-        const popoverRef = useRef<HTMLDivElement>(null);
-
-        const [popoverStyles, setPopoverStyles] = useState<CSSProperties>({});
-
-        const updatePosition = useCallback(() => {
-            if (!isOpen || !containerRef.current || !popoverRef.current) return;
-            const triggerRect = containerRef.current.getBoundingClientRect();
-            const popoverRect = popoverRef.current.getBoundingClientRect();
-            
-            const scrollX = window.scrollX;
-            const scrollY = window.scrollY;
-            const viewportWidth = document.documentElement.clientWidth;
-            const viewportHeight = window.innerHeight;
-            
-            let calculatedLeft = triggerRect.left + scrollX;
-            let calculatedTop = triggerRect.bottom + scrollY + 8;
-            
-            // X-Axis bounding (Right edge)
-            if (calculatedLeft + popoverRect.width > viewportWidth + scrollX - 16) {
-                // Align right edges
-                calculatedLeft = (triggerRect.right + scrollX) - popoverRect.width;
-            }
-            
-            // X-Axis bounding (Left edge strict clamp)
-            if (calculatedLeft < scrollX + 16) {
-                calculatedLeft = scrollX + 16;
-            }
-
-            // Y-Axis bounding (Flip to top if bottom overflows)
-            if (triggerRect.bottom + popoverRect.height + 8 > viewportHeight && triggerRect.top - popoverRect.height - 8 > 0) {
-                calculatedTop = triggerRect.top + scrollY - popoverRect.height - 8;
-            }
-
-            setPopoverStyles({
-                position: 'absolute',
-                top: `${calculatedTop}px`,
-                left: `${calculatedLeft}px`,
-                zIndex: 'var(--z-dropdown, 9999)',
-            });
-        }, [isOpen]);
-
-        useLayoutEffect(() => {
-            if (isOpen) {
-                updatePosition();
-                window.addEventListener('scroll', updatePosition, true);
-                window.addEventListener('resize', updatePosition);
-                return () => {
-                    window.removeEventListener('scroll', updatePosition, true);
-                    window.removeEventListener('resize', updatePosition);
-                };
-            }
-        }, [isOpen, updatePosition]);
+        const {popoverRef, popoverStyles} = usePickerPopover(isOpen, containerRef, popoverId, () => setIsOpen(false));
 
         const mergedRef = useCallback(
             (node: HTMLDivElement | null) => {
@@ -231,21 +141,6 @@ export const DatePicker = forwardRef<HTMLDivElement, DatePickerProps>(
             }
         }, [value, displayValue]);
 
-        // Close on outside click
-        useEffect(() => {
-            if (!isOpen) return;
-            const handleOutside = (e: MouseEvent) => {
-                const target = e.target as Node;
-                const popoverEl = document.getElementById(popoverId);
-                if (containerRef.current && !containerRef.current.contains(target) && (!popoverEl || !popoverEl.contains(target))) {
-                    setIsOpen(false);
-                }
-            };
-            document.addEventListener('mousedown', handleOutside);
-            return () => document.removeEventListener('mousedown', handleOutside);
-        }, [isOpen, popoverId]);
-
-
         const handleSelectDate = useCallback(
             (date: Date) => {
                 onChange?.(date);
@@ -270,10 +165,8 @@ export const DatePicker = forwardRef<HTMLDivElement, DatePickerProps>(
                 onChange?.(null);
                 return;
             }
-            const [y, m, d] = val.split('-').map(Number);
-            if (!isNaN(y) && !isNaN(m) && !isNaN(d)) {
-                onChange?.(new Date(y, m - 1, d));
-            }
+            const date = parseLocalDate(val);
+            if (date) onChange?.(date);
         }, [onChange]);
 
         const handleInputChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
@@ -339,7 +232,7 @@ export const DatePicker = forwardRef<HTMLDivElement, DatePickerProps>(
                 id={pickerId}
                 className={clsx(
                     'datepicker',
-                    size !== 'md' && `datepicker--${size}`,
+                    size !== 'md' && `datepicker-${size}`,
                     disabled && 'is-disabled',
                     isComponentInvalid && 'is-invalid',
                     isOpen && 'is-open',
@@ -349,7 +242,7 @@ export const DatePicker = forwardRef<HTMLDivElement, DatePickerProps>(
                 {...props}
             >
                 <div
-                    className="datepicker__trigger"
+                    className="datepicker-trigger"
                     onClick={(e) => {
                         e.stopPropagation(); // CRITICAL: Prevent bubbling to document
                         if (disabled) return;
@@ -358,7 +251,7 @@ export const DatePicker = forwardRef<HTMLDivElement, DatePickerProps>(
                     }}
                 >
                     {/* Calendar icon */}
-                    <span className="datepicker__icon" aria-hidden="true">
+                    <span className="datepicker-icon" aria-hidden="true">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                             <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
                             <line x1="16" y1="2" x2="16" y2="6"/>
@@ -370,7 +263,7 @@ export const DatePicker = forwardRef<HTMLDivElement, DatePickerProps>(
                     <input
                         ref={inputRef}
                         type={isMobile ? "date" : "text"}
-                        className="datepicker__input"
+                        className="datepicker-input"
                         placeholder={placeholder}
                         value={isMobile ? nativeValue : inputValue}
                         onChange={isMobile ? handleNativeChange : handleInputChange}
@@ -390,7 +283,7 @@ export const DatePicker = forwardRef<HTMLDivElement, DatePickerProps>(
                     {/* Clear button */}
                     {inputValue && (
                         <span
-                            className="datepicker__clear"
+                            className="datepicker-clear"
                             role="button"
                             aria-label="Clear date"
                             tabIndex={disabled ? -1 : 0}
@@ -407,7 +300,7 @@ export const DatePicker = forwardRef<HTMLDivElement, DatePickerProps>(
                     )}
 
                     {/* Chevron */}
-                    <svg className="datepicker__chevron" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <svg className="datepicker-chevron" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                         <polyline points="6 9 12 15 18 9"/>
                     </svg>
                 </div>
@@ -416,9 +309,16 @@ export const DatePicker = forwardRef<HTMLDivElement, DatePickerProps>(
                     <div
                         ref={popoverRef}
                         id={popoverId}
-                        className="datepicker__popover"
+                        className="datepicker-popover"
                         role="dialog"
                         aria-label="Date picker calendar"
+                        onKeyDown={(event) => {
+                            if (event.key === 'Escape') {
+                                event.preventDefault();
+                                setIsOpen(false);
+                                inputRef.current?.focus();
+                            }
+                        }}
                         style={{
                             ...popoverStyles,
                             ...(isColored ? {
@@ -442,7 +342,7 @@ export const DatePicker = forwardRef<HTMLDivElement, DatePickerProps>(
                 )}
 
                 {isComponentInvalid && finalMessage && (
-                    <div className="input__message input__message--invalid" role="alert">
+                    <div className="input-message input-message-invalid" role="alert">
                         {finalMessage}
                     </div>
                 )}
@@ -452,3 +352,6 @@ export const DatePicker = forwardRef<HTMLDivElement, DatePickerProps>(
 );
 
 DatePicker.displayName = 'DatePicker';
+
+
+

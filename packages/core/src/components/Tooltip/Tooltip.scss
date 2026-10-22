@@ -4,7 +4,7 @@
   display: inline-block;
 }
 
-.tooltip__content {
+.tooltip-content {
   position: absolute; // It's attached to body, absolute to the page
   z-index: var(--z-index-tooltip, 1000);
   background-color: var(--color-obsidian, var(--color-carbon));
@@ -19,19 +19,19 @@
   white-space: nowrap;
   pointer-events: none;
 
-  &--top {
+  &-top {
     animation: tooltipSlideUp var(--duration-fast) var(--ease-out);
   }
 
-  &--bottom {
+  &-bottom {
     animation: tooltipSlideDown var(--duration-fast) var(--ease-out);
   }
 
-  &--left {
+  &-left {
     animation: tooltipSlideLeft var(--duration-fast) var(--ease-out);
   }
 
-  &--right {
+  &-right {
     animation: tooltipSlideRight var(--duration-fast) var(--ease-out);
   }
 }
@@ -80,3 +80,4 @@
     transform: translateX(0);
   }
 }
+

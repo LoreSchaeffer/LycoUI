@@ -1,10 +1,6 @@
-import {forwardRef, type KeyboardEvent, memo, useCallback, useEffect, useMemo, useRef, useState} from 'react';
-import clsx from 'clsx';
+import {forwardRef, type KeyboardEvent, memo, useCallback, useEffect, useMemo, useState} from 'react';
+import {CalendarGrid} from './CalendarGrid.tsx';
 
-/** Internal props for the Calendar sub-component. Not exported publicly. */
-/**
- * Props for the Calendar component.
- */
 export interface CalendarProps {
     /** The month/year currently displayed in the calendar. */
     viewDate: Date;
@@ -24,7 +20,6 @@ export interface CalendarProps {
     onNextMonth: () => void;
 }
 
-/** Zero-out the time portion of a date for safe day comparisons. */
 const stripTime = (d: Date): Date => new Date(d.getFullYear(), d.getMonth(), d.getDate());
 
 /** Build the 6×7 grid of days for a given month view. */
@@ -83,7 +78,6 @@ const Calendar = memo(forwardRef<HTMLDivElement, CalendarProps>(function Calenda
     const maxNorm = useMemo(() => maxDate ? stripTime(maxDate) : null, [maxDate]);
 
     const days = useMemo(() => buildDayGrid(viewDate), [viewDate]);
-    const gridRef = useRef<HTMLDivElement>(null);
 
     const [focusedDay, setFocusedDay] = useState<Date>(() => {
         if (selectedDate) return stripTime(selectedDate);
@@ -176,12 +170,12 @@ const Calendar = memo(forwardRef<HTMLDivElement, CalendarProps>(function Calenda
     const focusedDayTime = focusedDay.getTime();
 
     return (
-        <div className="datepicker__calendar" ref={ref}>
+        <div className="datepicker-calendar" ref={ref}>
             {/* Header */}
-            <div className="datepicker__cal-header">
+            <div className="datepicker-cal-header">
                 <button
                     type="button"
-                    className="datepicker__cal-nav-btn"
+                    className="datepicker-cal-nav-btn"
                     onClick={onPrevMonth}
                     aria-label="Previous month"
                 >
@@ -189,10 +183,10 @@ const Calendar = memo(forwardRef<HTMLDivElement, CalendarProps>(function Calenda
                         <polyline points="15 18 9 12 15 6"/>
                     </svg>
                 </button>
-                <span className="datepicker__cal-title" aria-live="polite">{monthYearLabel}</span>
+                <span className="datepicker-cal-title" aria-live="polite">{monthYearLabel}</span>
                 <button
                     type="button"
-                    className="datepicker__cal-nav-btn"
+                    className="datepicker-cal-nav-btn"
                     onClick={onNextMonth}
                     aria-label="Next month"
                 >
@@ -202,65 +196,18 @@ const Calendar = memo(forwardRef<HTMLDivElement, CalendarProps>(function Calenda
                 </button>
             </div>
 
-            {/* Calendar grid */}
-            <div
-                ref={gridRef}
-                className="datepicker__cal-grid"
-                role="grid"
-                aria-label={monthYearLabel}
-                tabIndex={0}
+            <CalendarGrid
+                rows={rows}
+                dayNames={DAY_NAMES}
+                label={monthYearLabel}
+                focusedDayTime={focusedDayTime}
+                selectedDayTime={selectedNorm?.getTime()}
+                todayTime={today.getTime()}
+                viewMonth={viewDate.getMonth()}
+                isDateDisabled={isDateDisabled}
+                onSelectDay={handleSelectDay}
                 onKeyDown={handleGridKeyDown}
-            >
-                {/* Day-of-week header row */}
-                <div className="datepicker__cal-row" role="row">
-                    {DAY_NAMES.map(name => (
-                        <div
-                            key={name}
-                            className="datepicker__cal-day-header"
-                            role="columnheader"
-                            aria-label={name}
-                        >
-                            {name}
-                        </div>
-                    ))}
-                </div>
-
-                {/* Day rows */}
-                {rows.map((week, rowIdx) => (
-                    <div key={rowIdx} className="datepicker__cal-row" role="row">
-                        {week.map(day => {
-                            const dayNorm = stripTime(day);
-                            const dayTime = dayNorm.getTime();
-                            const isCurrentMonth = day.getMonth() === viewDate.getMonth();
-                            const isSelected = selectedNorm !== null && dayTime === selectedNorm.getTime();
-                            const isToday = dayTime === today.getTime();
-                            const isDisabled = isDateDisabled(day);
-                            const isFocused = dayTime === focusedDayTime;
-
-                            return (
-                                <div
-                                    key={dayTime}
-                                    className={clsx(
-                                        'datepicker__cal-cell',
-                                        !isCurrentMonth && 'is-outside',
-                                        isSelected && 'is-selected',
-                                        isToday && 'is-today',
-                                        isDisabled && 'is-disabled',
-                                        isFocused && 'is-focused'
-                                    )}
-                                    role="gridcell"
-                                    aria-selected={isSelected}
-                                    aria-disabled={isDisabled}
-                                    tabIndex={isFocused ? 0 : -1}
-                                    onClick={() => handleSelectDay(day)}
-                                >
-                                    {day.getDate()}
-                                </div>
-                            );
-                        })}
-                    </div>
-                ))}
-            </div>
+            />
         </div>
     );
 }));
@@ -268,3 +215,4 @@ const Calendar = memo(forwardRef<HTMLDivElement, CalendarProps>(function Calenda
 Calendar.displayName = 'Calendar';
 
 export default Calendar;
+

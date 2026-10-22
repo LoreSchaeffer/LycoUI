@@ -51,7 +51,7 @@ export const Radio = memo(forwardRef<HTMLInputElement, RadioProps>((
             className={clsx(
                 'radio',
                 disabled && 'is-disabled',
-                size !== 'md' && `radio--${size}`,
+                size !== 'md' && `radio-${size}`,
                 className
             )}
             style={isColored ? {
@@ -65,14 +65,16 @@ export const Radio = memo(forwardRef<HTMLInputElement, RadioProps>((
                 type="radio"
                 id={inputId}
                 disabled={disabled}
-                className="radio__input"
+                className="radio-input"
                 {...props}
             />
-            <span className="radio__control" aria-hidden="true"/>
-            {label && <span className="radio__label">{label}</span>}
+            <span className="radio-control" aria-hidden="true"/>
+            {label && <span className="radio-label">{label}</span>}
         </label>
     );
 }));
 
 Radio.displayName = 'Radio';
+
+
 

@@ -1,0 +1,11 @@
+import {type ChangeEvent, type CSSProperties, type KeyboardEvent, type RefObject, type ReactNode} from 'react';
+import clsx from 'clsx';
+import type {SelectOption} from './Select';
+import {SelectOptions} from './SelectOptions';
+import {SelectTrigger} from './SelectTrigger';
+
+interface Props { rootRef: (node: HTMLDivElement | null) => void; className?: string; style?: CSSProperties; options: (SelectOption & {id: string})[]; value?: string | number; placeholder: string; icon?: ReactNode; size: string; disabled: boolean; searchable: boolean; open: boolean; error: string | null; dropdownId: string; focusedIndex: number; inputValue: string; dropdownStyles: CSSProperties; inputRef: RefObject<HTMLInputElement | null>; listboxRef: RefObject<HTMLUListElement | null>; onToggle: () => void; onInputClick: () => void; onKeyDown: (event: KeyboardEvent<HTMLElement>) => void; onInputChange: (event: ChangeEvent<HTMLInputElement>) => void; onSelect: (option: SelectOption) => void; onFocus: (index: number) => void; }
+export const SelectRenderer = ({rootRef, className, style, options, value, placeholder, icon, size, disabled, searchable, open, error, dropdownId, focusedIndex, inputValue, dropdownStyles, inputRef, listboxRef, onToggle, onInputClick, onKeyDown, onInputChange, onSelect, onFocus}: Props) => {
+    const selected = options.find(option => option.value === value && !option.isSpacer); const activeIcon = selected?.icon || icon;
+    return <div ref={rootRef} className={clsx('select', size !== 'md' && `select-${size}`, disabled && 'is-disabled', open && 'is-open', error && 'is-error', className)} style={style}><SelectTrigger selected={selected} icon={activeIcon} searchable={searchable} disabled={disabled} open={open} placeholder={placeholder} value={inputValue} inputRef={inputRef} listboxId={dropdownId} activeId={open && focusedIndex >= 0 ? `${dropdownId}-option-${options[focusedIndex]?.id}` : undefined} onToggle={onToggle} onInputClick={onInputClick} onKeyDown={onKeyDown} onInputChange={onInputChange}/><SelectOptions open={open} listboxId={dropdownId} options={options} value={value} focusedIndex={focusedIndex} styles={dropdownStyles} listboxRef={listboxRef} onSelect={onSelect} onFocus={onFocus}/>{error && <div className="select-error-message">{error}</div>}</div>;
+};

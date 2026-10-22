@@ -15,7 +15,7 @@
     color: var(--color-text-muted);
   }
 
-  &__input {
+  &-input {
     position: absolute;
     opacity: 0;
     width: 0;
@@ -23,7 +23,7 @@
     margin: 0;
   }
 
-  &__control {
+  &-control {
     width: var(--control-size, 1.125rem);
     height: var(--control-size, 1.125rem);
     flex-shrink: 0;
@@ -49,16 +49,16 @@
     }
   }
 
-  &:hover:not(.is-disabled) &__control {
+  &:hover:not(.is-disabled) &-control {
     border-color: var(--color-border-strong);
   }
 
-  &__input:focus-visible + &__control {
+  &-input:focus-visible + &-control {
     outline: none;
     box-shadow: 0 0 0 1px var(--color-void), 0 0 0 3px var(--radio-color-base, var(--color-primary));
   }
 
-  &__input:checked + &__control {
+  &-input:checked + &-control {
     background-color: var(--radio-color-base, var(--color-primary));
     border-color: var(--radio-color-base, var(--color-primary));
 
@@ -67,24 +67,24 @@
     }
   }
 
-  &__label {
+  &-label {
     user-select: none;
   }
 
   // ==========================================================================
   // SIZES
   // ==========================================================================
-  &--sm {
+  &-sm {
     font-size: var(--text-body-sm);
     --control-size: 0.875rem;
   }
 
-  &--md {
+  &-md {
     font-size: var(--font-size-base);
     --control-size: 1.125rem;
   }
 
-  &--lg {
+  &-lg {
     font-size: var(--font-size-lg);
     --control-size: 1.375rem;
   }

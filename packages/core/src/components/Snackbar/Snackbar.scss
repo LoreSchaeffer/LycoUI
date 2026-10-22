@@ -43,23 +43,23 @@
   }
 
   &.has-icon {
-    .snackbar__content {
+    .snackbar-content {
       padding-left: var(--spacing-3);
     }
   }
 
-  &--closable {
+  &-closable {
     padding-right: var(--spacing-12, 3rem);
   }
 
-  &--flat {
+  &-flat {
     box-shadow: none;
     background-color: transparent;
     border-color: transparent;
   }
 }
 
-.snackbar__icon {
+.snackbar-icon {
   flex-shrink: 0;
   display: flex;
   align-items: center;
@@ -75,12 +75,12 @@
   }
 }
 
-.snackbar__content {
+.snackbar-content {
   flex-grow: 1;
   word-break: break-word;
 }
 
-.snackbar__close {
+.snackbar-close {
   position: absolute;
   top: 50%;
   right: var(--spacing-2, 0.5rem);
@@ -136,3 +136,4 @@
     transform: translateY(var(--spacing-4, 1rem)) scale(0.95);
   }
 }
+
