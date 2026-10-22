@@ -1,7 +1,7 @@
 import './DataTable.scss';
 import {type DragEvent, forwardRef, type ReactElement, type ReactNode, type Ref, useCallback, useImperativeHandle, useMemo, useState} from 'react';
 import clsx from 'clsx';
-import {Table, TableBody, TableCell, TableHead, TableRow} from '../Table';
+import {Table, TableBody, TableCell, TableRow} from '../Table';
 import {Select, type SelectOption} from '../Select';
 import {Pagination} from '../Pagination';
 import {Spinner} from '../Spinner';
@@ -10,32 +10,10 @@ import {deriveRows} from './data-model.ts';
 import {useRowSelection} from './useRowSelection.ts';
 import {useRowReorder} from './useRowReorder.ts';
 import {DataTableToolbar} from './DataTableToolbar.tsx';
+import {DataTableHead} from './DataTableHead.tsx';
 
 
 import type {DataTableProps, DataTableRef, SortDirection} from './DataTable.types.ts';
-const SortAscIcon = () => (
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"
-         strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-        <polyline points="18 15 12 9 6 15"/>
-    </svg>
-);
-
-const SortDescIcon = () => (
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"
-         strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-        <polyline points="6 9 12 15 18 9"/>
-    </svg>
-);
-
-const SortNeutralIcon = () => (
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"
-         strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"
-         style={{opacity: 0.35}}>
-        <polyline points="8 6 12 2 16 6"/>
-        <polyline points="8 18 12 22 16 18"/>
-    </svg>
-);
-
 const DragHandleIcon = () => (
     <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" width="16" height="16">
         <circle cx="9" cy="6" r="1.5"/>
@@ -286,62 +264,17 @@ function DataTableInner<T>(
                     borderless={borderless}
                     size={size}
                 >
-                    <TableHead>
-                        <TableRow>
-                            {isDragEnabled && (
-                                <TableCell isHeader className="data-table__drag-header" aria-label="Drag handle">
-                                    {/* Empty visually, used for accessibility label */}
-                                </TableCell>
-                            )}
-                            {selectable && (
-                                <TableCell isHeader className="data-table__select-cell">
-                                    <Checkbox
-                                        checked={isAllSelected}
-                                        indeterminate={isSomeSelected}
-                                        onChange={(e) => handleSelectAll(e.target.checked)}
-                                        aria-label="Select all rows"
-                                    />
-                                </TableCell>
-                            )}
-                            {columns.map(col => {
-                                const isSortable = !isDragEnabled && col.sortable !== false;
-                                const isSorted = sortColumn === col.id;
-
-                                return (
-                                    <TableCell
-                                        key={col.id}
-                                        isHeader
-                                        className={clsx(
-                                            'data-table__th',
-                                            isSortable && 'data-table__th--sortable',
-                                            isSorted && 'data-table__th--sorted'
-                                        )}
-                                        style={col.minWidth ? {minWidth: col.minWidth} : undefined}
-                                        onClick={isSortable ? () => handleSort(col.id) : undefined}
-                                        aria-sort={
-                                            isSorted
-                                                ? (sortDirection === 'asc' ? 'ascending' : 'descending')
-                                                : undefined
-                                        }
-                                    >
-                                        <span className="data-table__th-content">
-                                            <span>{col.header}</span>
-                                            {isSortable && (
-                                                <span className="data-table__sort-icon">
-                                                    {isSorted
-                                                        ? (sortDirection === 'asc'
-                                                            ? <SortAscIcon/>
-                                                            : <SortDescIcon/>)
-                                                        : <SortNeutralIcon/>
-                                                    }
-                                                </span>
-                                            )}
-                                        </span>
-                                    </TableCell>
-                                );
-                            })}
-                        </TableRow>
-                    </TableHead>
+                    <DataTableHead
+                        columns={columns}
+                        dragEnabled={isDragEnabled}
+                        selectable={selectable}
+                        allSelected={isAllSelected}
+                        someSelected={isSomeSelected}
+                        sortColumn={sortColumn}
+                        sortDirection={sortDirection}
+                        onSort={handleSort}
+                        onSelectAll={handleSelectAll}
+                    />
                     <TableBody>
                         {loading ? (
                             <TableRow>
