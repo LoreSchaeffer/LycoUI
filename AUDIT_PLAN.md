@@ -781,7 +781,7 @@ This exhaustive unit/color candidate ledger lists lines with raw dimensional/tim
 
   **Verify:** `npm run test:parity -- tests/parity/sidebar.spec.ts tests/parity/overlay.spec.ts --project=chromium`; `npm run audit:contracts -- --check loc --components Sidebar`. Covers C10, H03/H04/H17/H18, M01/M05.
 
-- [ ] Task 2.3 — Separate picker domains from popup and validation behavior
+- [x] Task 2.3 — Separate picker domains from popup and validation behavior
 
   **Targets:** modify `packages/core/src/components/DatePicker/DatePicker.tsx`, `packages/core/src/components/DatePicker/TimePicker.tsx`, `packages/core/src/components/DatePicker/DateTimePicker.tsx`, `packages/core/src/components/DatePicker/Calendar.tsx`, `packages/core/src/components/DatePicker/TimeInput.tsx`, `packages/core/src/components/DatePicker/DatePicker.scss`; create `packages/core/src/components/DatePicker/date-model.ts`, `packages/core/src/components/DatePicker/time-model.ts`, `packages/core/src/components/DatePicker/usePickerField.ts`, `packages/core/src/components/DatePicker/PickerPopover.tsx`, `packages/core/src/components/DatePicker/PickerTrigger.tsx`, `packages/core/src/components/DatePicker/CalendarGrid.tsx`, `packages/core/src/components/DatePicker/_field.scss`, `packages/core/src/components/DatePicker/_calendar.scss`, `packages/core/src/components/DatePicker/_time.scss`, `tests/unit/picker-model.test.ts`, `tests/parity/picker-react.spec.ts`.
 

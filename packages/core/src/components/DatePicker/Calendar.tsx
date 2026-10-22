@@ -1,10 +1,6 @@
 import {forwardRef, type KeyboardEvent, memo, useCallback, useEffect, useMemo, useState} from 'react';
 import {CalendarGrid} from './CalendarGrid.tsx';
 
-/** Internal props for the Calendar sub-component. Not exported publicly. */
-/**
- * Props for the Calendar component.
- */
 export interface CalendarProps {
     /** The month/year currently displayed in the calendar. */
     viewDate: Date;
@@ -24,7 +20,6 @@ export interface CalendarProps {
     onNextMonth: () => void;
 }
 
-/** Zero-out the time portion of a date for safe day comparisons. */
 const stripTime = (d: Date): Date => new Date(d.getFullYear(), d.getMonth(), d.getDate());
 
 /** Build the 6×7 grid of days for a given month view. */
