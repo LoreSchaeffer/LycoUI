@@ -35,6 +35,7 @@ export * from './components/Divider';
 export * from './components/Carousel';
 export * from './components/ContextMenu';
 export * from './components/DatePicker';
+export * from './components/ColorPicker';
 
 export * from './utils/theme';
 
