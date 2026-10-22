@@ -6,7 +6,8 @@ import type {FullVariant, SizeVariant} from '../../types/types.ts';
 import {getContrastColor} from '../../utils/theme.ts';
 import {useMediaQuery} from '../../hooks/useMediaQuery.ts';
 import Calendar from './Calendar.tsx';
-import {parseLocalDate} from './date-model';
+import {formatDateString, parseDateString, parseLocalDate} from './date-model';
+export {formatDateString, parseDateString} from './date-model';
 
 /**
  * Props for the DatePicker component.
@@ -51,48 +52,6 @@ export interface DatePickerProps extends Omit<HTMLAttributes<HTMLDivElement>, 'o
 
 const pad2 = (n: number): string => String(n).padStart(2, '0');
 
-export function formatDateString(date: Date, format: string, locale?: string): string {
-    if (['short', 'medium', 'long', 'full'].includes(format)) {
-        return new Intl.DateTimeFormat(locale, {dateStyle: format as 'short' | 'medium' | 'long' | 'full'}).format(date);
-    }
-    const y = date.getFullYear().toString();
-    const m = pad2(date.getMonth() + 1);
-    const d = pad2(date.getDate());
-    return format.replace('yyyy', y).replace('MM', m).replace('dd', d);
-}
-
-export function parseDateString(str: string, format: string): Date | null {
-    if (['short', 'medium', 'long', 'full'].includes(format)) {
-        const parsed = new Date(str);
-        return isNaN(parsed.getTime()) ? null : parsed;
-    }
-    const tokens = {
-        'yyyy': '(\\d{4})',
-        'MM': '(\\d{1,2})',
-        'dd': '(\\d{1,2})'
-    };
-    const regexStr = format
-        .replace(/[.*+?^${}()|[\]\\]/g, '\\$&') // escape regex chars
-        .replace(/yyyy|MM|dd/g, (match) => tokens[match as keyof typeof tokens]);
-
-    const match = str.match(new RegExp(`^${regexStr}$`));
-    if (!match) return null;
-
-    let y = 0, m = 0, d = 0;
-    let idx = 1;
-    const formatTokens = format.match(/yyyy|MM|dd/g) || [];
-    for (const token of formatTokens) {
-        const val = parseInt(match[idx++], 10);
-        if (token === 'yyyy') y = val;
-        if (token === 'MM') m = val;
-        if (token === 'dd') d = val;
-    }
-    if (m >= 1 && m <= 12 && d >= 1 && d <= 31) {
-        const parsed = new Date(y, m - 1, d);
-        if (parsed.getFullYear() === y && parsed.getMonth() === m - 1 && parsed.getDate() === d) return parsed;
-    }
-    return null;
-}
 
 /**
  * A fully accessible date picker component with a popover calendar, keyboard navigation,
