@@ -3,6 +3,7 @@ import React, {forwardRef, useCallback, useEffect, useRef, useState, type CSSPro
 import { createPortal } from 'react-dom';
 import {DropdownMenuContext} from './DropdownMenuContext';
 import {useKeyboardNav} from '../../hooks/useKeyboardNav';
+import {useControllableState} from '../../hooks/useControllableState';
 
 /**
  * Props for the DropdownMenu component.
@@ -18,18 +19,12 @@ export interface DropdownMenuProps {
  * A UI component for LycoUI.
  */
 export const DropdownMenu: React.FC<DropdownMenuProps> = ({children, isOpen: controlledIsOpen, onOpenChange}) => {
-    const [uncontrolledIsOpen, setUncontrolledIsOpen] = useState(false);
     const triggerRef = useRef<HTMLButtonElement>(null);
-
-    const isControlled = controlledIsOpen !== undefined;
-    const isOpen = isControlled ? controlledIsOpen : uncontrolledIsOpen;
-
-    const setIsOpen = useCallback((newIsOpen: boolean) => {
-        if (!isControlled) {
-            setUncontrolledIsOpen(newIsOpen);
-        }
-        onOpenChange?.(newIsOpen);
-    }, [isControlled, onOpenChange]);
+    const [isOpen, setIsOpen] = useControllableState({
+        value: controlledIsOpen,
+        defaultValue: false,
+        onChange: onOpenChange
+    });
 
     const closeMenu = useCallback(() => {
         setIsOpen(false);
