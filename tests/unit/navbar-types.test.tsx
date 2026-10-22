@@ -15,5 +15,8 @@ describe('Navbar compound API', () => {
     expect(markup).toContain('href="/docs"');
     expect(markup).toContain('aria-controls="main-nav-collapse"');
     expect(markup).toContain('id="main-nav-collapse"');
+    expect(markup).toContain('class="navbar-container"');
+    expect(markup).not.toContain('navbar__');
+    expect(markup).not.toContain('navbar--');
   });
 });
