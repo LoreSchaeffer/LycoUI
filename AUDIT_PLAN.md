@@ -735,7 +735,7 @@ This exhaustive unit/color candidate ledger lists lines with raw dimensional/tim
 
   **Verify:** `npm run test:unit -- tests/unit/interaction.test.tsx`; `npm run test:parity -- tests/parity/menu.spec.ts --project=chromium`. Covers H02/H06/H07/H10–H12/H18 and C12's menu foundation.
 
-- [ ] Task 1.4 — Extract floating geometry, Collapse and Tooltip surfaces
+- [x] Task 1.4 — Extract floating geometry, Collapse and Tooltip surfaces
 
   **Targets:** modify `packages/core/src/utils/floating.ts`; create `packages/core/src/interaction/floating-position.ts`, `packages/core/src/interaction/visibility.ts`, `packages/core/src/hooks/useFloatingPosition.ts`, `packages/core/src/primitives/Collapse/Collapse.tsx`, `packages/core/src/primitives/Collapse/CollapseController.ts`, `packages/core/src/primitives/Tooltip/TooltipSurface.tsx`, `packages/core/src/primitives/Tooltip/TooltipController.ts`, `packages/core/src/styles/primitives/_floating.scss`, `packages/core/src/styles/primitives/_collapse.scss`, `packages/core/src/styles/primitives/_tooltip.scss`, `tests/unit/floating.test.ts`, `tests/parity/floating.spec.ts`, `tests/parity/collapse.spec.ts`.
 
