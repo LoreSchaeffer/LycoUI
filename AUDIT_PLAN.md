@@ -791,7 +791,7 @@ This exhaustive unit/color candidate ledger lists lines with raw dimensional/tim
 
   **Verify:** `npm run test:unit -- tests/unit/picker-model.test.ts`; `npm run test:parity -- tests/parity/picker-react.spec.ts --project=chromium`; `npm run audit:contracts -- --check loc --components DatePicker`. Covers H05/H12/H19, M01; paired Vanilla completion is Task 3.11.
 
-- [ ] Task 2.4 — Extract the DataTable model and focused views
+- [x] Task 2.4 — Extract the DataTable model and focused views
 
   **Targets:** modify `packages/core/src/components/DataTable/DataTable.tsx`, `packages/core/src/components/DataTable/DataTable.scss`, `packages/core/src/components/DataTable/index.ts`; create `packages/core/src/components/DataTable/DataTable.types.ts`, `packages/core/src/components/DataTable/data-model.ts`, `packages/core/src/components/DataTable/useDataTableState.ts`, `packages/core/src/components/DataTable/useRowSelection.ts`, `packages/core/src/components/DataTable/useRowReorder.ts`, `packages/core/src/components/DataTable/DataTableToolbar.tsx`, `packages/core/src/components/DataTable/DataTableHead.tsx`, `packages/core/src/components/DataTable/DataTableBody.tsx`, `packages/core/src/components/DataTable/_toolbar.scss`, `packages/core/src/components/DataTable/_rows.scss`, `tests/unit/data-table-model.test.ts`, `tests/parity/data-table-react.spec.ts`.
 

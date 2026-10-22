@@ -1,16 +1,15 @@
 import './DataTable.scss';
-import {type DragEvent, forwardRef, type ReactElement, type ReactNode, type Ref, useCallback, useImperativeHandle, useMemo, useState} from 'react';
+import {forwardRef, type ReactElement, type Ref, useCallback, useImperativeHandle, useMemo, useState} from 'react';
 import clsx from 'clsx';
-import {Table, TableBody, TableCell, TableRow} from '../Table';
+import {Table} from '../Table';
 import {Select, type SelectOption} from '../Select';
 import {Pagination} from '../Pagination';
-import {Spinner} from '../Spinner';
-import {Checkbox} from '../Checkbox';
 import {deriveRows} from './data-model.ts';
 import {useRowSelection} from './useRowSelection.ts';
 import {useRowReorder} from './useRowReorder.ts';
 import {DataTableToolbar} from './DataTableToolbar.tsx';
 import {DataTableHead} from './DataTableHead.tsx';
+import {DataTableBody} from './DataTableBody.tsx';
 
 
 import type {DataTableProps, DataTableRef, SortDirection} from './DataTable.types.ts';
@@ -25,10 +24,6 @@ const DragHandleIcon = () => (
     </svg>
 );
 
-
-function getRowValue<T>(row: T, colId: string): unknown {
-    return (row as Record<string, unknown>)[colId];
-}
 
 const DEFAULT_PAGE_SIZES = [10, 25, 50, 100];
 
@@ -275,80 +270,28 @@ function DataTableInner<T>(
                         onSort={handleSort}
                         onSelectAll={handleSelectAll}
                     />
-                    <TableBody>
-                        {loading ? (
-                            <TableRow>
-                                <TableCell
-                                    colSpan={columns.length + (isDragEnabled ? 1 : 0)}
-                                    className="data-table__empty-cell"
-                                >
-                                    <Spinner size="lg"/>
-                                </TableCell>
-                            </TableRow>
-                        ) : paginatedData.length > 0 ? (
-                            paginatedData.map((row, idx) => {
-                                const absoluteIndex = isDragEnabled
-                                    ? idx
-                                    : (activePage - 1) * pageSize + idx;
-                                const key = getRowKey(row, absoluteIndex);
-                                const extraClass = rowClassName ? rowClassName(row) : undefined;
-                                const isDragged = dragIndex === absoluteIndex;
-                                const isDragOver = dragOverIndex === absoluteIndex;
-
-                                return (
-                                    <TableRow
-                                        key={key}
-                                        className={clsx(
-                                            extraClass,
-                                            onRowClick && 'data-table__row--clickable',
-                                            isDragged && 'is-dragging',
-                                            isDragOver && 'is-drag-over'
-                                        )}
-                                        onClick={onRowClick ? (e) => onRowClick(e, row, absoluteIndex) : undefined}
-                                        onContextMenu={onRowContextMenu ? (e) => onRowContextMenu(e, row, absoluteIndex) : undefined}
-                                        draggable={isDragEnabled}
-                                        onDragStart={isDragEnabled ? (e) => onDragStart(e as unknown as DragEvent<HTMLTableRowElement>, absoluteIndex) : undefined}
-                                        onDragOver={isDragEnabled ? (e) => onDragOver(e as unknown as DragEvent<HTMLTableRowElement>, absoluteIndex) : undefined}
-                                        onDragLeave={isDragEnabled ? onDragLeave : undefined}
-                                        onDrop={isDragEnabled ? (e) => onDrop(e as unknown as DragEvent<HTMLTableRowElement>, absoluteIndex) : undefined}
-                                        onDragEnd={isDragEnabled ? onDragEnd : undefined}
-                                    >
-                                        {isDragEnabled && (
-                                            <TableCell className="data-table__drag-cell">
-                                                <DragHandleIcon/>
-                                            </TableCell>
-                                        )}
-                                        {selectable && (
-                                            <TableCell className="data-table__select-cell" onClick={(e) => e.stopPropagation()}>
-                                                <Checkbox
-                                                    checked={activeSelectedKeys.includes(key)}
-                                                    onChange={(e) => toggleSelection(key, e.target.checked)}
-                                                    aria-label={`Select row ${String(key)}`}
-                                                />
-                                            </TableCell>
-                                        )}
-                                        {columns.map(col => (
-                                            <TableCell key={`${key}_${col.id}`}>
-                                                {col.render
-                                                    ? col.render(row, absoluteIndex)
-                                                    : getRowValue(row, col.id) as ReactNode
-                                                }
-                                            </TableCell>
-                                        ))}
-                                    </TableRow>
-                                );
-                            })
-                        ) : (
-                            <TableRow>
-                                <TableCell
-                                    colSpan={columns.length + (isDragEnabled ? 1 : 0)}
-                                    className="data-table__empty-cell"
-                                >
-                                    {emptyMessage}
-                                </TableCell>
-                            </TableRow>
-                        )}
-                    </TableBody>
+                    <DataTableBody
+                        columns={columns}
+                        rows={paginatedData}
+                        loading={loading}
+                        emptyMessage={emptyMessage}
+                        dragEnabled={isDragEnabled}
+                        selectable={selectable}
+                        selectedKeys={activeSelectedKeys}
+                        rowOffset={(activePage - 1) * pageSize}
+                        draggedIndex={dragIndex}
+                        dragOverIndex={dragOverIndex}
+                        getRowKey={getRowKey}
+                        rowClassName={rowClassName}
+                        onRowClick={onRowClick}
+                        onRowContextMenu={onRowContextMenu}
+                        onToggleSelection={toggleSelection}
+                        onDragStart={onDragStart}
+                        onDragOver={onDragOver}
+                        onDragLeave={onDragLeave}
+                        onDrop={onDrop}
+                        onDragEnd={onDragEnd}
+                    />
                 </Table>
             </div>
 
