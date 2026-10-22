@@ -25,8 +25,8 @@ export class LycoNavbarController extends BaseController {
     constructor(navbar: HTMLElement) {
         super();
         this.navbar = navbar;
-        const toggles = [...navbar.querySelectorAll<HTMLButtonElement>('.navbar__toggle')];
-        const collapses = [...navbar.querySelectorAll<HTMLElement>('.navbar__collapse')];
+        const toggles = [...navbar.querySelectorAll<HTMLButtonElement>('.navbar-toggle')];
+        const collapses = [...navbar.querySelectorAll<HTMLElement>('.navbar-collapse')];
         toggles.forEach((toggle, index) => {
             const controlsId = toggle.getAttribute('aria-controls');
             const panel = controlsId ? document.getElementById(controlsId) : collapses[index];
@@ -35,15 +35,15 @@ export class LycoNavbarController extends BaseController {
             this.collapseControllers.push(controller);
             this.addCleanup(() => controller.destroy());
         });
-        navbar.querySelectorAll<HTMLElement>('.navbar__dropdown').forEach((dropdown) => {
-            const trigger = dropdown.querySelector<HTMLElement>('.navbar__dropdown-trigger');
-            const surface = dropdown.querySelector<HTMLElement>('.navbar__dropdown-menu');
+        navbar.querySelectorAll<HTMLElement>('.navbar-dropdown').forEach((dropdown) => {
+            const trigger = dropdown.querySelector<HTMLElement>('.navbar-dropdown-trigger');
+            const surface = dropdown.querySelector<HTMLElement>('.navbar-dropdown-menu');
             if (!trigger || !surface) return;
             const controller = new MenuController(trigger, surface);
             this.menuControllers.push(controller);
             this.addCleanup(() => controller.destroy());
         });
-        navbar.querySelectorAll<HTMLElement>('.navbar__link').forEach((link) => this.listen(link, 'click', () => this.closeAll()));
+        navbar.querySelectorAll<HTMLElement>('.navbar-link').forEach((link) => this.listen(link, 'click', () => this.closeAll()));
     }
 
     private closeAll(): void {

@@ -72,11 +72,11 @@ const NavbarComponent = forwardRef<HTMLElement, NavbarProps>((
                 ref={ref}
                 className={clsx(
                     'navbar',
-                    isBaseVariant ? `navbar--${variant}` : `navbar-variant ${dim ? 'navbar-dim' : 'navbar-solid'}`,
+                    isBaseVariant ? `navbar-${variant}` : `navbar-variant ${dim ? 'navbar-dim' : 'navbar-solid'}`,
                     `navbar-elevation-${elevation}`,
-                    position !== 'static' && `navbar--${position}`,
-                    expand !== 'never' && `navbar--expand-${expand}`,
-                    isPredefinedSize && `navbar--${size}`,
+                    position !== 'static' && `navbar-${position}`,
+                    expand !== 'never' && `navbar-expand-${expand}`,
+                    isPredefinedSize && `navbar-${size}`,
                     className
                 )}
                 id={id}
@@ -90,7 +90,7 @@ const NavbarComponent = forwardRef<HTMLElement, NavbarProps>((
                 } as CSSProperties}
                 {...props}
             >
-                <div className="navbar__container">
+                <div className="navbar-container">
                     {children}
                 </div>
             </nav>
@@ -115,7 +115,7 @@ const NavbarBrand = forwardRef((
     return (
         <Component
             ref={ref}
-            className={clsx('navbar__brand', centered && 'navbar__brand--centered', className)}
+            className={clsx('navbar-brand', centered && 'navbar-brand--centered', className)}
             {...props}
         >
             {children}
@@ -143,7 +143,7 @@ const NavbarToggle = forwardRef<HTMLButtonElement, NavbarToggleProps>((
         <button
             ref={ref}
             type="button"
-            className={clsx('navbar__toggle', className)}
+            className={clsx('navbar-toggle', className)}
             onClick={handleClick}
             aria-expanded={isOpen}
             aria-controls={ariaControls || `${id}-collapse`}
@@ -172,11 +172,11 @@ const NavbarCollapse = forwardRef<HTMLDivElement, NavbarCollapseProps>((
     return (
         <div
             ref={ref}
-            className={clsx('navbar__collapse', isOpen && 'is-open', className)}
+            className={clsx('navbar-collapse', isOpen && 'is-open', className)}
             id={id}
             {...props}
         >
-            <div className="navbar__collapse-inner">
+            <div className="navbar-collapse-inner">
                 {children}
             </div>
         </div>
@@ -197,7 +197,7 @@ const NavbarNav = forwardRef<HTMLUListElement, NavbarNavProps>((
     return (
         <ul
             ref={ref}
-            className={clsx('navbar__nav', `navbar__nav--align-${align}`, className)}
+            className={clsx('navbar-nav', `navbar-nav--align-${align}`, className)}
             {...props}
         >
             {children}
@@ -217,7 +217,7 @@ const NavbarItem = forwardRef<HTMLLIElement, NavbarItemProps>((
     return (
         <li
             ref={ref}
-            className={clsx('navbar__item', className)}
+            className={clsx('navbar-item', className)}
             {...props}
         >
             {children}
@@ -250,7 +250,7 @@ const NavbarLink = forwardRef((
     return (
         <Component
             ref={ref}
-            className={clsx('navbar__link', active && 'is-active', className)}
+            className={clsx('navbar-link', active && 'is-active', className)}
             aria-current={active ? 'page' : undefined}
             onClick={handleClick}
             {...props}
@@ -306,24 +306,24 @@ const NavbarDropdown = forwardRef<HTMLLIElement, NavbarDropdownProps>((
                     if (typeof ref === 'function') ref(node);
                     else if (ref) (ref as React.MutableRefObject<HTMLLIElement | null>).current = node;
                 }}
-                className={clsx('navbar__item', 'navbar__dropdown', isOpen && 'is-open', className)}
+                className={clsx('navbar-item', 'navbar-dropdown', isOpen && 'is-open', className)}
                 {...props}
             >
                 <button
                     type="button"
-                    className={clsx('navbar__link', 'navbar__dropdown-trigger', unstyled && 'navbar__dropdown-trigger--unstyled')}
+                    className={clsx('navbar-link', 'navbar-dropdown-trigger', unstyled && 'navbar-dropdown-trigger--unstyled')}
                     onClick={toggle}
                     aria-expanded={isOpen}
                     aria-haspopup="true"
                 >
                     {title}
                     {!hideCaret && (
-                        <svg className="navbar__dropdown-caret" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                        <svg className="navbar-dropdown-caret" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                             <polyline points="6 9 12 15 18 9"></polyline>
                         </svg>
                     )}
                 </button>
-                <div className={clsx('navbar__dropdown-menu', isOpen && 'is-open', align === 'right' && 'navbar__dropdown-menu--right')}>
+                <div className={clsx('navbar-dropdown-menu', isOpen && 'is-open', align === 'right' && 'navbar-dropdown-menu--right')}>
                     {children}
                 </div>
             </li>
@@ -355,7 +355,7 @@ const NavbarDropdownItem = forwardRef((
     return (
         <Component
             ref={ref}
-            className={clsx('navbar__dropdown-item', variant !== 'base' && `navbar__dropdown-item--${variant}`, className)}
+            className={clsx('navbar-dropdown-item', variant !== 'base' && `navbar-dropdown-item--${variant}`, className)}
             onClick={handleClick}
             {...props}
         >
@@ -400,26 +400,26 @@ const NavbarDropdownSubMenu = forwardRef<HTMLDivElement, NavbarDropdownSubMenuPr
     return (
         <div
             ref={ref}
-            className={clsx('navbar__dropdown-submenu', isFlipped && 'navbar__dropdown-submenu--flip-left', isOpen && 'is-open', className)}
+            className={clsx('navbar-dropdown-submenu', isFlipped && 'navbar-dropdown-submenu--flip-left', isOpen && 'is-open', className)}
             onMouseEnter={handleMouseEnter}
             onMouseLeave={handleMouseLeave}
             {...props}
         >
             <button
                 type="button"
-                className="navbar__dropdown-submenu-trigger"
+                className="navbar-dropdown-submenu-trigger"
                 aria-haspopup="true"
                 aria-expanded={isOpen}
                 onClick={toggle}
             >
                 <span>{title}</span>
-                <svg className="navbar__dropdown-caret" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <svg className="navbar-dropdown-caret" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                     <polyline points="6 9 12 15 18 9"></polyline>
                 </svg>
             </button>
             <div
                 ref={menuRef}
-                className={clsx('navbar__dropdown-menu navbar__dropdown-menu--nested', isOpen && 'is-open')}
+                className={clsx('navbar-dropdown-menu navbar-dropdown-menu--nested', isOpen && 'is-open')}
             >
                 {children}
             </div>
