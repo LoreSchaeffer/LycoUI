@@ -13,5 +13,7 @@ describe('picker models', () => {
     expect(formatTime({hours: 0, minutes: 0}, true)).toBe('12:00 AM');
     expect(formatTime({hours: 12, minutes: 0}, true)).toBe('12:00 PM');
     expect(parseTime('24:00')).toBeNull();
+    expect(parseTime('12:30 AM')).toEqual({hours: 0, minutes: 30});
+    expect(parseTime('1:30 PM')).toEqual({hours: 13, minutes: 30});
   });
 });
