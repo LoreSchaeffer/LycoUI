@@ -1,0 +1,22 @@
+@use "./layout-core";
+@use "./layout-links";
+@use "./layout-dropdown";
+// Backdrop for overlay mode
+.sidebar-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: var(--color-overlay);
+  z-index: var(--z-index-modal-backdrop, 1040);
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity var(--duration-normal) var(--ease-default), visibility var(--duration-normal) var(--ease-default);
+
+  &.is-open {
+    opacity: 1;
+    visibility: visible;
+  }
+}
+

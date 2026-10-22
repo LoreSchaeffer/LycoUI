@@ -1,0 +1,165 @@
+@use "../../styles/tokens/breakpoints" as *;
+
+.sidebar {
+  &__dropdown,
+  &-dropdown {
+    display: flex;
+    flex-direction: column;
+  }
+
+  &__dropdown-trigger,
+  &-dropdown-trigger {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start !important; // Override Button default center
+    width: 100%;
+    padding: var(--spacing-2) var(--spacing-3);
+    color: var(--color-text-secondary);
+    background: transparent;
+    border: none;
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    text-align: left;
+    transition: background-color var(--duration-fast) var(--ease-default), color var(--duration-fast) var(--ease-default);
+
+    &:hover, &:focus-visible {
+      color: var(--color-text-primary);
+      background-color: var(--surface-elevated);
+      outline: none;
+
+      .sidebar-icon,
+      .sidebar-icon {
+        color: var(--color-text-primary);
+      }
+    }
+
+    .sidebar-icon,
+    .sidebar-icon {
+      color: var(--color-text-muted);
+      transition: color var(--duration-fast) var(--ease-default), transform var(--duration-normal) var(--ease-default);
+    }
+
+    .sidebar-dropdown-caret,
+    .sidebar-dropdown-caret {
+      flex-shrink: 0;
+      width: var(--spacing-4, 1rem);
+      height: var(--spacing-4, 1rem);
+      transition: transform var(--duration-fast) var(--ease-default);
+    }
+  }
+
+  &__dropdown.is-open,
+  &-dropdown.is-open {
+    .sidebar-dropdown-trigger,
+    .sidebar-dropdown-trigger {
+      color: var(--color-text-primary);
+
+      .sidebar-icon,
+      .sidebar-icon {
+        color: var(--color-text-primary);
+      }
+
+      .sidebar-dropdown-caret,
+      .sidebar-dropdown-caret {
+        transform: rotate(180deg);
+      }
+    }
+
+    .sidebar-dropdown-menu-wrapper,
+    .sidebar-dropdown-menu-wrapper {
+      grid-template-rows: 1fr;
+    }
+  }
+
+  &__dropdown-menu-wrapper,
+  &-dropdown-menu-wrapper {
+    display: grid;
+    grid-template-rows: 0fr;
+    transition: grid-template-rows var(--duration-normal) var(--ease-default);
+  }
+
+  &__dropdown-menu,
+  &-dropdown-menu {
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    padding-left: calc(var(--spacing-3) + 1.25rem); // Indent past icon (var(--spacing-5, 1.25rem) is icon width)
+  }
+
+  &__dropdown-item,
+  &-dropdown-item {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-2);
+    flex-direction: row;
+    padding: var(--spacing-2) var(--spacing-3);
+    color: var(--color-text-muted);
+    text-decoration: none;
+    font-size: var(--text-body-sm);
+    font-weight: var(--font-weight-normal);
+    border-radius: var(--radius-md);
+    transition: background-color var(--duration-fast) var(--ease-default), color var(--duration-fast) var(--ease-default);
+    margin-top: var(--spacing-1); // Slight gap between items
+    white-space: nowrap;
+
+    &:hover, &:focus-visible {
+      color: var(--color-text-primary);
+      background-color: var(--surface-elevated);
+      outline: none;
+      text-decoration: none;
+    }
+
+    &.is-active {
+      color: var(--color-primary);
+      font-weight: var(--font-weight-medium);
+      background-color: color-mix(in srgb, var(--color-primary) 10%, transparent);
+    }
+
+    svg {
+      flex-shrink: 0;
+    }
+
+    &--danger {
+      color: var(--color-danger);
+      &:hover, &:focus-visible {
+        color: var(--color-danger);
+        background-color: var(--color-danger-subtle, color-mix(in srgb, var(--color-danger) 10%, transparent));
+      }
+    }
+
+    &--success {
+      color: var(--color-success);
+      &:hover, &:focus-visible {
+        color: var(--color-success);
+        background-color: var(--color-success-subtle, color-mix(in srgb, var(--color-success) 10%, transparent));
+      }
+    }
+
+    &--warning {
+      color: var(--color-warning);
+      &:hover, &:focus-visible {
+        color: var(--color-warning);
+        background-color: var(--color-warning-subtle, color-mix(in srgb, var(--color-warning) 10%, transparent));
+      }
+    }
+
+    &--primary {
+      color: var(--color-primary);
+      &:hover, &:focus-visible {
+        color: var(--color-primary);
+        background-color: var(--color-primary-subtle, color-mix(in srgb, var(--color-primary) 10%, transparent));
+      }
+    }
+
+    &.is-disabled,
+    &:disabled,
+    &[aria-disabled="true"] {
+      opacity: 0.5;
+      cursor: not-allowed;
+      pointer-events: none;
+      color: var(--color-text-muted) !important;
+      background-color: transparent !important;
+    }
+  }
+
+}

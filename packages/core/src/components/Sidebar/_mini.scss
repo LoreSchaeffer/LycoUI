@@ -1,0 +1,131 @@
+@use "../../styles/tokens/breakpoints" as *;
+
+.sidebar {
+  // Mini Mode Overrides
+  &.is-mini {
+    .sidebar-dropdown-trigger,
+    .sidebar-dropdown-trigger {
+      padding: 0 !important;
+      width: var(--spacing-9, 2.25rem) !important;
+      min-width: 0 !important;
+      height: var(--spacing-9, 2.25rem) !important;
+      margin: 0 auto;
+      justify-content: center !important;
+
+      .sidebar-label,
+      .sidebar-label,
+      .sidebar-dropdown-caret,
+      .sidebar-dropdown-caret {
+        display: none;
+      }
+
+      .sidebar-icon,
+      .sidebar-icon {
+        margin-right: 0;
+      }
+    }
+
+    .sidebar-dropdown,
+    .sidebar-dropdown {
+      position: relative; // Context for flyout
+    }
+
+    .sidebar-dropdown-menu-wrapper,
+    .sidebar-dropdown-menu-wrapper {
+      // Switch from grid accordion to fixed flyout
+      display: block; // Override grid
+      position: fixed;
+      width: max-content;
+      min-width: max-content;
+      overflow-y: auto; // max-height is set inline by the viewport-aware positioning
+
+      // Floating aesthetics (matching DropdownMenu)
+      background-color: var(--surface-floating, var(--color-bg-surface));
+      backdrop-filter: none;
+      border: 1px solid var(--color-border-subtle);
+      border-radius: var(--radius-md);
+      box-shadow: var(--shadow-xl);
+      z-index: var(--z-index-dropdown, 1030);
+
+      opacity: 0;
+      visibility: hidden;
+      transform: translateX(-0.5rem);
+      transition: opacity var(--duration-fast) var(--ease-out), transform var(--duration-fast) var(--ease-out), visibility var(--duration-fast) var(--ease-out);
+    }
+
+    .sidebar-dropdown-menu,
+    .sidebar-dropdown-menu {
+      overflow: visible; // Because it's no longer a grid transition
+      padding: var(--spacing-1); // Match DropdownMenu padding
+      gap: 0;
+    }
+
+    .sidebar-dropdown-item,
+    .sidebar-dropdown-item {
+      margin-top: 0;
+      border-radius: var(--radius-sm);
+      color: var(--color-text-primary);
+
+      &:hover, &:focus-visible {
+        color: var(--color-text-primary);
+        background-color: var(--color-surface-active, color-mix(in srgb, var(--color-primary) 10%, transparent));
+      }
+
+      &--danger {
+        color: var(--color-danger);
+        &:hover, &:focus-visible {
+          color: var(--color-danger);
+          background-color: var(--color-danger-subtle, color-mix(in srgb, var(--color-danger) 10%, transparent));
+        }
+      }
+
+      &--success {
+        color: var(--color-success);
+        &:hover, &:focus-visible {
+          color: var(--color-success);
+          background-color: var(--color-success-subtle, color-mix(in srgb, var(--color-success) 10%, transparent));
+        }
+      }
+
+      &--warning {
+        color: var(--color-warning);
+        &:hover, &:focus-visible {
+          color: var(--color-warning);
+          background-color: var(--color-warning-subtle, color-mix(in srgb, var(--color-warning) 10%, transparent));
+        }
+      }
+
+      &--primary {
+        color: var(--color-primary);
+        &:hover, &:focus-visible {
+          color: var(--color-primary);
+          background-color: var(--color-primary-subtle, color-mix(in srgb, var(--color-primary) 10%, transparent));
+        }
+      }
+
+      &.is-disabled,
+      &:disabled,
+      &[aria-disabled="true"] {
+        opacity: 0.5;
+        cursor: not-allowed;
+        pointer-events: none;
+        color: var(--color-text-muted) !important;
+        background-color: transparent !important;
+      }
+    }
+
+    // Hover to reveal flyout
+    .sidebar-dropdown:hover > .sidebar-dropdown-menu-wrapper,
+    .sidebar-dropdown:hover > .sidebar-dropdown-menu-wrapper,
+    .sidebar-dropdown:hover > .sidebar-dropdown-menu-wrapper,
+    .sidebar-dropdown:hover > .sidebar-dropdown-menu-wrapper,
+    .sidebar-dropdown:focus-within > .sidebar-dropdown-menu-wrapper,
+    .sidebar-dropdown:focus-within > .sidebar-dropdown-menu-wrapper,
+    .sidebar-dropdown:focus-within > .sidebar-dropdown-menu-wrapper,
+    .sidebar-dropdown:focus-within > .sidebar-dropdown-menu-wrapper {
+      opacity: 1;
+      visibility: visible;
+      transform: translateX(0);
+    }
+  }
+}
