@@ -1,8 +1,14 @@
+import {CollapseController} from '../../primitives/Collapse/CollapseController';
+import {MenuController} from '../../primitives/Menu/MenuController';
+import {BaseController} from '../../vanilla/BaseController';
+import {controllerRegistry} from '../../vanilla/controller-registry';
+
 export function initLycoNavbars(): void {
-    const navbars = document.querySelectorAll<HTMLElement>('.navbar:not([data-lyco-initialized])');
+    const navbars = document.querySelectorAll<HTMLElement>('.navbar');
     navbars.forEach(navbar => {
-        if (!navbar.dataset.lycoInitialized) {
-            new LycoNavbarController(navbar);
+        if (!controllerRegistry.get(navbar, 'navbar')) {
+            const controller = new LycoNavbarController(navbar);
+            controllerRegistry.register(navbar, 'navbar', controller);
             navbar.dataset.lycoInitialized = 'true';
         }
     });
@@ -11,91 +17,43 @@ export function initLycoNavbars(): void {
 /**
  * Controller for the Vanilla JS LycoNavbar component.
  */
-export class LycoNavbarController {
+export class LycoNavbarController extends BaseController {
     private readonly navbar: HTMLElement;
-    private readonly toggles: NodeListOf<HTMLButtonElement>;
-    private readonly collapses: NodeListOf<HTMLElement>;
-    private readonly links: NodeListOf<HTMLAnchorElement>;
-    private readonly _onClickMap = new Map<HTMLButtonElement, () => void>();
-    private readonly _onDocumentClick: (e: MouseEvent) => void;
-    private readonly _onLinkClick: (e: MouseEvent) => void;
+    private readonly collapseControllers: CollapseController[] = [];
+    private readonly menuControllers: MenuController[] = [];
 
     constructor(navbar: HTMLElement) {
+        super();
         this.navbar = navbar;
-
-        this.toggles = navbar.querySelectorAll<HTMLButtonElement>('.navbar__toggle');
-        this.collapses = navbar.querySelectorAll<HTMLElement>('.navbar__collapse');
-
-        this.toggles.forEach(toggle => {
-            const onClick = () => this.handleToggle(toggle);
-            this._onClickMap.set(toggle, onClick);
-            toggle.addEventListener('click', onClick);
+        const toggles = [...navbar.querySelectorAll<HTMLButtonElement>('.navbar__toggle')];
+        const collapses = [...navbar.querySelectorAll<HTMLElement>('.navbar__collapse')];
+        toggles.forEach((toggle, index) => {
+            const controlsId = toggle.getAttribute('aria-controls');
+            const panel = controlsId ? document.getElementById(controlsId) : collapses[index];
+            if (!panel) return;
+            const controller = new CollapseController(toggle, panel, toggle.getAttribute('aria-expanded') === 'true');
+            this.collapseControllers.push(controller);
+            this.addCleanup(() => controller.destroy());
         });
-
-        this.links = navbar.querySelectorAll<HTMLAnchorElement>('.navbar__link');
-
-        this._onDocumentClick = (e: MouseEvent) => {
-            if (!this.navbar.contains(e.target as Node)) {
-                this.closeAll();
-            }
-        };
-        document.addEventListener('mousedown', this._onDocumentClick);
-
-        this._onLinkClick = () => {
-            this.closeAll();
-        };
-        this.links.forEach(link => {
-            link.addEventListener('click', this._onLinkClick);
+        navbar.querySelectorAll<HTMLElement>('.navbar__dropdown').forEach((dropdown) => {
+            const trigger = dropdown.querySelector<HTMLElement>('.navbar__dropdown-trigger');
+            const surface = dropdown.querySelector<HTMLElement>('.navbar__dropdown-menu');
+            if (!trigger || !surface) return;
+            const controller = new MenuController(trigger, surface);
+            this.menuControllers.push(controller);
+            this.addCleanup(() => controller.destroy());
         });
-    }
-
-    private handleToggle(toggle: HTMLButtonElement): void {
-        const isExpanded = toggle.getAttribute('aria-expanded') === 'true';
-        const nextState = !isExpanded;
-
-        toggle.setAttribute('aria-expanded', String(nextState));
-
-        const controlsId = toggle.getAttribute('aria-controls');
-        if (controlsId) {
-            const target = document.getElementById(controlsId);
-            if (target && target.classList.contains('navbar__collapse')) {
-                this.toggleCollapse(target, nextState);
-                return;
-            }
-        }
-
-        this.collapses.forEach(collapse => this.toggleCollapse(collapse, nextState));
-    }
-
-    private toggleCollapse(collapse: HTMLElement, isOpen: boolean): void {
-        if (isOpen) {
-            collapse.classList.add('is-open');
-        } else {
-            collapse.classList.remove('is-open');
-        }
+        navbar.querySelectorAll<HTMLElement>('.navbar__link').forEach((link) => this.listen(link, 'click', () => this.closeAll()));
     }
 
     private closeAll(): void {
-        this.toggles.forEach(t => {
-            if (t.getAttribute('aria-expanded') === 'true') {
-                t.setAttribute('aria-expanded', 'false');
-            }
-        });
-        this.collapses.forEach(c => c.classList.remove('is-open'));
+        this.collapseControllers.forEach((controller) => controller.close());
+        this.menuControllers.forEach((controller) => controller.close());
     }
 
-    public destroy(): void {
-        this.toggles.forEach(toggle => {
-            const onClick = this._onClickMap.get(toggle);
-            if (onClick) {
-                toggle.removeEventListener('click', onClick);
-            }
-        });
-        this._onClickMap.clear();
-
-        document.removeEventListener('mousedown', this._onDocumentClick);
-        this.links.forEach(link => link.removeEventListener('click', this._onLinkClick));
-
+    public override destroy(): void {
+        this.closeAll();
+        super.destroy();
         delete this.navbar.dataset.lycoInitialized;
     }
 }
