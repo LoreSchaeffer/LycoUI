@@ -4,7 +4,7 @@
   // ==========================================================================
   &.is-focused {
     border-color: var(--input-color-base);
-    box-shadow: 0 0 0 1px var(--color-void), 0 0 0 3px var(--input-color-base);
+    box-shadow: 0 0 0 1px var(--neutral-950), 0 0 0 3px var(--input-color-base);
     --input-border-internal: var(--input-color-base);
   }
 
@@ -15,7 +15,7 @@
     opacity: 0.6;
     cursor: not-allowed;
     pointer-events: none;
-    background-color: var(--color-carbon);
+    background-color: var(--neutral-950);
 
     .input-field {
       color: var(--color-text-muted);
@@ -28,7 +28,7 @@
   // ==========================================================================
   &.is-readonly,
   &:has(.input-field[readonly]) {
-    background-color: var(--color-carbon);
+    background-color: var(--neutral-950);
     border-color: var(--color-border-subtle);
 
     .input-field {
@@ -58,7 +58,7 @@
     --input-color-base: var(--color-success);
 
     &.is-focused {
-      box-shadow: 0 0 0 1px var(--color-void), 0 0 0 3px var(--color-success);
+      box-shadow: 0 0 0 1px var(--neutral-950), 0 0 0 3px var(--color-success);
     }
   }
 
@@ -67,7 +67,7 @@
     --input-color-base: var(--color-danger);
 
     &.is-focused {
-      box-shadow: 0 0 0 1px var(--color-void), 0 0 0 3px var(--color-danger);
+      box-shadow: 0 0 0 1px var(--neutral-950), 0 0 0 3px var(--color-danger);
     }
   }
 
@@ -77,17 +77,17 @@
   &-flat {
     box-shadow: none;
     background-image: none;
-    background-color: var(--color-carbon);
+    background-color: var(--neutral-950);
     border-color: transparent;
 
     &:hover:not(.is-disabled):not(.is-invalid):not(.is-valid) {
-      background-color: var(--color-carbon-active);
+      background-color: var(--surface-active);
     }
 
     &.is-focused {
-      background-color: var(--color-void);
+    background-color: var(--neutral-950);
       border-color: var(--input-color-base);
-      box-shadow: 0 0 0 1px var(--color-void), 0 0 0 3px var(--input-color-base);
+    box-shadow: 0 0 0 1px var(--neutral-950), 0 0 0 3px var(--input-color-base);
     }
   }
 

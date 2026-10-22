@@ -3,7 +3,7 @@ import {Badge, Card, Code, getContrastColor, Table, TableBody, TableCell, TableH
 
 const hues = ['red', 'orange', 'amber', 'yellow', 'lime', 'green', 'teal', 'cyan', 'blue', 'indigo', 'purple', 'fuchsia', 'pink'];
 const lightnessSteps = [50, 100, 200, 300, 400, 500, 600, 700, 800, 900, 950];
-const secondaryColors = ['void', 'carbon', 'obsidian', 'graphite', 'smoke', 'ash', 'fog', 'mist', 'bone', 'paper'];
+const neutralSteps = [50, 100, 200, 300, 400, 500, 600, 700, 800, 900, 950];
 
 const semanticColors = [
     {name: 'Primary', var: '--color-primary'},
@@ -11,7 +11,7 @@ const semanticColors = [
     {name: 'Warning', var: '--color-warning'},
     {name: 'Danger', var: '--color-danger'},
     {name: 'Info', var: '--color-info'},
-    {name: 'Secondary', var: '--color-ash'}
+    {name: 'Secondary', var: '--color-secondary'}
 ];
 
 interface ColorSwatchProps {
@@ -37,7 +37,7 @@ const ColorSwatch: React.FC<ColorSwatchProps> = ({colorVar, label, textColor}) =
             className="docs-colors__palette-step"
             style={{
                 backgroundColor: `var(${colorVar})`,
-                color: textColor || 'var(--color-carbon)',
+                color: textColor || 'var(--neutral-950)',
                 cursor: 'pointer',
                 display: 'flex',
                 alignItems: 'center',
@@ -122,7 +122,7 @@ const Colors: React.FC = () => {
                             <div className="docs-colors__palette-steps" style={{display: 'grid', gridTemplateColumns: 'repeat(11, 1fr)', flex: 1, gap: '4px'}}>
                                 {lightnessSteps.map(step => {
                                     const colorVar = `--${hue}-${step}`;
-                                    let textColor = 'var(--color-carbon)';
+                                    let textColor = 'var(--neutral-950)';
                                     if (step >= 600) textColor = 'var(--white)';
                                     else if (step === 500) textColor = getContrastColor(hue);
 
@@ -142,28 +142,44 @@ const Colors: React.FC = () => {
             </section>
 
             <section className="mb-12">
-                <h2 className="mt-12 mb-6">Secondary Colors</h2>
+                <h2 className="mt-12 mb-6">Neutral Palette</h2>
                 <p className="text-secondary mb-8">
-                    Our secondary palette for backgrounds, surfaces, and typography. From the deep, rich 'void' to the crisp 'paper', these named tokens form the structural foundation of our UI.
+                    Neutral tokens provide the structural colors for backgrounds, surfaces, borders, and typography. Use the numeric <Code inline>--neutral-50</Code> through <Code inline>--neutral-950</Code> aliases so your styles follow the active neutral theme.
                 </p>
 
                 <div className="docs-colors__palette-row mb-1" style={{display: 'flex', alignItems: 'center'}}>
-                    <span className="docs-colors__palette-title" style={{width: '80px', fontWeight: 'bold'}}>Secondary</span>
-                    <div className="docs-colors__palette-steps" style={{display: 'grid', gridTemplateColumns: 'repeat(10, 1fr)', flex: 1, gap: '4px'}}>
-                        {secondaryColors.map((name) => {
-                            const colorVar = `--color-${name}`;
-                            const isLightSecondary = ['mist', 'bone', 'paper', 'white'].includes(name);
+                    <span className="docs-colors__palette-title" style={{width: '80px', fontWeight: 'bold'}}>Neutral</span>
+                    <div className="docs-colors__palette-steps" style={{display: 'grid', gridTemplateColumns: 'repeat(11, 1fr)', flex: 1, gap: '4px'}}>
+                        {neutralSteps.map(step => {
+                            const colorVar = `--neutral-${step}`;
                             return (
                                 <ColorSwatch
-                                    key={name}
+                                    key={step}
                                     colorVar={colorVar}
-                                    label={name}
-                                    textColor={isLightSecondary ? 'var(--color-carbon)' : 'var(--white)'}
+                                    label={step}
+                                    textColor={step >= 600 ? 'var(--white)' : 'var(--neutral-950)'}
                                 />
                             );
                         })}
                     </div>
                 </div>
+            </section>
+
+            <section className="mb-12">
+                <h2 className="mt-12 mb-6">Neutral Themes</h2>
+                <p className="text-secondary mb-6">
+                    The default neutral theme is cool slate. Set <Code inline>data-theme</Code> on the document element to switch every <Code inline>--neutral-*</Code> alias globally: use <Code inline>gray</Code> for a neutral temperature or <Code inline>zinc</Code> for a warmer temperature.
+                </p>
+                <Code
+                    language="html"
+                    code={`<!doctype html>
+<html data-theme="zinc">
+  <!-- All var(--neutral-50) through var(--neutral-950) values use zinc. -->
+</html>`}
+                />
+                <p className="text-secondary mt-6 mb-0">
+                    Omit the attribute or use <Code inline>data-theme="slate"</Code> to use the default slate scale. Apply the attribute to <Code inline>&lt;html&gt;</Code>, rather than an individual component, so surfaces and components stay in the same neutral family.
+                </p>
             </section>
 
             <section className="mb-12">
@@ -196,9 +212,9 @@ const Colors: React.FC = () => {
                             <TableCell>Applies <Code inline>{"border-color: var(--{color}-{step}) !important;"}</Code>. Example: <Code inline>border-green-400</Code></TableCell>
                         </TableRow>
                         <TableRow hover>
-                            <TableCell><Code inline language="css">{".text-{name}"}</Code> / <Code inline language="css">{".bg-{name}"}</Code></TableCell>
-                            <TableCell><Badge variant="secondary">Semantic & Neutral</Badge></TableCell>
-                            <TableCell>Standard properties for semantics and neutrals. Examples: <Code inline>text-primary</Code>, <Code inline>bg-void</Code></TableCell>
+                            <TableCell><Code inline language="css">{".text-neutral-{step}"}</Code> / <Code inline language="css">{".bg-neutral-{step}"}</Code></TableCell>
+                            <TableCell><Badge variant="secondary">Neutral</Badge></TableCell>
+                            <TableCell>Standard properties for the active neutral theme. Examples: <Code inline>text-neutral-200</Code>, <Code inline>bg-neutral-950</Code></TableCell>
                         </TableRow>
                     </TableBody>
                 </Table>

@@ -86,7 +86,7 @@
   }
 
   &:focus-visible {
-    outline: 2px solid var(--color-void);
+    outline: 2px solid var(--neutral-950);
     box-shadow: 0 0 0 var(--spacing-1, 4px) var(--alert-color-base);
     outline-offset: calc(2px * -1);
   }

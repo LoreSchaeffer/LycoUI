@@ -9,7 +9,7 @@ export default function TypesDoc() {
 
     const getTextColor = (val: string) => {
         const lightColors = ['yellow', 'lime', 'green', 'cyan', 'white', 'success', 'warning', 'info'];
-        return lightColors.includes(val) ? 'var(--color-void)' : 'white';
+        return lightColors.includes(val) ? 'var(--neutral-950)' : 'white';
     };
 
     return (
@@ -89,13 +89,13 @@ export default function TypesDoc() {
                             <TableCell className="td-description">
                                 Maps to the <code
                                     style={{
-                                        backgroundColor: 'var(--color-ash)',
+                                        backgroundColor: 'var(--color-secondary)',
                                         color: 'white',
                                         borderRadius: 'var(--radius-sm)',
                                         padding: '0.25rem 0.5rem',
                                         marginInline: '0.25rem'
                                     }}
-                                >--color-ash</code> semantic theme color.
+                                >--color-secondary</code> semantic theme color.
                             </TableCell>
                         </TableRow>
                         {['success', 'warning', 'danger', 'info'].map(val => (

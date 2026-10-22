@@ -10,7 +10,7 @@
   --range-thumb-size: var(--spacing-6, 1.5rem);
   --range-color-base: var(--color-primary);
   --range-progress: 50%;
-  --range-track-color: var(--color-carbon, var(--slate-800));
+  --range-track-color: var(--neutral-950, var(--neutral-800));
   --range-track-fill: var(--range-color-base);
 
   height: calc(var(--range-thumb-size) + 1rem);
@@ -121,11 +121,11 @@
     }
 
     &:focus-visible::-webkit-slider-thumb {
-      box-shadow: 0 0 0 1px var(--color-void), 0 0 0 3px var(--range-color-base);
+      box-shadow: 0 0 0 1px var(--neutral-950), 0 0 0 3px var(--range-color-base);
     }
 
     &:focus-visible::-moz-range-thumb {
-      box-shadow: 0 0 0 1px var(--color-void), 0 0 0 3px var(--range-color-base);
+      box-shadow: 0 0 0 1px var(--neutral-950), 0 0 0 3px var(--range-color-base);
     }
   }
 

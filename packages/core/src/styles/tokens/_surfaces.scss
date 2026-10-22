@@ -2,17 +2,16 @@
 // SURFACES
 // ==========================================================================
 // Linear-style uses stacked distinct layers instead of gradients for depth.
-// We use semantic neutral tokens (void, carbon, etc.) rather than numerical 
-// slate scales to ensure perfect depth in dark mode.
+// Numeric neutral aliases make every surface respond to the document theme.
 $surface-treatments: (
   // Base app background (near black)
-        'root': 'var(--color-void)',
+        'root': 'var(--neutral-950)',
   // Default components/cards
-        'base': 'var(--color-carbon)',
+        'base': 'var(--neutral-950)',
   // Hover states or elevated components
-        'elevated': 'var(--color-obsidian)',
+        'elevated': 'var(--neutral-900)',
   // Floating panels, dropdowns, popovers
-        'floating': 'var(--color-graphite)',
+        'floating': 'var(--neutral-800)',
   // Active/Pressed states
-        'active': 'var(--color-carbon-active)'
+        'active': 'color-mix(in srgb, var(--neutral-950) 96%, black)'
 );

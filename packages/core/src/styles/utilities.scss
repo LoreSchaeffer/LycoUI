@@ -405,25 +405,25 @@
 }
 
 // Neutral Colors
-@each $name, $color in colors.$neutral-colors {
-  .text-#{$name} {
-    color: var(--color-#{$name}) !important;
+@each $step in colors.$neutral-steps {
+  .text-neutral-#{$step} {
+    color: var(--neutral-#{$step}) !important;
   }
 
-  .bg-#{$name} {
-    background-color: var(--color-#{$name}) !important;
+  .bg-neutral-#{$step} {
+    background-color: var(--neutral-#{$step}) !important;
   }
 
-  .border-#{$name} {
-    border-color: var(--color-#{$name}) !important;
+  .border-neutral-#{$step} {
+    border-color: var(--neutral-#{$step}) !important;
   }
 
-  .hover\:text-#{$name}:hover {
-    color: var(--color-#{$name}) !important;
+  .hover\:text-neutral-#{$step}:hover {
+    color: var(--neutral-#{$step}) !important;
   }
 
-  .hover\:bg-#{$name}:hover {
-    background-color: var(--color-#{$name}) !important;
+  .hover\:bg-neutral-#{$step}:hover {
+    background-color: var(--neutral-#{$step}) !important;
   }
 }
 

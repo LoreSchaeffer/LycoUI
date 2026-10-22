@@ -7,7 +7,7 @@
 .tooltip-content {
   position: absolute; // It's attached to body, absolute to the page
   z-index: var(--z-index-tooltip, 1000);
-  background-color: var(--color-obsidian, var(--color-carbon));
+  background-color: var(--neutral-900, var(--neutral-950));
   color: var(--color-text-primary);
   font-size: var(--text-caption);
   font-family: var(--font-family-base);

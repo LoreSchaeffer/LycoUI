@@ -16,7 +16,7 @@ export default function CodeDoc() {
                 <div style={{display: 'flex', flexDirection: 'column', gap: '1rem'}}>
                     <p>Display syntax-highlighted code snippets using Shiki. Features optional toolbars for copying and downloading, and an editable mode for live text input.</p>
 
-                    <div style={{padding: '1rem', backgroundColor: 'var(--color-obsidian)', borderRadius: 'var(--radius-md)', border: '1px solid var(--color-border-subtle)'}}>
+                    <div style={{padding: '1rem', backgroundColor: 'var(--neutral-900)', borderRadius: 'var(--radius-md)', border: '1px solid var(--color-border-subtle)'}}>
                         <strong>Installation Required:</strong>
                         <p style={{margin: '0.5rem 0'}}>To use syntax highlighting, you must manually install <code>shiki</code>. It is an optional dependency to keep our core library small. If missing, it safely falls back to standard
                             text.</p>

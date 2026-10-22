@@ -142,7 +142,7 @@ const ShadowRow = ({step, prefix, isGlow}: { step: string; prefix: string; isGlo
                         display: 'flex',
                         alignItems: 'center',
                         justifyContent: 'center',
-                        backgroundColor: 'var(--color-void)',
+                        backgroundColor: 'var(--neutral-950)',
                         position: 'relative',
                         overflow: 'hidden',
                         borderRadius: 'var(--radius-md)'

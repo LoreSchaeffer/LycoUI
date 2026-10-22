@@ -7,7 +7,7 @@
   &-inline {
     font-family: var(--code-font);
     font-size: var(--text-body-sm);
-    background-color: var(--color-surface-elevated, var(--color-carbon));
+    background-color: var(--color-surface-elevated, var(--neutral-950));
     color: var(--color-text-primary);
     padding: 0.15em 0.3em;
     border-radius: var(--radius-sm);
@@ -15,7 +15,7 @@
   }
 
   &-block {
-    --code-bg: var(--color-obsidian, var(--color-bg-root));
+    --code-bg: var(--neutral-900, var(--color-bg-root));
     --code-border: var(--color-border-subtle);
     --code-header-bg: var(--color-surface-elevated);
     --code-radius: var(--radius-xl);

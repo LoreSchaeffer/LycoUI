@@ -11,7 +11,7 @@
   padding: var(--spacing-8) var(--spacing-4);
   border: 1px dashed var(--color-border-base);
   border-radius: var(--radius-lg);
-  background-color: var(--color-void, transparent);
+  background-color: var(--neutral-950, transparent);
   cursor: pointer;
   transition: border-color var(--duration-fast) var(--ease-default),
   background-color var(--duration-fast) var(--ease-default),
@@ -20,14 +20,14 @@
   --fileupload-color-base: var(--color-primary);
 
   &:hover:not(.is-disabled) {
-    background-color: var(--color-carbon);
+    background-color: var(--neutral-950);
     border-color: var(--color-border-strong);
   }
 
   &:focus-visible {
     outline: none;
     border-color: var(--fileupload-color-base);
-    box-shadow: 0 0 0 1px var(--color-void), 0 0 0 3px var(--fileupload-color-base);
+    box-shadow: 0 0 0 1px var(--neutral-950), 0 0 0 3px var(--fileupload-color-base);
   }
 
   // ==========================================================================
@@ -36,7 +36,7 @@
   &.is-drag-active {
     border-style: solid;
     border-color: var(--fileupload-color-base);
-    background-color: color-mix(in srgb, var(--fileupload-color-base) 10%, var(--color-void, transparent));
+    background-color: color-mix(in srgb, var(--fileupload-color-base) 10%, var(--neutral-950, transparent));
   }
 
   // ==========================================================================
@@ -45,7 +45,7 @@
   &.is-disabled {
     opacity: 0.6;
     cursor: not-allowed;
-    background-color: var(--color-carbon);
+    background-color: var(--neutral-950);
   }
 
   // ==========================================================================

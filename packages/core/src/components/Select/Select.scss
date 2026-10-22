@@ -19,7 +19,7 @@
       border-color: var(--color-danger);
     }
     &:focus-within .select-trigger {
-      box-shadow: 0 0 0 1px var(--color-void), 0 0 0 3px var(--color-danger);
+      box-shadow: 0 0 0 1px var(--neutral-950), 0 0 0 3px var(--color-danger);
     }
   }
   &-error-message {
@@ -35,7 +35,7 @@
   &:focus-within .select-trigger,
   &:focus-visible .select-trigger {
     outline: none;
-    box-shadow: 0 0 0 1px var(--color-void), 0 0 0 3px var(--select-color-base);
+    box-shadow: 0 0 0 1px var(--neutral-950), 0 0 0 3px var(--select-color-base);
     border-color: var(--select-color-base);
   }
   &-sm {
@@ -74,7 +74,7 @@
   }
   &.is-open .select-trigger {
     border-color: var(--select-color-base);
-    box-shadow: 0 0 0 1px var(--color-void), 0 0 0 3px var(--select-color-base);
+    box-shadow: 0 0 0 1px var(--neutral-950), 0 0 0 3px var(--select-color-base);
   }
   &-content {
     display: flex;
@@ -154,12 +154,12 @@
       display: none !important;
     }
     scrollbar-width: thin;
-    scrollbar-color: var(--slate-600) transparent;
+    scrollbar-color: var(--neutral-600) transparent;
     &::-webkit-scrollbar {
       width: 6px;
     }
     &::-webkit-scrollbar-thumb {
-      background-color: var(--slate-600);
+      background-color: var(--neutral-600);
       border-radius: var(--radius-full);
     }
   }

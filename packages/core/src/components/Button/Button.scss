@@ -97,9 +97,9 @@
   // ==========================================================================
   &-white {
     --btn-bg: var(--color-white, #ffffff);
-    --btn-bg-hover: var(--color-ash, #e5e5e5);
-    --btn-bg-active: color-mix(in srgb, var(--color-ash, #e5e5e5) 85%, black);
-    --btn-text: var(--color-carbon, #0f1011);
+    --btn-bg-hover: var(--neutral-500, #62666d);
+    --btn-bg-active: color-mix(in srgb, var(--neutral-500, #62666d) 85%, black);
+    --btn-text: var(--neutral-950, #0f1011);
   }
 
   &-outline {

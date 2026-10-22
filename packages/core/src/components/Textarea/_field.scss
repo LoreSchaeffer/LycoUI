@@ -10,7 +10,7 @@
   display: flex;
   flex-direction: column;
   width: 100%;
-  background-color: var(--color-void, transparent);
+  background-color: var(--neutral-950, transparent);
   border: 1px solid var(--color-border-base);
   border-radius: var(--textarea-radius, var(--radius-md));
   overflow: hidden;
@@ -102,14 +102,14 @@
   }
   &.is-focused {
     border-color: var(--textarea-color-base);
-    box-shadow: 0 0 0 1px var(--color-void), 0 0 0 3px var(--textarea-color-base);
+    box-shadow: 0 0 0 1px var(--neutral-950), 0 0 0 3px var(--textarea-color-base);
     --textarea-border-internal: var(--textarea-color-base);
   }
   &.is-disabled {
     opacity: 0.6;
     cursor: not-allowed;
     pointer-events: none;
-    background-color: var(--color-carbon);
+    background-color: var(--neutral-950);
     .textarea-field {
       color: var(--color-text-muted);
       -webkit-text-fill-color: var(--color-text-muted); // Required for Safari
@@ -117,7 +117,7 @@
     }
   }
   &.is-readonly {
-    background-color: var(--color-carbon);
+    background-color: var(--neutral-950);
     border-color: var(--color-border-subtle);
     .textarea-field {
       cursor: default;
@@ -129,28 +129,28 @@
     border-color: var(--color-success);
     --textarea-color-base: var(--color-success);
     &.is-focused {
-      box-shadow: 0 0 0 1px var(--color-void), 0 0 0 3px var(--color-success);
+      box-shadow: 0 0 0 1px var(--neutral-950), 0 0 0 3px var(--color-success);
     }
   }
   &.is-invalid {
     border-color: var(--color-danger);
     --textarea-color-base: var(--color-danger);
     &.is-focused {
-      box-shadow: 0 0 0 1px var(--color-void), 0 0 0 3px var(--color-danger);
+      box-shadow: 0 0 0 1px var(--neutral-950), 0 0 0 3px var(--color-danger);
     }
   }
   &-flat {
     box-shadow: none;
     background-image: none;
-    background-color: var(--color-carbon);
+    background-color: var(--neutral-950);
     border-color: transparent;
     &:hover:not(.is-disabled):not(.is-invalid):not(.is-valid) {
-      background-color: var(--color-carbon-active);
+      background-color: var(--surface-active);
     }
     &.is-focused {
-      background-color: var(--color-void);
+      background-color: var(--neutral-950);
       border-color: var(--textarea-color-base);
-      box-shadow: 0 0 0 1px var(--color-void), 0 0 0 3px var(--textarea-color-base);
+      box-shadow: 0 0 0 1px var(--neutral-950), 0 0 0 3px var(--textarea-color-base);
     }
   }
   &-sm {

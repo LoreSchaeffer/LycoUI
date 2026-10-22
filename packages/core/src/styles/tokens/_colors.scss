@@ -178,15 +178,48 @@ $semantic-colors: (
         )
 );
 
-$neutral-colors: (
-        'void': #08090a,
-        'carbon': #0f1011,
-        'obsidian': #161718,
-        'graphite': #23252a,
-        'smoke': #383b3f,
-        'ash': #62666d,
-        'fog': #8a8f98,
-        'mist': #d0d6e0,
-        'bone': #e5e5e6,
-        'paper': #ffffff
+$neutral-steps: 50, 100, 200, 300, 400, 500, 600, 700, 800, 900, 950;
+
+// Slate is the default neutral family. Its deepest steps preserve the
+// established dark surfaces exactly: carbon, obsidian, and graphite.
+$neutral-scales: (
+        'slate': (
+                50: #ffffff,
+                100: #e5e5e6,
+                200: #d0d6e0,
+                300: #b2b8c2,
+                400: #8a8f98,
+                500: #62666d,
+                600: #4c4f55,
+                700: #383b3f,
+                800: #23252a,
+                900: #161718,
+                950: #0f1011
+        ),
+        'gray': (
+                50: #fbfbfb,
+                100: #eeeeee,
+                200: #d8d8d8,
+                300: #bdbdbd,
+                400: #969696,
+                500: #707070,
+                600: #555555,
+                700: #3d3d3d,
+                800: #292929,
+                900: #1a1a1a,
+                950: #101010
+        ),
+        'zinc': (
+                50: #fbfaf9,
+                100: #f4f1ee,
+                200: #e6e0da,
+                300: #d2c8bf,
+                400: #a89c92,
+                500: #81766e,
+                600: #635a54,
+                700: #49423e,
+                800: #302c2a,
+                900: #1c1a19,
+                950: #100f0e
+        )
 );
