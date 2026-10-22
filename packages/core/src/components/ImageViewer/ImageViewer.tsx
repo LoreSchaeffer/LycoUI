@@ -1,5 +1,6 @@
 import React, {useCallback, useEffect, useRef, useState} from 'react';
 import {Modal} from '../Modal';
+import {clampGalleryIndex, nextGalleryIndex} from './gallery-model';
 import './ImageViewer.scss';
 
 /**
@@ -51,7 +52,7 @@ export const ImageViewer = React.forwardRef<HTMLDialogElement, ImageViewerProps>
     // Reset state when opening/closing or when images change
     useEffect(() => {
         if (isOpen) {
-            setCurrentIndex(initialIndex >= 0 && initialIndex < images.length ? initialIndex : 0);
+            setCurrentIndex(clampGalleryIndex(initialIndex, images.length));
         }
         setScale(1);
         setPosition({x: 0, y: 0});
@@ -60,7 +61,7 @@ export const ImageViewer = React.forwardRef<HTMLDialogElement, ImageViewerProps>
     const handlePrev = (e: React.MouseEvent) => {
         e.stopPropagation();
         if (currentIndex > 0) {
-            setCurrentIndex(prev => prev - 1);
+            setCurrentIndex(prev => nextGalleryIndex(prev, images.length, -1, false));
             setScale(1);
             setPosition({x: 0, y: 0});
         }
@@ -69,7 +70,7 @@ export const ImageViewer = React.forwardRef<HTMLDialogElement, ImageViewerProps>
     const handleNext = (e: React.MouseEvent) => {
         e.stopPropagation();
         if (currentIndex < images.length - 1) {
-            setCurrentIndex(prev => prev + 1);
+            setCurrentIndex(prev => nextGalleryIndex(prev, images.length, 1, false));
             setScale(1);
             setPosition({x: 0, y: 0});
         }

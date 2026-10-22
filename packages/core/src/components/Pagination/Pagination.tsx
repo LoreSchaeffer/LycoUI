@@ -3,6 +3,7 @@ import {type CSSProperties, forwardRef, type HTMLAttributes, type ReactNode, use
 import clsx from 'clsx';
 import type {FullVariant, SizeVariant} from '../../types/types.ts';
 import {getContrastColor} from '../../utils/theme.ts';
+import {clampPage, pageWindow} from './pagination-model';
 
 /**
  * Props for the Pagination component.
@@ -66,7 +67,7 @@ export const Pagination = forwardRef<HTMLElement, PaginationProps>((
     const [inputValue, setInputValue] = useState(currentPage.toString());
     const inputRef = useRef<HTMLInputElement>(null);
 
-    const safeCurrentPage = Math.max(1, Math.min(currentPage, Math.max(1, totalPages)));
+    const safeCurrentPage = clampPage(currentPage, totalPages);
 
     useEffect(() => {
         setInputValue(safeCurrentPage.toString());
@@ -111,35 +112,7 @@ export const Pagination = forwardRef<HTMLElement, PaginationProps>((
         setInputValue(e.target.value);
     }, []);
 
-    const generatePages = useCallback(() => {
-        const totalNumbers = siblingCount * 2 + 3;
-        const totalBlocks = totalNumbers + 2;
-
-        if (totalPages > totalBlocks) {
-            const startPage = Math.max(2, safeCurrentPage - siblingCount);
-            const endPage = Math.min(totalPages - 1, safeCurrentPage + siblingCount);
-
-            let pages: (number | string)[] = [1];
-
-            if (startPage > 2) {
-                pages.push('ellipsis-start');
-            } else if (startPage === 2) {
-            }
-
-            for (let i = startPage; i <= endPage; i++) {
-                pages.push(i);
-            }
-
-            if (endPage < totalPages - 1) {
-                pages.push('ellipsis-end');
-            }
-
-            pages.push(totalPages);
-            return pages;
-        }
-
-        return Array.from({length: totalPages}, (_, i) => i + 1);
-    }, [totalPages, safeCurrentPage, siblingCount]);
+    const generatePages = useCallback(() => pageWindow(totalPages, safeCurrentPage, siblingCount), [totalPages, safeCurrentPage, siblingCount]);
 
     const renderStandard = () => {
         const pages = generatePages();
