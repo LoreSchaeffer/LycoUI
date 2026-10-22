@@ -3,6 +3,7 @@ import type {TextareaHTMLAttributes} from 'react';
 import React, {type CSSProperties, forwardRef, useCallback, useEffect, useId, useRef, useState} from 'react';
 import clsx from 'clsx';
 import type {FullVariant, SizeVariant} from '../../types/types';
+import {resolveFieldValidation} from '../../interaction/field-validation';
 
 /**
  * TextareaValidation state options.
@@ -137,23 +138,13 @@ export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
             onChange?.(e);
         }, [onChange, validation, hasBlurred, runAutoValidation]);
 
-        let visualValidation: 'valid' | 'invalid' | null = null;
-        if (validation === 'valid') {
-            visualValidation = 'valid';
-        } else if (validation === 'invalid') {
-            visualValidation = 'invalid';
-        } else if (validation === 'auto' && hasBlurred) {
-            visualValidation = autoValidationState;
-        }
-
-        let displayMessage = '';
-        if (validation !== 'disabled') {
-            if (validationMessage) {
-                displayMessage = validationMessage;
-            } else if (validation === 'auto' && autoValidationMessage) {
-                displayMessage = autoValidationMessage;
-            }
-        }
+        const {state: visualValidation, message: displayMessage} = resolveFieldValidation({
+            mode: validation,
+            hasBlurred,
+            nativeValid: autoValidationState !== 'invalid',
+            nativeMessage: autoValidationMessage,
+            explicitMessage: validationMessage,
+        });
 
         return (
             <div className="textarea-wrapper" style={style}>

@@ -4,6 +4,7 @@ import React, {type CSSProperties, forwardRef, useCallback, useEffect, useId, us
 import clsx from 'clsx';
 import type {FullVariant, SizeVariant} from '../../types/types';
 import {Spinner, type SpinnerType} from '../Spinner';
+import {resolveFieldValidation} from '../../interaction/field-validation';
 
 /**
  * InputValidation.
@@ -192,23 +193,13 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
             }
         }, [disabled, loading, readOnly, validation, hasBlurred, runAutoValidation]);
 
-        let visualValidation: 'valid' | 'invalid' | null = null;
-        if (validation === 'valid') {
-            visualValidation = 'valid';
-        } else if (validation === 'invalid') {
-            visualValidation = 'invalid';
-        } else if (validation === 'auto' && hasBlurred) {
-            visualValidation = autoValidationState;
-        }
-
-        let displayMessage = '';
-        if (validation !== 'disabled') {
-            if (validationMessage) {
-                displayMessage = validationMessage;
-            } else if (validation === 'auto' && autoValidationMessage) {
-                displayMessage = autoValidationMessage;
-            }
-        }
+        const {state: visualValidation, message: displayMessage} = resolveFieldValidation({
+            mode: validation,
+            hasBlurred,
+            nativeValid: autoValidationState !== 'invalid',
+            nativeMessage: autoValidationMessage,
+            explicitMessage: validationMessage,
+        });
 
         const showSpinnerStart = loading && spinnerPlacement === 'start';
         const showSpinnerEnd = loading && spinnerPlacement === 'end';
