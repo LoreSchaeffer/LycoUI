@@ -1,5 +1,5 @@
-import React from 'react';
-import {Badge, Card, Code, getContrastColor, Table, TableBody, TableCell, TableHead, TableRow, useNotification} from '@loreschaeffer/lyco-ui';
+import React, {useEffect, useRef, useState} from 'react';
+import {Badge, Card, Code, getContrastColor, Switch, Table, TableBody, TableCell, TableHead, TableRow, useNotification} from '@loreschaeffer/lyco-ui';
 
 const hues = ['red', 'orange', 'amber', 'yellow', 'lime', 'green', 'teal', 'cyan', 'blue', 'indigo', 'purple', 'fuchsia', 'pink'];
 const lightnessSteps = [50, 100, 200, 300, 400, 500, 600, 700, 800, 900, 950];
@@ -24,16 +24,35 @@ interface ColorSwatchProps {
     label: string | number;
     textColor?: string;
     colorValue?: string;
+    hexValue?: string;
+    copyHexValues: boolean;
 }
 
-const ColorSwatch: React.FC<ColorSwatchProps> = ({colorVar, label, textColor, colorValue}) => {
+const rgbToHex = (value: string) => {
+    const match = value.match(/\d+/g);
+    if (!match || match.length < 3) return value;
+    return `#${match.slice(0, 3).map(channel => Number(channel).toString(16).padStart(2, '0')).join('')}`;
+};
+
+const ColorSwatch: React.FC<ColorSwatchProps> = ({colorVar, label, textColor, colorValue, hexValue, copyHexValues}) => {
     const {showNotification} = useNotification();
+    const swatchRef = useRef<HTMLDivElement>(null);
+    const [resolvedHex, setResolvedHex] = useState(hexValue);
+    const [isHovered, setIsHovered] = useState(false);
+
+    const handleMouseEnter = () => {
+        setIsHovered(true);
+        if (!resolvedHex && swatchRef.current) {
+            setResolvedHex(rgbToHex(getComputedStyle(swatchRef.current).backgroundColor));
+        }
+    };
 
     const handleCopy = () => {
-        navigator.clipboard.writeText(`var(${colorVar})`);
+        const copyValue = copyHexValues ? (resolvedHex || hexValue || colorValue || '') : `var(${colorVar})`;
+        navigator.clipboard.writeText(copyValue);
         showNotification({
             title: 'Copied to clipboard',
-            description: `var(${colorVar}) has been copied.`,
+            description: `${copyValue} has been copied.`,
             variant: 'success'
         });
     };
@@ -41,6 +60,9 @@ const ColorSwatch: React.FC<ColorSwatchProps> = ({colorVar, label, textColor, co
     return (
         <Card
             className="docs-colors__palette-step"
+            ref={swatchRef}
+            onMouseEnter={handleMouseEnter}
+            onMouseLeave={() => setIsHovered(false)}
             style={{
                 backgroundColor: colorValue || `var(${colorVar})`,
                 color: textColor || 'var(--neutral-950)',
@@ -53,19 +75,28 @@ const ColorSwatch: React.FC<ColorSwatchProps> = ({colorVar, label, textColor, co
                 boxShadow: 'none',
                 borderRadius: 'var(--radius-sm)'
             }}
-            title={`Copy var(${colorVar})`}
+            title={`Copy ${copyHexValues ? (resolvedHex || hexValue || 'HEX value') : `var(${colorVar})`}`}
             onClick={handleCopy}
             role="button"
             tabIndex={0}
         >
-            <span className="docs-colors__step-label" style={{fontSize: 'var(--text-caption)'}}>{label}</span>
+            <span className="docs-colors__step-label" style={{fontSize: 'var(--text-caption)'}}>{isHovered && resolvedHex ? resolvedHex : label}</span>
         </Card>
     );
 };
 
 const SemanticColorSwatch: React.FC<{ color: { name: string; var: string } }> = ({color}) => {
     const {showNotification} = useNotification();
-    const handleCopy = () => {
+    const colorRef = useRef<HTMLDivElement>(null);
+    const [semanticHex, setSemanticHex] = useState('');
+
+    useEffect(() => {
+        if (colorRef.current) {
+            setSemanticHex(rgbToHex(getComputedStyle(colorRef.current).backgroundColor));
+        }
+    }, []);
+
+    const handleCopyVar = () => {
         navigator.clipboard.writeText(`var(${color.var})`);
         showNotification({
             title: 'Copied to clipboard',
@@ -73,25 +104,61 @@ const SemanticColorSwatch: React.FC<{ color: { name: string; var: string } }> = 
             variant: 'success'
         });
     };
+
+    const handleCopyHex = () => {
+        navigator.clipboard.writeText(semanticHex);
+        showNotification({
+            title: 'Copied to clipboard',
+            description: `${semanticHex} has been copied.`,
+            variant: 'success'
+        });
+    };
+
+    const handleValueKeyDown = (event: React.KeyboardEvent<HTMLDivElement>, copy: () => void) => {
+        if (event.key === 'Enter' || event.key === ' ') {
+            event.preventDefault();
+            copy();
+        }
+    };
+
     return (
         <Card
             className="docs-colors__swatch"
-            onClick={handleCopy}
             style={{cursor: 'pointer', overflow: 'hidden'}}
-            title={`Copy var(${color.var})`}
         >
-            <div className="docs-colors__swatch-color" style={{backgroundColor: `var(${color.var})`, height: '80px'}}/>
-            <div className="docs-colors__swatch-info" style={{padding: '16px'}}>
-                <div style={{fontWeight: '600', marginBottom: '4px'}}>
+            <div ref={colorRef} className="docs-colors__swatch-color" style={{backgroundColor: `var(${color.var})`, height: '80px'}}/>
+            <div className="docs-colors__swatch-info" style={{padding: '16px 16px 14px'}}>
+                <div style={{fontWeight: '700', fontSize: 'var(--text-body)', marginBottom: '12px', letterSpacing: '-0.01em'}}>
                     {color.name}
                 </div>
-                <div style={{color: 'var(--text-secondary)', fontSize: 'var(--text-body-sm)'}}>var({color.var})</div>
+                <div
+                    className="docs-colors__semantic-value"
+                    onClick={handleCopyVar}
+                    title={`Copy var(${color.var})`}
+                    aria-label={`Copy var(${color.var})`}
+                    role="button"
+                    tabIndex={0}
+                    onKeyDown={event => handleValueKeyDown(event, handleCopyVar)}
+                    style={{display: 'flex', alignItems: 'baseline', gap: '8px', color: 'var(--text-secondary)', fontSize: 'var(--text-body-sm)', fontFamily: 'var(--font-mono)', cursor: 'copy', padding: '5px 0', borderBottom: '1px solid var(--border-subtle)'}}
+                >var({color.var})</div>
+                <div
+                    className="docs-colors__semantic-value"
+                    onClick={handleCopyHex}
+                    title="Copy HEX value"
+                    aria-label={`Copy HEX value ${semanticHex}`}
+                    role="button"
+                    tabIndex={0}
+                    onKeyDown={event => handleValueKeyDown(event, handleCopyHex)}
+                    style={{display: 'flex', alignItems: 'baseline', gap: '8px', color: 'var(--text-primary)', fontSize: 'var(--text-body-sm)', fontFamily: 'var(--font-mono)', fontWeight: '600', cursor: 'copy', padding: '5px 0'}}
+                >{semanticHex || 'Resolving HEX value…'}</div>
             </div>
         </Card>
     );
 };
 
 const Colors: React.FC = () => {
+    const [copyHexValues, setCopyHexValues] = useState(false);
+
     return (
         <article className="mb-10">
             <h1 className="mb-8">Colors</h1>
@@ -121,6 +188,14 @@ const Colors: React.FC = () => {
                     Step 500 is the luminous base color.
                 </p>
 
+                <div className="mb-6">
+                    <Switch
+                        label="Copy HEX values"
+                        checked={copyHexValues}
+                        onChange={event => setCopyHexValues(event.currentTarget.checked)}
+                    />
+                </div>
+
                 <div style={{display: 'flex', flexDirection: 'column'}}>
                     {hues.map(hue => (
                         <div key={hue} className="docs-colors__palette-row mb-1" style={{display: 'flex', alignItems: 'center'}}>
@@ -138,6 +213,7 @@ const Colors: React.FC = () => {
                                             colorVar={colorVar}
                                             label={step}
                                             textColor={textColor}
+                                            copyHexValues={copyHexValues}
                                         />
                                     );
                                 })}
@@ -164,6 +240,8 @@ const Colors: React.FC = () => {
                                     colorValue={theme.colors[index]}
                                     label={step}
                                     textColor={step >= 600 ? 'var(--white)' : 'var(--neutral-950)'}
+                                    hexValue={theme.colors[index]}
+                                    copyHexValues={copyHexValues}
                                 />
                             ))}
                         </div>
